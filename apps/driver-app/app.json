@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "RideDriveAhead - Driver Partner",
+    "slug": "ridedriveahead-driver",
+    "version": "1.0.0",
+    "sdkVersion": "57.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ridedriveahead.driver"
+    },
+    "android": {
+      "package": "com.ridedriveahead.driver",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF"
+      }
+    }
+  }
+}

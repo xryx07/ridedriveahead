@@ -1,0 +1,955 @@
+openapi: 3.0.3
+info:
+  title: RideDriveAhead API
+  description: |
+    Enterprise API specification for the Advance-Scheduled Ride Booking Platform.
+    Provides complete endpoints for Riders, Drivers, and Admin Compliance Officers,
+    with core focus on Advance-Scheduled trips, upfront fare guarantees, driver fatigue protection,
+    and AES-256 KYC document vault management.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local API Gateway
+  - url: https://api.ridedriveahead.com/v1
+    description: Production API Gateway
+
+paths:
+  # -------------------------------------------------------------
+  # AUTH SERVICE
+  # -------------------------------------------------------------
+  /auth/otp/request:
+    post:
+      tags: [Authentication]
+      summary: Request phone OTP for login or registration
+      operationId: requestOtp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpRequest'
+      responses:
+        '200':
+          description: OTP dispatched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '429':
+          description: Too many OTP requests (rate limited)
+
+  /auth/otp/verify:
+    post:
+      tags: [Authentication]
+      summary: Verify phone OTP and obtain JWT tokens
+      operationId: verifyOtp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpVerifyRequest'
+      responses:
+        '200':
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid or expired OTP
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Rotate refresh token and get new access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /auth/me:
+    get:
+      tags: [Authentication]
+      summary: Get current authenticated user profile
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+
+  # -------------------------------------------------------------
+  # BOOKING SERVICE (Instant & Advance-Scheduled)
+  # -------------------------------------------------------------
+  /bookings/estimate:
+    post:
+      tags: [Bookings]
+      summary: Upfront fare estimate for instant or advance-scheduled trip
+      operationId: getFareEstimate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FareEstimateRequest'
+      responses:
+        '200':
+          description: Guaranteed upfront fare estimates across vehicle tiers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FareEstimateResponse'
+
+  /bookings:
+    post:
+      tags: [Bookings]
+      summary: Create an instant or advance-scheduled ride booking
+      security:
+        - BearerAuth: []
+      operationId: createBooking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookingRequest'
+      responses:
+        '201':
+          description: Booking created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+        '400':
+          description: Invalid schedule window or parameters
+
+  /bookings/{id}:
+    get:
+      tags: [Bookings]
+      summary: Get booking details and live status
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+
+  /bookings/my-rides:
+    get:
+      tags: [Bookings]
+      summary: Get authenticated user's ride history
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: statusGroup
+          in: query
+          description: Filter by status group
+          schema:
+            type: string
+            enum: [UPCOMING_SCHEDULED, ACTIVE, COMPLETED, CANCELLED]
+      responses:
+        '200':
+          description: List of bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDto'
+
+  /bookings/{id}/cancel:
+    post:
+      tags: [Bookings]
+      summary: Cancel a booking with fee calculation
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelBookingRequest'
+      responses:
+        '200':
+          description: Booking cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+
+  /bookings/{id}/verify-otp:
+    post:
+      tags: [Bookings]
+      summary: Driver verifies rider's 4-digit OTP to start trip
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [otpCode]
+              properties:
+                otpCode:
+                  type: string
+                  example: "4821"
+      responses:
+        '200':
+          description: OTP verified and trip started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+
+  /bookings/{id}/complete:
+    post:
+      tags: [Bookings]
+      summary: Complete an active trip
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Trip completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+
+  /bookings/{id}/rate:
+    post:
+      tags: [Bookings]
+      summary: Rate and review the trip
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripRatingRequest'
+      responses:
+        '200':
+          description: Rating submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+
+  # -------------------------------------------------------------
+  # CHAUFFEUR SERVICE (Drive My Car - Hourly & Multi-Day)
+  # -------------------------------------------------------------
+  /chauffeur/packages:
+    get:
+      tags: [Chauffeur]
+      summary: List available chauffeur packages (hourly, events, 1-2 day outstation)
+      responses:
+        '200':
+          description: List of chauffeur packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChauffeurPackageDto'
+
+  # -------------------------------------------------------------
+  # DRIVER SERVICE (KYC Vault, Availability, Scheduled Pool)
+  # -------------------------------------------------------------
+  /drivers/kyc/upload:
+    post:
+      tags: [Driver]
+      summary: Upload KYC document (encrypted into AES-256 vault)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KycUploadRequest'
+      responses:
+        '201':
+          description: Document securely vaulted and queued for verification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycDocumentDto'
+
+  /drivers/kyc/status:
+    get:
+      tags: [Driver]
+      summary: Check overall KYC verification status
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: KYC status details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycStatusResponse'
+
+  /drivers/availability:
+    post:
+      tags: [Driver]
+      summary: Toggle driver online/offline availability
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [isOnline]
+              properties:
+                isOnline:
+                  type: boolean
+                currentLat:
+                  type: number
+                currentLng:
+                  type: number
+      responses:
+        '200':
+          description: Availability updated
+
+  /drivers/scheduled-pool:
+    get:
+      tags: [Driver]
+      summary: View available advance-scheduled rides to claim
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: List of unassigned scheduled bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDto'
+
+  /drivers/scheduled-pool/{bookingId}/accept:
+    post:
+      tags: [Driver]
+      summary: Claim and accept an advance-scheduled booking
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Trip claimed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDto'
+
+  /drivers/gigs:
+    get:
+      tags: [Driver]
+      summary: Marketplace of open driving gigs (hourly chauffeur, events, 1-2 day outstation, cabs)
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Open gigs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GigOfferDto'
+
+  /drivers/fatigue-status:
+    get:
+      tags: [Driver]
+      summary: Check driver driving-hours and fatigue safety status
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Fatigue monitoring data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FatigueStatusResponse'
+
+  /drivers/earnings:
+    get:
+      tags: [Driver]
+      summary: Get driver earnings breakdown
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Daily, weekly, monthly earnings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverEarningsResponse'
+
+  # -------------------------------------------------------------
+  # PAYMENT SERVICE
+  # -------------------------------------------------------------
+  /payments/process:
+    post:
+      tags: [Payments]
+      summary: Process trip payment (UPI, Card, Wallet)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessPaymentRequest'
+      responses:
+        '200':
+          description: Payment processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReceiptDto'
+
+  /payments/receipt/{bookingId}:
+    get:
+      tags: [Payments]
+      summary: Retrieve itemized trip receipt
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Itemized receipt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentReceiptDto'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    OtpRequest:
+      type: object
+      required: [phoneNumber, userRole]
+      properties:
+        phoneNumber:
+          type: string
+          example: "+919876543210"
+        userRole:
+          type: string
+          enum: [RIDER, DRIVER]
+          example: "RIDER"
+
+    OtpVerifyRequest:
+      type: object
+      required: [phoneNumber, otpCode, userRole]
+      properties:
+        phoneNumber:
+          type: string
+          example: "+919876543210"
+        otpCode:
+          type: string
+          example: "123456"
+        userRole:
+          type: string
+          enum: [RIDER, DRIVER]
+          example: "RIDER"
+
+    RefreshTokenRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        tokenType:
+          type: string
+          example: "Bearer"
+        expiresIn:
+          type: integer
+          example: 86400
+        user:
+          $ref: '#/components/schemas/UserProfile'
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phoneNumber:
+          type: string
+          example: "+919876543210"
+        fullName:
+          type: string
+          example: "Arjun Verma"
+        email:
+          type: string
+          example: "arjun@example.com"
+        role:
+          type: string
+          enum: [RIDER, DRIVER, ADMIN]
+        rating:
+          type: number
+          example: 4.92
+        kycStatus:
+          type: string
+          enum: [NOT_SUBMITTED, PENDING, APPROVED, REJECTED]
+
+    FareEstimateRequest:
+      type: object
+      required: [pickupAddress, dropAddress, bookingType]
+      properties:
+        pickupAddress:
+          type: string
+          example: "Indira Gandhi International Airport, Terminal 3"
+        dropAddress:
+          type: string
+          example: "Cyber City, DLF Phase 2, Gurugram"
+        pickupLat:
+          type: number
+          example: 28.5562
+        pickupLng:
+          type: number
+          example: 77.1000
+        dropLat:
+          type: number
+          example: 28.4952
+        dropLng:
+          type: number
+          example: 77.0891
+        bookingType:
+          type: string
+          enum: [INSTANT, SCHEDULED]
+          example: "SCHEDULED"
+        scheduledPickupTime:
+          type: string
+          format: date-time
+          example: "2026-09-12T05:30:00Z"
+
+    FareEstimateResponse:
+      type: object
+      properties:
+        distanceKm:
+          type: number
+          example: 18.5
+        estimatedDurationMin:
+          type: integer
+          example: 35
+        bookingType:
+          type: string
+          enum: [INSTANT, SCHEDULED]
+        scheduledPickupTime:
+          type: string
+          format: date-time
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleTierEstimate'
+
+    VehicleTierEstimate:
+      type: object
+      properties:
+        vehicleType:
+          type: string
+          enum: [HATCHBACK, SEDAN, SUV, PREMIER]
+          example: "SEDAN"
+        tierName:
+          type: string
+          example: "Premier Sedan"
+        description:
+          type: string
+          example: "Comfortable sedans with top-rated drivers"
+        capacity:
+          type: integer
+          example: 4
+        baseFare:
+          type: number
+          example: 150.0
+        distanceFare:
+          type: number
+          example: 277.5
+        advanceReservationFee:
+          type: number
+          example: 50.0
+        totalFare:
+          type: number
+          example: 477.5
+        currency:
+          type: string
+          example: "INR"
+
+    CreateBookingRequest:
+      type: object
+      required: [pickupAddress, dropAddress, vehicleType, bookingType, estimatedFare]
+      properties:
+        pickupAddress:
+          type: string
+        dropAddress:
+          type: string
+        pickupLat:
+          type: number
+        pickupLng:
+          type: number
+        dropLat:
+          type: number
+        dropLng:
+          type: number
+        vehicleType:
+          type: string
+          enum: [HATCHBACK, SEDAN, SUV, PREMIER]
+        bookingType:
+          type: string
+          enum: [INSTANT, SCHEDULED]
+        scheduledPickupTime:
+          type: string
+          format: date-time
+        flightNumber:
+          type: string
+          example: "AI 102"
+        riderNotes:
+          type: string
+          example: "Have 2 large suitcases, early morning flight"
+        paymentMethod:
+          type: string
+          enum: [UPI, CARD, WALLET, CASH]
+        estimatedFare:
+          type: number
+
+    BookingDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        riderId:
+          type: string
+          format: uuid
+        driverId:
+          type: string
+          format: uuid
+        bookingType:
+          type: string
+          enum: [INSTANT, SCHEDULED]
+        status:
+          type: string
+          enum: [DRAFT, SCHEDULED_CONFIRMED, ASSIGNED, EN_ROUTE, ARRIVED, IN_PROGRESS, COMPLETED, CANCELLED]
+        scheduledPickupTime:
+          type: string
+          format: date-time
+        pickupAddress:
+          type: string
+        dropAddress:
+          type: string
+        vehicleType:
+          type: string
+        fareAmount:
+          type: number
+        otpCode:
+          type: string
+          example: "4821"
+        driverName:
+          type: string
+        driverPhone:
+          type: string
+        driverRating:
+          type: number
+        vehicleModel:
+          type: string
+        vehiclePlate:
+          type: string
+        flightNumber:
+          type: string
+        riderNotes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CancelBookingRequest:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          example: "Flight delayed by airline"
+
+    TripRatingRequest:
+      type: object
+      required: [rating]
+      properties:
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        feedback:
+          type: string
+        tipAmount:
+          type: number
+
+    KycUploadRequest:
+      type: object
+      required: [documentType, documentNumber, fileBase64]
+      properties:
+        documentType:
+          type: string
+          enum: [AADHAAR, PAN, DRIVING_LICENSE, VEHICLE_REGISTRATION]
+        documentNumber:
+          type: string
+          example: "5482 9182 3019"
+        fileBase64:
+          type: string
+          description: Base64 encoded document image or PDF
+
+    KycDocumentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        documentType:
+          type: string
+        maskedNumber:
+          type: string
+          example: "XXXX-XXXX-3019"
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED]
+        vaultDocumentId:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+
+    KycStatusResponse:
+      type: object
+      properties:
+        overallStatus:
+          type: string
+          enum: [NOT_SUBMITTED, PENDING, APPROVED, REJECTED]
+        isEligibleToDrive:
+          type: boolean
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/KycDocumentDto'
+
+    FatigueStatusResponse:
+      type: object
+      properties:
+        drivingHoursToday:
+          type: number
+          example: 4.8
+        maxDailyDrivingHours:
+          type: number
+          example: 8.0
+        remainingHoursAllowed:
+          type: number
+          example: 3.2
+        isRestBreakRecommended:
+          type: boolean
+          example: false
+        lastRestTime:
+          type: string
+          format: date-time
+
+    DriverEarningsResponse:
+      type: object
+      properties:
+        todayEarnings:
+          type: number
+          example: 2850.0
+        weeklyEarnings:
+          type: number
+          example: 16400.0
+        monthlyEarnings:
+          type: number
+          example: 68200.0
+        todayCompletedTrips:
+          type: integer
+          example: 6
+        scheduledTripsCompleted:
+          type: integer
+          example: 2
+        incentivesEarned:
+          type: number
+          example: 450.0
+
+    ProcessPaymentRequest:
+      type: object
+      required: [bookingId, paymentMethod, amount]
+      properties:
+        bookingId:
+          type: string
+          format: uuid
+        paymentMethod:
+          type: string
+          enum: [UPI, CARD, WALLET, CASH]
+        amount:
+          type: number
+        upiId:
+          type: string
+          example: "rider@okhdfcbank"
+
+    PaymentReceiptDto:
+      type: object
+      properties:
+        receiptNumber:
+          type: string
+          example: "RCP-20260911-8921"
+        bookingId:
+          type: string
+          format: uuid
+        baseFare:
+          type: number
+        distanceFare:
+          type: number
+        advanceReservationFee:
+          type: number
+        taxes:
+          type: number
+        totalAmount:
+          type: number
+        paymentMethod:
+          type: string
+        paidAt:
+          type: string
+          format: date-time
+
+    ChauffeurPackageDto:
+      type: object
+      properties:
+        packageId:
+          type: string
+          example: "HOURLY_4H"
+        packageName:
+          type: string
+          example: "4 Hours Half-Day Chauffeur"
+        hoursIncluded:
+          type: integer
+          example: 4
+        baseFare:
+          type: number
+          example: 549.0
+        overtimeRatePerHour:
+          type: number
+          example: 99.0
+        description:
+          type: string
+          example: "Shopping, dining, and multi-stop city errands"
+
+    GigOfferDto:
+      type: object
+      properties:
+        gigId:
+          type: string
+          example: "GIG-101"
+        gigType:
+          type: string
+          enum: [HOURLY_CHAUFFEUR, EVENT_CHAUFFEUR, OUTSTATION_MULTI_DAY, AIRPORT_CAB]
+        title:
+          type: string
+          example: "4-Hour Local Chauffeur"
+        carModel:
+          type: string
+          example: "Customer's Honda City (Automatic AT)"
+        scheduledTime:
+          type: string
+          format: date-time
+        pickupAddress:
+          type: string
+        fareAmount:
+          type: number
+          example: 549.0
+        isClaimed:
+          type: boolean
+

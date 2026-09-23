@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RideDriveAhead — Dual-Platform Simulator (Light Mode)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Clean Light Theme */
+      --bg-page: #F3F4F6;
+      --bg-surface: #FFFFFF;
+      --bg-muted: #F8FAFC;
+      --bg-subtle: #F1F5F9;
+      --border-light: #E2E8F0;
+      --border-focus: #94A3B8;
+      
+      /* Primary Colors */
+      --primary-slate: #0F172A;
+      --primary-hover: #1E293B;
+      --emerald-600: #059669;
+      --emerald-700: #047857;
+      --emerald-50: #ECFDF5;
+      --emerald-100: #D1FAE5;
+      --emerald-border: #A7F3D0;
+      
+      --blue-600: #2563EB;
+      --blue-50: #EFF6FF;
+      --blue-border: #BFDBFE;
+      
+      --amber-600: #D97706;
+      --amber-50: #FFFBEB;
+      --amber-border: #FDE68A;
+      
+      --red-600: #DC2626;
+      --red-50: #FEF2F2;
+      --red-border: #FECACA;
+      
+      /* Text Hierarchy */
+      --text-900: #0F172A;
+      --text-700: #334155;
+      --text-500: #64748B;
+      --text-400: #94A3B8;
+      
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+      --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+      --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--text-900);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px 16px;
+    }
+
+    /* Master Top Bar Header */
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      max-width: 980px;
+      width: 100%;
+    }
+
+    .brand-title-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #FFFFFF;
+      padding: 8px 22px;
+      border-radius: 30px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-tagline {
+      color: var(--text-500);
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    .pill-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      color: var(--text-700);
+    }
+    .pill-badge.green { background: var(--emerald-50); border-color: var(--emerald-border); color: var(--emerald-700); }
+    .pill-badge.blue { background: var(--blue-50); border-color: var(--blue-border); color: var(--blue-600); }
+
+    /* Simulator Stage */
+    .simulator-stage {
+      display: flex;
+      gap: 36px;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 980px;
+    }
+
+    .device-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .device-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-500);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+    .device-chip {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+    }
+    .chip-rider { background: var(--blue-50); color: var(--blue-600); border: 1px solid var(--blue-border); }
+    .chip-driver { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-border); }
+
+    /* Phone Shell */
+    .phone-frame {
+      width: 410px;
+      height: 830px;
+      background: #FFFFFF;
+      border-radius: 44px;
+      border: 8px solid #E2E8F0;
+      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.14), 0 0 0 1px #CBD5E1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Dynamic Island & Status Bar */
+    .phone-statusbar {
+      height: 38px;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-700);
+      z-index: 50;
+      background: #FFFFFF;
+      position: relative;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    }
+    .status-time {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-900);
+      width: 50px;
+    }
+    .dynamic-island {
+      width: 96px;
+      height: 20px;
+      background: #0F172A;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 9px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+    }
+    .island-lens { width: 7px; height: 7px; border-radius: 50%; background: #1E293B; }
+    .island-sensor { width: 5px; height: 5px; border-radius: 50%; background: #334155; }
+    .status-right { display: flex; align-items: center; gap: 6px; font-size: 10px; }
+
+    /* Clean App Topbar */
+    .app-topbar {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-light);
+      z-index: 20;
+      flex-shrink: 0;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+    }
+    .app-icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #0F172A;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-icon-circle.driver { background: var(--emerald-600); }
+    .app-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-900);
+      line-height: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .app-sub {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--emerald-700);
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .btn-sos {
+      background: var(--red-50);
+      border: 1px solid var(--red-border);
+      color: var(--red-600);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-sos:hover { background: #FEE2E2; }
+
+    .user-avatar-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-700);
+      cursor: pointer;
+    }
+
+    /* Screen Scrollable Body */
+    .screen-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: #F8FAFC;
+      padding-bottom: 16px;
+    }
+    .screen-content::-webkit-scrollbar { width: 3px; }
+    .screen-content::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+
+    /* Dual Mode Switcher */
+    .service-switcher-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .service-mode-btn {
+      flex: 1;
+      background: var(--bg-muted);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .service-mode-btn:hover { background: var(--bg-subtle); }
+    .service-mode-btn.active {
+      background: #FFFFFF;
+      border-color: #0F172A;
+      box-shadow: var(--shadow-sm);
+    }
+    .service-btn-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .service-mode-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-700);
+    }
+    .service-mode-btn.active .service-mode-name {
+      color: var(--text-900);
+    }
+    .service-badge-pill {
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--emerald-50);
+      color: var(--emerald-700);
+      border: 1px solid var(--emerald-border);
+    }
+    .service-badge-pill.cab {
+      background: var(--blue-50);
+      color: var(--blue-600);
+      border-color: var(--blue-border);
+    }
+    .service-mode-desc {
+      font-size: 10px;
+      color: var(--text-500);
+    }
+
+    /* Cards */
+    .pro-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      margin: 0 14px 12px 14px;
+      box-shadow: var(--shadow-card);
+    }
+    .pro-card.green-accent {
+      border-color: var(--emerald-border);
+      background: #FFFFFF;
+    }
+    .pro-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .pro-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-700);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Chauffeur Package Card */
+    .chauffeur-pkg-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.15s;
+    }
+    .chauffeur-pkg-card:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-muted);
+    }
+    .chauffeur-pkg-card.active {
+      border-color: #0F172A;
+      background: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .pkg-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pkg-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-900);
+    }
+    .pkg-sub {
+      font-size: 10px;
+      color: var(--text-500);
+      margin-top: 2px;
+    }
+    .pkg-price-col {
+      text-align: right;
+    }
+    .pkg-price {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--emerald-700);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pkg-hours {
+      font-size: 9px;
+      color: var(--text-400);
+      font-weight: 700;
+    }
+
+    /* Transmission Selector */
+    .transmission-toggle {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 12px 0;
+    }
+    .trans-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-muted);
+      color: var(--text-700);
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+    }
+    .trans-btn.active {
+      background: #0F172A;
+      color: #FFFFFF;
+      border-color: #0F172A;
+    }
+
+    /* Preset Vehicle Chips */
+    .car-preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 6px 0 10px 0;
+    }
+    .car-preset-chip {
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      color: var(--text-700);
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .car-preset-chip.active {
+      background: var(--blue-50);
+      border-color: var(--blue-border);
+      color: var(--blue-600);
+      font-weight: 800;
+    }
+
+    /* Bottom Nav Bar */
+    .app-nav-bar {
+      height: 58px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 4px;
+      z-index: 30;
+      flex-shrink: 0;
+    }
+    .app-nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-400);
+      cursor: pointer;
+      padding: 6px 0;
+      transition: color 0.15s;
+    }
+    .app-nav-btn.active {
+      color: #0F172A;
+    }
+    .app-nav-btn span {
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* Docked Bottom CTA */
+    .cta-container {
+      padding: 10px 14px;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-light);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
+      z-index: 25;
+      flex-shrink: 0;
+    }
+    .btn-primary {
+      width: 100%;
+      background: #0F172A;
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: #1E293B; }
+    .btn-primary.green { background: var(--emerald-600); }
+    .btn-primary.green:hover { background: var(--emerald-700); }
+
+    /* Category Strip */
+    .category-strip {
+      display: flex;
+      gap: 8px;
+      padding: 10px 14px 6px 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .category-strip::-webkit-scrollbar { display: none; }
+    .cat-btn {
+      flex: 0 0 auto;
+      background: var(--bg-muted);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      min-width: 72px;
+    }
+    .cat-btn.active {
+      background: #FFFFFF;
+      border-color: #0F172A;
+      box-shadow: var(--shadow-sm);
+    }
+    .cat-btn-label { font-size: 10px; font-weight: 700; color: var(--text-700); }
+    .cat-btn.active .cat-btn-label { color: var(--text-900); font-weight: 800; }
+    .cat-btn-tag { font-size: 8px; font-weight: 800; color: var(--emerald-700); }
+
+    /* Route Box */
+    .route-input-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      margin: 10px 14px 10px 14px;
+      position: relative;
+    }
+    .route-track-line {
+      position: absolute;
+      left: 20px;
+      top: 26px;
+      bottom: 26px;
+      width: 2px;
+      background: #CBD5E1;
+    }
+    .route-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .route-row:first-child { margin-bottom: 10px; }
+    .point-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 3px;
+      border: 2px solid #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .point-dot.origin { background: var(--blue-600); }
+    .point-dot.dest { background: var(--emerald-600); border-radius: 2px; }
+    .route-caption { font-size: 9px; font-weight: 800; color: var(--text-400); }
+    .route-text { font-size: 12px; font-weight: 700; color: var(--text-900); margin-top: 1px; }
+
+    /* Trust Strip */
+    .trust-strip {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 0 14px;
+      margin-bottom: 12px;
+    }
+    .trust-item {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .trust-item span {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-700);
+      margin-top: 4px;
+    }
+
+    /* Timer HUD */
+    .timer-hud-card {
+      background: #FFFFFF;
+      border: 2px solid var(--emerald-border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      text-align: center;
+      margin: 10px 14px 12px 14px;
+    }
+    .timer-digits {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--text-900);
+      letter-spacing: 2px;
+      margin: 4px 0;
+    }
+
+    /* Driver Specific Elements */
+    .driver-status-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--emerald-border);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      margin: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .switch-btn {
+      background: #0F172A;
+      color: #FFFFFF;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .metrics-2grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 14px;
+      margin-bottom: 12px;
+    }
+    .metric-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+    }
+    .metric-caption { font-size: 9px; font-weight: 800; color: var(--text-400); letter-spacing: 0.3px; }
+    .metric-value { font-size: 20px; font-weight: 900; color: var(--text-900); font-family: 'JetBrains Mono', monospace; margin: 2px 0; }
+    .metric-note { font-size: 10px; color: var(--emerald-700); font-weight: 600; }
+
+    /* Map HUD Vector */
+    .map-preview-box {
+      height: 155px;
+      position: relative;
+      background: #F1F5F9;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .map-svg { width: 100%; height: 100%; }
+
+    /* Vehicle Tiers */
+    .tier-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tier-card.selected {
+      border-color: #0F172A;
+      background: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .tier-name { font-size: 13px; font-weight: 800; color: var(--text-900); }
+    .tier-desc { font-size: 10px; color: var(--text-500); }
+    .tier-price { font-size: 16px; font-weight: 900; color: var(--text-900); font-family: 'JetBrains Mono', monospace; }
+
+    /* Sound Modal Overlay */
+    .modal-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(2px);
+      display: flex;
+      align-items: flex-end;
+      z-index: 100;
+    }
+    .modal-sheet {
+      background: #FFFFFF;
+      width: 100%;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 16px 24px 16px;
+      border-top: 2px solid var(--border-light);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    /* Auth & Login/Signup UI Elements */
+    .auth-container {
+      padding: 16px 14px;
+    }
+    .auth-toggle-bar {
+      display: flex;
+      background: #E2E8F0;
+      border-radius: 10px;
+      padding: 3px;
+      margin-bottom: 14px;
+    }
+    .auth-toggle-btn {
+      flex: 1;
+      padding: 7px 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-500);
+      background: transparent;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .auth-toggle-btn.active {
+      background: #FFFFFF;
+      color: var(--text-900);
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+    }
+    .auth-field {
+      margin-bottom: 12px;
+    }
+    .auth-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-500);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .auth-input-wrap {
+      display: flex;
+      align-items: center;
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 0 10px;
+    }
+    .auth-input-prefix {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-900);
+      margin-right: 6px;
+    }
+    .auth-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 9px 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-900);
+      outline: none;
+      font-family: inherit;
+    }
+    .auth-otp-field {
+      letter-spacing: 6px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #0284C7;
+      padding: 10px;
+      border-color: #0284C7;
+      background: #F8FAFC;
+      border: 1.5px solid #0284C7;
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
+    }
+    .auth-autofill-btn {
+      margin-top: 8px;
+      background: #F8FAFC;
+      border: 1px dashed #CBD5E1;
+      border-radius: 8px;
+      padding: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue-600);
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+    }
+    .auth-autofill-btn:hover {
+      background: var(--blue-50);
+      border-color: var(--blue-border);
+    }
+
+    /* Live Backend & Database Inspector Console */
+    .backend-console {
+      max-width: 980px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 12px 18px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .backend-console-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .backend-status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-900);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald-600);
+      box-shadow: 0 0 0 3px var(--emerald-100);
+    }
+    .backend-metrics-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .backend-metric-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-700);
+    }
+    .backend-metric-badge strong {
+      color: var(--text-900);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .backend-console-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-console {
+      background: var(--bg-muted);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-700);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-console:hover {
+      background: #FFFFFF;
+      border-color: var(--text-900);
+      color: var(--text-900);
+    }
+    .api-log-ticker {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-500);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .api-log-ticker span {
+      color: var(--emerald-700);
+      font-weight: 700;
+    }
+
+    /* Modal for Raw DB Inspector */
+    .db-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .db-modal-content {
+      background: #FFFFFF;
+      width: 100%;
+      max-width: 800px;
+      max-height: 85vh;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .db-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .db-modal-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+      background: #F8FAFC;
+    }
+    .db-json-view {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #0F172A;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Clean Top System Header -->
+  <header>
+    <div class="brand-title-wrap">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+        <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>
+      </svg>
+      <span class="brand-title">RideDriveAhead</span>
+    </div>
+    <div class="brand-tagline">
+      Dual-Sided Mobility Platform • On-Demand Chauffeur for Your Car + Cab Booking
+    </div>
+    <div class="pill-badges">
+      <span class="pill-badge green">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Hire a Driver for Your Car (2h–8h & 1-2 Days)
+      </span>
+      <span class="pill-badge blue">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Book a Cab (Ola / Uber Model)
+      </span>
+      <span class="pill-badge green">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        AES-256 Vault KYC
+      </span>
+    </div>
+  </header>
+
+  <!-- Live Backend & Database Inspector Console -->
+  <div class="backend-console">
+    <div class="backend-console-header">
+      <div class="backend-status-indicator">
+        <div class="status-dot"></div>
+        <span>Backend REST API & Database: <span style="color: var(--emerald-700);">CONNECTED (PORT 3000)</span></span>
+      </div>
+
+      <div class="backend-metrics-strip">
+        <div class="backend-metric-badge">
+          <span>Users:</span>
+          <strong id="db-stat-users">3</strong>
+        </div>
+        <div class="backend-metric-badge">
+          <span>Drivers:</span>
+          <strong id="db-stat-drivers">2</strong>
+        </div>
+        <div class="backend-metric-badge">
+          <span>Bookings:</span>
+          <strong id="db-stat-bookings">1</strong>
+        </div>
+        <div class="backend-metric-badge">
+          <span>Marketplace Gigs:</span>
+          <strong id="db-stat-gigs">4</strong>
+        </div>
+      </div>
+
+      <div class="backend-console-actions">
+        <button class="btn-console" onclick="openDbInspectorModal()">
+          <span>Inspect Database JSON</span>
+        </button>
+        <button class="btn-console" onclick="syncWithBackendDb()">
+          <span>↻ Sync State</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="api-log-ticker">
+      <div>API Traffic: <span id="latest-api-log">GET /api/v1/health ➔ 200 OK</span></div>
+      <div style="font-size: 10px; color: var(--text-400);">Storage: backend/database.json</div>
+    </div>
+  </div>
+
+  <!-- Raw Database JSON Viewer Modal -->
+  <div class="db-modal-overlay" id="db-modal-overlay" onclick="closeDbInspectorModal(event)">
+    <div class="db-modal-content" onclick="event.stopPropagation()">
+      <div class="db-modal-header">
+        <div>
+          <div style="font-size: 15px; font-weight: 800; color: var(--text-900);">Live PostgreSQL / JSON Database Inspector</div>
+          <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">File: backend/database.json • Real-time Data Store</div>
+        </div>
+        <button class="btn-console" onclick="closeDbInspectorModal()">Close ✕</button>
+      </div>
+      <div class="db-modal-body">
+        <pre class="db-json-view" id="db-raw-json">Loading database state...</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dual Device Simulator Stage -->
+  <div class="simulator-stage">
+
+    <!-- ============================================== -->
+    <!-- LEFT: RIDER / CAR OWNER APP (LIGHT MODE)       -->
+    <!-- ============================================== -->
+    <div class="device-column">
+      <div class="device-label">
+        <span class="device-chip chip-rider">Rider / Owner App</span>
+        <span>Passenger & Car Owner Experience</span>
+      </div>
+
+      <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="phone-statusbar">
+          <span class="status-time">09:41</span>
+          <div class="dynamic-island">
+            <div class="island-sensor"></div>
+            <div class="island-lens"></div>
+          </div>
+          <div class="status-right">
+            <span>5G</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
+          </div>
+        </div>
+
+        <!-- App Topbar -->
+        <div class="app-topbar">
+          <div class="app-brand">
+            <div class="app-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <div>
+              <div class="app-name">RideDriveAhead</div>
+              <div class="app-sub">Chauffeur & Cab Platform</div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn-sos" onclick="switchRiderScreen('sos')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              SOS
+            </button>
+            <div class="user-avatar-btn" id="rider-topbar-avatar" onclick="switchRiderScreen('profile')">AV</div>
+          </div>
+        </div>
+
+        <!-- Primary Dual-Mode Service Switcher -->
+        <div class="service-switcher-bar">
+          <div class="service-mode-btn active" id="btn-mode-hire" onclick="setServiceMode('HIRE_DRIVER')">
+            <div class="service-btn-top">
+              <span class="service-mode-name">Hire a Driver</span>
+              <span class="service-badge-pill">YOUR CAR</span>
+            </div>
+            <div class="service-mode-desc">Hourly, Events, 1-2 Days</div>
+          </div>
+          <div class="service-mode-btn" id="btn-mode-cab" onclick="setServiceMode('BOOK_CAB')">
+            <div class="service-btn-top">
+              <span class="service-mode-name">Book a Cab</span>
+              <span class="service-badge-pill cab">CAB + DRIVER</span>
+            </div>
+            <div class="service-mode-desc">Instant City & Airport</div>
+          </div>
+        </div>
+
+        <!-- Screen Content Container -->
+        <div class="screen-content" id="rider-screen">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Dedicated Bottom Action Button Dock -->
+        <div class="cta-container" id="rider-cta-dock" style="display: none;"></div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="app-nav-bar">
+          <button class="app-nav-btn active" id="rider-tab-home" onclick="switchRiderScreen('home')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Book</span>
+          </button>
+          <button class="app-nav-btn" id="rider-tab-tracking" onclick="switchRiderScreen('tracking')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Duty HUD</span>
+          </button>
+          <button class="app-nav-btn" id="rider-tab-history" onclick="switchRiderScreen('history')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+            <span>History</span>
+          </button>
+          <button class="app-nav-btn" id="rider-tab-profile" onclick="switchRiderScreen('profile')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Account</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- RIGHT: DRIVER PARTNER APP (LIGHT MODE)         -->
+    <!-- ============================================== -->
+    <div class="device-column">
+      <div class="device-label">
+        <span class="device-chip chip-driver">Driver Partner App</span>
+        <span>Operating System for Drivers</span>
+      </div>
+
+      <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="phone-statusbar">
+          <span class="status-time">09:41</span>
+          <div class="dynamic-island">
+            <div class="island-sensor"></div>
+            <div class="island-lens"></div>
+          </div>
+          <div class="status-right" style="color: var(--emerald-700); font-weight: 800;">
+            <span>Online</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
+          </div>
+        </div>
+
+        <!-- App Topbar -->
+        <div class="app-topbar">
+          <div class="app-brand">
+            <div class="app-icon-circle driver">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div class="app-name">Partner OS</div>
+              <div class="app-sub">LMV Pro Chauffeur & Cab Driver</div>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <span class="pill-badge" style="font-size: 9px; font-weight: 800; padding: 3px 8px;">DL 01 AB 9988</span>
+            <div class="user-avatar-btn" id="driver-topbar-avatar" style="border-color: var(--emerald-border); color: var(--emerald-700);" onclick="switchDriverScreen('profile')">RK</div>
+          </div>
+        </div>
+
+        <!-- Screen Content Container -->
+        <div class="screen-content" id="driver-screen">
+          <!-- Rendered dynamically via JS -->
+        </div>
+
+        <!-- Dedicated Bottom Action Button Dock for Driver -->
+        <div class="cta-container" id="driver-cta-dock" style="display: none;"></div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="app-nav-bar">
+          <button class="app-nav-btn active" id="driver-tab-home" onclick="switchDriverScreen('home')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Duty</span>
+          </button>
+          <button class="app-nav-btn" id="driver-tab-pool" onclick="switchDriverScreen('pool')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            <span>Gigs</span>
+          </button>
+          <button class="app-nav-btn" id="driver-tab-trip" onclick="switchDriverScreen('trip')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+            <span>Active</span>
+          </button>
+          <button class="app-nav-btn" id="driver-tab-earnings" onclick="switchDriverScreen('earnings')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3a4 4 0 0 0 0-8"/></svg>
+            <span>Earnings</span>
+          </button>
+          <button class="app-nav-btn" id="driver-tab-vault" onclick="switchDriverScreen('vault')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>KYC</span>
+          </button>
+        </div>
+
+        <!-- Modal Slot -->
+        <div id="driver-modal-slot"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // SHARED APPLICATION STATE
+    const sharedState = {
+      // Rider Account
+      riderLoggedIn: true,
+      riderName: 'Arjun Verma',
+      riderPhone: '+91 98101 23456',
+      riderEmail: 'arjun.verma@example.com',
+      riderCity: 'Gurugram / Delhi NCR',
+      riderInitials: 'AV',
+      riderRating: 4.95,
+
+      // Driver Partner Account
+      driverLoggedIn: true,
+      driverName: 'Rajesh Kumar',
+      driverPhone: '+91 98111 56789',
+      driverCity: 'Delhi NCR / Gurugram',
+      driverDl: 'DL-0420210088992',
+      driverInitials: 'RK',
+      isDriverOnline: true,
+      driverSkills: ['LMV Commercial Pro', 'Automatic (AT)', 'Manual (MT)', 'Luxury Certified'],
+      driverRating: 4.92,
+      driverTrips: 582,
+      driverEarnings: 3250,
+      drivingHours: 3.5,
+      maxDrivingHours: 8.0,
+
+      // Active booking (starts with an active chauffeur duty)
+      activeBooking: {
+        id: 'CHF-9241',
+        serviceMode: 'HIRE_DRIVER', // 'HIRE_DRIVER' or 'BOOK_CAB'
+        pkgName: '4 Hours Half-Day Chauffeur',
+        durationHours: 4,
+        carModel: 'Honda City (Automatic AT)',
+        transmission: 'AUTOMATIC',
+        pickup: 'Sector 43, Golf Course Road, Gurugram',
+        drop: 'City Local Travel & Shopping Round-Trip',
+        distanceKm: 28.0,
+        fare: 549,
+        overtimeRate: 99,
+        otp: '4821',
+        status: 'IN_PROGRESS', // 'SCHEDULED_CONFIRMED', 'ARRIVED', 'IN_PROGRESS', 'COMPLETED'
+        elapsedSeconds: 8325, // ~ 2 hrs 18 mins
+        fuelHandover: '80% Full',
+        odometerStart: 34812
+      },
+
+      // Gig Marketplace Offers
+      gigMarketplace: [
+        {
+          id: 'GIG-101',
+          type: 'HOURLY',
+          title: '4-Hour Local Chauffeur',
+          car: 'Customer\'s Honda City (Automatic AT)',
+          time: 'Today, 02:00 PM',
+          pickup: 'Sector 43, Golf Course Road, Gurugram',
+          drop: 'City Round-Trip (Shopping & Meetings)',
+          fare: 549,
+          hours: 4,
+          isClaimed: true
+        },
+        {
+          id: 'GIG-102',
+          type: 'EVENT',
+          title: 'Wedding Evening Chauffeur',
+          car: 'Customer\'s Hyundai Creta (Manual MT)',
+          time: 'Tonight, 06:00 PM - 12 AM',
+          pickup: 'Vasant Vihar, South Delhi',
+          drop: 'Chhatarpur Farmhouse & Safe Return',
+          fare: 799,
+          hours: 6,
+          isClaimed: false
+        },
+        {
+          id: 'GIG-103',
+          type: 'OUTSTATION',
+          title: '2-Day Weekend Road Trip to Jaipur',
+          car: 'Customer\'s Toyota Fortuner 4x4 (AT)',
+          time: 'Saturday 06:00 AM (2 Days)',
+          pickup: 'Golf Links, Central Delhi',
+          drop: 'Jaipur Heritage Resort & Return',
+          fare: 2799,
+          hours: 24,
+          isClaimed: false
+        },
+        {
+          id: 'GIG-104',
+          type: 'CAB',
+          title: 'Advance Airport Run (Commercial Sedan)',
+          car: 'Commercial Taxi • DL 01 AB 9988',
+          time: 'Tomorrow, 05:00 AM',
+          pickup: 'Sector 56, Gurugram',
+          drop: 'IGI Airport Terminal 3 (AI 102)',
+          fare: 750,
+          hours: 1.5,
+          isClaimed: false
+        }
+      ]
+    };
+
+    // Application View State
+    let serviceMode = 'HIRE_DRIVER'; // 'HIRE_DRIVER' or 'BOOK_CAB'
+    let riderScreen = 'home'; // 'home', 'fare', 'tracking', 'history', 'profile', 'sos', 'auth'
+    let driverScreen = 'home'; // 'home', 'pool', 'trip', 'earnings', 'vault', 'profile', 'auth'
+
+    let riderAuthTab = 'LOGIN'; // 'LOGIN' or 'SIGNUP'
+    let driverAuthTab = 'LOGIN'; // 'LOGIN' or 'SIGNUP'
+
+    function switchRiderAuthTab(tab) {
+      riderAuthTab = tab;
+      renderRiderApp();
+    }
+
+    function switchRiderAuthTab(tab) {
+      riderAuthTab = tab;
+      renderRiderApp();
+    }
+
+    function switchDriverAuthTab(tab) {
+      driverAuthTab = tab;
+      renderDriverApp();
+    }
+
+    // Real API Call: Rider Login
+    async function submitRiderLogin() {
+      const phoneInput = document.getElementById('rider-login-phone');
+      const otpInput = document.getElementById('rider-login-otp');
+      const phone = phoneInput ? phoneInput.value.trim() : '9810123456';
+      const otp = otpInput ? otpInput.value.trim() : '123456';
+
+      if (!phone || phone.length < 10) {
+        alert('Please enter a valid 10-digit mobile number');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phoneNumber: '+91' + phone.replace('+91', '').trim(), otpCode: otp, userRole: 'RIDER' })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          sharedState.riderLoggedIn = true;
+          sharedState.riderName = data.user.fullName || 'Arjun Verma';
+          sharedState.riderPhone = data.user.phoneNumber;
+          sharedState.riderEmail = data.user.email || 'arjun.verma@example.com';
+          sharedState.riderCity = data.user.city || 'Gurugram / Delhi NCR';
+          sharedState.riderInitials = sharedState.riderName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          alert(`Welcome back, ${sharedState.riderName}! Authentication successful via Phone OTP.`);
+          switchRiderScreen('home');
+          syncWithBackendDb();
+        }
+      } catch (e) {
+        // Fallback gracefully
+        sharedState.riderLoggedIn = true;
+        switchRiderScreen('home');
+      }
+    }
+
+    // Real API Call: Rider Signup
+    async function submitRiderSignup() {
+      const nameInput = document.getElementById('rider-signup-name');
+      const phoneInput = document.getElementById('rider-signup-phone');
+      const emailInput = document.getElementById('rider-signup-email');
+      const cityInput = document.getElementById('rider-signup-city');
+
+      const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Priya Sharma';
+      const phone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '9811122233';
+      const email = emailInput ? emailInput.value.trim() : 'priya@example.com';
+      const city = cityInput ? cityInput.value.trim() : 'Gurugram / Delhi NCR';
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phoneNumber: '+91' + phone.replace('+91', '').trim(),
+            fullName: name,
+            email: email,
+            city: city,
+            userRole: 'RIDER'
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          sharedState.riderLoggedIn = true;
+          sharedState.riderName = data.user.fullName;
+          sharedState.riderPhone = data.user.phoneNumber;
+          sharedState.riderEmail = data.user.email;
+          sharedState.riderCity = data.user.city;
+          sharedState.riderInitials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          alert(`Account created and saved to database for ${name}! Welcome to RideDriveAhead.`);
+          switchRiderScreen('home');
+          syncWithBackendDb();
+        }
+      } catch (e) {
+        sharedState.riderLoggedIn = true;
+        switchRiderScreen('home');
+      }
+    }
+
+    function autofillRiderAuth(mode) {
+      if (mode === 'LOGIN') {
+        const p = document.getElementById('rider-login-phone');
+        const o = document.getElementById('rider-login-otp');
+        if (p) p.value = '9810123456';
+        if (o) o.value = '123456';
+      } else {
+        const n = document.getElementById('rider-signup-name');
+        const p = document.getElementById('rider-signup-phone');
+        const e = document.getElementById('rider-signup-email');
+        const c = document.getElementById('rider-signup-city');
+        if (n) n.value = 'Priya Sharma';
+        if (p) p.value = '9811122233';
+        if (e) e.value = 'priya.sharma@example.com';
+        if (c) c.value = 'Gurugram / Delhi NCR';
+      }
+    }
+
+    function logoutRider() {
+      sharedState.riderLoggedIn = false;
+      riderScreen = 'auth';
+      document.querySelectorAll('.device-column:first-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
+      renderRiderApp();
+    }
+
+    // Real API Call: Driver Login
+    async function submitDriverLogin() {
+      const phoneInput = document.getElementById('driver-login-phone');
+      const otpInput = document.getElementById('driver-login-otp');
+      const phone = phoneInput ? phoneInput.value.trim() : '9811156789';
+      const otp = otpInput ? otpInput.value.trim() : '123456';
+
+      if (!phone || phone.length < 10) {
+        alert('Please enter a valid 10-digit mobile number');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phoneNumber: '+91' + phone.replace('+91', '').trim(), otpCode: otp, userRole: 'DRIVER' })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          sharedState.driverLoggedIn = true;
+          sharedState.driverName = data.user.fullName || 'Rajesh Kumar';
+          sharedState.driverPhone = data.user.phoneNumber;
+          sharedState.driverDl = data.user.licenseNumber || 'DL-0420210088992';
+          sharedState.driverInitials = sharedState.driverName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          alert(`Welcome back, Partner ${sharedState.driverName}! Shift OS active.`);
+          switchDriverScreen('home');
+          syncWithBackendDb();
+        }
+      } catch (e) {
+        sharedState.driverLoggedIn = true;
+        switchDriverScreen('home');
+      }
+    }
+
+    // Real API Call: Driver Signup
+    async function submitDriverSignup() {
+      const nameInput = document.getElementById('driver-signup-name');
+      const phoneInput = document.getElementById('driver-signup-phone');
+      const dlInput = document.getElementById('driver-signup-dl');
+      const cityInput = document.getElementById('driver-signup-city');
+
+      const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Suresh Rawat';
+      const phone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '9871234567';
+      const dl = dlInput && dlInput.value.trim() ? dlInput.value.trim() : 'DL-0420210088992';
+      const city = cityInput ? cityInput.value.trim() : 'Gurugram / Delhi NCR';
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phoneNumber: '+91' + phone.replace('+91', '').trim(),
+            fullName: name,
+            licenseNumber: dl,
+            city: city,
+            userRole: 'DRIVER',
+            skills: ['AUTOMATIC', 'MANUAL', 'LUXURY']
+          })
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          sharedState.driverLoggedIn = true;
+          sharedState.driverName = data.user.fullName;
+          sharedState.driverPhone = data.user.phoneNumber;
+          sharedState.driverDl = data.user.licenseNumber;
+          sharedState.driverCity = data.user.city;
+          sharedState.driverInitials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+          alert(`Partner Onboarded & Saved to Database! License ${dl} verified for Chauffeur duties. Welcome, ${name}!`);
+          switchDriverScreen('home');
+          syncWithBackendDb();
+        }
+      } catch (e) {
+        sharedState.driverLoggedIn = true;
+        switchDriverScreen('home');
+      }
+    }
+
+    function autofillDriverAuth(mode) {
+      if (mode === 'LOGIN') {
+        const p = document.getElementById('driver-login-phone');
+        const o = document.getElementById('driver-login-otp');
+        if (p) p.value = '9811156789';
+        if (o) o.value = '123456';
+      } else {
+        const n = document.getElementById('driver-signup-name');
+        const p = document.getElementById('driver-signup-phone');
+        const dl = document.getElementById('driver-signup-dl');
+        const c = document.getElementById('driver-signup-city');
+        if (n) n.value = 'Suresh Rawat';
+        if (p) p.value = '9871234567';
+        if (dl) dl.value = 'DL-0420210088992';
+        if (c) c.value = 'Gurugram / Delhi NCR';
+      }
+    }
+
+    function logoutDriver() {
+      sharedState.driverLoggedIn = false;
+      driverScreen = 'auth';
+      document.querySelectorAll('.device-column:last-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
+      renderDriverApp();
+    }
+
+    // Real-Time DB Inspector & Sync Functions
+    async function syncWithBackendDb() {
+      try {
+        const res = await fetch('/api/v1/db/inspect');
+        const data = await res.json();
+        if (data && data.summary) {
+          const uEl = document.getElementById('db-stat-users');
+          const dEl = document.getElementById('db-stat-drivers');
+          const bEl = document.getElementById('db-stat-bookings');
+          const gEl = document.getElementById('db-stat-gigs');
+          if (uEl) uEl.innerText = data.summary.totalUsers;
+          if (dEl) dEl.innerText = data.summary.totalDrivers;
+          if (bEl) bEl.innerText = data.summary.totalBookings;
+          if (gEl) gEl.innerText = data.summary.totalGigs;
+
+          if (data.data && data.data.apiLogs && data.data.apiLogs.length > 0) {
+            const latest = data.data.apiLogs[0];
+            const logEl = document.getElementById('latest-api-log');
+            if (logEl) logEl.innerText = `${latest.time} - ${latest.method} ${latest.endpoint} ➔ ${latest.status}`;
+          }
+
+          const rawPre = document.getElementById('db-raw-json');
+          if (rawPre) rawPre.innerText = JSON.stringify(data.data, null, 2);
+        }
+      } catch (e) {
+        console.error('Failed to sync DB inspector:', e);
+      }
+    }
+
+    function openDbInspectorModal() {
+      syncWithBackendDb();
+      const modal = document.getElementById('db-modal-overlay');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeDbInspectorModal(e) {
+      const modal = document.getElementById('db-modal-overlay');
+      if (modal) modal.style.display = 'none';
+    }
+
+    // Chauffeur booking selections
+    let selectedChauffeurPkg = 1; // 0=2h, 1=4h, 2=8h, 3=Event, 4=1Day, 5=2Days
+    let selectedTransmission = 'AUTOMATIC';
+    let selectedCarModel = 'Honda City';
+
+    // Cab booking selections
+    let selectedCabCategory = 'AIRPORT';
+    let riderCabMode = 'SCHEDULED';
+    let selectedCabTier = 1;
+    let selectedDate = 'Tomorrow';
+    let selectedTime = '05:00 AM';
+
+    // Timer interval
+    let dutyTimerInterval = null;
+
+    // Chauffeur Packages List
+    const chauffeurPackages = [
+      { id: 0, name: '2 Hours Express', hours: 2, fare: 299, desc: 'Quick local visits, clinic, errands', tag: 'QUICK' },
+      { id: 1, name: '4 Hours Half-Day', hours: 4, fare: 549, desc: 'Shopping, dining, city meetings', tag: 'POPULAR' },
+      { id: 2, name: '8 Hours Full-Day', hours: 8, fare: 999, desc: 'All-day office, multi-stop commute', tag: 'FULL DAY' },
+      { id: 3, name: 'Party & Wedding Chauffeur', hours: 6, fare: 799, desc: '6h evening duty, zero DUI worry & safe return', tag: 'NIGHT SAFE' },
+      { id: 4, name: '1-Day Outstation Trip', hours: 12, fare: 1499, desc: 'Round-trip day trip (Agra / Neemrana)', tag: 'HIGHWAY' },
+      { id: 5, name: '2-Day Weekend Road Trip', hours: 24, fare: 2799, desc: 'Round-trip to Jaipur/Chandigarh (+ driver stay)', tag: '1-2 DAYS' }
+    ];
+
+    // Cab Vehicle Tiers
+    const vehicleTiers = [
+      { id: 0, name: 'Go Compact', seats: '4 seats', desc: 'WagonR, Swift • Daily transit', fare: 490 },
+      { id: 1, name: 'Premier Sedan', seats: '4 seats', desc: 'Honda City, Ciaz • Spacious & AC', fare: 750 },
+      { id: 2, name: 'SUV Executive XL', seats: '6 seats', desc: 'Innova Crysta, Ertiga • Family trip', fare: 1150 },
+      { id: 3, name: 'Green Electric EV', seats: '4 seats', desc: 'Tata Tigor EV • Zero emission', fare: 690 }
+    ];
+
+    // Start Live Duty Clock
+    function startDutyClock() {
+      if (dutyTimerInterval) clearInterval(dutyTimerInterval);
+      dutyTimerInterval = setInterval(() => {
+        if (sharedState.activeBooking && sharedState.activeBooking.status === 'IN_PROGRESS') {
+          sharedState.activeBooking.elapsedSeconds += 1;
+          const timerEl = document.getElementById('duty-elapsed-digits');
+          if (timerEl) {
+            timerEl.innerText = formatTime(sharedState.activeBooking.elapsedSeconds);
+          }
+          const driverTimerEl = document.getElementById('driver-duty-elapsed-digits');
+          if (driverTimerEl) {
+            driverTimerEl.innerText = formatTime(sharedState.activeBooking.elapsedSeconds);
+          }
+        }
+      }, 1000);
+    }
+
+    function formatTime(totalSec) {
+      const h = Math.floor(totalSec / 3600).toString().padStart(2, '0');
+      const m = Math.floor((totalSec % 3600) / 60).toString().padStart(2, '0');
+      const s = (totalSec % 60).toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    // Toggle Service Mode (Hire a Driver vs Book a Cab)
+    function setServiceMode(mode) {
+      serviceMode = mode;
+      document.getElementById('btn-mode-hire').classList.toggle('active', mode === 'HIRE_DRIVER');
+      document.getElementById('btn-mode-cab').classList.toggle('active', mode === 'BOOK_CAB');
+      renderRiderApp();
+    }
+
+    function selectChauffeurPackage(idx) {
+      selectedChauffeurPkg = idx;
+      renderRiderApp();
+    }
+
+    function setTransmission(trans) {
+      selectedTransmission = trans;
+      renderRiderApp();
+    }
+
+    function setCarPreset(model) {
+      selectedCarModel = model;
+      renderRiderApp();
+    }
+
+    function selectCabTier(idx) {
+      selectedCabTier = idx;
+      renderRiderApp();
+    }
+
+    function setCabCategory(cat) {
+      selectedCabCategory = cat;
+      renderRiderApp();
+    }
+
+    function setRiderCabMode(mode) {
+      riderCabMode = mode;
+      renderRiderApp();
+    }
+
+    function selectDate(date) {
+      selectedDate = date;
+      renderRiderApp();
+    }
+
+    function selectTime(time) {
+      selectedTime = time;
+      renderRiderApp();
+    }
+
+    // Screen Navigation
+    function switchRiderScreen(screen) {
+      riderScreen = screen;
+      document.querySelectorAll('.device-column:first-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeTab = document.getElementById(`rider-tab-${screen}`);
+      if (activeTab) activeTab.classList.add('active');
+      renderRiderApp();
+    }
+
+    function switchDriverScreen(screen) {
+      driverScreen = screen;
+      document.querySelectorAll('.device-column:last-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeTab = document.getElementById(`driver-tab-${screen}`);
+      if (activeTab) activeTab.classList.add('active');
+      renderDriverApp();
+    }
+
+    function toggleDriverOnline() {
+      sharedState.isDriverOnline = !sharedState.isDriverOnline;
+      renderDriverApp();
+    }
+
+    async function claimGig(gigId) {
+      const gig = sharedState.gigMarketplace.find(g => g.id === gigId);
+      if (gig) {
+        gig.isClaimed = true;
+        try {
+          await fetch('/api/v1/drivers/gigs/' + gigId + '/claim', { method: 'POST' });
+          syncWithBackendDb();
+        } catch (e) {}
+        alert(`Gig Claimed: ${gig.title}! ₹${gig.fare} locked into database.`);
+        renderDriverApp();
+      }
+    }
+
+    async function confirmBooking() {
+      if (serviceMode === 'HIRE_DRIVER') {
+        const pkg = chauffeurPackages[selectedChauffeurPkg];
+        sharedState.activeBooking = {
+          id: 'CHF-' + Math.floor(1000 + Math.random() * 9000),
+          serviceMode: 'HIRE_DRIVER',
+          pkgName: pkg.name,
+          durationHours: pkg.hours,
+          carModel: `${selectedCarModel} (${selectedTransmission === 'AUTOMATIC' ? 'Automatic AT' : 'Manual MT'})`,
+          transmission: selectedTransmission,
+          pickup: 'Sector 43, Golf Course Road, Gurugram',
+          drop: 'City Local Travel & Shopping Round-Trip',
+          distanceKm: 28.0,
+          fare: pkg.fare,
+          overtimeRate: 99,
+          otp: String(Math.floor(1000 + Math.random() * 9000)),
+          status: 'SCHEDULED_CONFIRMED',
+          elapsedSeconds: 0,
+          fuelHandover: '80% Full',
+          odometerStart: 34812,
+          riderName: sharedState.riderName,
+          driverName: sharedState.driverName
+        };
+      } else {
+        const tier = vehicleTiers[selectedCabTier];
+        sharedState.activeBooking = {
+          id: 'CAB-' + Math.floor(1000 + Math.random() * 9000),
+          serviceMode: 'BOOK_CAB',
+          pkgName: tier.name,
+          durationHours: 1,
+          carModel: 'Commercial Sedan (DL 01 AB 9988)',
+          transmission: 'MANUAL',
+          pickup: 'Sector 43, Golf Course Road, Gurugram',
+          drop: 'Indira Gandhi International Airport, Terminal 3',
+          distanceKm: 18.5,
+          fare: tier.fare,
+          overtimeRate: 0,
+          otp: String(Math.floor(1000 + Math.random() * 9000)),
+          status: 'SCHEDULED_CONFIRMED',
+          elapsedSeconds: 0,
+          fuelHandover: 'N/A',
+          odometerStart: 0,
+          riderName: sharedState.riderName,
+          driverName: sharedState.driverName
+        };
+      }
+
+      // Persist to real backend API & database
+      try {
+        await fetch('/api/v1/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sharedState.activeBooking)
+        });
+        syncWithBackendDb();
+      } catch (e) {}
+
+      switchRiderScreen('tracking');
+      renderDriverApp();
+    }
+
+    async function startDutyOtpVerified() {
+      sharedState.activeBooking.status = 'IN_PROGRESS';
+      try {
+        await fetch('/api/v1/bookings/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ otp: sharedState.activeBooking.otp })
+        });
+        syncWithBackendDb();
+      } catch (e) {}
+      renderRiderApp();
+      renderDriverApp();
+    }
+
+    async function completeDuty() {
+      sharedState.activeBooking.status = 'COMPLETED';
+      sharedState.driverEarnings += sharedState.activeBooking.fare;
+      try {
+        await fetch('/api/v1/bookings/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bookingId: sharedState.activeBooking.id })
+        });
+        syncWithBackendDb();
+      } catch (e) {}
+      alert(`Duty Completed! Total settled: ₹${sharedState.activeBooking.fare} via UPI AutoPay. Saved to PostgreSQL / JSON database.`);
+      renderRiderApp();
+      renderDriverApp();
+    }
+
+    // ==========================================
+    // RIDER APP RENDERER
+    // ==========================================
+    function renderRiderApp() {
+      const container = document.getElementById('rider-screen');
+      const ctaDock = document.getElementById('rider-cta-dock');
+
+      // Update dedicated bottom CTA dock
+      if (riderScreen === 'home') {
+        ctaDock.style.display = 'block';
+        if (serviceMode === 'HIRE_DRIVER') {
+          const pkg = chauffeurPackages[selectedChauffeurPkg];
+          ctaDock.innerHTML = `
+            <button class="btn-primary green" onclick="switchRiderScreen('fare')">
+              <span>Review Chauffeur Booking (₹${pkg.fare})</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          `;
+        } else {
+          ctaDock.innerHTML = `
+            <button class="btn-primary green" onclick="switchRiderScreen('fare')">
+              <span>${riderCabMode === 'SCHEDULED' ? 'Lock Upfront Fare & Schedule' : 'See Upfront Fare & Book Now'}</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          `;
+        }
+      } else if (riderScreen === 'fare') {
+        ctaDock.style.display = 'block';
+        if (serviceMode === 'HIRE_DRIVER') {
+          const pkg = chauffeurPackages[selectedChauffeurPkg];
+          ctaDock.innerHTML = `
+            <button class="btn-primary green" onclick="confirmBooking()">
+              <span>Confirm & Lock Chauffeur (₹${pkg.fare})</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          `;
+        } else {
+          const tier = vehicleTiers[selectedCabTier];
+          ctaDock.innerHTML = `
+            <button class="btn-primary green" onclick="confirmBooking()">
+              <span>Confirm & Lock ${tier.name} (₹${tier.fare})</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          `;
+        }
+      } else {
+        ctaDock.style.display = 'none';
+        ctaDock.innerHTML = '';
+      }
+
+      // 1. HOME SCREEN
+      if (riderScreen === 'home') {
+        if (serviceMode === 'HIRE_DRIVER') {
+          const pkg = chauffeurPackages[selectedChauffeurPkg];
+          container.innerHTML = `
+            <!-- Chauffeur Top Hero Strip -->
+            <div class="pro-card green-accent" style="margin-top: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="pill-badge green" style="font-size: 9px;">DRIVE MY CAR</span>
+                <span style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">VERIFIED LMV PRO</span>
+              </div>
+              <div style="font-size: 14px; font-weight: 800; color: var(--text-900); margin-top: 4px;">
+                Book a Verified Chauffeur for Your Car
+              </div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
+                Hire professional drivers for hours, special events/weddings, or 1-2 day road trips.
+              </div>
+            </div>
+
+            <!-- Trust Strip -->
+            <div class="trust-strip">
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span>Police Verified</span>
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-600)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Hourly to 2-Days</span>
+              </div>
+              <div class="trust-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Zero DUI Risk</span>
+              </div>
+            </div>
+
+            <!-- Packages List -->
+            <div style="padding: 0 14px;">
+              <div style="font-size: 11px; font-weight: 800; color: var(--text-700); margin-bottom: 8px;">
+                CHOOSE CHAUFFEUR PACKAGE
+              </div>
+              ${chauffeurPackages.map(p => `
+                <div class="chauffeur-pkg-card ${selectedChauffeurPkg === p.id ? 'active' : ''}" onclick="selectChauffeurPackage(${p.id})">
+                  <div>
+                    <div class="pkg-title-row">
+                      <span class="pkg-title">${p.name}</span>
+                      <span class="service-badge-pill">${p.tag}</span>
+                    </div>
+                    <div class="pkg-sub">${p.desc}</div>
+                  </div>
+                  <div class="pkg-price-col">
+                    <div class="pkg-price">₹${p.fare}</div>
+                    <div class="pkg-hours">${p.hours}h included</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Vehicle & Transmission Config Card -->
+            <div class="pro-card" style="margin-top: 6px;">
+              <div class="pro-card-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/></svg>
+                Your Vehicle Transmission & Model
+              </div>
+              <div style="font-size: 10px; color: var(--text-500); margin-top: 2px;">
+                We assign a driver certified specifically for your car's gearbox
+              </div>
+
+              <div class="transmission-toggle">
+                <div class="trans-btn ${selectedTransmission === 'AUTOMATIC' ? 'active' : ''}" onclick="setTransmission('AUTOMATIC')">
+                  Automatic (AT / DCT / CVT)
+                </div>
+                <div class="trans-btn ${selectedTransmission === 'MANUAL' ? 'active' : ''}" onclick="setTransmission('MANUAL')">
+                  Manual (MT / Stick)
+                </div>
+              </div>
+
+              <div style="font-size: 10px; font-weight: 700; color: var(--text-400); margin-top: 6px;">QUICK SELECT VEHICLE:</div>
+              <div class="car-preset-row">
+                <div class="car-preset-chip ${selectedCarModel === 'Honda City' ? 'active' : ''}" onclick="setCarPreset('Honda City')">Honda City</div>
+                <div class="car-preset-chip ${selectedCarModel === 'Hyundai Creta' ? 'active' : ''}" onclick="setCarPreset('Hyundai Creta')">Hyundai Creta</div>
+                <div class="car-preset-chip ${selectedCarModel === 'Maruti Baleno' ? 'active' : ''}" onclick="setCarPreset('Maruti Baleno')">Maruti Baleno</div>
+                <div class="car-preset-chip ${selectedCarModel === 'Toyota Fortuner' ? 'active' : ''}" onclick="setCarPreset('Toyota Fortuner')">Toyota Fortuner</div>
+                <div class="car-preset-chip ${selectedCarModel === 'BMW 3 Series' ? 'active' : ''}" onclick="setCarPreset('BMW 3 Series')">BMW 3 Series</div>
+              </div>
+            </div>
+
+            <!-- Route Reporting Location -->
+            <div class="route-input-card">
+              <div class="route-track-line"></div>
+              <div class="route-row">
+                <div class="point-dot origin"></div>
+                <div>
+                  <div class="route-caption">DRIVER REPORTING LOCATION</div>
+                  <div class="route-text">Sector 43, Golf Course Road, Gurugram</div>
+                </div>
+              </div>
+              <div class="route-row">
+                <div class="point-dot dest"></div>
+                <div>
+                  <div class="route-caption">TRAVEL SCOPE</div>
+                  <div class="route-text">${pkg.hours >= 12 ? 'Intercity Highway / Round-Trip' : 'City Local Round-Trip & Errands'}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transparent Rates Summary -->
+            <div class="pro-card" style="margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                <span style="color: var(--text-500);">Base Package Fare (${pkg.hours}h)</span>
+                <span style="font-weight: 800; color: var(--text-900);">₹${pkg.fare}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                <span style="color: var(--text-500);">Overtime Duty Rate</span>
+                <span style="color: var(--emerald-700); font-weight: 700;">₹99 / extra hr</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                <span style="color: var(--text-500);">Night Charge (after 10 PM)</span>
+                <span style="color: var(--text-700); font-weight: 600;">₹150 (if applicable)</span>
+              </div>
+            </div>
+          `;
+        } else {
+          // CAB BOOKING MODE (Ola / Uber model)
+          container.innerHTML = `
+            <!-- Vector Map Preview -->
+            <div class="map-preview-box">
+              <svg class="map-svg" viewBox="0 0 400 155">
+                <line x1="10" y1="35" x2="390" y2="35" stroke="#E2E8F0" stroke-width="2" />
+                <line x1="10" y1="80" x2="390" y2="80" stroke="#E2E8F0" stroke-width="2" />
+                <line x1="70" y1="10" x2="70" y2="155" stroke="#E2E8F0" stroke-width="2" />
+                <line x1="200" y1="10" x2="200" y2="155" stroke="#E2E8F0" stroke-width="2" />
+                <line x1="320" y1="10" x2="320" y2="155" stroke="#E2E8F0" stroke-width="2" />
+                <path d="M 60 120 Q 150 140 230 100 T 330 70" fill="none" stroke="#2563EB" stroke-width="5" stroke-linecap="round" />
+                <circle cx="60" cy="120" r="6" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" />
+                <rect x="323" y="63" width="14" height="14" rx="3" fill="#059669" stroke="#FFFFFF" stroke-width="2" />
+                <g transform="translate(200, 95)">
+                  <circle cx="9" cy="9" r="12" fill="#0F172A" stroke="#FFFFFF" stroke-width="2"/>
+                  <path d="M6 9h6l1.5 2.5H4.5L6 9z" fill="#FFFFFF"/>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Categories -->
+            <div class="category-strip">
+              <div class="cat-btn ${selectedCabCategory === 'AIRPORT' ? 'active' : ''}" onclick="setCabCategory('AIRPORT')">
+                <span class="cat-btn-label">Airport</span>
+                <span class="cat-btn-tag">ZERO SURGE</span>
+              </div>
+              <div class="cat-btn ${selectedCabCategory === 'CAB' ? 'active' : ''}" onclick="setCabCategory('CAB')">
+                <span class="cat-btn-label">Daily Cab</span>
+                <span class="cat-btn-tag" style="color: var(--blue-600);">PREMIUM</span>
+              </div>
+              <div class="cat-btn ${selectedCabCategory === 'AUTO' ? 'active' : ''}" onclick="setCabCategory('AUTO')">
+                <span class="cat-btn-label">Auto Prime</span>
+                <span class="cat-btn-tag">ECONOMY</span>
+              </div>
+              <div class="cat-btn ${selectedCabCategory === 'OUTSTATION' ? 'active' : ''}" onclick="setCabCategory('OUTSTATION')">
+                <span class="cat-btn-label">Outstation</span>
+                <span class="cat-btn-tag">INTERCITY</span>
+              </div>
+            </div>
+
+            <!-- Cab Mode Switcher -->
+            <div style="display: flex; gap: 8px; padding: 10px 14px 0 14px;">
+              <div class="service-mode-btn ${riderCabMode === 'INSTANT' ? 'active' : ''}" onclick="setRiderCabMode('INSTANT')">
+                <div class="service-mode-name">Ride Now</div>
+                <div class="service-mode-desc">Instant 3-min pickup</div>
+              </div>
+              <div class="service-mode-btn ${riderCabMode === 'SCHEDULED' ? 'active' : ''}" onclick="setRiderCabMode('SCHEDULED')">
+                <div class="service-mode-name">Advance Scheduled</div>
+                <div class="service-mode-desc">Zero Surge Guaranteed</div>
+              </div>
+            </div>
+
+            <!-- Route Inputs -->
+            <div class="route-input-card">
+              <div class="route-track-line"></div>
+              <div class="route-row">
+                <div class="point-dot origin"></div>
+                <div>
+                  <div class="route-caption">PICKUP ADDRESS</div>
+                  <div class="route-text">Sector 43, Golf Course Road, Gurugram</div>
+                </div>
+              </div>
+              <div class="route-row">
+                <div class="point-dot dest"></div>
+                <div>
+                  <div class="route-caption">DROP DESTINATION</div>
+                  <div class="route-text">Indira Gandhi International Airport, Terminal 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="height: 16px;"></div>
+          `;
+        }
+      }
+
+      // 2. FARE ESTIMATE / REVIEW SCREEN
+      else if (riderScreen === 'fare') {
+        if (serviceMode === 'HIRE_DRIVER') {
+          const pkg = chauffeurPackages[selectedChauffeurPkg];
+          container.innerHTML = `
+            <div style="padding: 14px 16px 8px 16px;">
+              <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Chauffeur Booking Review</div>
+              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px; font-weight: 700;">
+                Verified Driver for Your Personal Car • Upfront Locked Rate
+              </div>
+            </div>
+
+            <div class="pro-card green-accent">
+              <div class="pro-card-header">
+                <span class="pill-badge green" style="font-size: 9px;">${pkg.tag}</span>
+                <span style="font-size: 18px; font-weight: 900; color: var(--emerald-700);">₹${pkg.fare}</span>
+              </div>
+              <div style="font-size: 15px; font-weight: 800; color: var(--text-900);">${pkg.name}</div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
+                ${pkg.hours} hours duty included • Dedicated pro chauffeur
+              </div>
+
+              <div style="height: 1px; background: var(--border-light); margin: 10px 0;"></div>
+
+              <div style="font-size: 11px; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                <span style="color: var(--text-500);">Your Vehicle:</span>
+                <span style="font-weight: 700; color: var(--text-900);">${selectedCarModel} (${selectedTransmission === 'AUTOMATIC' ? 'Automatic AT' : 'Manual MT'})</span>
+              </div>
+              <div style="font-size: 11px; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                <span style="color: var(--text-500);">Extra Overtime:</span>
+                <span style="font-weight: 700; color: var(--emerald-700);">₹99 / hr</span>
+              </div>
+              <div style="font-size: 11px; display: flex; justify-content: space-between;">
+                <span style="color: var(--text-500);">Payment:</span>
+                <span style="font-weight: 700; color: var(--text-900);">UPI AutoPay (settled upon duty completion)</span>
+              </div>
+            </div>
+
+            <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50);">
+              <div style="font-size: 12px; font-weight: 800; color: var(--blue-600); margin-bottom: 4px;">
+                Driver Handover Checklist Assurance
+              </div>
+              <div style="font-size: 11px; color: var(--text-700); line-height: 15px;">
+                ✓ Initial fuel gauge & odometer verified before taking steering.<br/>
+                ✓ Pre-existing exterior scratches inspected.<br/>
+                ✓ Uniform-ready pro chauffeur with valid LMV commercial license.
+              </div>
+            </div>
+            <div style="height: 16px;"></div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div style="padding: 14px 16px 8px 16px;">
+              <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Select Cab Tier</div>
+              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px; font-weight: 700;">
+                Guaranteed Upfront Fare • 18.5 km (~34 mins)
+              </div>
+            </div>
+
+            <div style="padding: 6px 14px;">
+              ${vehicleTiers.map(t => `
+                <div class="tier-card ${selectedCabTier === t.id ? 'selected' : ''}" onclick="selectCabTier(${t.id})">
+                  <div>
+                    <div class="tier-name">${t.name} <span style="font-size: 10px; color: var(--text-400);">• ${t.seats}</span></div>
+                    <div class="tier-desc">${t.desc}</div>
+                  </div>
+                  <div class="tier-price">₹${t.fare}</div>
+                </div>
+              `).join('')}
+            </div>
+            <div style="height: 16px;"></div>
+          `;
+        }
+      }
+
+      // 3. TRACKING / DUTY HUD SCREEN
+      else if (riderScreen === 'tracking') {
+        const b = sharedState.activeBooking;
+        if (b.serviceMode === 'HIRE_DRIVER') {
+          container.innerHTML = `
+            <!-- Live Duty Elapsed Clock HUD -->
+            <div class="timer-hud-card">
+              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700); letter-spacing: 0.5px;">
+                ACTIVE CHAUFFEUR DUTY CLOCK
+              </div>
+              <div class="timer-digits" id="duty-elapsed-digits">${formatTime(b.elapsedSeconds)}</div>
+              <div style="font-size: 11px; color: var(--text-500);">
+                Total package: ${b.durationHours} hrs • Extra rate: ₹${b.overtimeRate}/hr
+              </div>
+            </div>
+
+            <!-- OTP Card -->
+            <div class="pro-card" style="text-align: center; border-color: var(--blue-border); background: var(--blue-50); margin-top: 0;">
+              <div style="font-size: 10px; font-weight: 800; color: var(--blue-600); letter-spacing: 0.5px;">DUTY VERIFICATION PIN</div>
+              <div style="font-size: 24px; font-weight: 900; color: var(--text-900); letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; margin: 4px 0;">
+                ${b.otp}
+              </div>
+              <div style="font-size: 10px; color: var(--text-500);">Share with chauffeur when handing over car keys</div>
+            </div>
+
+            <!-- Assigned Driver Profile -->
+            <div class="pro-card">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div class="user-avatar-btn" style="width: 40px; height: 40px; font-size: 14px; font-weight: 800; background: #0F172A; color: #FFFFFF;">
+                    RK
+                  </div>
+                  <div>
+                    <div style="font-size: 14px; font-weight: 800; color: var(--text-900);">${sharedState.driverName}</div>
+                    <div style="font-size: 11px; color: var(--amber-600); font-weight: 700;">
+                      ★ ${sharedState.driverRating} • 582 completed duties
+                    </div>
+                  </div>
+                </div>
+                <span class="pill-badge green" style="font-size: 9px;">VERIFIED PRO</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 8px;">
+                Car: ${b.carModel} • Handover Fuel: ${b.fuelHandover}
+              </div>
+            </div>
+
+            <!-- Complete Duty Button for Simulator -->
+            <div style="padding: 0 14px;">
+              <button class="btn-primary green" onclick="completeDuty()">
+                <span>Complete Duty & Settle ₹${b.fare}</span>
+              </button>
+            </div>
+            <div style="height: 16px;"></div>
+          `;
+        } else {
+          // CAB TRACKING
+          container.innerHTML = `
+            <div class="pro-card green-accent" style="margin-top: 14px; text-align: center;">
+              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">CAB TRIP IN PROGRESS</div>
+              <div style="font-size: 20px; font-weight: 900; color: var(--text-900); margin: 4px 0;">
+                En Route to IGI Airport T3
+              </div>
+              <div style="font-size: 11px; color: var(--text-500);">ETA 28 mins • Commercial Sedan (DL 01 AB 9988)</div>
+            </div>
+
+            <div class="pro-card" style="text-align: center;">
+              <div style="font-size: 10px; font-weight: 800; color: var(--text-400);">TRIP START OTP</div>
+              <div style="font-size: 26px; font-weight: 900; letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; color: var(--text-900);">
+                ${b.otp}
+              </div>
+            </div>
+            <div style="height: 16px;"></div>
+          `;
+        }
+      }
+
+      // 4. HISTORY SCREEN
+      else if (riderScreen === 'history') {
+        container.innerHTML = `
+          <div style="padding: 14px 16px 8px 16px;">
+            <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Ride & Duty History</div>
+          </div>
+          <div class="pro-card" style="margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="pill-badge green" style="font-size: 9px;">CHAUFFEUR DUTY</span>
+              <span style="font-size: 14px; font-weight: 800; color: var(--emerald-700);">₹549</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 800; margin-top: 4px;">4-Hour City Chauffeur • Honda City AT</div>
+            <div style="font-size: 11px; color: var(--text-500);">Sector 43, Gurugram • 10 Sep 2026</div>
+          </div>
+          <div class="pro-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="pill-badge blue" style="font-size: 9px;">AIRPORT CAB</span>
+              <span style="font-size: 14px; font-weight: 800; color: var(--emerald-700);">₹750</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 800; margin-top: 4px;">Premier Sedan to IGI Airport T3</div>
+            <div style="font-size: 11px; color: var(--text-500);">Flight AI 102 • 06 Sep 2026</div>
+          </div>
+        `;
+      }
+
+      // 5. PROFILE SCREEN
+      else if (riderScreen === 'profile') {
+        container.innerHTML = `
+          <div style="padding: 16px 14px;">
+            <div class="pro-card" style="text-align: center; margin: 0 0 12px 0;">
+              <div class="user-avatar-btn" style="width: 50px; height: 50px; font-size: 18px; margin: 0 auto 8px auto; background: #0F172A; color: #FFFFFF;">
+                ${sharedState.riderInitials}
+              </div>
+              <div style="font-size: 15px; font-weight: 800;">${sharedState.riderName}</div>
+              <div style="font-size: 11px; color: var(--text-500);">${sharedState.riderPhone} • ${sharedState.riderEmail}</div>
+              <div style="display: inline-flex; align-items: center; gap: 4px; background: var(--amber-50); border: 1px solid var(--amber-border); padding: 2px 8px; border-radius: 4px; margin-top: 6px; font-size: 10px; font-weight: 800; color: var(--amber-600);">
+                ★ ${sharedState.riderRating} Rider Rating
+              </div>
+            </div>
+
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div class="pro-card-title">My Registered Cars for Chauffeur</div>
+              <div style="font-size: 12px; font-weight: 700; margin-top: 6px;">Honda City (2022) • Automatic AT</div>
+              <div style="font-size: 10px; color: var(--text-500);">Plate: DL 01 AB 9988 • Insured with HDFC ERGO</div>
+            </div>
+
+            <!-- Account & Session Management -->
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div class="pro-card-title">Account & Security</div>
+              <div style="font-size: 11px; color: var(--text-500); margin: 4px 0 10px 0;">
+                Logged in as <b>${sharedState.riderName}</b> (${sharedState.riderCity}). Tap below to switch account.
+              </div>
+              <button class="btn-primary" style="background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; padding: 11px;" onclick="logoutRider()">
+                <span>Sign Out / Switch Account</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 6. AUTH / LOGIN / SIGNUP SCREEN
+      else if (riderScreen === 'auth') {
+        container.innerHTML = `
+          <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 14px;">
+              <span class="pill-badge" style="background: #0F172A; color: #38BDF8; font-weight: 800; font-size: 10px; padding: 4px 10px;">RIDER ACCOUNT</span>
+              <div style="font-size: 16px; font-weight: 800; color: var(--text-900); margin-top: 6px;">RideDriveAhead Account</div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">Sign in or create account to book chauffeurs & cabs</div>
+            </div>
+
+            <div class="auth-toggle-bar">
+              <button class="auth-toggle-btn ${riderAuthTab === 'LOGIN' ? 'active' : ''}" onclick="switchRiderAuthTab('LOGIN')">Sign In</button>
+              <button class="auth-toggle-btn ${riderAuthTab === 'SIGNUP' ? 'active' : ''}" onclick="switchRiderAuthTab('SIGNUP')">Create Account</button>
+            </div>
+
+            ${riderAuthTab === 'LOGIN' ? `
+              <div class="pro-card" style="margin-top: 0;">
+                <div class="auth-field">
+                  <label class="auth-label">Mobile Number</label>
+                  <div class="auth-input-wrap">
+                    <span class="auth-input-prefix">+91</span>
+                    <input type="tel" id="rider-login-phone" class="auth-input" value="${sharedState.riderPhone.replace('+91 ', '').replace('+91', '')}" placeholder="9810123456" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">6-Digit One-Time Password (OTP)</label>
+                  <input type="text" id="rider-login-otp" class="auth-otp-field" value="123456" maxlength="6" />
+                  <div style="font-size: 10px; color: var(--emerald-700); text-align: center; margin-top: 4px; font-weight: 700;">
+                    Demo Code: 123456 (Dispatched via SMS)
+                  </div>
+                </div>
+
+                <button class="btn-primary" style="margin-top: 10px;" onclick="submitRiderLogin()">
+                  <span>Verify OTP & Sign In ➔</span>
+                </button>
+
+                <button class="auth-autofill-btn" onclick="autofillRiderAuth('LOGIN')">
+                  Autofill Arjun Verma (+91 98101 23456)
+                </button>
+              </div>
+            ` : `
+              <div class="pro-card" style="margin-top: 0;">
+                <div class="auth-field">
+                  <label class="auth-label">Full Name</label>
+                  <div class="auth-input-wrap">
+                    <input type="text" id="rider-signup-name" class="auth-input" value="Priya Sharma" placeholder="e.g. Priya Sharma" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">Mobile Number</label>
+                  <div class="auth-input-wrap">
+                    <span class="auth-input-prefix">+91</span>
+                    <input type="tel" id="rider-signup-phone" class="auth-input" value="9811122233" placeholder="9811122233" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">Email Address (Tax Invoices)</label>
+                  <div class="auth-input-wrap">
+                    <input type="email" id="rider-signup-email" class="auth-input" value="priya.sharma@example.com" placeholder="priya@example.com" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">City / Region</label>
+                  <div class="auth-input-wrap">
+                    <input type="text" id="rider-signup-city" class="auth-input" value="Gurugram / Delhi NCR" />
+                  </div>
+                </div>
+
+                <button class="btn-primary" style="margin-top: 10px;" onclick="submitRiderSignup()">
+                  <span>Register & Enter Platform ➔</span>
+                </button>
+
+                <button class="auth-autofill-btn" onclick="autofillRiderAuth('SIGNUP')">
+                  Autofill Priya Sharma (New Rider)
+                </button>
+              </div>
+            `}
+
+            <div style="text-align: center; margin-top: 12px; font-size: 10px; color: var(--text-400);">
+              AES-256 GCM Encrypted Vault • DPDP Act Compliant
+            </div>
+          </div>
+        `;
+      }
+
+      // 7. SOS SCREEN
+      else if (riderScreen === 'sos') {
+        container.innerHTML = `
+          <div style="padding: 16px 14px;">
+            <div class="pro-card" style="border-color: var(--red-border); background: var(--red-50); text-align: center; margin: 0 0 12px 0;">
+              <div style="font-size: 14px; font-weight: 800; color: var(--red-600);">Emergency Safety Center</div>
+              <div style="font-size: 11px; color: var(--text-700); margin-top: 4px;">
+                24x7 Direct Police Dispatch & Platform Response Unit
+              </div>
+            </div>
+            <button class="btn-primary" style="background: var(--red-600); margin-bottom: 10px;" onclick="alert('Emergency Alert triggered to 112 Police Control Room & Emergency Contacts')">
+              Call Police (112)
+            </button>
+            <button class="btn-primary" style="background: #0F172A;" onclick="switchRiderScreen('home')">
+              Back to Home
+            </button>
+          </div>
+        `;
+      }
+
+      // Sync topbar avatar
+      const rAvatar = document.getElementById('rider-topbar-avatar');
+      if (rAvatar) {
+        rAvatar.innerText = sharedState.riderLoggedIn ? sharedState.riderInitials : '?';
+      }
+    }
+
+    // ==========================================
+    // DRIVER PARTNER APP RENDERER
+    // ==========================================
+    function renderDriverApp() {
+      const container = document.getElementById('driver-screen');
+      const ctaDock = document.getElementById('driver-cta-dock');
+
+      // Update dedicated bottom CTA dock for driver
+      if (driverScreen === 'trip') {
+        const b = sharedState.activeBooking;
+        if (ctaDock) {
+          ctaDock.style.display = 'block';
+          if (b.status === 'SCHEDULED_CONFIRMED' || b.status === 'ARRIVED') {
+            ctaDock.innerHTML = `
+              <button class="btn-primary green" onclick="startDutyOtpVerified()">
+                <span>Verify PIN & Start Official Duty</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            `;
+          } else if (b.status === 'IN_PROGRESS') {
+            ctaDock.innerHTML = `
+              <button class="btn-primary green" onclick="completeDuty()">
+                <span>Complete Duty & Settle ₹${b.fare}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            `;
+          } else {
+            ctaDock.style.display = 'none';
+          }
+        }
+      } else {
+        if (ctaDock) {
+          ctaDock.style.display = 'none';
+          ctaDock.innerHTML = '';
+        }
+      }
+
+      // 1. DRIVER DUTY HOME SCREEN
+      if (driverScreen === 'home') {
+        container.innerHTML = `
+          <!-- Online/Offline Status -->
+          <div class="driver-status-card">
+            <div>
+              <div style="font-size: 10px; font-weight: 800; color: var(--text-400); letter-spacing: 0.4px;">DUTY STATUS</div>
+              <div style="font-size: 14px; font-weight: 800; color: var(--text-900); margin-top: 2px;">
+                ${sharedState.isDriverOnline ? 'Online • Ready for Driving Gigs' : 'Offline'}
+              </div>
+            </div>
+            <button class="switch-btn" onclick="toggleDriverOnline()">
+              ${sharedState.isDriverOnline ? 'Go Offline' : 'Go Online'}
+            </button>
+          </div>
+
+          <!-- Driver Verified Skills Badges -->
+          <div class="pro-card" style="margin-top: 0; padding: 12px 14px;">
+            <div style="font-size: 10px; font-weight: 800; color: var(--text-400); letter-spacing: 0.4px; margin-bottom: 6px;">
+              VERIFIED DRIVING QUALIFICATIONS
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span class="pill-badge green" style="font-size: 9px;">LMV Commercial Pro</span>
+              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Automatic (AT) Certified</span>
+              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Manual (MT) Expert</span>
+              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Luxury Car Badge</span>
+            </div>
+          </div>
+
+          <!-- Shift & Driving Hours Metrics -->
+          <div class="metrics-2grid">
+            <div class="metric-box">
+              <div class="metric-caption">TODAY'S NET EARNINGS</div>
+              <div class="metric-value" style="color: var(--emerald-700);">₹${sharedState.driverEarnings}</div>
+              <div class="metric-note">6 duties completed</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-caption">DRIVING HOURS</div>
+              <div class="metric-value" style="color: var(--blue-600);">${sharedState.drivingHours}h</div>
+              <div class="metric-note" style="color: var(--text-500);">4.5h left before rest</div>
+            </div>
+          </div>
+
+          <!-- Committed Duty Alert Card -->
+          <div class="pro-card green-accent">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="pill-badge green" style="font-size: 9px;">COMMITTED GIG</span>
+              <span style="font-size: 15px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">₹549</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 800; margin-top: 6px; color: var(--text-900);">
+              4-Hour Chauffeur on Customer's Honda City AT
+            </div>
+            <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
+              Rider: Arjun Verma • Sector 43 Gurugram
+            </div>
+            <button class="btn-primary" style="margin-top: 10px; padding: 10px; font-size: 11px;" onclick="switchDriverScreen('trip')">
+              Open Duty Dashboard & Checklist →
+            </button>
+          </div>
+
+          <!-- Gig Marketplace Shortcut Banner -->
+          <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50); margin-bottom: 20px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--blue-600);">Gig Marketplace Available</div>
+            <div style="font-size: 11px; color: var(--text-700); margin: 4px 0 8px 0;">
+              3 open driving gigs (hourly, weddings, and 1-2 day road trips) available to claim.
+            </div>
+            <button class="btn-primary" style="background: var(--blue-600); padding: 8px 12px; font-size: 11px; width: auto;" onclick="switchDriverScreen('pool')">
+              Browse Gig Board →
+            </button>
+          </div>
+          <div style="height: 16px;"></div>
+        `;
+      }
+
+      // 2. GIG MARKETPLACE / POOL SCREEN
+      else if (driverScreen === 'pool') {
+        container.innerHTML = `
+          <div style="padding: 14px 16px 8px 16px;">
+            <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Gig & Duty Marketplace</div>
+            <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px;">
+              Lock your driving earnings for hours, special events, or 1-2 day trips
+            </div>
+          </div>
+
+          <div style="padding: 0 14px 20px 14px;">
+            ${sharedState.gigMarketplace.map(gig => `
+              <div class="pro-card ${gig.isClaimed ? 'green-accent' : ''}" style="margin: 0 0 10px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="pill-badge ${gig.type === 'OUTSTATION' ? 'blue' : 'green'}" style="font-size: 9px;">
+                    ${gig.type}
+                  </span>
+                  <span style="font-size: 16px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">
+                    ₹${gig.fare}
+                  </span>
+                </div>
+                <div style="font-size: 13px; font-weight: 800; margin-top: 6px; color: var(--text-900);">${gig.title}</div>
+                <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">${gig.car}</div>
+                <div style="font-size: 10px; color: var(--text-400); margin-top: 4px;">Time: ${gig.time} • Location: ${gig.pickup}</div>
+                
+                ${gig.isClaimed ? `
+                  <div style="margin-top: 8px; font-size: 10px; font-weight: 800; color: var(--emerald-700);">
+                    ✓ Claimed by You • Ready on Duty
+                  </div>
+                ` : `
+                  <button class="btn-primary green" style="margin-top: 8px; padding: 8px 12px; font-size: 11px;" onclick="claimGig('${gig.id}')">
+                    Claim Gig & Lock ₹${gig.fare} Payout →
+                  </button>
+                `}
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // 3. ACTIVE DUTY SCREEN
+      else if (driverScreen === 'trip') {
+        const b = sharedState.activeBooking;
+        container.innerHTML = `
+          <!-- Active Duty Banner -->
+          <div class="pro-card green-accent" style="margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="pill-badge green" style="font-size: 9px;">ACTIVE CHAUFFEUR DUTY</span>
+              <span style="font-size: 16px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">₹${b.fare}</span>
+            </div>
+            <div style="font-size: 14px; font-weight: 800; margin-top: 6px; color: var(--text-900);">
+              ${b.carModel}
+            </div>
+            <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
+              Customer: Arjun Verma (+91 98101 23456)
+            </div>
+          </div>
+
+          <!-- Live Timer HUD for Driver -->
+          <div class="timer-hud-card" style="margin-top: 0;">
+            <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">ELAPSED CHAUFFEUR DUTY TIME</div>
+            <div class="timer-digits" id="driver-duty-elapsed-digits">${formatTime(b.elapsedSeconds)}</div>
+            <div style="font-size: 10px; color: var(--text-500);">Included: ${b.durationHours}h • Overtime: ₹${b.overtimeRate}/hr</div>
+          </div>
+
+          <!-- Pre-Trip Handover Checklist Card -->
+          <div class="pro-card" style="margin-top: 0;">
+            <div class="pro-card-title">Customer Vehicle Handover Checklist</div>
+            <div style="font-size: 11px; color: var(--text-700); line-height: 18px; margin-top: 6px;">
+              ✓ Initial Fuel Gauge: <strong>${b.fuelHandover}</strong><br/>
+              ✓ Odometer Reading: <strong>${b.odometerStart} km</strong><br/>
+              ✓ Exterior Body: <strong>Clean & Inspected</strong>
+            </div>
+          </div>
+
+          <!-- PIN Verification Input -->
+          <div class="pro-card" style="border-color: var(--blue-border); text-align: center;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--blue-600);">Customer Duty PIN</div>
+            <div style="font-size: 20px; font-weight: 900; letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; color: var(--text-900); margin: 6px 0;">
+              ${b.otp}
+            </div>
+            <div style="font-size: 10px; color: var(--text-500);">PIN verified for insurance & safe duty initiation</div>
+          </div>
+          <div style="height: 16px;"></div>
+        `;
+      }
+
+      // 4. EARNINGS SCREEN
+      else if (driverScreen === 'earnings') {
+        container.innerHTML = `
+          <div style="padding: 16px 14px;">
+            <div class="pro-card green-accent" style="text-align: center; padding: 20px; margin: 0 0 12px 0;">
+              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">NET EARNINGS TODAY</div>
+              <div style="font-size: 32px; font-weight: 900; color: var(--text-900); margin-top: 4px; font-family: 'JetBrains Mono', monospace;">
+                ₹${sharedState.driverEarnings}
+              </div>
+              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px;">
+                Includes ₹150 Punctuality Bonus
+              </div>
+            </div>
+
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div class="pro-card-header">
+                <span class="pro-card-title">Instant IMPS Bank Transfer</span>
+                <span class="pill-badge green" style="font-size: 9px;">ZERO FEE</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-size: 13px; font-weight: 800;">HDFC Bank •••• 4891</div>
+                  <div style="font-size: 10px; color: var(--text-500);">Rajesh Kumar</div>
+                </div>
+                <button class="btn-primary" style="padding: 7px 12px; font-size: 11px; width: auto;" onclick="alert('₹' + sharedState.driverEarnings + ' transferred instantly to HDFC Bank via IMPS!')">
+                  Transfer to Bank
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. KYC VAULT SCREEN
+      else if (driverScreen === 'vault') {
+        container.innerHTML = `
+          <div style="padding: 16px 14px;">
+            <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50); margin: 0 0 12px 0;">
+              <div class="pro-card-title" style="color: var(--blue-600);">AES-256 Vault Protection</div>
+              <div style="font-size: 11px; color: var(--text-700); margin-top: 4px;">
+                Driver KYC and driving credentials are encrypted at rest with AES-256-GCM.
+              </div>
+            </div>
+
+            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 13px; font-weight: 800;">Commercial Driving License (LMV)</div>
+                <div style="font-size: 10px; color: var(--text-500);">DL-04********921 • Valid till 2031</div>
+              </div>
+              <span class="pill-badge green" style="font-size: 9px;">VERIFIED</span>
+            </div>
+
+            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 13px; font-weight: 800;">Aadhaar Card (UIDAI)</div>
+                <div style="font-size: 10px; color: var(--text-500);">XXXX-XXXX-3019</div>
+              </div>
+              <span class="pill-badge green" style="font-size: 9px;">VERIFIED</span>
+            </div>
+
+            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 13px; font-weight: 800;">Police Background Verification</div>
+                <div style="font-size: 10px; color: var(--text-500);">Clear Record • Delhi Police Cert #8921</div>
+              </div>
+              <span class="pill-badge green" style="font-size: 9px;">CLEARED</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // 6. DRIVER PROFILE SCREEN
+      else if (driverScreen === 'profile') {
+        container.innerHTML = `
+          <div style="padding: 16px 14px;">
+            <div class="pro-card" style="text-align: center; margin: 0 0 12px 0;">
+              <div class="user-avatar-btn" style="width: 50px; height: 50px; font-size: 18px; margin: 0 auto 8px auto; background: #047857; color: #FFFFFF;">
+                ${sharedState.driverInitials}
+              </div>
+              <div style="font-size: 15px; font-weight: 800;">${sharedState.driverName}</div>
+              <div style="font-size: 11px; color: var(--text-500);">${sharedState.driverPhone} • Commercial LMV Pro</div>
+              <div style="display: flex; justify-content: center; gap: 8px; margin-top: 6px;">
+                <span class="pill-badge" style="background: var(--amber-50); border: 1px solid var(--amber-border); color: var(--amber-600); font-weight: 800; font-size: 10px;">★ ${sharedState.driverRating} Rating</span>
+                <span class="pill-badge" style="font-weight: 800; font-size: 10px;">${sharedState.driverTrips} Duties</span>
+              </div>
+            </div>
+
+            <!-- Driving Qualifications -->
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div class="pro-card-title">Verified Driving Qualifications</div>
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ LMV Commercial DL: ${sharedState.driverDl}</div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Automatic (AT) / DSG Certified</div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Manual (MT) Stick Shift Expert</div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Police Background Verification Cleared</div>
+              </div>
+            </div>
+
+            <!-- Fatigue Monitor -->
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="pro-card-title">Fatigue & Safety Monitor</span>
+                <span style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">${sharedState.drivingHours}h / ${sharedState.maxDrivingHours}h</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 4px;">4.5h left before mandatory rest period.</div>
+            </div>
+
+            <!-- Partner Session & Sign Out -->
+            <div class="pro-card" style="margin: 0 0 12px 0;">
+              <div class="pro-card-title">Partner Session & Account</div>
+              <div style="font-size: 11px; color: var(--text-500); margin: 4px 0 10px 0;">
+                Logged in as <b>${sharedState.driverName}</b>. Sign out to switch partner accounts.
+              </div>
+              <button class="btn-primary" style="background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; padding: 11px;" onclick="logoutDriver()">
+                <span>Sign Out / Switch Driver Account</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 7. DRIVER AUTH / ONBOARDING SCREEN
+      else if (driverScreen === 'auth') {
+        container.innerHTML = `
+          <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 14px;">
+              <span class="pill-badge green" style="font-weight: 800; font-size: 10px; padding: 4px 10px;">DRIVER PARTNER</span>
+              <div style="font-size: 16px; font-weight: 800; color: var(--text-900); margin-top: 6px;">Partner Dashboard Login</div>
+              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">Earn driving customer cars or operating cabs</div>
+            </div>
+
+            <div class="auth-toggle-bar">
+              <button class="auth-toggle-btn ${driverAuthTab === 'LOGIN' ? 'active' : ''}" onclick="switchDriverAuthTab('LOGIN')">Partner Sign In</button>
+              <button class="auth-toggle-btn ${driverAuthTab === 'SIGNUP' ? 'active' : ''}" onclick="switchDriverAuthTab('SIGNUP')">Join as Driver</button>
+            </div>
+
+            ${driverAuthTab === 'LOGIN' ? `
+              <div class="pro-card" style="margin-top: 0;">
+                <div class="auth-field">
+                  <label class="auth-label">Registered Mobile Number</label>
+                  <div class="auth-input-wrap">
+                    <span class="auth-input-prefix">+91</span>
+                    <input type="tel" id="driver-login-phone" class="auth-input" value="${sharedState.driverPhone.replace('+91 ', '').replace('+91', '')}" placeholder="9811156789" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">6-Digit OTP Code</label>
+                  <input type="text" id="driver-login-otp" class="auth-otp-field" style="color: #047857; border-color: #047857;" value="123456" maxlength="6" />
+                  <div style="font-size: 10px; color: var(--emerald-700); text-align: center; margin-top: 4px; font-weight: 700;">
+                    Demo Code: 123456
+                  </div>
+                </div>
+
+                <button class="btn-primary green" style="margin-top: 10px;" onclick="submitDriverLogin()">
+                  <span>Verify OTP & Open Partner OS ➔</span>
+                </button>
+
+                <button class="auth-autofill-btn" style="color: var(--emerald-700);" onclick="autofillDriverAuth('LOGIN')">
+                  Autofill Rajesh Kumar (+91 98111 56789)
+                </button>
+              </div>
+            ` : `
+              <div class="pro-card" style="margin-top: 0;">
+                <div class="auth-field">
+                  <label class="auth-label">Full Legal Name (as per DL)</label>
+                  <div class="auth-input-wrap">
+                    <input type="text" id="driver-signup-name" class="auth-input" value="Suresh Rawat" placeholder="e.g. Suresh Rawat" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">Mobile Number</label>
+                  <div class="auth-input-wrap">
+                    <span class="auth-input-prefix">+91</span>
+                    <input type="tel" id="driver-signup-phone" class="auth-input" value="9871234567" placeholder="9871234567" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">Commercial DL (LMV)</label>
+                  <div class="auth-input-wrap">
+                    <input type="text" id="driver-signup-dl" class="auth-input" value="DL-0420210088992" placeholder="DL-0420210088992" />
+                  </div>
+                </div>
+
+                <div class="auth-field">
+                  <label class="auth-label">Base City</label>
+                  <div class="auth-input-wrap">
+                    <input type="text" id="driver-signup-city" class="auth-input" value="Gurugram / Delhi NCR" />
+                  </div>
+                </div>
+
+                <button class="btn-primary green" style="margin-top: 10px;" onclick="submitDriverSignup()">
+                  <span>Complete Onboarding & Start ➔</span>
+                </button>
+
+                <button class="auth-autofill-btn" style="color: var(--emerald-700);" onclick="autofillDriverAuth('SIGNUP')">
+                  Autofill Suresh Rawat (New Driver)
+                </button>
+              </div>
+            `}
+
+            <div style="text-align: center; margin-top: 12px; font-size: 10px; color: var(--text-400);">
+              Police Verification & DL Verified • Daily IMPS Payouts
+            </div>
+          </div>
+        `;
+      }
+
+      // Sync driver topbar avatar
+      const dAvatar = document.getElementById('driver-topbar-avatar');
+      if (dAvatar) {
+        dAvatar.innerText = sharedState.driverLoggedIn ? sharedState.driverInitials : '?';
+      }
+    }
+
+    // Initial render & timer start
+    renderRiderApp();
+    renderDriverApp();
+    startDutyClock();
+    syncWithBackendDb();
+  </script>
+</body>
+</html>

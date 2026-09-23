@@ -1,0 +1,301 @@
+{
+  "users": [
+    {
+      "id": "u-101",
+      "phoneNumber": "+919810123456",
+      "fullName": "Arjun Verma",
+      "email": "arjun.verma@example.com",
+      "role": "RIDER",
+      "city": "Gurugram / Delhi NCR",
+      "rating": 4.95,
+      "registeredCars": [
+        {
+          "model": "Honda City (2022)",
+          "transmission": "AUTOMATIC",
+          "plate": "DL 01 AB 9988",
+          "insurance": "HDFC ERGO Valid"
+        },
+        {
+          "model": "Hyundai Creta (2021)",
+          "transmission": "MANUAL",
+          "plate": "HR 26 CZ 4410",
+          "insurance": "ICICI Lombard Valid"
+        }
+      ],
+      "createdAt": "2026-09-10T10:00:00.000Z"
+    },
+    {
+      "id": "u-102",
+      "phoneNumber": "+919876543210",
+      "fullName": "Priya Sharma",
+      "email": "priya.sharma@example.com",
+      "role": "RIDER",
+      "city": "Delhi NCR / Gurugram",
+      "rating": 5,
+      "registeredCars": [],
+      "createdAt": "2026-09-11T12:00:00.000Z"
+    },
+    {
+      "id": "u-9054",
+      "phoneNumber": "+919988776655",
+      "fullName": "Amit Sharma",
+      "email": "",
+      "role": "RIDER",
+      "city": "Noida",
+      "rating": 5,
+      "registeredCars": [
+        {
+          "model": "Honda City (2022)",
+          "transmission": "AUTOMATIC",
+          "plate": "DL 01 AB 9988"
+        }
+      ],
+      "createdAt": "2026-09-11T17:52:14.901Z"
+    }
+  ],
+  "drivers": [
+    {
+      "id": "d-201",
+      "userId": "u-driver-201",
+      "fullName": "Rajesh Kumar",
+      "phoneNumber": "+919811156789",
+      "city": "Delhi NCR / Gurugram",
+      "licenseNumber": "DL-0420210088992",
+      "role": "ALL_ROUNDER",
+      "transmissionSkills": [
+        "MANUAL",
+        "AUTOMATIC",
+        "LUXURY"
+      ],
+      "vehicleModel": "Honda City / Maruti Dzire Tour",
+      "vehiclePlate": "DL 01 AB 9988",
+      "vehicleType": "SEDAN",
+      "isOnline": true,
+      "rating": 4.92,
+      "totalTrips": 582,
+      "kycStatus": "APPROVED",
+      "drivingHoursToday": 3.5,
+      "maxDrivingHours": 8,
+      "todayEarnings": 3250
+    },
+    {
+      "id": "d-202",
+      "userId": "u-driver-202",
+      "fullName": "Suresh Rawat",
+      "phoneNumber": "+919871234567",
+      "city": "Gurugram / Delhi NCR",
+      "licenseNumber": "DL-0420220099112",
+      "role": "CHAUFFEUR_ONLY",
+      "transmissionSkills": [
+        "AUTOMATIC",
+        "MANUAL",
+        "LUXURY"
+      ],
+      "vehicleModel": "Drive Customer Cars",
+      "vehiclePlate": "N/A",
+      "vehicleType": "SEDAN",
+      "isOnline": true,
+      "rating": 5,
+      "totalTrips": 0,
+      "kycStatus": "PENDING",
+      "drivingHoursToday": 0,
+      "maxDrivingHours": 8,
+      "todayEarnings": 0
+    }
+  ],
+  "chauffeurPackages": [
+    {
+      "id": "pkg-1",
+      "name": "2 Hours Express",
+      "hours": 2,
+      "fare": 299,
+      "desc": "Quick local visits, clinic, errands",
+      "tag": "QUICK"
+    },
+    {
+      "id": "pkg-2",
+      "name": "4 Hours Half-Day",
+      "hours": 4,
+      "fare": 549,
+      "desc": "Shopping, dining, city meetings",
+      "tag": "POPULAR"
+    },
+    {
+      "id": "pkg-3",
+      "name": "8 Hours Full-Day",
+      "hours": 8,
+      "fare": 999,
+      "desc": "All-day office, multi-stop commute",
+      "tag": "FULL DAY"
+    },
+    {
+      "id": "pkg-4",
+      "name": "Party & Wedding Chauffeur",
+      "hours": 6,
+      "fare": 799,
+      "desc": "6h evening duty, zero DUI worry & safe return",
+      "tag": "NIGHT SAFE"
+    },
+    {
+      "id": "pkg-5",
+      "name": "1-Day Outstation Trip",
+      "hours": 12,
+      "fare": 1499,
+      "desc": "Round-trip day trip (Agra / Neemrana)",
+      "tag": "HIGHWAY"
+    },
+    {
+      "id": "pkg-6",
+      "name": "2-Day Weekend Road Trip",
+      "hours": 24,
+      "fare": 2799,
+      "desc": "Round-trip to Jaipur/Chandigarh (+ driver stay)",
+      "tag": "1-2 DAYS"
+    }
+  ],
+  "cabTiers": [
+    {
+      "id": "cab-1",
+      "name": "Go Compact",
+      "seats": "4 seats",
+      "desc": "WagonR, Swift • Daily transit",
+      "fare": 490
+    },
+    {
+      "id": "cab-2",
+      "name": "Premier Sedan",
+      "seats": "4 seats",
+      "desc": "Honda City, Ciaz • Spacious & AC",
+      "fare": 750
+    },
+    {
+      "id": "cab-3",
+      "name": "SUV Executive XL",
+      "seats": "6 seats",
+      "desc": "Innova Crysta, Ertiga • Family trip",
+      "fare": 1150
+    },
+    {
+      "id": "cab-4",
+      "name": "Green Electric EV",
+      "seats": "4 seats",
+      "desc": "Tata Tigor EV • Zero emission",
+      "fare": 690
+    }
+  ],
+  "gigs": [
+    {
+      "id": "GIG-101",
+      "type": "HOURLY",
+      "title": "4-Hour Local Chauffeur",
+      "car": "Customer's Honda City (Automatic AT)",
+      "time": "Today, 02:00 PM",
+      "pickup": "Sector 43, Golf Course Road, Gurugram",
+      "drop": "City Round-Trip (Shopping & Meetings)",
+      "fare": 549,
+      "hours": 4,
+      "isClaimed": true
+    },
+    {
+      "id": "GIG-102",
+      "type": "EVENT",
+      "title": "Wedding Evening Chauffeur",
+      "car": "Customer's Hyundai Creta (Manual MT)",
+      "time": "Tonight, 06:00 PM - 12 AM",
+      "pickup": "Vasant Vihar, South Delhi",
+      "drop": "Chhatarpur Farmhouse & Safe Return",
+      "fare": 799,
+      "hours": 6,
+      "isClaimed": false
+    },
+    {
+      "id": "GIG-103",
+      "type": "OUTSTATION",
+      "title": "2-Day Weekend Road Trip to Jaipur",
+      "car": "Customer's Toyota Fortuner 4x4 (AT)",
+      "time": "Saturday 06:00 AM (2 Days)",
+      "pickup": "Golf Links, Central Delhi",
+      "drop": "Jaipur Heritage Resort & Return",
+      "fare": 2799,
+      "hours": 24,
+      "isClaimed": false
+    },
+    {
+      "id": "GIG-104",
+      "type": "CAB",
+      "title": "Advance Airport Run (Commercial Sedan)",
+      "car": "Commercial Taxi • DL 01 AB 9988",
+      "time": "Tomorrow, 05:00 AM",
+      "pickup": "Sector 56, Gurugram",
+      "drop": "IGI Airport Terminal 3 (AI 102)",
+      "fare": 750,
+      "hours": 1.5,
+      "isClaimed": false
+    }
+  ],
+  "bookings": [
+    {
+      "id": "CHF-9241",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "Sector 43, Golf Course Road, Gurugram",
+      "drop": "City Local Travel & Shopping Round-Trip",
+      "distanceKm": 28,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "4821",
+      "status": "IN_PROGRESS",
+      "elapsedSeconds": 8325,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-09-11T13:00:00.000Z"
+    }
+  ],
+  "kycDocuments": [
+    {
+      "driverId": "d-201",
+      "documentType": "DRIVING_LICENSE",
+      "maskedNumber": "DL-04********921",
+      "status": "APPROVED",
+      "encryptedPayload": "AES256GCM:a7f9b8c2e1049281726aefb839c02"
+    },
+    {
+      "driverId": "d-201",
+      "documentType": "AADHAAR",
+      "maskedNumber": "XXXX-XXXX-3019",
+      "status": "APPROVED",
+      "encryptedPayload": "AES256GCM:901238472910482910482910482"
+    }
+  ],
+  "apiLogs": [
+    {
+      "time": "11:22:27 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/db/inspect",
+      "status": 200
+    },
+    {
+      "time": "11:22:14 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/verify",
+      "status": 200
+    },
+    {
+      "time": "11:21:58 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/db/inspect",
+      "status": 200
+    },
+    {
+      "time": "11:21:34 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    }
+  ]
+}

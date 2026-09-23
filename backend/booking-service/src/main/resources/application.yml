@@ -1,0 +1,36 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ridedriveahead}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgrespassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+ridedriveahead:
+  booking:
+    min-advance-schedule-minutes: 60      # Min 1 hour ahead for scheduling
+    max-advance-schedule-days: 30         # Up to 30 days ahead
+    free-cancellation-minutes: 120        # Free cancellation up to 2 hours before scheduled pickup
+    cancellation-fee: 100.00              # Late cancellation fee in INR
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.ridedriveahead: DEBUG
