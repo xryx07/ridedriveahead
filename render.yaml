@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ridedriveahead
+    runtime: node
+    plan: free
+    buildCommand: echo "RideDriveAhead ready"
+    startCommand: node apps/demo-preview/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20

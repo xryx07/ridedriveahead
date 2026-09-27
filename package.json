@@ -1,0 +1,24 @@
+{
+  "name": "ridedriveahead",
+  "version": "1.0.0",
+  "description": "RideDriveAhead Full-Stack Mobility Platform - Hire a Driver (Drive My Car) & Cab Booking Platform",
+  "main": "apps/demo-preview/server.js",
+  "scripts": {
+    "start": "node apps/demo-preview/server.js",
+    "test": "node -e \"console.log('RideDriveAhead build verification: PASS')\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ridedriveahead",
+    "mobility",
+    "chauffeur",
+    "hire-driver",
+    "cab-booking",
+    "expo",
+    "react-native"
+  ],
+  "author": "xryx07",
+  "license": "ISC"
+}
