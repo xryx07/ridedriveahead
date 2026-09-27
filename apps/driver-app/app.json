@@ -19,6 +19,12 @@
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       }
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a21f01d3-cdca-4b1a-8140-db4dfe7b06d3"
+      }
+    },
+    "owner": "aryajain19"
   }
 }
