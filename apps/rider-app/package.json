@@ -12,7 +12,7 @@
     "build:ios": "eas build -p ios --profile preview"
   },
   "dependencies": {
-    "expo": "~57.0.22",
+    "expo": "~57.0.25",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~18.3.12",
-    "typescript": "^5.3.3"
+    "@types/react": "~19.2.4",
+    "typescript": "~5.9.3"
   }
 }
