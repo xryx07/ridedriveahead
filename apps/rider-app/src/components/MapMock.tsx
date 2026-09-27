@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E2E8F0'
   },
   gridOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     opacity: 0.35
   },
   gridLineHorizontal: {

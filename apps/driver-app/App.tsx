@@ -30,8 +30,6 @@ export default function App() {
     }
 
     switch (currentScreen) {
-      case 'LOGIN':
-        return <DriverLoginScreen />;
       case 'HOME':
         return <DriverHomeScreen />;
       case 'KYC_UPLOAD':

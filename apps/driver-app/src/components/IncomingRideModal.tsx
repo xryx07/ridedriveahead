@@ -4,14 +4,17 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 interface IncomingRideModalProps {
   visible: boolean;
   onAccept: () => void;
-  onDecline: () => void;
+  onDecline?: () => void;
+  onReject?: () => void;
 }
 
 export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
   visible,
   onAccept,
-  onDecline
+  onDecline,
+  onReject
 }) => {
+  const handleDismiss = onDecline || onReject || (() => {});
   const [countdown, setCountdown] = useState(25);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
         setCountdown((prev) => {
           if (prev <= 1) {
             clearInterval(timer);
-            onDecline();
+            handleDismiss();
             return 0;
           }
           return prev - 1;
@@ -77,7 +80,7 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
 
           {/* Action Buttons */}
           <View style={styles.actionsRow}>
-            <TouchableOpacity style={styles.declineBtn} onPress={onDecline}>
+            <TouchableOpacity style={styles.declineBtn} onPress={handleDismiss}>
               <Text style={styles.declineText}>Decline</Text>
             </TouchableOpacity>
 

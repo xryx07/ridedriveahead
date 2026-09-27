@@ -13,7 +13,7 @@ export const RideHistoryScreen: React.FC = () => {
   );
 
   const pastRides = rideHistory.filter(
-    (b) => b.status === 'COMPLETED' || b.status === 'CANCELLED' || (b.bookingType === 'INSTANT' && b.status !== 'COMPLETED')
+    (b) => b.status === 'COMPLETED' || b.status === 'CANCELLED' || b.bookingType === 'INSTANT'
   );
 
   const currentList = activeTab === 'SCHEDULED' ? scheduledRides : pastRides;
