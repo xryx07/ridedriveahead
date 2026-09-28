@@ -15,13 +15,20 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack = false, backTo 
     <View style={styles.header}>
       <View style={styles.leftContainer}>
         {showBack ? (
-          <TouchableOpacity style={styles.backButton} onPress={() => navigate(backTo)}>
-            <Text style={styles.backText}>← Back</Text>
-          </TouchableOpacity>
+          <View style={styles.backRow}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigate(backTo)}>
+              <Text style={styles.backText}>← Back</Text>
+            </TouchableOpacity>
+            {title ? (
+              <Text style={styles.headerTitle} numberOfLines={1}>
+                {title}
+              </Text>
+            ) : null}
+          </View>
         ) : (
           <View>
-            <Text style={styles.brandTitle}>RideDriveAhead</Text>
-            <Text style={styles.brandSubtitle}>Advance-Scheduled & Instant Rides</Text>
+            <Text style={styles.brandTitle} numberOfLines={1}>RideDriveAhead</Text>
+            <Text style={styles.brandSubtitle} numberOfLines={1}>Advance-Scheduled & Instant Rides</Text>
           </View>
         )}
       </View>
@@ -43,17 +50,31 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack = false, backTo 
 
 const styles = StyleSheet.create({
   header: {
-    height: 64,
+    minHeight: 56,
     backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
+    paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#E2E8F0'
+    borderBottomColor: '#E2E8F0',
+    zIndex: 20
   },
   leftContainer: {
-    flex: 1
+    flex: 1,
+    marginRight: 8
+  },
+  backRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10
+  },
+  headerTitle: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#0F172A',
+    flexShrink: 1
   },
   brandTitle: {
     color: '#0F172A',
@@ -71,9 +92,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#F1F5F9',
     borderRadius: 8,
-    alignSelf: 'flex-start',
     borderWidth: 1,
-    borderColor: '#E2E8F0'
+    borderColor: '#E2E8F0',
+    flexShrink: 0
   },
   backText: {
     color: '#0F172A',
@@ -83,7 +104,8 @@ const styles = StyleSheet.create({
   rightContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8
+    gap: 8,
+    flexShrink: 0
   },
   sosButton: {
     backgroundColor: '#FEF2F2',

@@ -620,15 +620,16 @@ const styles = StyleSheet.create({
   },
   serviceModeRow: {
     flexDirection: 'row',
-    gap: 10
+    gap: 8
   },
   serviceModeBtn: {
     flex: 1,
+    minWidth: 0,
     backgroundColor: '#F8FAFC',
     borderRadius: 12,
     borderWidth: 1.5,
     borderColor: '#E2E8F0',
-    padding: 12
+    padding: 10
   },
   serviceModeBtnActive: {
     backgroundColor: '#FFFFFF',
@@ -689,44 +690,48 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginHorizontal: 16,
     marginBottom: 12,
-    padding: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#E2E8F0',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'stretch'
   },
   trustItem: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 2
   },
   trustBadge: {
     fontSize: 8,
     fontWeight: '800',
     color: '#047857',
     backgroundColor: '#ECFDF5',
-    paddingHorizontal: 6,
+    paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 4,
-    marginBottom: 4
+    marginBottom: 3
   },
   trustTitle: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '800',
-    color: '#0F172A'
+    color: '#0F172A',
+    textAlign: 'center'
   },
   trustDesc: {
     fontSize: 9,
     color: '#64748B',
     marginTop: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: 12
   },
   trustDivider: {
     width: 1,
-    height: 36,
     backgroundColor: '#E2E8F0',
-    marginHorizontal: 4
+    marginHorizontal: 2
   },
   sectionContainer: {
     paddingHorizontal: 16,
@@ -769,17 +774,21 @@ const styles = StyleSheet.create({
   packageCardTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'flex-start',
+    gap: 8
   },
   packageNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8
+    gap: 6,
+    flexWrap: 'wrap',
+    marginBottom: 2
   },
   packageName: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#334155'
+    color: '#334155',
+    flexShrink: 1
   },
   packageNameSelected: {
     color: '#0F172A',
@@ -803,7 +812,7 @@ const styles = StyleSheet.create({
   },
   packagePriceCol: {
     alignItems: 'flex-end',
-    marginLeft: 8
+    flexShrink: 0
   },
   packagePrice: {
     fontSize: 16,

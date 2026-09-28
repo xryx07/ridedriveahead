@@ -246,7 +246,7 @@ export const FareEstimateScreen: React.FC = () => {
                       paymentMethod === method && styles.paymentPillTextActive
                     ]}
                   >
-                    {method === 'UPI' ? 'UPI AutoPay' : method === 'CARD' ? 'Credit/Debit Card' : 'Cash'}
+                    {method === 'UPI' ? 'UPI' : method === 'CARD' ? 'Card' : 'Cash'}
                   </Text>
                 </TouchableOpacity>
               ))}

@@ -10,7 +10,7 @@ if (typeof (global as any).RN$registerCallableModule === 'undefined') {
 }
 
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { useDriverStore } from './src/store/useDriverStore';
 import { DriverHomeScreen } from './src/screens/DriverHomeScreen';
 import { KycUploadScreen } from './src/screens/KycUploadScreen';
@@ -60,6 +60,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   }
 });
