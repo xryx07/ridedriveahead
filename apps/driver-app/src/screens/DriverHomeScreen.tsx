@@ -50,36 +50,54 @@ export const DriverHomeScreen: React.FC = () => {
         <View style={[styles.heroCard, driver.isOnline ? styles.heroOnline : styles.heroOffline]}>
           <View style={styles.heroTop}>
             <View>
-              <Text style={styles.heroStatusLabel}>DUTY AVAILABILITY</Text>
+              <View style={styles.statusIndicatorRow}>
+                <View style={[styles.statusBeacon, driver.isOnline ? styles.beaconOnline : styles.beaconOffline]} />
+                <Text style={[styles.heroStatusLabel, driver.isOnline ? styles.labelOnline : styles.labelOffline]}>
+                  {driver.isOnline ? 'DUTY SYSTEM ACTIVE' : 'DUTY SYSTEM OFFLINE'}
+                </Text>
+              </View>
               <Text style={styles.heroStatusTitle}>
-                {driver.isOnline ? 'Online • Receiving Gigs & Rides' : 'You are Currently Offline'}
+                {driver.isOnline ? 'Receiving Gigs & Airport Runs' : 'Shift Currently Paused'}
               </Text>
             </View>
-            <TouchableOpacity style={styles.heroToggleBtn} onPress={toggleOnline}>
+            <TouchableOpacity
+              style={[styles.heroToggleBtn, driver.isOnline ? styles.heroToggleBtnActive : styles.heroToggleBtnInactive]}
+              onPress={toggleOnline}
+              activeOpacity={0.85}
+            >
               <Text style={styles.heroToggleText}>{driver.isOnline ? 'Go Offline' : 'Go Online'}</Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.heroHint}>
             {driver.isOnline
-              ? 'Receiving hourly chauffeur duties (2h-8h), special event duties, 1-2 day outstation gigs & cab runs.'
-              : 'Switch online to view and claim open driving gigs.'}
+              ? 'Matched with verified personal car duties (2h-8h), party returns, 1-2 day outstation road trips & city cab requests.'
+              : 'Switch online to view open customer gigs and start receiving direct dispatches.'}
           </Text>
         </View>
 
         {/* Transmission & Skill Badges */}
         <View style={styles.skillsCard}>
-          <Text style={styles.skillsTitle}>YOUR CERTIFIED DRIVER SKILLS</Text>
+          <View style={styles.skillsHeaderRow}>
+            <Text style={styles.skillsTitle}>YOUR CERTIFIED DRIVER CREDENTIALS</Text>
+            <View style={styles.badgeVerified}>
+              <Text style={styles.badgeVerifiedText}>POLICE VERIFIED</Text>
+            </View>
+          </View>
           <View style={styles.badgeRow}>
             <View style={styles.skillBadge}>
+              <Text style={styles.skillBadgeBullet}>◆</Text>
               <Text style={styles.skillBadgeText}>LMV Commercial DL</Text>
             </View>
             <View style={styles.skillBadge}>
+              <Text style={styles.skillBadgeBulletGold}>◆</Text>
               <Text style={styles.skillBadgeText}>Automatic (AT) Pro</Text>
             </View>
             <View style={styles.skillBadge}>
+              <Text style={styles.skillBadgeBulletGold}>◆</Text>
               <Text style={styles.skillBadgeText}>Manual (MT) Expert</Text>
             </View>
             <View style={styles.skillBadge}>
+              <Text style={styles.skillBadgeBullet}>◆</Text>
               <Text style={styles.skillBadgeText}>Luxury Car Certified</Text>
             </View>
           </View>
@@ -90,13 +108,13 @@ export const DriverHomeScreen: React.FC = () => {
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>TODAY'S NET EARNINGS</Text>
             <Text style={styles.statValue}>₹{earnings.todayEarnings}</Text>
-            <Text style={styles.statSub}>{earnings.todayCompletedTrips} Duties completed</Text>
+            <Text style={styles.statSub}>{earnings.todayCompletedTrips} Duties Completed</Text>
           </View>
 
           <View style={styles.statCard}>
             <Text style={styles.statLabel}>DRIVING HOURS TODAY</Text>
-            <Text style={[styles.statValue, { color: '#0284C7' }]}>{driver.drivingHoursToday}h</Text>
-            <Text style={styles.statSub}>4.5h left before rest limit</Text>
+            <Text style={[styles.statValue, { color: '#0F172A' }]}>{driver.drivingHoursToday}h</Text>
+            <Text style={styles.statSub}>4.5h left before fatigue limit</Text>
           </View>
         </View>
 
@@ -105,6 +123,7 @@ export const DriverHomeScreen: React.FC = () => {
           <TouchableOpacity
             style={styles.scheduledAlertCard}
             onPress={() => navigate('SCHEDULED_RIDES')}
+            activeOpacity={0.88}
           >
             <View style={styles.scheduledAlertTop}>
               <View style={styles.badgeScheduled}>
@@ -138,6 +157,7 @@ export const DriverHomeScreen: React.FC = () => {
         <TouchableOpacity
           style={styles.marketplaceBanner}
           onPress={() => navigate('SCHEDULED_RIDES')}
+          activeOpacity={0.88}
         >
           <View style={styles.marketLeft}>
             <View style={styles.marketBadge}>
@@ -149,18 +169,27 @@ export const DriverHomeScreen: React.FC = () => {
             </Text>
           </View>
           <View style={styles.marketActionBtn}>
-            <Text style={styles.marketActionText}>Explore</Text>
+            <Text style={styles.marketActionText}>Explore →</Text>
           </View>
         </TouchableOpacity>
 
         {/* Instant Dispatch Simulator Trigger */}
         <View style={styles.simCard}>
-          <Text style={styles.simTitle}>Simulate Incoming Chauffeur Request</Text>
+          <View style={styles.simHeaderRow}>
+            <Text style={styles.simTitle}>SIMULATE INCOMING REQUEST</Text>
+            <View style={styles.simPill}>
+              <Text style={styles.simPillText}>TEST DISPATCH</Text>
+            </View>
+          </View>
           <Text style={styles.simSub}>
             Test incoming 30-second dispatch modal with car transmission & hourly duty specs.
           </Text>
-          <TouchableOpacity style={styles.simBtn} onPress={() => setShowIncomingModal(true)}>
-            <Text style={styles.simBtnText}>Trigger Instant Request</Text>
+          <TouchableOpacity
+            style={styles.simBtn}
+            onPress={() => setShowIncomingModal(true)}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.simBtnText}>Trigger Instant Chauffeur Request →</Text>
           </TouchableOpacity>
         </View>
 
@@ -189,68 +218,130 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 40
   },
+
+  /* Hero Status Banner */
   heroCard: {
-    borderRadius: 14,
-    padding: 16,
+    borderRadius: 18,
+    padding: 18,
     marginBottom: 14,
-    borderWidth: 1
+    borderWidth: 1.5,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3
   },
   heroOnline: {
-    backgroundColor: '#ECFDF5',
+    backgroundColor: '#FFFFFF',
     borderColor: '#A7F3D0'
   },
   heroOffline: {
     backgroundColor: '#FFFFFF',
-    borderColor: '#CBD5E1'
+    borderColor: '#E2E8F0'
   },
   heroTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 10
+  },
+  statusIndicatorRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8
+    gap: 6,
+    marginBottom: 3
+  },
+  statusBeacon: {
+    width: 8,
+    height: 8,
+    borderRadius: 4
+  },
+  beaconOnline: {
+    backgroundColor: '#10B981'
+  },
+  beaconOffline: {
+    backgroundColor: '#94A3B8'
   },
   heroStatusLabel: {
-    color: '#047857',
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 0.5
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 0.6
+  },
+  labelOnline: {
+    color: '#059669'
+  },
+  labelOffline: {
+    color: '#64748B'
   },
   heroStatusTitle: {
     color: '#0F172A',
     fontSize: 15,
-    fontWeight: '800',
-    marginTop: 2
+    fontWeight: '900',
+    letterSpacing: -0.2
   },
   heroToggleBtn: {
-    backgroundColor: '#0F172A',
     paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: 8
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2
+  },
+  heroToggleBtnActive: {
+    backgroundColor: '#0F172A'
+  },
+  heroToggleBtnInactive: {
+    backgroundColor: '#059669'
   },
   heroToggleText: {
     color: '#FFFFFF',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '800'
   },
   heroHint: {
-    color: '#334155',
-    fontSize: 12,
+    color: '#64748B',
+    fontSize: 11.5,
     lineHeight: 16
   },
+
+  /* Skills & Credentials */
   skillsCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 12,
-    borderWidth: 1,
+    borderRadius: 16,
+    padding: 14,
+    borderWidth: 1.5,
     borderColor: '#E2E8F0',
-    marginBottom: 12
+    marginBottom: 14,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2
+  },
+  skillsHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
   },
   skillsTitle: {
-    fontSize: 9,
-    fontWeight: '800',
-    color: '#64748B',
-    letterSpacing: 0.5,
-    marginBottom: 8
+    fontSize: 9.5,
+    fontWeight: '900',
+    color: '#0F172A',
+    letterSpacing: 0.5
+  },
+  badgeVerified: {
+    backgroundColor: '#ECFDF5',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  badgeVerifiedText: {
+    fontSize: 8,
+    fontWeight: '900',
+    color: '#047857'
   },
   badgeRow: {
     flexDirection: 'row',
@@ -258,18 +349,31 @@ const styles = StyleSheet.create({
     gap: 6
   },
   skillBadge: {
-    backgroundColor: '#F1F5F9',
+    backgroundColor: '#F8FAFC',
     paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingVertical: 5,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E2E8F0'
+    borderColor: '#E2E8F0',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4
+  },
+  skillBadgeBullet: {
+    fontSize: 7,
+    color: '#059669'
+  },
+  skillBadgeBulletGold: {
+    fontSize: 7,
+    color: '#D97706'
   },
   skillBadgeText: {
     fontSize: 10,
     fontWeight: '700',
     color: '#334155'
   },
+
+  /* Stats Row */
   statsRow: {
     flexDirection: 'row',
     gap: 12,
@@ -278,16 +382,21 @@ const styles = StyleSheet.create({
   statCard: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    borderRadius: 16,
     padding: 14,
-    borderWidth: 1,
-    borderColor: '#E2E8F0'
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2
   },
   statLabel: {
     color: '#64748B',
     fontSize: 9,
-    fontWeight: '800',
-    letterSpacing: 0.3
+    fontWeight: '900',
+    letterSpacing: 0.4
   },
   statValue: {
     color: '#047857',
@@ -297,15 +406,23 @@ const styles = StyleSheet.create({
   },
   statSub: {
     color: '#64748B',
-    fontSize: 10
+    fontSize: 10.5,
+    fontWeight: '500'
   },
+
+  /* Scheduled Alert Card */
   scheduledAlertCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    borderRadius: 16,
     padding: 16,
     borderWidth: 1.5,
     borderColor: '#059669',
-    marginBottom: 14
+    marginBottom: 14,
+    shadowColor: '#059669',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3
   },
   scheduledAlertTop: {
     flexDirection: 'row',
@@ -316,19 +433,20 @@ const styles = StyleSheet.create({
   badgeScheduled: {
     backgroundColor: '#ECFDF5',
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 3,
     borderRadius: 6,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#A7F3D0'
   },
   badgeScheduledText: {
     color: '#047857',
-    fontSize: 10,
-    fontWeight: '800'
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 0.3
   },
   alertFare: {
     color: '#047857',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '900'
   },
   alertHeading: {
@@ -352,89 +470,124 @@ const styles = StyleSheet.create({
   alertRider: {
     color: '#475569',
     fontSize: 11,
-    fontWeight: '600'
+    fontWeight: '700'
   },
   alertAction: {
     color: '#0284C7',
     fontSize: 11,
-    fontWeight: '700'
+    fontWeight: '800'
   },
+
+  /* Gig Marketplace Banner */
   marketplaceBanner: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    backgroundColor: '#0F172A',
+    borderRadius: 18,
     padding: 16,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
     marginBottom: 14,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4
   },
   marketLeft: {
     flex: 1,
     marginRight: 10
   },
   marketBadge: {
-    backgroundColor: '#EFF6FF',
+    backgroundColor: '#1E293B',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
     alignSelf: 'flex-start',
-    marginBottom: 4
+    marginBottom: 6,
+    borderWidth: 0.5,
+    borderColor: '#334155'
   },
   marketBadgeText: {
     fontSize: 8,
-    fontWeight: '800',
-    color: '#1D4ED8'
+    fontWeight: '900',
+    color: '#D4AF37',
+    letterSpacing: 0.4
   },
   marketTitle: {
     fontSize: 13,
-    fontWeight: '800',
-    color: '#0F172A'
+    fontWeight: '900',
+    color: '#FFFFFF'
   },
   marketSub: {
     fontSize: 11,
-    color: '#64748B',
-    marginTop: 2
+    color: '#94A3B8',
+    marginTop: 3,
+    lineHeight: 14
   },
   marketActionBtn: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderRadius: 8
+    borderRadius: 10
   },
   marketActionText: {
-    color: '#FFFFFF',
+    color: '#0F172A',
     fontSize: 11,
-    fontWeight: '800'
+    fontWeight: '900'
   },
+
+  /* Simulator Card */
   simCard: {
     backgroundColor: '#FFFBEB',
-    borderRadius: 14,
-    padding: 14,
-    borderWidth: 1,
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1.5,
     borderColor: '#FDE68A'
   },
+  simHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4
+  },
   simTitle: {
-    color: '#D97706',
-    fontSize: 12,
-    fontWeight: '800'
+    color: '#92400E',
+    fontSize: 10.5,
+    fontWeight: '900',
+    letterSpacing: 0.4
+  },
+  simPill: {
+    backgroundColor: '#FEF3C7',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  simPillText: {
+    color: '#B45309',
+    fontSize: 7.5,
+    fontWeight: '900'
   },
   simSub: {
     color: '#78350F',
     fontSize: 11,
-    marginVertical: 4
+    marginTop: 2,
+    lineHeight: 15
   },
   simBtn: {
     backgroundColor: '#D97706',
-    paddingVertical: 9,
-    borderRadius: 8,
+    paddingVertical: 11,
+    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 6
+    marginTop: 10,
+    shadowColor: '#D97706',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 2
   },
   simBtnText: {
     color: '#FFFFFF',
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '800'
   }
 });

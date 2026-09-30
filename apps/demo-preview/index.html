@@ -339,9 +339,9 @@
     }
     .service-mode-btn:hover { background: var(--bg-subtle); }
     .service-mode-btn.active {
-      background: #FFFFFF;
+      background: #0F172A;
       border-color: #0F172A;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
     }
     .service-btn-top {
       display: flex;
@@ -355,7 +355,7 @@
       color: var(--text-700);
     }
     .service-mode-btn.active .service-mode-name {
-      color: var(--text-900);
+      color: #FFFFFF;
     }
     .service-badge-pill {
       font-size: 8px;
@@ -366,20 +366,34 @@
       color: var(--emerald-700);
       border: 1px solid var(--emerald-border);
     }
+    .service-mode-btn.active .service-badge-pill {
+      background: #FEF3C7;
+      color: #92400E;
+      border-color: #FDE68A;
+      font-weight: 900;
+    }
     .service-badge-pill.cab {
       background: var(--blue-50);
       color: var(--blue-600);
       border-color: var(--blue-border);
     }
+    .service-mode-btn.active .service-badge-pill.cab {
+      background: #ECFDF5;
+      color: #047857;
+      border-color: #A7F3D0;
+    }
     .service-mode-desc {
       font-size: 10px;
       color: var(--text-500);
+    }
+    .service-mode-btn.active .service-mode-desc {
+      color: #CBD5E1;
     }
 
     /* Cards */
     .pro-card {
       background: #FFFFFF;
-      border: 1px solid var(--border-light);
+      border: 1.5px solid var(--border-light);
       border-radius: var(--radius-lg);
       padding: 14px 16px;
       margin: 0 14px 12px 14px;
@@ -416,6 +430,8 @@
       justify-content: space-between;
       align-items: center;
       transition: all 0.15s;
+      position: relative;
+      overflow: hidden;
     }
     .chauffeur-pkg-card:hover {
       border-color: var(--border-focus);
@@ -424,7 +440,16 @@
     .chauffeur-pkg-card.active {
       border-color: #0F172A;
       background: #FFFFFF;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+    .chauffeur-pkg-card.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #D4AF37;
     }
     .pkg-title-row {
       display: flex;
@@ -447,8 +472,11 @@
     .pkg-price {
       font-size: 16px;
       font-weight: 900;
-      color: var(--emerald-700);
+      color: #0F172A;
       font-family: 'JetBrains Mono', monospace;
+    }
+    .chauffeur-pkg-card.active .pkg-price {
+      color: var(--emerald-700);
     }
     .pkg-hours {
       font-size: 9px;
@@ -666,20 +694,50 @@
 
     /* Timer HUD */
     .timer-hud-card {
-      background: #FFFFFF;
-      border: 2px solid var(--emerald-border);
+      background: #090D16;
+      border: 1.5px solid #1E293B;
       border-radius: var(--radius-lg);
-      padding: 16px;
+      padding: 18px 16px;
       text-align: center;
       margin: 10px 14px 12px 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
     .timer-digits {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 30px;
+      font-size: 34px;
       font-weight: 900;
-      color: var(--text-900);
-      letter-spacing: 2px;
-      margin: 4px 0;
+      color: #FFFFFF;
+      letter-spacing: 3px;
+      margin: 6px 0;
+    }
+    .otp-hud-card {
+      background: #FFFBEB;
+      border: 1.5px solid #FDE68A;
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      text-align: center;
+      margin: 0 14px 12px 14px;
+    }
+    .pin-boxes-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 8px 0;
+    }
+    .pin-digit-box {
+      width: 40px;
+      height: 44px;
+      background: #FFFFFF;
+      border: 1.5px solid #F59E0B;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 900;
+      color: #0F172A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
 
     /* Driver Specific Elements */
@@ -2205,22 +2263,27 @@
           container.innerHTML = `
             <!-- Live Duty Elapsed Clock HUD -->
             <div class="timer-hud-card">
-              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700); letter-spacing: 0.5px;">
-                ACTIVE CHAUFFEUR DUTY CLOCK
+              <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 10px; font-weight: 900; color: #10B981; letter-spacing: 0.6px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+                LIVE CHAUFFEUR DUTY CLOCK
               </div>
               <div class="timer-digits" id="duty-elapsed-digits">${formatTime(b.elapsedSeconds)}</div>
-              <div style="font-size: 11px; color: var(--text-500);">
-                Total package: ${b.durationHours} hrs • Extra rate: ₹${b.overtimeRate}/hr
+              <div style="font-size: 11px; color: #94A3B8; font-weight: 600;">
+                Package: ${b.durationHours} hrs duty • Overtime: ₹${b.overtimeRate}/hr extra
               </div>
             </div>
 
             <!-- OTP Card -->
-            <div class="pro-card" style="text-align: center; border-color: var(--blue-border); background: var(--blue-50); margin-top: 0;">
-              <div style="font-size: 10px; font-weight: 800; color: var(--blue-600); letter-spacing: 0.5px;">DUTY VERIFICATION PIN</div>
-              <div style="font-size: 24px; font-weight: 900; color: var(--text-900); letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; margin: 4px 0;">
-                ${b.otp}
+            <div class="otp-hud-card">
+              <div style="font-size: 10px; font-weight: 900; color: #92400E; letter-spacing: 0.5px;">
+                KEY HANDOVER VERIFICATION PIN
               </div>
-              <div style="font-size: 10px; color: var(--text-500);">Share with chauffeur when handing over car keys</div>
+              <div class="pin-boxes-row">
+                ${b.otp.split('').map(d => `<div class="pin-digit-box">${d}</div>`).join('')}
+              </div>
+              <div style="font-size: 10.5px; color: #78350F; line-height: 14px;">
+                Share with Chauffeur when handing over car keys to activate official duty insurance.
+              </div>
             </div>
 
             <!-- Assigned Driver Profile -->

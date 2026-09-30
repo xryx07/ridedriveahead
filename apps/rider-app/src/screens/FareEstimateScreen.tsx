@@ -149,7 +149,7 @@ export const FareEstimateScreen: React.FC = () => {
 
                 <Text style={styles.cardTitle}>{selectedChauffeurPkg.name}</Text>
                 <Text style={styles.cardSub}>
-                  {selectedChauffeurPkg.hoursIncluded} hours duty for your personal car
+                  {selectedChauffeurPkg.hoursIncluded} hours duty for your personal car • Overtime ₹{selectedChauffeurPkg.overtimeRatePerHour}/hr
                 </Text>
 
                 <View style={styles.divider} />
@@ -178,26 +178,41 @@ export const FareEstimateScreen: React.FC = () => {
                 <View style={styles.detailRow}>
                   <Text style={styles.detailKey}>Extra Duty Rate:</Text>
                   <Text style={[styles.detailVal, { color: '#047857' }]}>
-                    ₹{selectedChauffeurPkg.overtimeRatePerHour} / hour
+                    ₹{selectedChauffeurPkg.overtimeRatePerHour} / extra hour
                   </Text>
                 </View>
               </View>
 
               {/* Verified Driver Match Guarantee */}
               <View style={styles.trustBox}>
-                <Text style={styles.trustBoxTitle}>Matched Pro Driver Qualification</Text>
+                <View style={styles.trustBoxHeader}>
+                  <Text style={styles.trustBoxBadge}>VERIFIED QUALIFICATION</Text>
+                  <Text style={styles.trustBoxTitle}>Matched Chauffeur Credentials</Text>
+                </View>
                 <Text style={styles.trustBoxDesc}>
-                  Your assigned driver holds an LMV commercial certification, verified police background
+                  Your assigned chauffeur holds an LMV commercial certification, verified police background
                   check, and minimum 5+ years experience driving {carTransmission.toLowerCase()} vehicles.
                 </Text>
               </View>
 
               {/* Handover Instructions */}
               <View style={styles.cardBox}>
-                <Text style={styles.sectionTitle}>Trip Handover Checklist</Text>
-                <Text style={styles.bulletItem}>✓ Check fuel gauge & odometer reading together</Text>
-                <Text style={styles.bulletItem}>✓ Note any existing dents or exterior scratches</Text>
-                <Text style={styles.bulletItem}>✓ Share 4-digit PIN to start official duty clock</Text>
+                <View style={styles.cardBoxHeader}>
+                  <Text style={styles.sectionTitle}>VEHICLE HANDOVER CHECKLIST</Text>
+                  <Text style={styles.checklistBadge}>3-POINT CHECK</Text>
+                </View>
+                <View style={styles.checkListItemRow}>
+                  <View style={styles.checkBadgeCircle}><Text style={styles.checkIconText}>✓</Text></View>
+                  <Text style={styles.bulletItem}>Check fuel gauge & odometer reading together before trip</Text>
+                </View>
+                <View style={styles.checkListItemRow}>
+                  <View style={styles.checkBadgeCircle}><Text style={styles.checkIconText}>✓</Text></View>
+                  <Text style={styles.bulletItem}>Walkaround inspection for exterior scratches</Text>
+                </View>
+                <View style={styles.checkListItemRow}>
+                  <View style={styles.checkBadgeCircle}><Text style={styles.checkIconText}>✓</Text></View>
+                  <Text style={styles.bulletItem}>Share 4-digit PIN to start official insured duty clock</Text>
+                </View>
               </View>
             </View>
           ) : (
@@ -206,7 +221,10 @@ export const FareEstimateScreen: React.FC = () => {
             /* ================================================= */
             <View>
               <View style={styles.proCard}>
-                <Text style={styles.sectionTitle}>Select Cab Tier</Text>
+                <View style={styles.cardBoxHeader}>
+                  <Text style={styles.sectionTitle}>SELECT CAB TIER</Text>
+                  <Text style={styles.guaranteePill}>UPFRONT FARE</Text>
+                </View>
                 {estimate?.tiers.map((tier) => {
                   const isSelected = chosenTier?.vehicleType === tier.vehicleType;
                   return (
@@ -214,15 +232,23 @@ export const FareEstimateScreen: React.FC = () => {
                       key={tier.vehicleType}
                       style={[styles.tierRow, isSelected && styles.tierRowSelected]}
                       onPress={() => setChosenTier(tier)}
+                      activeOpacity={0.85}
                     >
                       <View style={{ flex: 1 }}>
-                        <Text style={[styles.tierName, isSelected && styles.tierNameSelected]}>
-                          {tier.tierName}
-                        </Text>
+                        <View style={styles.tierNameRow}>
+                          <Text style={[styles.tierName, isSelected && styles.tierNameSelected]}>
+                            {tier.tierName}
+                          </Text>
+                          {isSelected && (
+                            <View style={styles.selectedTierBadge}>
+                              <Text style={styles.selectedTierText}>✓ SELECTED</Text>
+                            </View>
+                          )}
+                        </View>
                         <Text style={styles.tierDesc}>{tier.description}</Text>
                         <Text style={styles.tierEta}>ETA: {tier.etaMinutes} mins</Text>
                       </View>
-                      <Text style={styles.tierFare}>₹{tier.totalFare}</Text>
+                      <Text style={[styles.tierFare, isSelected && styles.tierFareSelected]}>₹{tier.totalFare}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -232,27 +258,34 @@ export const FareEstimateScreen: React.FC = () => {
 
           {/* Payment Method Selector */}
           <View style={styles.proCard}>
-            <Text style={styles.sectionTitle}>Payment Method</Text>
+            <View style={styles.cardBoxHeader}>
+              <Text style={styles.sectionTitle}>PAYMENT METHOD</Text>
+              <Text style={styles.secureBadge}>ENCRYPTED</Text>
+            </View>
             <View style={styles.paymentRow}>
-              {(['UPI', 'CARD', 'CASH'] as PaymentMethod[]).map((method) => (
-                <TouchableOpacity
-                  key={method}
-                  style={[styles.paymentPill, paymentMethod === method && styles.paymentPillActive]}
-                  onPress={() => setPaymentMethod(method)}
-                >
-                  <Text
-                    style={[
-                      styles.paymentPillText,
-                      paymentMethod === method && styles.paymentPillTextActive
-                    ]}
+              {(['UPI', 'CARD', 'CASH'] as PaymentMethod[]).map((method) => {
+                const isPayActive = paymentMethod === method;
+                return (
+                  <TouchableOpacity
+                    key={method}
+                    style={[styles.paymentPill, isPayActive ? styles.paymentPillActive : styles.paymentPillInactive]}
+                    onPress={() => setPaymentMethod(method)}
+                    activeOpacity={0.85}
                   >
-                    {method === 'UPI' ? 'UPI' : method === 'CARD' ? 'Card' : 'Cash'}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.paymentPillText,
+                        isPayActive ? styles.paymentPillTextActive : styles.paymentPillTextInactive
+                      ]}
+                    >
+                      {method === 'UPI' ? 'UPI AutoPay' : method === 'CARD' ? 'Credit / Debit' : 'Cash on Duty'}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
             <Text style={styles.paymentSub}>
-              Amount is locked upfront and settled automatically upon duty completion.
+              Amount is locked upfront and auto-settled upon verified duty completion.
             </Text>
           </View>
 
@@ -261,13 +294,14 @@ export const FareEstimateScreen: React.FC = () => {
             style={[styles.confirmBtn, isSubmitting && { opacity: 0.7 }]}
             onPress={handleConfirmBooking}
             disabled={isSubmitting}
+            activeOpacity={0.88}
           >
             <Text style={styles.confirmBtnText}>
               {isSubmitting
                 ? 'Securing Pro Driver...'
                 : serviceMode === 'HIRE_DRIVER'
-                ? `Confirm Chauffeur • ₹${selectedChauffeurPkg.baseFare}`
-                : `Confirm Booking • ₹${chosenTier?.totalFare}`}
+                ? `Confirm Verified Chauffeur • ₹${selectedChauffeurPkg.baseFare} →`
+                : `Confirm Booking • ₹${chosenTier?.totalFare} →`}
             </Text>
           </TouchableOpacity>
 
@@ -300,67 +334,75 @@ const styles = StyleSheet.create({
     color: '#64748B',
     marginTop: 12,
     fontSize: 13,
-    fontWeight: '600'
+    fontWeight: '700'
   },
   proCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    borderRadius: 16,
     padding: 16,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#E2E8F0',
-    marginBottom: 12
+    marginBottom: 12,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 2
   },
   cardHeaderRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 6
+    marginBottom: 8
   },
   badgeGreen: {
     backgroundColor: '#ECFDF5',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 4,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#A7F3D0'
   },
   badgeGreenText: {
     fontSize: 9,
-    fontWeight: '800',
-    color: '#047857'
+    fontWeight: '900',
+    color: '#047857',
+    letterSpacing: 0.3
   },
   cardHeaderPrice: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '900',
-    color: '#047857'
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: '800',
     color: '#0F172A'
   },
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#0F172A',
+    letterSpacing: -0.3
+  },
   cardSub: {
-    fontSize: 12,
+    fontSize: 11.5,
     color: '#64748B',
-    marginTop: 2
+    marginTop: 2,
+    lineHeight: 16
   },
   divider: {
     height: 1,
-    backgroundColor: '#E2E8F0',
+    backgroundColor: '#F1F5F9',
     marginVertical: 12
   },
   detailRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 6
+    marginBottom: 8
   },
   detailKey: {
-    fontSize: 11,
+    fontSize: 11.5,
     fontWeight: '700',
     color: '#64748B'
   },
   detailVal: {
-    fontSize: 11,
+    fontSize: 11.5,
     fontWeight: '700',
     color: '#0F172A',
     flex: 1,
@@ -368,69 +410,161 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   trustBox: {
-    backgroundColor: '#EFF6FF',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#BFDBFE',
-    marginBottom: 12
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+    marginBottom: 12,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2
+  },
+  trustBoxHeader: {
+    marginBottom: 6
+  },
+  trustBoxBadge: {
+    fontSize: 8.5,
+    fontWeight: '900',
+    color: '#2563EB',
+    letterSpacing: 0.5,
+    marginBottom: 2
   },
   trustBoxTitle: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#1D4ED8'
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#0F172A'
   },
   trustBoxDesc: {
     fontSize: 11,
-    color: '#334155',
+    color: '#475569',
     lineHeight: 16,
-    marginTop: 4
+    marginTop: 2
   },
   cardBox: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    borderRadius: 16,
     padding: 16,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#E2E8F0',
-    marginBottom: 12
+    marginBottom: 12,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2
+  },
+  cardBoxHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
   },
   sectionTitle: {
-    fontSize: 12,
-    fontWeight: '800',
+    fontSize: 11,
+    fontWeight: '900',
     color: '#0F172A',
+    letterSpacing: 0.5
+  },
+  checklistBadge: {
+    backgroundColor: '#FEF3C7',
+    color: '#92400E',
+    fontSize: 8,
+    fontWeight: '900',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  guaranteePill: {
+    backgroundColor: '#ECFDF5',
+    color: '#047857',
+    fontSize: 8,
+    fontWeight: '900',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  secureBadge: {
+    backgroundColor: '#F1F5F9',
+    color: '#475569',
+    fontSize: 8,
+    fontWeight: '900',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  checkListItemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
     marginBottom: 8
+  },
+  checkBadgeCircle: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: '#ECFDF5',
+    borderWidth: 1,
+    borderColor: '#A7F3D0',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  checkIconText: {
+    color: '#047857',
+    fontSize: 10,
+    fontWeight: '900'
   },
   bulletItem: {
     fontSize: 11,
-    color: '#475569',
+    color: '#334155',
     fontWeight: '600',
-    lineHeight: 18
+    flex: 1
   },
   tierRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#F1F5F9'
   },
   tierRowSelected: {
     backgroundColor: '#F8FAFC',
-    borderRadius: 8,
-    paddingHorizontal: 8
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    borderBottomColor: 'transparent'
+  },
+  tierNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6
   },
   tierName: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '700',
     color: '#334155'
   },
   tierNameSelected: {
     color: '#0F172A',
-    fontWeight: '800'
+    fontWeight: '900'
+  },
+  selectedTierBadge: {
+    backgroundColor: '#0F172A',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  selectedTierText: {
+    color: '#FFFFFF',
+    fontSize: 8,
+    fontWeight: '900'
   },
   tierDesc: {
     fontSize: 11,
-    color: '#64748B'
+    color: '#64748B',
+    marginTop: 2
   },
   tierEta: {
     fontSize: 10,
@@ -439,9 +573,14 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   tierFare: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '800',
     color: '#0F172A'
+  },
+  tierFareSelected: {
+    color: '#047857',
+    fontSize: 18,
+    fontWeight: '900'
   },
   paymentRow: {
     flexDirection: 'row',
@@ -450,39 +589,55 @@ const styles = StyleSheet.create({
   },
   paymentPill: {
     flex: 1,
-    paddingVertical: 9,
-    borderRadius: 8,
-    backgroundColor: '#F8FAFC',
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1.5,
     alignItems: 'center'
+  },
+  paymentPillInactive: {
+    backgroundColor: '#F8FAFC',
+    borderColor: '#E2E8F0'
   },
   paymentPillActive: {
     backgroundColor: '#0F172A',
-    borderColor: '#0F172A'
+    borderColor: '#0F172A',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3
   },
   paymentPillText: {
-    fontSize: 11,
-    fontWeight: '700',
+    fontSize: 10.5,
+    fontWeight: '700'
+  },
+  paymentPillTextInactive: {
     color: '#475569'
   },
   paymentPillTextActive: {
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    fontWeight: '800'
   },
   paymentSub: {
     fontSize: 10,
     color: '#64748B',
-    marginTop: 4
+    marginTop: 6
   },
   confirmBtn: {
-    backgroundColor: '#047857',
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center'
+    backgroundColor: '#0F172A',
+    paddingVertical: 15,
+    borderRadius: 14,
+    alignItems: 'center',
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4
   },
   confirmBtnText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '800'
+    fontWeight: '800',
+    letterSpacing: 0.3
   }
 });
