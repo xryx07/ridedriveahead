@@ -185,10 +185,10 @@ export const riderApi = {
     return newBooking;
   },
 
-  triggerSos: async (riderId: string, lat: number, lng: number): Promise<{ success: boolean; message: string }> => {
+  shareLiveTrip: async (riderId: string, bookingId: string): Promise<{ success: boolean; message: string }> => {
     return {
       success: true,
-      message: 'Emergency alert dispatched to Emergency Contacts and Police Control Room with live GPS.'
+      message: 'Live trip tracking link shared with trusted emergency contacts.'
     };
   }
 };

@@ -50,16 +50,6 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack = false, backTo 
       </View>
 
       <View style={styles.rightContainer}>
-        {/* Quick Emergency SOS button */}
-        <TouchableOpacity
-          style={styles.sosButton}
-          onPress={() => navigate('SOS')}
-          activeOpacity={0.8}
-        >
-          <View style={styles.sosDot} />
-          <Text style={styles.sosText}>SOS</Text>
-        </TouchableOpacity>
-
         {/* Profile Avatar */}
         <TouchableOpacity
           style={styles.profileButton}
@@ -180,29 +170,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     flexShrink: 0
-  },
-  sosButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#FEF2F2',
-    borderWidth: 1,
-    borderColor: '#FECACA',
-    paddingHorizontal: 9,
-    paddingVertical: 5,
-    borderRadius: 8
-  },
-  sosDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#DC2626'
-  },
-  sosText: {
-    color: '#DC2626',
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 0.4
   },
   profileButton: {
     width: 34,

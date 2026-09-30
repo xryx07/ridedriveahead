@@ -35,7 +35,7 @@ RideDriveAhead is an enterprise-grade, two-sided mobility platform built around 
    - Mandatory rest break nudges and intelligent scheduling prevents assigning trips that violate driver rest intervals.
 
 4. **Dual Premium Mobile Apps**:
-   - **Rider App**: Seamless phone OTP login, instant vs scheduled toggle, interactive airport quick-select, upfront fare breakdown, live tracking with 4-digit start OTP, in-app call/chat, and one-tap emergency SOS.
+   - **Rider App**: Seamless phone OTP login, instant vs scheduled toggle, interactive airport quick-select, upfront fare breakdown, live tracking with 4-digit start OTP, in-app call/chat, and live trip sharing & safety monitoring.
    - **Driver App**: KYC onboarding & status tracker, Online/Offline availability toggle, 30s instant dispatch modal, **Dedicated Scheduled Airport Rides Pool**, turn-by-turn navigation HUD with OTP verification, earnings dashboard, and rest-break meter.
 
 ---

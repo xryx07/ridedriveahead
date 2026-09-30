@@ -98,11 +98,11 @@ export const LiveTrackingScreen: React.FC = () => {
           </View>
         </View>
         <TouchableOpacity
-          style={styles.sosTopBtn}
-          onPress={() => navigate('SOS')}
+          style={styles.shareTopBtn}
+          onPress={() => alert('Live trip tracking link copied to clipboard.')}
           activeOpacity={0.8}
         >
-          <Text style={styles.sosTopText}>SOS</Text>
+          <Text style={styles.shareTopText}>Share</Text>
         </TouchableOpacity>
       </View>
 
@@ -334,11 +334,11 @@ export const LiveTrackingScreen: React.FC = () => {
 
             <View style={styles.auxActionsRow}>
               <TouchableOpacity
-                style={styles.sosButton}
-                onPress={() => navigate('SOS')}
+                style={styles.shareActionBtn}
+                onPress={() => alert('Live tracking link shared with emergency contacts.')}
                 activeOpacity={0.85}
               >
-                <Text style={styles.sosButtonText}>⚠️ Emergency SOS</Text>
+                <Text style={styles.shareActionText}>↗ Share Live Trip</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -420,19 +420,18 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600'
   },
-  sosTopBtn: {
-    backgroundColor: 'rgba(239, 68, 68, 0.15)',
-    paddingVertical: 8,
+  shareTopBtn: {
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    paddingVertical: 6,
     paddingHorizontal: 12,
-    borderRadius: 16,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.35)'
+    borderColor: 'rgba(255, 255, 255, 0.12)'
   },
-  sosTopText: {
-    color: '#EF4444',
+  shareTopText: {
+    color: '#D2FF00',
     fontSize: 11.5,
-    fontWeight: '900',
-    letterSpacing: 0.5
+    fontWeight: '800'
   },
 
   scrollArea: {
@@ -920,17 +919,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10
   },
-  sosButton: {
+  shareActionBtn: {
     flex: 1,
-    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    backgroundColor: '#1E293B',
     paddingVertical: 12,
     borderRadius: 14,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(239, 68, 68, 0.4)'
+    borderColor: 'rgba(210, 255, 0, 0.3)'
   },
-  sosButtonText: {
-    color: '#EF4444',
+  shareActionText: {
+    color: '#D2FF00',
     fontSize: 12,
     fontWeight: '800'
   },

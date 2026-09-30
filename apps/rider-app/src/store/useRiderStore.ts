@@ -18,8 +18,7 @@ export type ScreenName =
   | 'LIVE_TRACKING'
   | 'TRIP_SUMMARY'
   | 'RIDE_HISTORY'
-  | 'PROFILE'
-  | 'SOS';
+  | 'PROFILE';
 
 interface RiderState {
   user: UserProfile | null;

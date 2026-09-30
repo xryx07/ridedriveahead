@@ -326,7 +326,7 @@ export const HomeScreen: React.FC = () => {
         {/* SAFETY FIRST BANNER */}
         <TouchableOpacity
           style={styles.safetyCard}
-          onPress={() => navigate('SOS')}
+          onPress={() => navigate('PROFILE')}
           activeOpacity={0.88}
         >
           <View style={styles.safetyIconCircle}>

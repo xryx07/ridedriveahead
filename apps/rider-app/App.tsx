@@ -19,7 +19,6 @@ import { LiveTrackingScreen } from './src/screens/LiveTrackingScreen';
 import { TripSummaryScreen } from './src/screens/TripSummaryScreen';
 import { RideHistoryScreen } from './src/screens/RideHistoryScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
-import { SosScreen } from './src/screens/SosScreen';
 
 export default function App() {
   const { currentScreen, isAuthenticated } = useRiderStore();
@@ -44,8 +43,6 @@ export default function App() {
         return <RideHistoryScreen />;
       case 'PROFILE':
         return <ProfileScreen />;
-      case 'SOS':
-        return <SosScreen />;
       default:
         return <HomeScreen />;
     }

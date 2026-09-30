@@ -94,8 +94,8 @@ export const ProfileScreen: React.FC = () => {
 
         {/* Emergency Contacts */}
         <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Emergency SOS Settings</Text>
-          <Text style={styles.sectionSub}>This contact is alerted with live GPS when you press the SOS button</Text>
+          <Text style={styles.sectionTitle}>Trusted Emergency Contact</Text>
+          <Text style={styles.sectionSub}>This contact is shared with live GPS and trip status updates</Text>
 
           <TextInput
             style={styles.inputField}
