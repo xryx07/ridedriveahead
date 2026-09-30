@@ -6,40 +6,42 @@
   <title>RideDriveAhead — Two ways. One platform. Book a Cab | Hire a Driver</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Deep Navy & Electric Lime Brand Palette */
-      --bg-space: #070B19;
-      --bg-app: #0B132B;
-      --bg-card: #131C38;
-      --bg-card-hover: #19264D;
-      --bg-card-light: #FFFFFF;
+      /* Brand Palette matching user mockup image */
+      --bg-dark: #070B19;
+      --bg-surface: #0B132B;
+      --bg-card: #101935;
+      --bg-card-hover: #16234D;
+      --bg-card-inner: #0E1630;
+      --bg-light: #FFFFFF;
       --border-dark: rgba(255, 255, 255, 0.08);
       --border-lime: rgba(210, 255, 0, 0.35);
 
-      /* Primary Colors */
-      --electric-lime: #D2FF00;
-      --lime-glow: rgba(210, 255, 0, 0.4);
-      --navy-deep: #0A1128;
-      --emerald-500: #10B981;
-      --emerald-400: #34D399;
-      --amber-400: #FBBF24;
-      --red-500: #EF4444;
+      /* Electric Lime & Accent Colors */
+      --lime: #D2FF00;
+      --lime-dark: #0A1128;
+      --lime-glow: rgba(210, 255, 0, 0.3);
+      --emerald: #10B981;
+      --emerald-dark: #047857;
+      --amber: #FBBF24;
+      --red: #EF4444;
+      --blue: #3B82F6;
 
       /* Text Hierarchy */
       --text-white: #FFFFFF;
-      --text-slate: #CBD5E1;
+      --text-light: #E2E8F0;
       --text-muted: #94A3B8;
       --text-dim: #64748B;
       --text-navy: #0A1128;
 
       /* Radius */
-      --radius-2xl: 28px;
-      --radius-xl: 22px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
+      --radius-2xl: 24px;
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
     }
 
     * {
@@ -51,294 +53,179 @@
     }
 
     body {
-      background-color: var(--bg-space);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(210, 255, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 100% 100%, 28px 28px;
+      background-color: var(--bg-dark);
       color: var(--text-white);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Master Top Bar for View Switching */
+    .master-view-bar {
+      background: #060914;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 24px 16px 50px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
     }
-
-    /* Master Header */
-    header {
-      text-align: center;
-      margin-bottom: 24px;
-      max-width: 980px;
-      width: 100%;
-    }
-
-    .brand-pill-wrap {
-      display: inline-flex;
+    .view-bar-brand {
+      display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(19, 28, 56, 0.85);
-      backdrop-filter: blur(12px);
-      padding: 8px 24px;
-      border-radius: 30px;
-      border: 1px solid var(--border-lime);
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
     }
-
-    .brand-title {
-      font-size: 18px;
+    .brand-logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
       font-weight: 900;
       color: var(--text-white);
-      letter-spacing: -0.2px;
     }
-    .brand-title span { color: var(--electric-lime); }
-
-    .brand-tagline {
-      color: var(--text-slate);
-      font-size: 13.5px;
-      font-weight: 500;
-      margin-top: 8px;
-    }
-
-    .pill-badges {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .pill-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-dark);
-      color: var(--text-slate);
-    }
-    .pill-badge.lime {
-      background: rgba(210, 255, 0, 0.12);
-      border-color: var(--border-lime);
-      color: var(--electric-lime);
-    }
-    .pill-badge.green {
-      background: rgba(16, 185, 129, 0.15);
-      border-color: rgba(16, 185, 129, 0.3);
-      color: var(--emerald-400);
-    }
-
-    /* Simulator Stage */
-    .simulator-stage {
-      display: flex;
-      gap: 36px;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 960px;
-    }
-
-    .device-column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .device-label {
-      font-size: 12px;
+    .brand-logo-badge span { color: var(--lime); }
+    .brand-mode-pill {
+      font-size: 9.5px;
       font-weight: 800;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-    }
-
-    .device-chip {
-      font-size: 10px;
       padding: 3px 8px;
-      border-radius: 6px;
-      font-weight: 800;
-    }
-    .chip-rider { background: rgba(210, 255, 0, 0.15); color: var(--electric-lime); border: 1px solid var(--border-lime); }
-    .chip-driver { background: rgba(16, 185, 129, 0.18); color: var(--emerald-400); border: 1px solid rgba(16, 185, 129, 0.4); }
-
-    /* Phone Shell */
-    .phone-frame {
-      width: 400px;
-      height: 840px;
-      background: var(--bg-app);
-      border-radius: 46px;
-      border: 8px solid #1E293B;
-      box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    /* Dynamic Island & Status Bar */
-    .phone-statusbar {
-      height: 40px;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      z-index: 50;
-      background: var(--bg-app);
-      position: relative;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      flex-shrink: 0;
-    }
-    .status-time {
-      font-size: 12px;
-      font-weight: 900;
-      color: var(--text-white);
-      width: 48px;
-    }
-    .dynamic-island {
-      width: 96px;
-      height: 20px;
-      background: #000000;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 9px;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 60;
+      background: rgba(210, 255, 0, 0.15);
+      color: var(--lime);
+      border: 1px solid var(--border-lime);
+      letter-spacing: 0.4px;
     }
-    .island-lens { width: 7px; height: 7px; border-radius: 50%; background: #1E293B; }
-    .island-sensor { width: 5px; height: 5px; border-radius: 50%; background: #334155; }
-    .status-right { display: flex; align-items: center; gap: 6px; font-size: 10px; }
 
-    /* Screen Scrollable Body */
-    .screen-content {
-      flex: 1;
-      overflow-y: auto;
+    .view-switcher-pills {
       display: flex;
-      flex-direction: column;
-      position: relative;
-      background: var(--bg-app);
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px;
+      border-radius: 24px;
+      border: 1px solid var(--border-dark);
     }
-    .screen-content::-webkit-scrollbar { width: 3px; }
-    .screen-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
-
-    /* Bottom Nav Bar */
-    .app-bottom-nav {
-      height: 62px;
-      background: var(--navy-deep);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 10px;
-      flex-shrink: 0;
-      z-index: 40;
-    }
-    .nav-tab-btn {
+    .view-pill-btn {
       background: none;
       border: none;
       color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .view-pill-btn.active {
+      background: var(--lime);
+      color: var(--lime-dark);
+      font-weight: 900;
+      box-shadow: 0 2px 10px var(--lime-glow);
+    }
+
+    /* Overall Web App Shell */
+    .webapp-shell {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 54px);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 210px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-dark);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      font-size: 9.5px;
-      font-weight: 700;
-      cursor: pointer;
-      position: relative;
-      padding: 6px 12px;
-      transition: color 0.15s;
+      padding: 20px 14px;
+      flex-shrink: 0;
     }
-    .nav-tab-btn.active {
-      color: var(--text-white);
-    }
-    .nav-tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: 2px;
-      width: 4px;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--electric-lime);
-    }
-    .nav-tab-icon {
-      font-size: 16px;
-    }
-
-    /* Common Components & Utility Classes */
-    .btn-lime {
-      background: var(--electric-lime);
-      color: var(--navy-deep);
-      border: none;
-      border-radius: var(--radius-lg);
-      font-size: 13.5px;
-      font-weight: 900;
-      padding: 14px 20px;
-      cursor: pointer;
+    .sidebar-brand {
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 8px;
-      box-shadow: 0 4px 16px var(--lime-glow);
-      transition: transform 0.1s, opacity 0.15s;
-    }
-    .btn-lime:hover {
-      opacity: 0.95;
-      transform: translateY(-1px);
-    }
-    .btn-lime:active {
-      transform: translateY(0);
-    }
-
-    /* ================================================= */
-    /* SCREEN 1: RIDER HOME STYLES                       */
-    /* ================================================= */
-    .home-top-bar {
-      padding: 14px 18px 8px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .greeting-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    .greeting-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 900;
       color: var(--text-white);
-      margin-top: 1px;
+      margin-bottom: 24px;
+      padding-left: 6px;
     }
-    .city-pill {
-      display: inline-flex;
+    .sidebar-brand span { color: var(--lime); }
+    .sidebar-brand-icon {
+      width: 26px;
+      height: 26px;
+      background: var(--lime);
+      border-radius: 6px;
+      display: flex;
       align-items: center;
-      gap: 4px;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10.5px;
-      color: var(--text-slate);
-      font-weight: 700;
-      margin-top: 5px;
-      border: 1px solid var(--border-dark);
+      justify-content: center;
+      font-size: 14px;
     }
-    .notif-bell-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 19px;
-      background: rgba(255, 255, 255, 0.08);
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-white);
+    }
+    .nav-item.active {
+      background: rgba(210, 255, 0, 0.15);
+      color: var(--lime);
+      font-weight: 800;
+    }
+    .nav-icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content Area */
+    .main-viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-dark);
+      overflow-y: auto;
+      height: calc(100vh - 54px);
+    }
+
+    /* Top Web Header Bar */
+    .top-header-bar {
+      height: 60px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .header-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-dark);
       display: flex;
       align-items: center;
@@ -347,1755 +234,2181 @@
       cursor: pointer;
       position: relative;
     }
-    .notif-dot {
+    .header-dot {
       position: absolute;
-      top: 9px;
-      right: 9px;
+      top: 8px;
+      right: 8px;
       width: 6px;
       height: 6px;
       border-radius: 3px;
-      background: var(--electric-lime);
+      background: var(--lime);
     }
-
-    /* Hero Dual Services Row */
-    .hero-dual-row {
+    .user-profile-badge {
       display: flex;
-      gap: 12px;
-      padding: 12px 18px;
-    }
-    .hero-card {
-      flex: 1;
-      height: 190px;
-      border-radius: 24px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      position: relative;
-      overflow: hidden;
     }
-    .hero-card:hover {
-      transform: translateY(-2px);
+    .user-avatar-img {
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      background: #1E293B;
+      border: 1.5px solid var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--lime);
     }
-
-    /* Left: Book a Cab (Navy) */
-    .hero-card.cab-card {
-      background: var(--navy-deep);
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 24px -5px rgba(0, 0, 0, 0.5);
-    }
-    .hero-card.cab-card .hero-tag {
-      background: rgba(210, 255, 0, 0.15);
-      color: var(--electric-lime);
-      border: 1px solid var(--border-lime);
-    }
-    .hero-card.cab-card .hero-title {
+    .user-name-text {
+      font-size: 12.5px;
+      font-weight: 800;
       color: var(--text-white);
     }
-    .hero-card.cab-card .hero-desc {
-      color: var(--text-muted);
-    }
-    .hero-card.cab-card .hero-arrow-btn {
-      background: var(--electric-lime);
-      color: var(--navy-deep);
+
+    /* ================================================= */
+    /* VIEW 1: RIDER HOME DASHBOARD (Exact Match)        */
+    /* ================================================= */
+    .view-content-wrapper {
+      padding: 24px 28px 40px 28px;
+      flex: 1;
     }
 
-    /* Right: Hire a Driver (White) */
-    .hero-card.driver-card {
-      background: var(--bg-card-light);
-      border: 1.5px solid #FFFFFF;
-      box-shadow: 0 10px 24px -5px rgba(0, 0, 0, 0.4);
-    }
-    .hero-card.driver-card .hero-tag {
-      background: rgba(10, 17, 40, 0.08);
-      color: var(--navy-deep);
-      border: 1px solid rgba(10, 17, 40, 0.12);
-    }
-    .hero-card.driver-card .hero-title {
-      color: var(--navy-deep);
-    }
-    .hero-card.driver-card .hero-desc {
-      color: #64748B;
-    }
-    .hero-card.driver-card .hero-arrow-btn {
-      background: var(--navy-deep);
-      color: var(--electric-lime);
+    .home-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
     }
 
-    .hero-card-top {
+    .home-main-col {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 18px;
     }
-    .hero-icon {
-      font-size: 26px;
-    }
-    .hero-tag {
-      font-size: 9px;
-      font-weight: 800;
-      padding: 3px 8px;
-      border-radius: 10px;
-      letter-spacing: 0.3px;
-    }
-    .hero-title {
-      font-size: 16px;
+
+    .greeting-header h1 {
+      font-size: 22px;
       font-weight: 900;
-      line-height: 20px;
-      margin-top: 10px;
+      color: var(--text-white);
     }
-    .hero-desc {
-      font-size: 11px;
+    .greeting-header p {
+      font-size: 13px;
+      color: var(--text-muted);
       margin-top: 3px;
-      line-height: 14px;
     }
-    .hero-arrow-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
+
+    /* Search Bar with Lime Search Button */
+    .destination-search-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: 30px;
+      padding: 6px 8px 6px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .search-input-field {
+      background: none;
+      border: none;
+      color: var(--text-white);
+      font-size: 13.5px;
+      width: 100%;
+      outline: none;
+    }
+    .search-input-field::placeholder { color: var(--text-dim); }
+    .search-action-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 19px;
+      background: var(--lime);
+      color: var(--lime-dark);
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 15px;
+      cursor: pointer;
       font-weight: 900;
-      align-self: flex-end;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px var(--lime-glow);
     }
 
-    /* Instant / Schedule Toggle Pill */
-    .booking-toggle-row {
-      display: flex;
-      background: var(--bg-card);
-      border-radius: 16px;
-      margin: 4px 18px 14px 18px;
-      padding: 4px;
-      border: 1px solid var(--border-dark);
+    /* 3 Hero Service Cards */
+    .hero-services-trio {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-    .booking-toggle-btn {
-      flex: 1;
-      padding: 9px;
-      text-align: center;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-muted);
+    .hero-service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
       cursor: pointer;
-      border: none;
-      background: none;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 110px;
+    }
+    .hero-service-card:hover {
+      border-color: var(--border-lime);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .hero-service-card .card-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .hero-service-card .card-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--text-white);
+    }
+    .hero-service-card .card-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* Quick Action Chips */
+    .quick-chips-row {
+      display: flex;
+      gap: 10px;
+    }
+    .quick-chip {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
       transition: all 0.15s;
     }
-    .booking-toggle-btn.active {
-      background: var(--bg-card-hover);
-      color: var(--electric-lime);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    .quick-chip:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .quick-chip-icon {
+      font-size: 16px;
+      color: var(--lime);
+    }
+    .quick-chip-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .quick-chip-sub {
+      font-size: 10px;
+      color: var(--text-muted);
     }
 
-    /* Saved Places Horizontal Row */
-    .section-title-row {
-      padding: 0 18px;
+    /* Recent Trips List */
+    .recent-trips-section {
+      margin-top: 4px;
+    }
+    .recent-trips-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
-    .section-label {
+    .recent-trips-header h3 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .recent-trips-header a {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--lime);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .recent-trips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .recent-trip-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .recent-trip-box:hover {
+      border-color: var(--border-lime);
+    }
+    .recent-trip-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .recent-trip-info { flex: 1; min-width: 0; }
+    .recent-trip-dest {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .recent-trip-date {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .recent-trip-price-col { text-align: right; }
+    .recent-trip-price {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: var(--text-white);
+    }
+    .recent-trip-badge {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--emerald);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* Safety Priority Box */
+    .safety-priority-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .safety-shield-icon {
+      font-size: 26px;
+      color: var(--emerald);
+    }
+    .safety-card-title {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--emerald);
+    }
+    .safety-card-sub {
+      font-size: 11px;
+      color: #A7F3D0;
+      margin-top: 2px;
+    }
+
+    /* Home Right Column Widgets */
+    .home-widgets-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Mini Map Card */
+    .mini-map-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mini-map-header {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .mini-map-title {
       font-size: 11px;
       font-weight: 800;
       color: var(--text-muted);
       letter-spacing: 0.5px;
     }
-    .saved-places-row {
-      display: flex;
-      gap: 8px;
-      padding: 0 18px;
-      overflow-x: auto;
-      margin-bottom: 16px;
-    }
-    .saved-places-row::-webkit-scrollbar { display: none; }
-    .place-chip {
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      padding: 8px 12px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .city-select-chip {
       font-size: 11px;
-      font-weight: 700;
-      color: var(--text-white);
-      white-space: nowrap;
-      cursor: pointer;
+      font-weight: 800;
+      color: var(--lime);
+      background: rgba(210, 255, 0, 0.12);
+      padding: 2px 8px;
+      border-radius: 8px;
     }
-    .place-chip:hover {
-      border-color: var(--border-lime);
+    .mini-map-svg-wrap {
+      height: 140px;
+      background: #0F1A3A;
+      position: relative;
+    }
+    .map-chip-eta {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(10, 17, 40, 0.9);
+      border: 1px solid var(--border-lime);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10.5px;
+      font-weight: 900;
+      color: var(--lime);
     }
 
-    /* Recent Trip Card */
-    .recent-trip-card {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 14px 16px;
-      margin: 0 18px 14px 18px;
-      border: 1px solid var(--border-dark);
+    /* Upcoming Booking Card */
+    .upcoming-booking-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
-    .recent-left {
+    .upcoming-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .recent-icon-circle {
-      width: 36px;
-      height: 36px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.06);
+    .upcoming-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 19px;
+      background: #F1F5F9;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
     }
-    .recent-route {
+    .upcoming-title {
       font-size: 13px;
+      font-weight: 900;
+      color: var(--navy-deep);
+    }
+    .upcoming-time {
+      font-size: 11px;
+      color: #64748B;
+      margin-top: 1px;
+    }
+    .btn-view-details {
+      background: var(--navy-deep);
+      color: #FFFFFF;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 11px;
       font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Promo Card */
+    .promo-card {
+      background: linear-gradient(135deg, #101935 0%, #162548 100%);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .promo-headline {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text-white);
+      max-width: 180px;
+      line-height: 19px;
+    }
+    .promo-sub {
+      font-size: 10.5px;
+      color: var(--lime);
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .promo-car-emoji {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      font-size: 50px;
+      opacity: 0.85;
+    }
+
+    /* ================================================= */
+    /* VIEW 2: BOOK A CAB SCREEN (Top-Right in image)     */
+    /* ================================================= */
+    .booking-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+    }
+
+    .booking-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .booking-header-row h1 {
+      font-size: 22px;
+      font-weight: 900;
       color: var(--text-white);
     }
-    .recent-meta {
-      font-size: 10.5px;
+    .booking-header-row p {
+      font-size: 12.5px;
       color: var(--text-muted);
       margin-top: 2px;
     }
-    .recent-price {
-      font-size: 14.5px;
-      font-weight: 900;
-      color: var(--electric-lime);
-    }
-
-    /* Safety Banner */
-    .safety-banner {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 18px;
-      padding: 12px 16px;
-      margin: 0 18px 20px 18px;
+    .instant-schedule-pill {
       display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .safety-icon {
-      font-size: 22px;
-    }
-    .safety-title {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--emerald-400);
-    }
-    .safety-sub {
-      font-size: 10px;
-      color: #A7F3D0;
-      margin-top: 1px;
-    }
-
-    /* ================================================= */
-    /* SCREEN 2: BOOKING / FARE ESTIMATE STYLES          */
-    /* ================================================= */
-    .sub-top-nav {
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-    .back-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--bg-card);
       border: 1px solid var(--border-dark);
-      color: var(--text-white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
+      border-radius: 20px;
+      padding: 3px;
     }
-    .sub-nav-title {
-      font-size: 14.5px;
-      font-weight: 800;
-      color: var(--text-white);
-      text-align: center;
-    }
-    .sub-nav-desc {
-      font-size: 10.5px;
+    .instant-schedule-btn {
+      background: none;
+      border: none;
       color: var(--text-muted);
-    }
-
-    /* Map Surface */
-    .map-surface-container {
-      height: 180px;
-      background: #0F1A3A;
-      position: relative;
-      overflow: hidden;
-      margin: 12px 18px;
-      border-radius: 22px;
-      border: 1px solid var(--border-dark);
-    }
-    .map-svg-canvas {
-      width: 100%;
-      height: 100%;
-    }
-    .floating-map-chip {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(10, 17, 40, 0.88);
-      backdrop-filter: blur(8px);
-      padding: 5px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border-lime);
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-size: 11px;
       font-weight: 800;
-      color: var(--text-white);
+      padding: 6px 14px;
+      border-radius: 16px;
+      cursor: pointer;
     }
-    .chip-pulse-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--electric-lime);
+    .instant-schedule-btn.active {
+      background: var(--lime);
+      color: var(--lime-dark);
     }
 
-    /* Floating Route Card */
-    .floating-route-card {
-      background: var(--bg-card-light);
-      border-radius: 20px;
-      padding: 14px;
-      margin: 0 18px 14px 18px;
+    /* Route Location Card */
+    .route-card-white {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 16px 18px;
       display: flex;
       align-items: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
-    .route-dots-col {
+    .route-timeline-col {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-right: 12px;
+      margin-right: 14px;
     }
-    .dot-pickup { width: 9px; height: 9px; border-radius: 5px; background: var(--emerald-500); }
-    .dot-line { width: 2px; height: 22px; background: #CBD5E1; margin: 3px 0; }
-    .dot-drop { width: 9px; height: 9px; border-radius: 2px; background: var(--navy-deep); }
-    .route-text-col { flex: 1; }
-    .route-label { font-size: 9px; font-weight: 800; color: #94A3B8; letter-spacing: 0.4px; }
-    .route-val { font-size: 12px; font-weight: 700; color: var(--navy-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
-    .route-div { height: 1px; background: #F1F5F9; margin: 5px 0; }
-    .swap-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 16px;
+    .route-pin-green { width: 10px; height: 10px; border-radius: 5px; background: var(--emerald); }
+    .route-pin-line { width: 2px; height: 26px; background: #CBD5E1; margin: 4px 0; }
+    .route-pin-black { width: 10px; height: 10px; border-radius: 2px; background: var(--navy-deep); }
+    .route-inputs-col { flex: 1; }
+    .location-field-label { font-size: 9px; font-weight: 800; color: #94A3B8; letter-spacing: 0.4px; }
+    .location-field-value { font-size: 13px; font-weight: 800; color: var(--navy-deep); margin-top: 1px; }
+    .location-divider { height: 1px; background: #F1F5F9; margin: 6px 0; }
+    .route-swap-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
       background: #F1F5F9;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 16px;
+      cursor: pointer;
       color: var(--navy-deep);
+    }
+
+    /* Ride Type 4-Cards Row */
+    .ride-types-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ride-type-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ride-type-card:hover { border-color: rgba(255, 255, 255, 0.2); }
+    .ride-type-card.selected {
+      background: var(--bg-card-hover);
+      border-color: var(--lime);
+      box-shadow: 0 4px 16px var(--lime-glow);
+    }
+    .ride-type-icon { font-size: 24px; margin-bottom: 6px; }
+    .ride-type-name { font-size: 12.5px; font-weight: 800; color: var(--text-white); }
+    .ride-type-fare { font-size: 14px; font-weight: 900; color: var(--text-white); margin-top: 3px; }
+    .ride-type-card.selected .ride-type-fare { color: var(--lime); }
+    .ride-type-time { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Additional Preferences Toggle Block */
+    .preferences-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+    }
+    .preferences-card h4 {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .pref-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+    .pref-item-row:not(:last-child) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .pref-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+    /* Toggle switch */
+    .switch-ui {
+      width: 40px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 11px;
+      padding: 2px;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .switch-ui.on {
+      background: var(--lime);
+    }
+    .switch-toggle-knob {
+      width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      background: #FFFFFF;
+      transition: transform 0.2s;
+    }
+    .switch-ui.on .switch-toggle-knob {
+      transform: translateX(18px);
+      background: var(--navy-deep);
+    }
+
+    /* Booking Right Column: Map & Fare Estimate */
+    .booking-right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .booking-route-map {
+      background: #0F1A3A;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-dark);
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fare-estimate-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      color: var(--navy-deep);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .fare-card-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      color: var(--navy-deep);
+      margin-bottom: 12px;
+    }
+    .fare-line-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #64748B;
+      padding: 3px 0;
+    }
+    .fare-line-val { font-weight: 800; color: var(--navy-deep); }
+    .fare-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E2E8F0;
+      margin-top: 10px;
+      padding-top: 12px;
+      margin-bottom: 14px;
+    }
+    .total-lbl { font-size: 14px; font-weight: 900; color: var(--navy-deep); }
+    .total-val { font-size: 20px; font-weight: 900; color: var(--navy-deep); }
+    .locked-fare-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--emerald-dark);
+      background: #ECFDF5;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid #A7F3D0;
+    }
+    .btn-confirm-ride {
+      width: 100%;
+      background: var(--lime);
+      color: var(--lime-dark);
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px var(--lime-glow);
+    }
+
+    /* ================================================= */
+    /* VIEW 3: LIVE TRIP SCREEN (Bottom-Left in image)    */
+    /* ================================================= */
+    .live-trip-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+    }
+    .live-map-wrapper {
+      background: #0F1A3A;
+      border-radius: var(--radius-2xl);
+      border: 1px solid var(--border-dark);
+      height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .live-bottom-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-sos-red {
+      background: var(--red);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 16px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+    }
+    .otp-display-pill {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 10px 18px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .otp-lbl { font-size: 9px; font-weight: 800; color: #94A3B8; }
+    .otp-val { font-size: 18px; font-weight: 900; color: var(--navy-deep); letter-spacing: 2px; }
+
+    /* Live Trip Right Details Column */
+    .live-details-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .driver-identity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .driver-id-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .driver-id-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+      background: #1E293B;
+      border: 2px solid var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--lime);
+    }
+    .driver-id-name {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .driver-rating-badge {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--lime);
+      background: rgba(210, 255, 0, 0.15);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .driver-car-desc {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .driver-id-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .driver-action-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
+      color: var(--text-white);
+      border-radius: 12px;
+      padding: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .driver-action-pill:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Trip Progress Card */
+    .trip-progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+    }
+    .trip-progress-card h4 {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      margin-bottom: 14px;
+    }
+    .stepper-bar-wrap {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 16px;
+      padding: 0 6px;
+    }
+    .stepper-base-line {
+      position: absolute;
+      top: 5px;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+    .stepper-active-line {
+      position: absolute;
+      top: 5px;
+      left: 14px;
+      width: 45%;
+      height: 3px;
+      background: var(--lime);
+      z-index: 2;
+    }
+    .step-node {
+      z-index: 3;
+      text-align: center;
+    }
+    .step-circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 0 auto 6px auto;
+    }
+    .step-circle.active {
+      background: var(--lime);
+      box-shadow: 0 0 8px var(--lime);
+    }
+    .step-name {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+    .step-name.active {
+      color: var(--lime);
+      font-weight: 800;
+    }
+
+    /* Live Summary List */
+    .live-summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+    }
+    .live-sum-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .sum-icon { color: var(--lime); font-size: 14px; width: 18px; }
+    .sum-label { color: var(--text-muted); width: 60px; font-weight: 700; }
+    .sum-val { color: var(--text-white); font-weight: 700; flex: 1; }
+
+    /* ================================================= */
+    /* VIEW 4: DRIVER DASHBOARD & GIGS (Bottom-Center & Right) */
+    /* ================================================= */
+    .driver-os-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+    }
+    .driver-main-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Driver Metrics 4-Box Row */
+    .driver-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+    }
+    .metric-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+    .metric-val {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-white);
+      margin-top: 4px;
+    }
+    .metric-sub {
+      font-size: 9.5px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .metric-sub.green { color: var(--emerald); }
+    .metric-sub.muted { color: var(--text-dim); }
+
+    /* Big Offline / Online Button */
+    .btn-duty-action {
+      background: var(--lime);
+      color: var(--lime-dark);
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 4px 16px var(--lime-glow);
+    }
+
+    /* Split Row: Upcoming Jobs + Fatigue Monitor */
+    .driver-split-row {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 16px;
+    }
+
+    /* Upcoming Jobs Card */
+    .upcoming-jobs-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+    }
+    .jobs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .jobs-header h4 { font-size: 12px; font-weight: 800; color: var(--text-white); }
+    .jobs-header a { font-size: 11px; font-weight: 700; color: var(--lime); text-decoration: none; }
+    .job-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .job-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .job-title { font-size: 12px; font-weight: 800; color: var(--text-white); }
+    .job-time { font-size: 10px; color: var(--text-muted); }
+    .job-route { font-size: 10.5px; color: var(--text-dim); margin-top: 1px; }
+    .job-price { font-size: 13px; font-weight: 900; color: var(--lime); }
+    .job-btn-view {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dark);
+      color: var(--text-white);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 800;
       cursor: pointer;
       margin-left: 8px;
     }
 
-    /* In-Screen Dual Switcher */
-    .screen-mode-switcher {
-      display: flex;
-      background: var(--bg-card);
-      border-radius: 16px;
-      margin: 0 18px 14px 18px;
-      padding: 4px;
-      border: 1px solid var(--border-dark);
-    }
-    .screen-mode-tab {
-      flex: 1;
-      padding: 10px;
-      text-align: center;
-      border-radius: 12px;
-      font-size: 12.5px;
-      font-weight: 800;
-      color: var(--text-muted);
-      cursor: pointer;
-      border: none;
-      background: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.15s;
-    }
-    .screen-mode-tab.active-cab {
-      background: var(--electric-lime);
-      color: var(--navy-deep);
-    }
-    .screen-mode-tab.active-driver {
-      background: #FFFFFF;
-      color: var(--navy-deep);
-    }
-
-    /* Vehicle Tier / Package Cards */
-    .tier-list-container {
-      padding: 0 18px;
-      margin-bottom: 14px;
-    }
-    .tier-card {
-      background: var(--bg-card);
-      border-radius: 18px;
-      padding: 12px 14px;
-      margin-bottom: 8px;
-      border: 1.5px solid var(--border-dark);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .tier-card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-    .tier-card.selected {
-      background: var(--bg-card-hover);
-      border-color: var(--electric-lime);
-    }
-    .tier-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tier-icon-box {
-      width: 40px;
-      height: 40px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-    .tier-name-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .tier-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text-white);
-    }
-    .tier-seats-pill {
-      font-size: 9.5px;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: var(--text-muted);
-    }
-    .tier-popular-tag {
-      font-size: 8px;
-      font-weight: 900;
-      background: rgba(210, 255, 0, 0.2);
-      color: var(--electric-lime);
-      padding: 2px 5px;
-      border-radius: 4px;
-    }
-    .tier-sub {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      margin-top: 1px;
-    }
-    .tier-eta {
-      font-size: 10px;
-      color: var(--emerald-400);
-      font-weight: 700;
-      margin-top: 2px;
-    }
-    .tier-right {
-      text-align: right;
-    }
-    .tier-fare {
-      font-size: 15px;
-      font-weight: 900;
-      color: var(--text-white);
-    }
-    .tier-card.selected .tier-fare {
-      color: var(--electric-lime);
-    }
-    .tier-select-badge {
-      font-size: 9px;
-      font-weight: 900;
-      background: var(--electric-lime);
-      color: var(--navy-deep);
-      padding: 2px 6px;
-      border-radius: 10px;
-      margin-top: 4px;
-      display: inline-block;
-    }
-
-    /* Transmission & Class Selectors */
-    .config-box {
-      padding: 0 18px;
-      margin-bottom: 12px;
-    }
-    .config-label {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-muted);
-      letter-spacing: 0.4px;
-      margin-bottom: 6px;
-    }
-    .trans-row {
-      display: flex;
-      gap: 8px;
-    }
-    .trans-pill {
-      flex: 1;
+    /* Fatigue Monitor Gauge Card */
+    .fatigue-monitor-card {
       background: var(--bg-card);
       border: 1px solid var(--border-dark);
-      padding: 8px;
-      border-radius: 12px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-align: center;
-      cursor: pointer;
-    }
-    .trans-pill.active {
-      background: var(--bg-card-hover);
-      border-color: var(--electric-lime);
-      color: var(--electric-lime);
-      font-weight: 800;
-    }
-
-    /* Payment Row */
-    .payment-row {
-      display: flex;
-      gap: 8px;
-      padding: 0 18px;
-      margin-bottom: 18px;
-    }
-    .pay-chip {
-      flex: 1;
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      padding: 9px 8px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-align: center;
-      cursor: pointer;
-    }
-    .pay-chip.active {
-      border-color: var(--electric-lime);
-      color: var(--text-white);
-      background: var(--bg-card-hover);
-    }
-
-    /* Bottom Fixed CTA Dock */
-    .bottom-cta-dock {
-      background: var(--navy-deep);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 12px 18px 24px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-    .dock-fare-label { font-size: 10px; color: var(--text-muted); font-weight: 700; }
-    .dock-fare-val { font-size: 18px; font-weight: 900; color: var(--electric-lime); }
-    .dock-cta-btn {
-      background: var(--electric-lime);
-      color: var(--navy-deep);
-      border: none;
-      border-radius: 16px;
-      padding: 12px 20px;
-      font-size: 13.5px;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px var(--lime-glow);
-    }
-
-    /* ================================================= */
-    /* SCREEN 3: LIVE TRIP STYLES                        */
-    /* ================================================= */
-    .live-map-full {
-      height: 240px;
-      background: #0F1A3A;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .live-eta-badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(10, 17, 40, 0.9);
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid var(--border-lime);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11.5px;
-      font-weight: 800;
-      color: var(--text-white);
-    }
-    .live-eta-badge span { color: var(--electric-lime); }
-
-    .bottom-sheet {
-      background: #0F172A;
-      border-top-left-radius: 28px;
-      border-top-right-radius: 28px;
-      margin-top: -24px;
-      padding: 12px 18px 24px 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-      z-index: 10;
-      flex: 1;
-    }
-    .sheet-pill-handle {
-      width: 36px;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 0 auto 14px auto;
-    }
-
-    /* Driver Profile Card */
-    .driver-hud-card {
-      background: var(--bg-card);
-      border-radius: 20px;
-      padding: 12px 14px;
-      border: 1px solid var(--border-dark);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .driver-hud-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .driver-avatar-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 22px;
-      background: #1E293B;
-      border: 2px solid var(--electric-lime);
-      color: var(--electric-lime);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 900;
-      position: relative;
-    }
-    .driver-tick-badge {
-      position: absolute;
-      bottom: -2px;
-      right: -2px;
-      width: 16px;
-      height: 16px;
-      border-radius: 8px;
-      background: var(--emerald-500);
-      color: #FFFFFF;
-      font-size: 9px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid var(--bg-card);
-    }
-    .driver-hud-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-white);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .rating-pill {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--electric-lime);
-      background: rgba(210, 255, 0, 0.15);
-      padding: 1px 6px;
-      border-radius: 6px;
-    }
-    .driver-hud-car {
-      font-size: 11px;
-      color: var(--text-slate);
-      margin-top: 1px;
-    }
-    .driver-hud-actions {
-      display: flex;
-      gap: 6px;
-    }
-    .hud-action-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 17px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    /* OTP Card */
-    .otp-hud-card {
-      background: var(--bg-card);
-      border-radius: 18px;
-      padding: 12px 14px;
-      border: 1.5px solid var(--border-lime);
-      margin-bottom: 12px;
-    }
-    .otp-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .otp-hud-label {
-      font-size: 10px;
-      font-weight: 900;
-      color: var(--electric-lime);
-      letter-spacing: 0.5px;
-    }
-    .otp-ins-badge {
-      font-size: 8.5px;
-      font-weight: 800;
-      color: var(--emerald-400);
-      background: rgba(16, 185, 129, 0.18);
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
-    .otp-digits-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 4px 0 6px 0;
-    }
-    .otp-digit-box {
-      width: 44px;
-      height: 46px;
-      border-radius: 12px;
-      background: #1A2548;
-      border: 1.5px solid var(--electric-lime);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--electric-lime);
-    }
-    .otp-sub-hint {
-      font-size: 9.5px;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    /* Stepper */
-    .stepper-box {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border-dark);
-    }
-    .stepper-line-track {
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      position: relative;
-      margin: 6px 14px 10px 14px;
-    }
-    .stepper-line-fill {
-      height: 100%;
-      background: var(--electric-lime);
-      border-radius: 2px;
-      transition: width 0.3s;
-    }
-    .stepper-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 9.5px;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .stepper-labels span.active { color: var(--electric-lime); font-weight: 800; }
-
-    /* Stats Grid */
-    .stats-hud-grid {
-      display: flex;
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 10px;
-      margin-bottom: 14px;
-      border: 1px solid var(--border-dark);
-    }
-    .stats-hud-col {
-      flex: 1;
-      text-align: center;
-    }
-    .stats-hud-col:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .stat-hud-lbl { font-size: 9px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.3px; }
-    .stat-hud-val { font-size: 14px; font-weight: 900; color: var(--text-white); margin-top: 2px; }
-    .stat-hud-sub { font-size: 9px; color: var(--text-dim); }
-
-    /* ================================================= */
-    /* DRIVER PARTNER APP SPECIFIC STYLES                */
-    /* ================================================= */
-    .fatigue-hud-card {
-      background: var(--bg-card);
-      border-radius: 22px;
+      border-radius: var(--radius-xl);
       padding: 16px;
-      margin: 12px 18px;
-      border: 1.5px solid var(--border-dark);
-    }
-    .fatigue-hud-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .fatigue-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 900;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-    .fatigue-zone-pill {
-      font-size: 9px;
-      font-weight: 800;
-      background: rgba(16, 185, 129, 0.18);
-      color: var(--emerald-400);
-      padding: 3px 8px;
-      border-radius: 8px;
-    }
-    .fatigue-cols-row {
-      display: flex;
-      margin-bottom: 10px;
-    }
-    .fatigue-col {
-      flex: 1;
       text-align: center;
-    }
-    .fatigue-col:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .fatigue-lbl { font-size: 8.5px; font-weight: 800; color: var(--text-muted); }
-    .fatigue-val { font-size: 14.5px; font-weight: 900; color: var(--text-white); margin-top: 2px; }
-    .fatigue-track {
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 6px;
-    }
-    .fatigue-fill {
-      height: 100%;
-      background: var(--electric-lime);
-      border-radius: 3px;
-    }
-    .fatigue-sub-labels {
       display: flex;
-      justify-content: space-between;
-      font-size: 8.5px;
-      color: var(--text-dim);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-
-    /* Modal Styles */
-    .modal-backdrop {
+    .fatigue-gauge-wrap {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      margin: 6px 0;
+    }
+    .gauge-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .gauge-center-text {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
-      z-index: 100;
       display: flex;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    .modal-sheet {
-      background: #0F172A;
-      width: 100%;
-      border-top-left-radius: 28px;
-      border-top-right-radius: 28px;
-      padding: 20px 18px 28px 18px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    .gauge-hrs { font-size: 14px; font-weight: 900; color: var(--text-white); }
+    .gauge-lbl { font-size: 8.5px; color: var(--text-muted); }
+    .fatigue-info-line {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .fatigue-info-line span { color: var(--lime); font-weight: 800; }
+
+    /* Available Gigs Panel (Right) */
+    .available-gigs-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .gigs-panel-top h3 { font-size: 14px; font-weight: 900; color: var(--text-white); }
+    .gigs-panel-top p { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .gigs-filter-row {
+      display: flex;
+      gap: 6px;
+    }
+    .gig-filter-chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
+      color: var(--text-muted);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .gig-filter-chip.active {
+      background: var(--lime);
+      color: var(--lime-dark);
+      font-weight: 800;
+    }
+    .gig-card-item {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gig-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #1E293B;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .gig-details { flex: 1; min-width: 0; }
+    .gig-name { font-size: 12px; font-weight: 800; color: var(--text-white); }
+    .gig-rate { font-size: 12.5px; font-weight: 900; color: var(--lime); margin-top: 2px; }
+    .gig-meta { font-size: 9.5px; color: var(--text-dim); margin-top: 2px; }
+    .btn-apply-gig {
+      background: var(--lime);
+      color: var(--lime-dark);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* ================================================= */
+    /* MASTER SHOWCASE GRID (Composite 4-in-1 View)      */
+    /* ================================================= */
+    .master-showcase-view {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 24px;
+    }
+    .showcase-row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .showcase-card-frame {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      min-height: 490px;
+    }
+
+    /* ================================================= */
+    /* BOTTOM SHOWCASE STRIP (Matching User Mockup)      */
+    /* ================================================= */
+    .bottom-showcase-strip {
+      background: #060914;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.2fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .unique-features-wrap h4 {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--text-white);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .unique-features-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    .feat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .feat-icon { font-size: 16px; margin-bottom: 4px; }
+    .feat-title { font-size: 10px; font-weight: 800; color: var(--text-white); }
+    .feat-desc { font-size: 8px; color: var(--text-dim); margin-top: 2px; line-height: 10px; }
+
+    .responsive-design-wrap {
+      text-align: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+    }
+    .resp-title { font-size: 11.5px; font-weight: 800; color: var(--text-white); }
+    .resp-sub { font-size: 9.5px; color: var(--text-muted); margin-bottom: 8px; }
+    .resp-devices-row { font-size: 32px; }
+
+    .branding-col-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+    .branding-title { font-size: 18px; font-weight: 900; color: var(--text-white); }
+    .branding-title span { color: var(--lime); }
+    .branding-sub { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+    .brand-options-list { font-size: 10px; font-weight: 700; color: var(--text-light); margin-top: 6px; }
+    .brand-script-slogan {
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      color: var(--lime);
+      margin-top: 6px;
+      transform: rotate(-2deg);
     }
   </style>
 </head>
 <body>
 
-  <!-- MASTER TOP BANNER -->
-  <header>
-    <div class="brand-pill-wrap">
-      <div class="brand-title">RideDrive<span>Ahead</span></div>
-      <div style="width: 1px; height: 16px; background: rgba(255, 255, 255, 0.2);"></div>
-      <div style="font-size: 11px; font-weight: 800; color: var(--electric-lime); letter-spacing: 0.5px;">DUAL MOBILITY OS</div>
-    </div>
-    <div class="brand-tagline">
-      Two ways. One platform. Book a Cab or Hire a Pro Driver for your own car.
-    </div>
-    <div class="pill-badges">
-      <span class="pill-badge lime">⚡ Electric Lime & Navy Theme</span>
-      <span class="pill-badge green">🛡️ Driver OS Fatigue Protection</span>
-      <span class="pill-badge">🔒 Upfront Locked Fares</span>
-      <span class="pill-badge">🔑 4-Digit Handover OTP</span>
-    </div>
-  </header>
-
-  <!-- DUAL PHONE SIMULATOR STAGE -->
-  <div class="simulator-stage">
-
-    <!-- ============================================== -->
-    <!-- LEFT: RIDER / CAR OWNER APP                    -->
-    <!-- ============================================== -->
-    <div class="device-column">
-      <div class="device-label">
-        <span class="device-chip chip-rider">Rider App</span>
-        <span>Passenger & Car Owner Experience</span>
+  <!-- MASTER VIEW SWITCHER BAR -->
+  <div class="master-view-bar">
+    <div class="view-bar-brand">
+      <div class="brand-logo-badge">
+        <span>🚗</span> RideDrive<span>Ahead</span>
       </div>
-
-      <div class="phone-frame">
-        <!-- Status Bar -->
-        <div class="phone-statusbar">
-          <span class="status-time">09:41</span>
-          <div class="dynamic-island">
-            <div class="island-sensor"></div>
-            <div class="island-lens"></div>
-          </div>
-          <div class="status-right">
-            <span>5G</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
-          </div>
-        </div>
-
-        <!-- Dynamic Screen Content -->
-        <div class="screen-content" id="rider-screen">
-          <!-- Rendered dynamically -->
-        </div>
-
-        <!-- Sticky Bottom CTA Dock (Used in Booking Options) -->
-        <div id="rider-bottom-dock" style="display: none;"></div>
-
-        <!-- Bottom Navigation Bar -->
-        <div class="app-bottom-nav">
-          <button class="nav-tab-btn active" id="rider-nav-home" onclick="setRiderScreen('HOME')">
-            <span class="nav-tab-icon">🏠</span>
-            <span>Home</span>
-          </button>
-          <button class="nav-tab-btn" id="rider-nav-trips" onclick="setRiderScreen('LIVE')">
-            <span class="nav-tab-icon">🚗</span>
-            <span>Trips</span>
-          </button>
-          <button class="nav-tab-btn" id="rider-nav-wallet" onclick="alert('Wallet balance: ₹ 2,450. AutoPay active.')">
-            <span class="nav-tab-icon">💳</span>
-            <span>Wallet</span>
-          </button>
-          <button class="nav-tab-btn" id="rider-nav-profile" onclick="setRiderScreen('SOS')">
-            <span class="nav-tab-icon">🛡️</span>
-            <span>Safety</span>
-          </button>
-        </div>
-      </div>
+      <span class="brand-mode-pill">WEB APP SUITE</span>
     </div>
 
-    <!-- ============================================== -->
-    <!-- RIGHT: DRIVER PARTNER APP                      -->
-    <!-- ============================================== -->
-    <div class="device-column">
-      <div class="device-label">
-        <span class="device-chip chip-driver">Driver Partner App</span>
-        <span>Driver OS & Gig Marketplace</span>
-      </div>
-
-      <div class="phone-frame">
-        <!-- Status Bar -->
-        <div class="phone-statusbar">
-          <span class="status-time">09:41</span>
-          <div class="dynamic-island">
-            <div class="island-sensor"></div>
-            <div class="island-lens"></div>
-          </div>
-          <div class="status-right" style="color: var(--electric-lime); font-weight: 800;">
-            <span>ONLINE</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
-          </div>
-        </div>
-
-        <!-- Dynamic Screen Content -->
-        <div class="screen-content" id="driver-screen">
-          <!-- Rendered dynamically -->
-        </div>
-
-        <!-- Bottom Navigation Bar -->
-        <div class="app-bottom-nav">
-          <button class="nav-tab-btn active" id="driver-nav-home" onclick="setDriverScreen('HOME')">
-            <span class="nav-tab-icon">🎛️</span>
-            <span>Cockpit</span>
-          </button>
-          <button class="nav-tab-btn" id="driver-nav-gigs" onclick="alert('14 open gigs available near Koramangala.')">
-            <span class="nav-tab-icon">📋</span>
-            <span>Gigs</span>
-          </button>
-          <button class="nav-tab-btn" id="driver-nav-earnings" onclick="alert('Today: ₹ 3,420 • This Week: ₹ 18,900. Ready for instant payout.')">
-            <span class="nav-tab-icon">💰</span>
-            <span>Earnings</span>
-          </button>
-          <button class="nav-tab-btn" id="driver-nav-profile" onclick="alert('Captain Rohit Kumar • LMV Commercial DL • AT/MT Certified Pro')">
-            <span class="nav-tab-icon">👤</span>
-            <span>Profile</span>
-          </button>
-        </div>
-
-        <!-- Driver Modal Slot -->
-        <div id="driver-modal-slot"></div>
-      </div>
+    <!-- View Switcher Pills -->
+    <div class="view-switcher-pills">
+      <button class="view-pill-btn active" id="btn-view-showcase" onclick="switchView('SHOWCASE')">
+        <span>✨</span> Full Showcase
+      </button>
+      <button class="view-pill-btn" id="btn-view-home" onclick="switchView('HOME')">
+        <span>🏠</span> Rider Home
+      </button>
+      <button class="view-pill-btn" id="btn-view-booking" onclick="switchView('BOOKING')">
+        <span>🚕</span> Book a Cab
+      </button>
+      <button class="view-pill-btn" id="btn-view-live" onclick="switchView('LIVE')">
+        <span>📍</span> Live Trip
+      </button>
+      <button class="view-pill-btn" id="btn-view-driver" onclick="switchView('DRIVER')">
+        <span>🎛️</span> Driver OS
+      </button>
     </div>
-
   </div>
+
+  <!-- CONTAINER WHERE VIEWS RENDER -->
+  <div id="main-view-container">
+    <!-- Rendered dynamically -->
+  </div>
+
+  <!-- BOTTOM SHOWCASE STRIP (From User Reference Mockup) -->
+  <footer class="bottom-showcase-strip">
+    <!-- Unique Features -->
+    <div class="unique-features-wrap">
+      <h4>Unique Features</h4>
+      <div class="unique-features-grid">
+        <div class="feat-card">
+          <div class="feat-icon">🚗</div>
+          <div class="feat-title">My Car Mode</div>
+          <div class="feat-desc">Use your own car with pro driver</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">📅</div>
+          <div class="feat-title">Smart Scheduling</div>
+          <div class="feat-desc">Plan rides for your convenience</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🛡️</div>
+          <div class="feat-title">Trip Guardian</div>
+          <div class="feat-desc">Live tracking, SOS & safety alerts</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">👨‍✈️</div>
+          <div class="feat-title">Driver Trust</div>
+          <div class="feat-desc">Verified, trained & rated drivers</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-title">Upfront Pricing</div>
+          <div class="feat-desc">No surprises, locked fare</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🛣️</div>
+          <div class="feat-title">Multi-Stop</div>
+          <div class="feat-desc">Add multiple stops in one trip</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive Design Card -->
+    <div class="responsive-design-wrap">
+      <div class="resp-title">Responsive Design</div>
+      <div class="resp-sub">Works seamlessly on all devices</div>
+      <div class="resp-devices-row">💻 📱 🖥️</div>
+    </div>
+
+    <!-- Branding & Script Slogan -->
+    <div class="branding-col-wrap">
+      <div class="branding-title">RideDrive<span>Ahead</span></div>
+      <div class="branding-sub">Two ways. One platform.</div>
+      <div class="brand-options-list">Book a Cab • Hire a Driver • Use Your Own Car</div>
+      <div class="brand-script-slogan">"More than a ride. It's your freedom."</div>
+    </div>
+  </footer>
 
   <script>
     // ==========================================
-    // SIMULATOR STATE
+    // WEB APP STATE
     // ==========================================
-    const simState = {
-      // Rider State
-      riderScreen: 'HOME', // 'HOME', 'BOOKING', 'LIVE', 'SOS'
-      serviceMode: 'BOOK_CAB', // 'BOOK_CAB' or 'HIRE_DRIVER'
-      bookingType: 'INSTANT', // 'INSTANT' or 'SCHEDULED'
-      selectedCabTier: 'SEDAN', // 'SEDAN', 'SUV', 'LUXURY'
-      selectedPkgId: 'HOURLY_4H',
-      transmission: 'AUTOMATIC',
-      carCategory: 'SEDAN',
-      paymentMethod: 'UPI',
+    let currentActiveView = 'SHOWCASE'; // 'SHOWCASE', 'HOME', 'BOOKING', 'LIVE', 'DRIVER'
+    let bookingType = 'INSTANT';
+    let selectedVehicleType = 'Sedan';
+    let selectedVehicleFare = 580;
+    let selectedVehicleTime = '6 min';
+    let prefAc = true;
+    let prefLuggage = true;
+    let prefPet = false;
 
-      // Live Trip State
-      tripStage: 'ON_THE_WAY', // 'ASSIGNED', 'ON_THE_WAY', 'ARRIVED', 'TRIP_STARTED', 'COMPLETED'
-      otp: '4792',
-      fareAmount: 1248,
-      driverName: 'Rohit Kumar',
-      driverPhone: '+91 98765 43210',
-      driverRating: 4.88,
-      vehiclePlate: 'KA 01 AB 1234',
+    let isDriverOnline = true;
+    let currentTripStage = 'ON_THE_WAY'; // 'ASSIGNED', 'ON_THE_WAY', 'REACHED', 'TRIP_STARTED'
 
-      // Driver OS State
-      driverScreen: 'HOME',
-      isDriverOnline: true,
-      drivingHours: '5h 42m',
-      breakIn: '18 min',
-      availableHours: '2h 18m',
-      todayEarnings: 3420,
-      todayTrips: 5,
-      showIncomingModal: false
-    };
-
-    // Packages Definition
-    const CHAUFFEUR_PACKAGES = [
-      { id: 'HOURLY_2H', name: '2 Hours Local Duty', hours: 2, fare: 699, tag: 'Quick Run', desc: 'City errands, medical visits, shopping' },
-      { id: 'HOURLY_4H', name: '4 Hours Half Day', hours: 4, fare: 1199, tag: 'Most Popular', desc: 'Meetings, dinner dining, multi-stops' },
-      { id: 'HOURLY_8H', name: '8 Hours Full Day', hours: 8, fare: 2199, tag: 'Best Value', desc: 'Full day city travel & family day' },
-      { id: 'SPECIAL_EVENT', name: 'Wedding Chauffeur', hours: 8, fare: 3499, tag: 'White Glove', desc: 'Formal elite chauffeur for luxury events' }
-    ];
-
-    // ==========================================
-    // RIDER APP RENDERERS
-    // ==========================================
-    function setRiderScreen(screen) {
-      simState.riderScreen = screen;
-      document.querySelectorAll('#rider-nav-home, #rider-nav-trips, #rider-nav-wallet, #rider-nav-profile').forEach(b => b.classList.remove('active'));
-      if (screen === 'HOME') document.getElementById('rider-nav-home').classList.add('active');
-      if (screen === 'LIVE') document.getElementById('rider-nav-trips').classList.add('active');
-      renderRider();
+    // View Switcher
+    function switchView(viewName) {
+      currentActiveView = viewName;
+      document.querySelectorAll('.view-pill-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-view-${viewName.toLowerCase()}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      renderApp();
     }
 
-    function setServiceMode(mode) {
-      simState.serviceMode = mode;
-      simState.riderScreen = 'BOOKING';
-      renderRider();
+    // Vehicle Tier Selection
+    function selectVehicle(name, fare, time) {
+      selectedVehicleType = name;
+      selectedVehicleFare = fare;
+      selectedVehicleTime = time;
+      renderApp();
     }
 
-    function renderRider() {
-      const container = document.getElementById('rider-screen');
-      const dock = document.getElementById('rider-bottom-dock');
-      dock.style.display = 'none';
-
-      // 1. SCREEN 1: RIDER HOME
-      if (simState.riderScreen === 'HOME') {
-        container.innerHTML = `
-          <!-- Top Greeting Bar -->
-          <div class="home-top-bar">
-            <div>
-              <div class="greeting-sub">Your journey, your way</div>
-              <div class="greeting-title">Good Morning, Alex 👋</div>
-              <div class="city-pill">📍 Bengaluru, Karnataka ⌵</div>
-            </div>
-            <div class="notif-bell-btn" onclick="alert('Notification: Upfront fare lock active for your next airport run.')">
-              <span>🔔</span>
-              <div class="notif-dot"></div>
-            </div>
-          </div>
-
-          <!-- Hero Dual Services Side-by-Side -->
-          <div class="hero-dual-row">
-            <!-- Book a Cab (Navy) -->
-            <div class="hero-card cab-card" onclick="setServiceMode('BOOK_CAB')">
-              <div class="hero-card-top">
-                <span class="hero-icon">🚕</span>
-                <span class="hero-tag">UPFRONT LOCK</span>
-              </div>
-              <div>
-                <div class="hero-title">Book a Cab</div>
-                <div class="hero-desc">Instant or scheduled city & airport taxi</div>
-              </div>
-              <div class="hero-arrow-btn">→</div>
-            </div>
-
-            <!-- Hire a Driver (White) -->
-            <div class="hero-card driver-card" onclick="setServiceMode('HIRE_DRIVER')">
-              <div class="hero-card-top">
-                <span class="hero-icon">👨‍✈️</span>
-                <span class="hero-tag">YOUR CAR</span>
-              </div>
-              <div>
-                <div class="hero-title">Hire a Driver</div>
-                <div class="hero-desc">Verified chauffeur for your personal vehicle</div>
-              </div>
-              <div class="hero-arrow-btn">→</div>
-            </div>
-          </div>
-
-          <!-- Instant / Schedule Pill Toggle -->
-          <div class="booking-toggle-row">
-            <button class="booking-toggle-btn ${simState.bookingType === 'INSTANT' ? 'active' : ''}" onclick="simState.bookingType='INSTANT'; renderRider();">
-              ⚡ Instant Booking
-            </button>
-            <button class="booking-toggle-btn ${simState.bookingType === 'SCHEDULED' ? 'active' : ''}" onclick="simState.bookingType='SCHEDULED'; renderRider();">
-              📅 Advance Schedule
-            </button>
-          </div>
-
-          <!-- Saved Places -->
-          <div class="section-title-row">
-            <span class="section-label">SAVED PLACES</span>
-            <span style="font-size: 10.5px; color: var(--electric-lime); font-weight: 800; cursor: pointer;">Manage</span>
-          </div>
-          <div class="saved-places-row">
-            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">🏠 Home</div>
-            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">💼 Work (ITPB)</div>
-            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">✈️ BLR Airport</div>
-            <div class="place-chip" onclick="alert('Add Place dialog')">+ Add Place</div>
-          </div>
-
-          <!-- Recent Trip Card -->
-          <div class="section-title-row">
-            <span class="section-label">REPEAT RECENT TRIP</span>
-          </div>
-          <div class="recent-trip-card" onclick="setServiceMode('BOOK_CAB')">
-            <div class="recent-left">
-              <div class="recent-icon-circle">🛫</div>
-              <div>
-                <div class="recent-route">BLR Airport ➔ Koramangala</div>
-                <div class="recent-meta">Yesterday • White Toyota Etios</div>
-              </div>
-            </div>
-            <div class="recent-price">₹ 1,248</div>
-          </div>
-
-          <!-- Safety First Banner -->
-          <div class="safety-banner" onclick="setRiderScreen('SOS')">
-            <div class="safety-icon">🛡️</div>
-            <div>
-              <div class="safety-title">Safety First Always Active</div>
-              <div class="safety-sub">Every ride is GPS tracked, insured & monitored 24/7.</div>
-            </div>
-          </div>
-          <div style="height: 16px;"></div>
-        `;
-      }
-
-      // 2. SCREEN 2: BOOKING OPTIONS / FARE ESTIMATE
-      else if (simState.riderScreen === 'BOOKING') {
-        const isCab = simState.serviceMode === 'BOOK_CAB';
-        const finalPrice = isCab
-          ? (simState.selectedCabTier === 'SEDAN' ? 1248 : simState.selectedCabTier === 'SUV' ? 1742 : 2980)
-          : (CHAUFFEUR_PACKAGES.find(p => p.id === simState.selectedPkgId)?.fare || 1199);
-
-        dock.style.display = 'flex';
-        dock.className = 'bottom-cta-dock';
-        dock.innerHTML = `
-          <div>
-            <div class="dock-fare-label">Locked Upfront Fare</div>
-            <div class="dock-fare-val">₹ ${finalPrice}</div>
-          </div>
-          <button class="dock-cta-btn" onclick="confirmRiderBooking(${finalPrice})">
-            <span>Continue • ₹ ${finalPrice}</span>
-            <span>→</span>
-          </button>
-        `;
-
-        container.innerHTML = `
-          <!-- Top Subnav -->
-          <div class="sub-top-nav">
-            <div class="back-btn" onclick="setRiderScreen('HOME')">←</div>
-            <div>
-              <div class="sub-nav-title">Trip Options</div>
-              <div class="sub-nav-desc">Koramangala ➔ BLR Airport</div>
-            </div>
-            <div class="back-btn" onclick="alert('Upfront Fare Guarantee: Price is 100% locked.')">ⓘ</div>
-          </div>
-
-          <!-- Stylized Map Surface -->
-          <div class="map-surface-container">
-            <svg class="map-svg-canvas" viewBox="0 0 360 180">
-              <!-- Grid Roads -->
-              <rect width="360" height="180" fill="#0F1A3A"/>
-              <line x1="0" y1="50" x2="360" y2="50" stroke="#16234D" stroke-width="16"/>
-              <line x1="0" y1="130" x2="360" y2="130" stroke="#16234D" stroke-width="20"/>
-              <line x1="80" y1="0" x2="80" y2="180" stroke="#16234D" stroke-width="18"/>
-              <line x1="260" y1="0" x2="260" y2="180" stroke="#16234D" stroke-width="22"/>
-              <!-- Electric Lime Route Polyline -->
-              <path d="M 50 130 C 120 130, 160 50, 290 50" fill="none" stroke="#D2FF00" stroke-width="5" stroke-linecap="round"/>
-              <!-- Origin Marker -->
-              <circle cx="50" cy="130" r="10" fill="rgba(210, 255, 0, 0.3)"/>
-              <circle cx="50" cy="130" r="5" fill="#D2FF00"/>
-              <!-- Dest Marker -->
-              <circle cx="290" cy="50" r="6" fill="#EF4444"/>
-              <!-- Moving Vehicle -->
-              <g transform="translate(170, 78)">
-                <circle cx="8" cy="8" r="14" fill="#0A1128" stroke="#D2FF00" stroke-width="1.5"/>
-                <text x="8" y="12" font-size="12" text-anchor="middle">🚗</text>
-              </g>
-            </svg>
-            <div class="floating-map-chip">
-              <div class="chip-pulse-dot"></div>
-              <span>22 km • 35 min away</span>
-            </div>
-          </div>
-
-          <!-- Floating Route Card -->
-          <div class="floating-route-card">
-            <div class="route-dots-col">
-              <div class="dot-pickup"></div>
-              <div class="dot-line"></div>
-              <div class="dot-drop"></div>
-            </div>
-            <div class="route-text-col">
-              <div class="route-label">PICKUP LOCATION</div>
-              <div class="route-val">Koramangala, 6th Block, Bengaluru</div>
-              <div class="route-div"></div>
-              <div class="route-label">DESTINATION</div>
-              <div class="route-val">BLR Airport, Devanahalli</div>
-            </div>
-            <button class="swap-btn" onclick="alert('Origin and destination reversed')">⇅</button>
-          </div>
-
-          <!-- In-Screen Dual Switcher -->
-          <div class="screen-mode-switcher">
-            <button class="screen-mode-tab ${isCab ? 'active-cab' : ''}" onclick="simState.serviceMode='BOOK_CAB'; renderRider();">
-              🚕 Book a Cab
-            </button>
-            <button class="screen-mode-tab ${!isCab ? 'active-driver' : ''}" onclick="simState.serviceMode='HIRE_DRIVER'; renderRider();">
-              👨‍✈️ Hire a Driver
-            </button>
-          </div>
-
-          <!-- Tier or Package List -->
-          ${isCab ? `
-            <div class="tier-list-container">
-              <div class="section-title-row" style="padding: 0 0 8px 0;">
-                <span class="section-label">SELECT CAB TIER</span>
-                <span class="pill-badge lime" style="font-size: 8.5px;">UPFRONT LOCKED</span>
-              </div>
-
-              <!-- Sedan -->
-              <div class="tier-card ${simState.selectedCabTier === 'SEDAN' ? 'selected' : ''}" onclick="simState.selectedCabTier='SEDAN'; renderRider();">
-                <div class="tier-left">
-                  <div class="tier-icon-box">🚘</div>
-                  <div>
-                    <div class="tier-name-row">
-                      <span class="tier-title">Sedan</span>
-                      <span class="tier-seats-pill">👤 4</span>
-                      <span class="tier-popular-tag">LOCKED</span>
-                    </div>
-                    <div class="tier-sub">Maruti Dzire, Honda Amaze</div>
-                    <div class="tier-eta">⚡ 3 min away</div>
-                  </div>
-                </div>
-                <div class="tier-right">
-                  <div class="tier-fare">₹ 1,248</div>
-                  ${simState.selectedCabTier === 'SEDAN' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
-                </div>
-              </div>
-
-              <!-- SUV -->
-              <div class="tier-card ${simState.selectedCabTier === 'SUV' ? 'selected' : ''}" onclick="simState.selectedCabTier='SUV'; renderRider();">
-                <div class="tier-left">
-                  <div class="tier-icon-box">🚙</div>
-                  <div>
-                    <div class="tier-name-row">
-                      <span class="tier-title">SUV</span>
-                      <span class="tier-seats-pill">👤 6</span>
-                    </div>
-                    <div class="tier-sub">Toyota Innova, Ertiga</div>
-                    <div class="tier-eta">⚡ 5 min away</div>
-                  </div>
-                </div>
-                <div class="tier-right">
-                  <div class="tier-fare">₹ 1,742</div>
-                  ${simState.selectedCabTier === 'SUV' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
-                </div>
-              </div>
-
-              <!-- Luxury -->
-              <div class="tier-card ${simState.selectedCabTier === 'LUXURY' ? 'selected' : ''}" onclick="simState.selectedCabTier='LUXURY'; renderRider();">
-                <div class="tier-left">
-                  <div class="tier-icon-box">✨</div>
-                  <div>
-                    <div class="tier-name-row">
-                      <span class="tier-title">Luxury Chauffeur</span>
-                      <span class="tier-seats-pill">👤 4</span>
-                    </div>
-                    <div class="tier-sub">Mercedes E-Class, BMW 5</div>
-                    <div class="tier-eta">⚡ 8 min away</div>
-                  </div>
-                </div>
-                <div class="tier-right">
-                  <div class="tier-fare">₹ 2,980</div>
-                  ${simState.selectedCabTier === 'LUXURY' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
-                </div>
-              </div>
-            </div>
-          ` : `
-            <div class="tier-list-container">
-              <div class="section-title-row" style="padding: 0 0 8px 0;">
-                <span class="section-label">SELECT CHAUFFEUR PACKAGE</span>
-                <span class="pill-badge green" style="font-size: 8.5px;">POLICE VERIFIED</span>
-              </div>
-              ${CHAUFFEUR_PACKAGES.map(pkg => `
-                <div class="tier-card ${simState.selectedPkgId === pkg.id ? 'selected' : ''}" onclick="simState.selectedPkgId='${pkg.id}'; renderRider();">
-                  <div>
-                    <div class="tier-name-row">
-                      <span class="tier-title">${pkg.name}</span>
-                      <span class="tier-popular-tag">${pkg.tag}</span>
-                    </div>
-                    <div class="tier-sub">${pkg.desc}</div>
-                    <div class="tier-eta">⏱️ ${pkg.hours} hours included</div>
-                  </div>
-                  <div class="tier-right">
-                    <div class="tier-fare">₹ ${pkg.fare}</div>
-                    ${simState.selectedPkgId === pkg.id ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
-                  </div>
-                </div>
-              `).join('')}
-
-              <!-- Transmission Preference -->
-              <div class="config-box" style="padding: 10px 0 0 0;">
-                <div class="config-label">YOUR CAR TRANSMISSION</div>
-                <div class="trans-row">
-                  <div class="trans-pill ${simState.transmission === 'AUTOMATIC' ? 'active' : ''}" onclick="simState.transmission='AUTOMATIC'; renderRider();">
-                    ⚙️ Automatic (AT)
-                  </div>
-                  <div class="trans-pill ${simState.transmission === 'MANUAL' ? 'active' : ''}" onclick="simState.transmission='MANUAL'; renderRider();">
-                    🕹️ Manual (MT)
-                  </div>
-                </div>
-              </div>
-            </div>
-          `}
-
-          <!-- Payment Method Selector -->
-          <div class="section-title-row" style="margin-top: 4px;">
-            <span class="section-label">PAYMENT METHOD</span>
-          </div>
-          <div class="payment-row">
-            <div class="pay-chip ${simState.paymentMethod === 'UPI' ? 'active' : ''}" onclick="simState.paymentMethod='UPI'; renderRider();">
-              ⚡ UPI AutoPay ✓
-            </div>
-            <div class="pay-chip ${simState.paymentMethod === 'CARD' ? 'active' : ''}" onclick="simState.paymentMethod='CARD'; renderRider();">
-              💳 Credit / Debit
-            </div>
-            <div class="pay-chip ${simState.paymentMethod === 'CASH' ? 'active' : ''}" onclick="simState.paymentMethod='CASH'; renderRider();">
-              💵 Cash on Duty
-            </div>
-          </div>
-          <div style="height: 10px;"></div>
-        `;
-      }
-
-      // 3. SCREEN 3: LIVE TRIP TRACKING
-      else if (simState.riderScreen === 'LIVE') {
-        const isChauffeur = simState.serviceMode === 'HIRE_DRIVER';
-
-        container.innerHTML = `
-          <!-- Full-width Map Surface -->
-          <div class="live-map-full">
-            <svg class="map-svg-canvas" viewBox="0 0 360 240">
-              <rect width="360" height="240" fill="#0F1A3A"/>
-              <line x1="0" y1="80" x2="360" y2="80" stroke="#16234D" stroke-width="20"/>
-              <line x1="0" y1="160" x2="360" y2="160" stroke="#16234D" stroke-width="26"/>
-              <line x1="90" y1="0" x2="90" y2="240" stroke="#16234D" stroke-width="22"/>
-              <line x1="270" y1="0" x2="270" y2="240" stroke="#16234D" stroke-width="24"/>
-              <!-- Glowing polyline -->
-              <path d="M 60 160 C 130 160, 160 80, 300 80" fill="none" stroke="#D2FF00" stroke-width="6" stroke-linecap="round"/>
-              <circle cx="60" cy="160" r="10" fill="rgba(210, 255, 0, 0.3)"/>
-              <circle cx="60" cy="160" r="5" fill="#D2FF00"/>
-              <text x="295" y="70" font-size="20">✈️</text>
-              <!-- Moving Vehicle -->
-              <g transform="translate(180, 105)">
-                <circle cx="10" cy="10" r="16" fill="rgba(210, 255, 0, 0.25)"/>
-                <circle cx="10" cy="10" r="12" fill="#0A1128" stroke="#D2FF00" stroke-width="1.5"/>
-                <text x="10" y="14" font-size="12" text-anchor="middle">🚕</text>
-              </g>
-            </svg>
-            <div class="live-eta-badge">
-              <div class="chip-pulse-dot"></div>
-              <span>ETA 18 min</span> • 12.4 km remaining
-            </div>
-          </div>
-
-          <!-- Curved Bottom Sheet -->
-          <div class="bottom-sheet">
-            <div class="sheet-pill-handle"></div>
-
-            <!-- Driver Card -->
-            <div class="driver-hud-card">
-              <div class="driver-hud-left">
-                <div class="driver-avatar-circle">
-                  <span>RK</span>
-                  <div class="driver-tick-badge">✓</div>
-                </div>
-                <div>
-                  <div class="driver-hud-name">
-                    <span>${simState.driverName}</span>
-                    <span class="rating-pill">★ ${simState.driverRating}</span>
-                  </div>
-                  <div class="driver-hud-car">
-                    ${isChauffeur ? `Customer Car (${simState.transmission} AT)` : `White Toyota Etios • ${simState.vehiclePlate}`}
-                  </div>
-                </div>
-              </div>
-              <div class="driver-hud-actions">
-                <button class="hud-action-btn" onclick="alert('Calling driver via masked privacy number...')">📞</button>
-                <button class="hud-action-btn" onclick="alert('Opening in-app secure chat...')">💬</button>
-              </div>
-            </div>
-
-            <!-- Ride Start OTP Card -->
-            <div class="otp-hud-card">
-              <div class="otp-card-top">
-                <span class="otp-hud-label">RIDE START OTP</span>
-                <span class="otp-ins-badge">🛡️ INSURANCE ACTIVE</span>
-              </div>
-              <div class="otp-digits-row">
-                <div class="otp-digit-box">4</div>
-                <div class="otp-digit-box">7</div>
-                <div class="otp-digit-box">9</div>
-                <div class="otp-digit-box">2</div>
-              </div>
-              <div class="otp-sub-hint">Share with driver before boarding vehicle to start official duty</div>
-            </div>
-
-            <!-- Trip Progress Stepper Bar -->
-            <div class="stepper-box">
-              <div class="stepper-line-track">
-                <div class="stepper-line-fill" style="width: ${simState.tripStage === 'ASSIGNED' ? '20%' : simState.tripStage === 'ON_THE_WAY' ? '50%' : simState.tripStage === 'ARRIVED' ? '75%' : '100%'};"></div>
-              </div>
-              <div class="stepper-labels">
-                <span class="active">Assigned</span>
-                <span class="${simState.tripStage !== 'ASSIGNED' ? 'active' : ''}">On Way</span>
-                <span class="${simState.tripStage === 'ARRIVED' || simState.tripStage === 'TRIP_STARTED' ? 'active' : ''}">Arrived</span>
-                <span class="${simState.tripStage === 'TRIP_STARTED' ? 'active' : ''}">Started</span>
-              </div>
-            </div>
-
-            <!-- Stats Row -->
-            <div class="stats-hud-grid">
-              <div class="stats-hud-col">
-                <div class="stat-hud-lbl">ETA</div>
-                <div class="stat-hud-val">18 min</div>
-                <div class="stat-hud-sub">On time</div>
-              </div>
-              <div class="stats-hud-col">
-                <div class="stat-hud-lbl">DISTANCE</div>
-                <div class="stat-hud-val">12.4 km</div>
-                <div class="stat-hud-sub">Fast route</div>
-              </div>
-              <div class="stats-hud-col">
-                <div class="stat-hud-lbl">FARE LOCKED</div>
-                <div class="stat-hud-val" style="color: var(--electric-lime);">₹ ${simState.fareAmount}</div>
-                <div class="stat-hud-sub">UPI AutoPay</div>
-              </div>
-            </div>
-
-            <!-- Action CTAs -->
-            <button class="btn-lime" style="width: 100%; margin-bottom: 8px;" onclick="advanceTripStage()">
-              <span>${simState.tripStage === 'ON_THE_WAY' ? 'Simulate Driver Arrival ➔' : simState.tripStage === 'ARRIVED' ? 'Verify OTP & Start Trip ➔' : 'Complete Trip & Settle ➔'}</span>
-            </button>
-            <button style="width: 100%; background: rgba(239, 68, 68, 0.15); color: var(--red-500); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 14px; padding: 10px; font-weight: 800; cursor: pointer;" onclick="setRiderScreen('SOS')">
-              ⚠️ Emergency SOS Assistance
-            </button>
-          </div>
-        `;
-      }
-
-      // 4. SCREEN 4: SOS EMERGENCY
-      else if (simState.riderScreen === 'SOS') {
-        container.innerHTML = `
-          <div class="sub-top-nav">
-            <div class="back-btn" onclick="setRiderScreen('HOME')">←</div>
-            <div class="sub-nav-title" style="color: var(--red-500);">Emergency SOS Center</div>
-            <div style="width: 36px;"></div>
-          </div>
-          <div style="padding: 18px;">
-            <div style="background: rgba(239, 68, 68, 0.15); border: 1.5px solid var(--red-500); border-radius: 20px; padding: 18px; text-align: center; margin-bottom: 16px;">
-              <div style="font-size: 32px; margin-bottom: 6px;">🚨</div>
-              <div style="font-size: 16px; font-weight: 900; color: #FFFFFF;">24x7 Rapid Response</div>
-              <div style="font-size: 11.5px; color: #FECACA; margin-top: 4px;">Direct dispatch to local police control room & RideDriveAhead emergency monitoring team.</div>
-            </div>
-            <button style="width: 100%; background: var(--red-500); color: #FFFFFF; border: none; border-radius: 16px; padding: 14px; font-size: 14px; font-weight: 900; cursor: pointer; margin-bottom: 10px;" onclick="alert('Calling Police Emergency 112 with live telemetry...')">
-              📞 Call Police (112)
-            </button>
-            <button style="width: 100%; background: var(--bg-card); color: var(--text-white); border: 1px solid var(--border-dark); border-radius: 16px; padding: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer;" onclick="alert('Live GPS link broadcast to your 3 emergency contacts.')">
-              📡 Broadcast Live GPS Link to Family
-            </button>
-          </div>
-        `;
-      }
-    }
-
-    // Confirm booking flow
-    function confirmRiderBooking(fare) {
-      simState.fareAmount = fare;
-      simState.tripStage = 'ON_THE_WAY';
-      simState.riderScreen = 'LIVE';
-      renderRider();
-      // Also notify driver phone simulator
-      simState.showIncomingModal = true;
-      renderDriver();
+    function togglePref(pref) {
+      if (pref === 'ac') prefAc = !prefAc;
+      if (pref === 'luggage') prefLuggage = !prefLuggage;
+      if (pref === 'pet') prefPet = !prefPet;
+      renderApp();
     }
 
     function advanceTripStage() {
-      if (simState.tripStage === 'ON_THE_WAY') {
-        simState.tripStage = 'ARRIVED';
-      } else if (simState.tripStage === 'ARRIVED') {
-        simState.tripStage = 'TRIP_STARTED';
-      } else {
-        alert(`Trip Completed! ₹${simState.fareAmount} auto-settled via UPI. Thank you for riding with RideDriveAhead!`);
-        simState.todayEarnings += simState.fareAmount;
-        simState.todayTrips += 1;
-        simState.riderScreen = 'HOME';
-        renderDriver();
+      if (currentTripStage === 'ASSIGNED') currentTripStage = 'ON_THE_WAY';
+      else if (currentTripStage === 'ON_THE_WAY') currentTripStage = 'REACHED';
+      else if (currentTripStage === 'REACHED') currentTripStage = 'TRIP_STARTED';
+      else {
+        alert('Trip Completed! ₹ 720 settled via UPI AutoPay. Upfront locked guarantee fulfilled.');
+        switchView('HOME');
+        return;
       }
-      renderRider();
+      renderApp();
     }
 
     // ==========================================
-    // DRIVER PARTNER APP RENDERERS
+    // COMPONENT HTML GENERATORS
     // ==========================================
-    function setDriverScreen(screen) {
-      simState.driverScreen = screen;
-      document.querySelectorAll('#driver-nav-home, #driver-nav-gigs, #driver-nav-earnings, #driver-nav-profile').forEach(b => b.classList.remove('active'));
-      if (screen === 'HOME') document.getElementById('driver-nav-home').classList.add('active');
-      renderDriver();
-    }
 
-    function renderDriver() {
-      const container = document.getElementById('driver-screen');
-      const modalSlot = document.getElementById('driver-modal-slot');
+    // Sidebar HTML Generator
+    function getSidebarHtml(role, activeItem) {
+      if (role === 'DRIVER') {
+        const items = [
+          { id: 'dashboard', name: 'Dashboard', icon: '🎛️' },
+          { id: 'jobs', name: 'My Jobs', icon: '📋' },
+          { id: 'gigs', name: 'Available Gigs', icon: '💼' },
+          { id: 'earnings', name: 'Earnings', icon: '💰' },
+          { id: 'docs', name: 'Vehicle & Docs', icon: '📄' },
+          { id: 'fatigue', name: 'Fatigue Monitor', icon: '🛡️' },
+          { id: 'profile', name: 'Profile', icon: '👤' },
+          { id: 'settings', name: 'Settings', icon: '⚙️' }
+        ];
+        return `
+          <div class="sidebar">
+            <div class="sidebar-brand">
+              <div class="sidebar-brand-icon">🚗</div>
+              <div>RideDrive<span>Ahead</span></div>
+            </div>
+            <ul class="nav-list">
+              ${items.map(item => `
+                <li class="nav-item ${activeItem === item.id ? 'active' : ''}" onclick="switchView('DRIVER')">
+                  <span class="nav-icon">${item.icon}</span>
+                  <span>${item.name}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
 
-      container.innerHTML = `
-        <!-- Availability Hero Card -->
-        <div style="background: var(--bg-card); border-radius: 22px; padding: 16px; margin: 12px 18px; border: 1.5px solid ${simState.isDriverOnline ? 'var(--border-lime)' : 'var(--border-dark)'};">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <div style="width: 7px; height: 7px; border-radius: 4px; background: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#94A3B8'};"></div>
-                <span style="font-size: 10px; font-weight: 800; color: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#94A3B8'}; letter-spacing: 0.5px;">
-                  ${simState.isDriverOnline ? 'DUTY SYSTEM ACTIVE' : 'DUTY PAUSED'}
-                </span>
-              </div>
-              <div style="font-size: 15px; font-weight: 900; color: var(--text-white); margin-top: 2px;">
-                ${simState.isDriverOnline ? 'Ready for Gigs & Airport Runs' : 'Shift Currently Offline'}
-              </div>
-            </div>
-            <button style="background: ${simState.isDriverOnline ? 'rgba(210, 255, 0, 0.15)' : '#1E293B'}; color: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#FFFFFF'}; border: 1px solid ${simState.isDriverOnline ? 'var(--border-lime)' : 'var(--border-dark)'}; border-radius: 12px; padding: 8px 14px; font-size: 11.5px; font-weight: 800; cursor: pointer;" onclick="simState.isDriverOnline = !simState.isDriverOnline; renderDriver();">
-              ${simState.isDriverOnline ? 'Go Offline' : 'Go Online'}
-            </button>
+      // Default Rider Sidebar
+      const items = [
+        { id: 'home', name: 'Home', icon: '🏠', target: 'HOME' },
+        { id: 'book', name: 'Book a Cab', icon: '🚕', target: 'BOOKING' },
+        { id: 'hire', name: 'Hire a Driver', icon: '👨‍✈️', target: 'BOOKING' },
+        { id: 'trips', name: 'My Trips', icon: '🚗', target: 'LIVE' },
+        { id: 'wallet', name: 'Wallet', icon: '💳', target: 'HOME' },
+        { id: 'saved', name: 'Saved Places', icon: '📍', target: 'HOME' },
+        { id: 'safety', name: 'Safety', icon: '🛡️', target: 'HOME' },
+        { id: 'profile', name: 'Profile', icon: '👤', target: 'HOME' }
+      ];
+      return `
+        <div class="sidebar">
+          <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">🚗</div>
+            <div>RideDrive<span>Ahead</span></div>
           </div>
-          <div style="font-size: 10.5px; color: var(--text-muted); line-height: 15px;">
-            Matched with verified personal car duties (2h-8h), party returns, 1-2 day road trips & city cabs.
-          </div>
-        </div>
-
-        <!-- Driver OS Fatigue Engine Cockpit -->
-        <div class="fatigue-hud-card">
-          <div class="fatigue-hud-header">
-            <div class="fatigue-title-row">
-              <span>🛡️</span>
-              <span>DRIVER OS FATIGUE ENGINE</span>
-            </div>
-            <span class="fatigue-zone-pill">SAFE ZONE</span>
-          </div>
-          <div class="fatigue-cols-row">
-            <div class="fatigue-col">
-              <div class="fatigue-lbl">DRIVING TODAY</div>
-              <div class="fatigue-val">${simState.drivingHours}</div>
-            </div>
-            <div class="fatigue-col">
-              <div class="fatigue-lbl">RECOMMENDED BREAK</div>
-              <div class="fatigue-val" style="color: var(--amber-400);">in ${simState.breakIn}</div>
-            </div>
-            <div class="fatigue-col">
-              <div class="fatigue-lbl">AVAILABLE DUTY</div>
-              <div class="fatigue-val" style="color: var(--electric-lime);">${simState.availableHours}</div>
-            </div>
-          </div>
-          <div class="fatigue-track">
-            <div class="fatigue-fill" style="width: 71%;"></div>
-          </div>
-          <div class="fatigue-sub-labels">
-            <span>0h Start</span>
-            <span>Break at 6h</span>
-            <span>8h Max Daily Limit</span>
-          </div>
-        </div>
-
-        <!-- Shift Net Earnings -->
-        <div style="background: var(--bg-card); border-radius: 20px; padding: 14px 16px; margin: 0 18px 12px 18px; border: 1px solid var(--border-dark);">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.4px;">TODAY'S NET EARNINGS</span>
-            <span class="pill-badge lime" style="font-size: 8.5px;">⚡ UPI READY</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0;">
-            <span style="font-size: 24px; font-weight: 900; color: var(--electric-lime);">₹ ${simState.todayEarnings}</span>
-            <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">${simState.todayTrips} Duties Completed</span>
-          </div>
-        </div>
-
-        <!-- Verified Qualifications -->
-        <div style="padding: 0 18px; margin-bottom: 12px;">
-          <div style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px;">VERIFIED QUALIFICATIONS</div>
-          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-            <span class="place-chip" style="font-size: 10px;">LMV Commercial DL</span>
-            <span class="place-chip" style="font-size: 10px; border-color: var(--border-lime); color: var(--electric-lime);">AT Pro</span>
-            <span class="place-chip" style="font-size: 10px; border-color: var(--border-lime); color: var(--electric-lime);">MT Expert</span>
-            <span class="place-chip" style="font-size: 10px; color: var(--emerald-400);">Police Verified ✓</span>
-          </div>
-        </div>
-
-        <!-- Gig Marketplace -->
-        <div style="padding: 0 18px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.4px;">GIG MARKETPLACE</span>
-          <span style="font-size: 10.5px; font-weight: 800; color: var(--electric-lime); cursor: pointer;" onclick="alert('Opening gig marketplace...')">View All (14) →</span>
-        </div>
-        <div style="padding: 0 18px; margin-bottom: 16px;">
-          <!-- Gig 1 -->
-          <div class="tier-card" style="margin-bottom: 8px;" onclick="alert('Gig Claimed! Added to your schedule.')">
-            <div>
-              <div class="tier-name-row">
-                <span class="tier-title">2h Chauffeur (Honda City AT)</span>
-                <span class="pill-badge green" style="font-size: 8px;">QUICK GIG</span>
-              </div>
-              <div class="tier-sub">📍 Koramangala ➔ Indiranagar Roundtrip</div>
-              <div class="tier-eta">Today at 4:30 PM</div>
-            </div>
-            <div class="tier-right">
-              <div class="tier-fare">₹ 750</div>
-              <span style="font-size: 9.5px; color: var(--electric-lime); font-weight: 800;">Claim →</span>
-            </div>
-          </div>
-
-          <!-- Gig 2 -->
-          <div class="tier-card" onclick="alert('Wedding gig claimed! Dress code: Formal suit.')">
-            <div>
-              <div class="tier-name-row">
-                <span class="tier-title">Wedding Chauffeur (Mercedes E)</span>
-                <span class="pill-badge lime" style="font-size: 8px;">HIGH VALUE</span>
-              </div>
-              <div class="tier-sub">📍 Palace Grounds ➔ Whitefield</div>
-              <div class="tier-eta">Tomorrow • 6 Hours Duty</div>
-            </div>
-            <div class="tier-right">
-              <div class="tier-fare" style="color: var(--electric-lime);">₹ 3,500</div>
-              <span style="font-size: 9.5px; color: var(--electric-lime); font-weight: 800;">Claim →</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Simulator Dispatch Trigger -->
-        <div style="background: var(--bg-card); border-radius: 18px; padding: 14px; margin: 0 18px 24px 18px; border: 1px solid var(--border-dark);">
-          <div style="font-size: 11px; font-weight: 800; color: var(--text-white); margin-bottom: 4px;">TEST DISPATCH NOTIFICATION</div>
-          <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 10px;">Simulate incoming 30-second ride dispatch modal popup.</div>
-          <button style="width: 100%; background: #1E293B; color: var(--electric-lime); border: 1px solid var(--border-lime); border-radius: 12px; padding: 10px; font-weight: 800; font-size: 12px; cursor: pointer;" onclick="simState.showIncomingModal = true; renderDriver();">
-            Trigger Incoming Ride Modal →
-          </button>
+          <ul class="nav-list">
+            ${items.map(item => `
+              <li class="nav-item ${activeItem === item.id ? 'active' : ''}" onclick="switchView('${item.target}')">
+                <span class="nav-icon">${item.icon}</span>
+                <span>${item.name}</span>
+              </li>
+            `).join('')}
+          </ul>
         </div>
       `;
+    }
 
-      // Render Modal if Active
-      if (simState.showIncomingModal) {
-        modalSlot.innerHTML = `
-          <div class="modal-backdrop">
-            <div class="modal-sheet">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span class="pill-badge lime">⚡ INCOMING DISPATCH (30s)</span>
-                <span style="font-size: 18px; font-weight: 900; color: var(--electric-lime);">₹ 1,248</span>
+    // Top Bar HTML Generator
+    function getTopBarHtml(name, role) {
+      if (role === 'DRIVER') {
+        return `
+          <div class="top-header-bar">
+            <div class="user-profile-badge">
+              <div class="user-avatar-img">RK</div>
+              <div>
+                <div class="user-name-text">${name}</div>
+                <div style="font-size: 9.5px; color: ${isDriverOnline ? 'var(--emerald)' : '#94A3B8'}; font-weight: 800;">
+                  ● ${isDriverOnline ? 'Online' : 'Offline'}
+                </div>
               </div>
-              <div style="font-size: 15px; font-weight: 900; color: #FFFFFF; margin-bottom: 2px;">
-                Personal Car Chauffeur (Honda City AT)
+            </div>
+            <div class="switch-ui ${isDriverOnline ? 'on' : ''}" style="margin-left: 6px;" onclick="isDriverOnline = !isDriverOnline; renderApp();">
+              <div class="switch-toggle-knob"></div>
+            </div>
+          </div>
+        `;
+      }
+      return `
+        <div class="top-header-bar">
+          <div class="header-icon-btn" onclick="alert('No new alerts. Upfront fare lock active.')">
+            <span>🔔</span>
+            <div class="header-dot"></div>
+          </div>
+          <div class="user-profile-badge" onclick="alert('User Account: Alex Carter')">
+            <div class="user-avatar-img">AC</div>
+            <span class="user-name-text">${name}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 1. RIDER HOME INNER CONTENT
+    function getRiderHomeInnerHtml() {
+      return `
+        <div class="view-content-wrapper">
+          <div class="home-grid-layout">
+            <div class="home-main-col">
+              <!-- Greeting Header -->
+              <div class="greeting-header">
+                <h1>Good Morning, Alex 👋</h1>
+                <p>Where would you like to go today?</p>
               </div>
-              <div style="font-size: 11.5px; color: var(--text-slate); margin-bottom: 12px;">
-                📍 Koramangala 6th Block ➔ Kempegowda Airport (BLR)
+
+              <!-- Search Bar -->
+              <div class="destination-search-box">
+                <input class="search-input-field" type="text" placeholder="Search destination (e.g. Airport, Mall, Office...)" value="Kempegowda International Airport" />
+                <button class="search-action-btn" onclick="switchView('BOOKING')">🔍</button>
               </div>
-              <div style="display: flex; gap: 8px; margin-bottom: 14px;">
-                <span class="place-chip" style="font-size: 10px;">Automatic AT</span>
-                <span class="place-chip" style="font-size: 10px;">22 km</span>
-                <span class="place-chip" style="font-size: 10px;">Rider: Alex (★ 4.9)</span>
+
+              <!-- 3 Hero Service Cards -->
+              <div class="hero-services-trio">
+                <div class="hero-service-card" onclick="switchView('BOOKING')">
+                  <div>
+                    <div class="card-icon">🚕</div>
+                    <div class="card-title">Book a Cab</div>
+                    <div class="card-sub">Quick & affordable rides</div>
+                  </div>
+                </div>
+
+                <div class="hero-service-card" onclick="switchView('BOOKING')">
+                  <div>
+                    <div class="card-icon">👨‍✈️</div>
+                    <div class="card-title">Hire a Driver</div>
+                    <div class="card-sub">Your car. Our professional drivers.</div>
+                  </div>
+                </div>
+
+                <div class="hero-service-card" onclick="switchView('BOOKING')">
+                  <div>
+                    <div class="card-icon">🚗</div>
+                    <div class="card-title">I Have My Own Car</div>
+                    <div class="card-sub">Drive with a professional driver</div>
+                  </div>
+                </div>
               </div>
-              <div style="display: flex; gap: 10px;">
-                <button style="flex: 1; background: #1E293B; color: #94A3B8; border: 1px solid var(--border-dark); border-radius: 14px; padding: 12px; font-weight: 800; cursor: pointer;" onclick="simState.showIncomingModal = false; renderDriver();">
-                  Decline
+
+              <!-- Quick Action Chips -->
+              <div class="quick-chips-row">
+                <div class="quick-chip" onclick="switchView('BOOKING')">
+                  <span class="quick-chip-icon">✈️</span>
+                  <div>
+                    <div class="quick-chip-title">Airport</div>
+                    <div class="quick-chip-sub">Book for airport</div>
+                  </div>
+                </div>
+                <div class="quick-chip" onclick="switchView('BOOKING')">
+                  <span class="quick-chip-icon">📅</span>
+                  <div>
+                    <div class="quick-chip-title">Schedule</div>
+                    <div class="quick-chip-sub">Plan your ride</div>
+                  </div>
+                </div>
+                <div class="quick-chip" onclick="switchView('BOOKING')">
+                  <span class="quick-chip-icon">🛣️</span>
+                  <div>
+                    <div class="quick-chip-title">Outstation</div>
+                    <div class="quick-chip-sub">Long distance trips</div>
+                  </div>
+                </div>
+                <div class="quick-chip" onclick="switchView('BOOKING')">
+                  <span class="quick-chip-icon">⏱️</span>
+                  <div>
+                    <div class="quick-chip-title">Hourly</div>
+                    <div class="quick-chip-sub">For events & meetings</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Trips Section -->
+              <div class="recent-trips-section">
+                <div class="recent-trips-header">
+                  <h3>Recent Trips</h3>
+                  <a onclick="switchView('LIVE')">View All →</a>
+                </div>
+                <div class="recent-trips-grid">
+                  <div class="recent-trip-box" onclick="switchView('BOOKING')">
+                    <div class="recent-trip-icon">🛫</div>
+                    <div class="recent-trip-info">
+                      <div class="recent-trip-dest">Bengaluru Airport</div>
+                      <div class="recent-trip-date">Sedan • 12 Mar 2025</div>
+                    </div>
+                    <div class="recent-trip-price-col">
+                      <div class="recent-trip-price">₹ 1,248</div>
+                      <span class="recent-trip-badge">Completed</span>
+                    </div>
+                  </div>
+
+                  <div class="recent-trip-box" onclick="switchView('BOOKING')">
+                    <div class="recent-trip-icon">🏢</div>
+                    <div class="recent-trip-info">
+                      <div class="recent-trip-dest">MG Road</div>
+                      <div class="recent-trip-date">SUV • 10 Mar 2025</div>
+                    </div>
+                    <div class="recent-trip-price-col">
+                      <div class="recent-trip-price">₹ 942</div>
+                      <span class="recent-trip-badge">Completed</span>
+                    </div>
+                  </div>
+
+                  <div class="recent-trip-box" onclick="switchView('BOOKING')">
+                    <div class="recent-trip-icon">🛍️</div>
+                    <div class="recent-trip-info">
+                      <div class="recent-trip-dest">Koramangala</div>
+                      <div class="recent-trip-date">Hatchback • 8 Mar 2025</div>
+                    </div>
+                    <div class="recent-trip-price-col">
+                      <div class="recent-trip-price">₹ 680</div>
+                      <span class="recent-trip-badge">Completed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Safety Priority Box -->
+              <div class="safety-priority-card">
+                <div class="safety-shield-icon">🛡️</div>
+                <div>
+                  <div class="safety-card-title">Your Safety, Our Priority</div>
+                  <div class="safety-card-sub">Live tracking • Verified drivers • 24/7 emergency support</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Home Right Column Widgets -->
+            <div class="home-widgets-col">
+              <!-- Mini Map Card -->
+              <div class="mini-map-card">
+                <div class="mini-map-header">
+                  <span class="mini-map-title">LIVE CITY RADAR</span>
+                  <span class="city-select-chip">📍 Bengaluru ⌵</span>
+                </div>
+                <div class="mini-map-svg-wrap">
+                  <svg viewBox="0 0 340 140" style="width: 100%; height: 100%;">
+                    <rect width="340" height="140" fill="#0F1A3A"/>
+                    <line x1="0" y1="40" x2="340" y2="40" stroke="#16234D" stroke-width="14"/>
+                    <line x1="0" y1="100" x2="340" y2="100" stroke="#16234D" stroke-width="16"/>
+                    <line x1="100" y1="0" x2="100" y2="140" stroke="#16234D" stroke-width="16"/>
+                    <line x1="240" y1="0" x2="240" y2="140" stroke="#16234D" stroke-width="18"/>
+                    <!-- Route -->
+                    <path d="M 80 100 C 140 100, 180 40, 260 40" fill="none" stroke="#D2FF00" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="80" cy="100" r="5" fill="#D2FF00"/>
+                    <circle cx="260" cy="40" r="5" fill="#EF4444"/>
+                    <text x="170" y="65" font-size="12">🚕</text>
+                  </svg>
+                  <div class="map-chip-eta">ETA 18 min</div>
+                </div>
+              </div>
+
+              <!-- Upcoming Booking Card -->
+              <div class="upcoming-booking-card">
+                <div class="upcoming-left">
+                  <div class="upcoming-icon">🛫</div>
+                  <div>
+                    <div class="upcoming-title">Airport Pickup</div>
+                    <div class="upcoming-time">Tomorrow, 6:30 AM</div>
+                  </div>
+                </div>
+                <button class="btn-view-details" onclick="switchView('LIVE')">View Details</button>
+              </div>
+
+              <!-- Promo Card -->
+              <div class="promo-card">
+                <div>
+                  <div class="promo-headline">Travel Smarter With RideDriveAhead</div>
+                  <div class="promo-sub">Safe • Reliable • Professional</div>
+                </div>
+                <div class="promo-car-emoji">🚘</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. BOOK A CAB INNER CONTENT
+    function getBookACabInnerHtml() {
+      const baseFare = selectedVehicleType === 'Mini' ? 320 : selectedVehicleType === 'Sedan' ? 420 : selectedVehicleType === 'SUV' ? 520 : 750;
+      const totalFare = selectedVehicleFare + (prefAc ? 40 : 0) + (prefLuggage ? 40 : 0);
+
+      return `
+        <div class="view-content-wrapper">
+          <div class="booking-grid-layout">
+            <div class="booking-left-col">
+              <!-- Header -->
+              <div class="booking-header-row">
+                <div>
+                  <h1>Book a Cab</h1>
+                  <p>Choose your ride, set your pickup and destination.</p>
+                </div>
+                <div class="instant-schedule-pill">
+                  <button class="instant-schedule-btn ${bookingType === 'INSTANT' ? 'active' : ''}" onclick="bookingType='INSTANT'; renderApp();">Instant</button>
+                  <button class="instant-schedule-btn ${bookingType === 'SCHEDULED' ? 'active' : ''}" onclick="bookingType='SCHEDULED'; renderApp();">Schedule</button>
+                </div>
+              </div>
+
+              <!-- Route Location Card -->
+              <div class="route-card-white">
+                <div class="route-timeline-col">
+                  <div class="route-pin-green"></div>
+                  <div class="route-pin-line"></div>
+                  <div class="route-pin-black"></div>
+                </div>
+                <div class="route-inputs-col">
+                  <div class="location-field-label">PICKUP LOCATION</div>
+                  <div class="location-field-value">Koramangala, 6th Block, Bengaluru</div>
+                  <div class="location-divider"></div>
+                  <div class="location-field-label">DROP LOCATION</div>
+                  <div class="location-field-value">Kempegowda International Airport</div>
+                </div>
+                <button class="route-swap-button" onclick="alert('Origin and destination reversed')">⇅</button>
+              </div>
+
+              <!-- Ride Type 4-Cards Row -->
+              <div style="font-size: 11.5px; font-weight: 800; color: var(--text-muted); margin-bottom: 8px;">RIDE TYPE</div>
+              <div class="ride-types-row">
+                <div class="ride-type-card ${selectedVehicleType === 'Mini' ? 'selected' : ''}" onclick="selectVehicle('Mini', 420, '4 min')">
+                  <div class="ride-type-icon">🚗</div>
+                  <div class="ride-type-name">Mini</div>
+                  <div class="ride-type-fare">₹ 420</div>
+                  <div class="ride-type-time">4 min</div>
+                </div>
+
+                <div class="ride-type-card ${selectedVehicleType === 'Sedan' ? 'selected' : ''}" onclick="selectVehicle('Sedan', 580, '6 min')">
+                  <div class="ride-type-icon">🚘</div>
+                  <div class="ride-type-name">Sedan</div>
+                  <div class="ride-type-fare">₹ 580</div>
+                  <div class="ride-type-time">6 min</div>
+                </div>
+
+                <div class="ride-type-card ${selectedVehicleType === 'SUV' ? 'selected' : ''}" onclick="selectVehicle('SUV', 720, '8 min')">
+                  <div class="ride-type-icon">🚙</div>
+                  <div class="ride-type-name">SUV</div>
+                  <div class="ride-type-fare">₹ 720</div>
+                  <div class="ride-type-time">8 min</div>
+                </div>
+
+                <div class="ride-type-card ${selectedVehicleType === 'Lux' ? 'selected' : ''}" onclick="selectVehicle('Lux', 1050, '10 min')">
+                  <div class="ride-type-icon">✨</div>
+                  <div class="ride-type-name">Lux</div>
+                  <div class="ride-type-fare">₹ 1,050</div>
+                  <div class="ride-type-time">10 min</div>
+                </div>
+              </div>
+
+              <!-- Additional Preferences -->
+              <div class="preferences-card">
+                <h4>ADDITIONAL PREFERENCES</h4>
+                <div class="pref-item-row">
+                  <div class="pref-item-left">
+                    <span>❄️</span>
+                    <span>Air Conditioning (AC)</span>
+                  </div>
+                  <div class="switch-ui ${prefAc ? 'on' : ''}" onclick="togglePref('ac')">
+                    <div class="switch-toggle-knob"></div>
+                  </div>
+                </div>
+
+                <div class="pref-item-row">
+                  <div class="pref-item-left">
+                    <span>🧳</span>
+                    <span>Luggage Assistance (Boot Space)</span>
+                  </div>
+                  <div class="switch-ui ${prefLuggage ? 'on' : ''}" onclick="togglePref('luggage')">
+                    <div class="switch-toggle-knob"></div>
+                  </div>
+                </div>
+
+                <div class="pref-item-row">
+                  <div class="pref-item-left">
+                    <span>🐾</span>
+                    <span>Pet Friendly</span>
+                  </div>
+                  <div class="switch-ui ${prefPet ? 'on' : ''}" onclick="togglePref('pet')">
+                    <div class="switch-toggle-knob"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Booking Right Column -->
+            <div class="booking-right-col">
+              <div class="booking-route-map">
+                <svg viewBox="0 0 380 220" style="width: 100%; height: 100%;">
+                  <rect width="380" height="220" fill="#0F1A3A"/>
+                  <line x1="0" y1="60" x2="380" y2="60" stroke="#16234D" stroke-width="16"/>
+                  <line x1="0" y1="160" x2="380" y2="160" stroke="#16234D" stroke-width="20"/>
+                  <line x1="120" y1="0" x2="120" y2="220" stroke="#16234D" stroke-width="18"/>
+                  <line x1="280" y1="0" x2="280" y2="220" stroke="#16234D" stroke-width="20"/>
+                  <!-- Curved Highway Route -->
+                  <path d="M 80 160 C 140 160, 180 50, 310 50" fill="none" stroke="#D2FF00" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="80" cy="160" r="6" fill="#D2FF00"/>
+                  <circle cx="310" cy="50" r="7" fill="#EF4444"/>
+                  <text x="195" y="98" font-size="16">🚕</text>
+                  <text x="70" y="190" fill="#94A3B8" font-size="11" font-weight="700">Bengaluru</text>
+                  <text x="240" y="40" fill="#E2E8F0" font-size="11" font-weight="800">Kempegowda Airport</text>
+                </svg>
+                <div class="map-chip-eta">ETA 18 min</div>
+              </div>
+
+              <!-- Fare Estimate Card -->
+              <div class="fare-estimate-card">
+                <div class="fare-card-title">FARE ESTIMATE</div>
+                <div class="fare-line-row">
+                  <span>Base Fare</span>
+                  <span class="fare-line-val">₹ ${baseFare}</span>
+                </div>
+                <div class="fare-line-row">
+                  <span>Distance (18 km)</span>
+                  <span class="fare-line-val">₹ 162</span>
+                </div>
+                <div class="fare-line-row">
+                  <span>Time (24 min)</span>
+                  <span class="fare-line-val">₹ 78</span>
+                </div>
+                <div class="fare-line-row">
+                  <span>Taxes & Fees</span>
+                  <span class="fare-line-val">₹ 60</span>
+                </div>
+
+                <div class="fare-total-row">
+                  <div>
+                    <div class="total-lbl">Total</div>
+                    <span class="locked-fare-badge">🔒 Upfront Locked</span>
+                  </div>
+                  <div class="total-val">₹ ${totalFare}</div>
+                </div>
+
+                <button class="btn-confirm-ride" onclick="switchView('LIVE')">
+                  <span>Confirm Ride</span>
+                  <span>→</span>
                 </button>
-                <button style="flex: 2; background: var(--electric-lime); color: var(--navy-deep); border: none; border-radius: 14px; padding: 12px; font-weight: 900; cursor: pointer;" onclick="simState.showIncomingModal = false; alert('Dispatch Accepted! Heading to Koramangala 6th Block.'); renderDriver();">
-                  Accept Duty (₹ 1,248) →
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. LIVE TRIP INNER CONTENT
+    function getLiveTripInnerHtml() {
+      return `
+        <div class="view-content-wrapper">
+          <div style="margin-bottom: 16px;">
+            <h1 style="font-size: 22px; font-weight: 900; color: #FFFFFF;">Live Trip</h1>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">Your ride is on the way</p>
+          </div>
+
+          <div class="live-trip-grid">
+            <!-- Left Large Map -->
+            <div class="live-map-wrapper">
+              <svg viewBox="0 0 540 480" style="width: 100%; height: 100%;">
+                <rect width="540" height="480" fill="#0F1A3A"/>
+                <line x1="0" y1="120" x2="540" y2="120" stroke="#16234D" stroke-width="24"/>
+                <line x1="0" y1="340" x2="540" y2="340" stroke="#16234D" stroke-width="30"/>
+                <line x1="160" y1="0" x2="160" y2="480" stroke="#16234D" stroke-width="26"/>
+                <line x1="400" y1="0" x2="400" y2="480" stroke="#16234D" stroke-width="28"/>
+                <!-- Path -->
+                <path d="M 120 340 C 220 340, 260 120, 440 120" fill="none" stroke="#D2FF00" stroke-width="6" stroke-linecap="round"/>
+                <circle cx="120" cy="340" r="10" fill="rgba(210, 255, 0, 0.3)"/>
+                <circle cx="120" cy="340" r="5" fill="#D2FF00"/>
+                <circle cx="440" cy="120" r="8" fill="#EF4444"/>
+                <g transform="translate(265, 210)">
+                  <circle cx="12" cy="12" r="18" fill="rgba(210, 255, 0, 0.25)"/>
+                  <circle cx="12" cy="12" r="14" fill="#0A1128" stroke="#D2FF00" stroke-width="1.5"/>
+                  <text x="12" y="17" font-size="14" text-anchor="middle">🚕</text>
+                </g>
+                <text x="110" y="380" fill="#94A3B8" font-size="12" font-weight="700">Koramangala</text>
+                <text x="370" y="95" fill="#E2E8F0" font-size="13" font-weight="800">BLR Airport</text>
+              </svg>
+              <div class="map-chip-eta" style="top: 18px; left: 18px; right: auto; padding: 6px 14px; font-size: 12px;">
+                ETA 7 min
+              </div>
+
+              <!-- Map Overlay Controls -->
+              <div class="live-bottom-controls">
+                <button class="btn-sos-red" onclick="alert('SOS Emergency Triggered! Alerting 112 police dispatch and 3 emergency contacts.')">
+                  <span>🚨</span>
+                  <span>SOS</span>
                 </button>
+                <div class="otp-display-pill">
+                  <div class="otp-lbl">TRIP OTP</div>
+                  <div class="otp-val">4827</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Details Column -->
+            <div class="live-details-col">
+              <!-- Driver Card -->
+              <div class="driver-identity-card">
+                <div class="driver-id-top">
+                  <div class="driver-id-avatar">RK</div>
+                  <div>
+                    <div class="driver-id-name">
+                      <span>Ramesh Kumar</span>
+                      <span class="driver-rating-badge">★ 4.8 (2.4k rides)</span>
+                    </div>
+                    <div class="driver-car-desc">Toyota Innova • KA 01 AB 1234</div>
+                  </div>
+                </div>
+                <div class="driver-id-actions">
+                  <button class="driver-action-pill" onclick="alert('Calling driver Ramesh Kumar (+91 98765 43210)...')">📞 Call</button>
+                  <button class="driver-action-pill" onclick="alert('Opening in-app chat...')">💬 Chat</button>
+                  <button class="driver-action-pill" onclick="alert('Live tracking link copied to clipboard.')">↗ Share</button>
+                </div>
+              </div>
+
+              <!-- Trip Progress Card -->
+              <div class="trip-progress-card">
+                <h4>TRIP PROGRESS</h4>
+                <div class="stepper-bar-wrap">
+                  <div class="stepper-base-line"></div>
+                  <div class="stepper-active-line" style="width: ${currentTripStage === 'ASSIGNED' ? '10%' : currentTripStage === 'ON_THE_WAY' ? '45%' : currentTripStage === 'REACHED' ? '75%' : '100%'};"></div>
+                  <div class="step-node">
+                    <div class="step-circle active"></div>
+                    <div class="step-name active">Driver Assigned</div>
+                  </div>
+                  <div class="step-node">
+                    <div class="step-circle ${currentTripStage !== 'ASSIGNED' ? 'active' : ''}"></div>
+                    <div class="step-name ${currentTripStage !== 'ASSIGNED' ? 'active' : ''}">On the Way</div>
+                  </div>
+                  <div class="step-node">
+                    <div class="step-circle ${currentTripStage === 'REACHED' || currentTripStage === 'TRIP_STARTED' ? 'active' : ''}"></div>
+                    <div class="step-name ${currentTripStage === 'REACHED' || currentTripStage === 'TRIP_STARTED' ? 'active' : ''}">Reached</div>
+                  </div>
+                  <div class="step-node">
+                    <div class="step-circle ${currentTripStage === 'TRIP_STARTED' ? 'active' : ''}"></div>
+                    <div class="step-name ${currentTripStage === 'TRIP_STARTED' ? 'active' : ''}">Trip Started</div>
+                  </div>
+                </div>
+
+                <div class="live-summary-list">
+                  <div class="live-sum-item">
+                    <span class="sum-icon">📍</span>
+                    <span class="sum-label">Pickup:</span>
+                    <span class="sum-val">Koramangala, 6th Block</span>
+                  </div>
+                  <div class="live-sum-item">
+                    <span class="sum-icon">🏁</span>
+                    <span class="sum-label">Drop:</span>
+                    <span class="sum-val">Kempegowda International Airport</span>
+                  </div>
+                  <div class="live-sum-item">
+                    <span class="sum-icon">🛣️</span>
+                    <span class="sum-label">Distance:</span>
+                    <span class="sum-val">18 km</span>
+                  </div>
+                  <div class="live-sum-item">
+                    <span class="sum-icon">⏱️</span>
+                    <span class="sum-label">ETA:</span>
+                    <span class="sum-val" style="color: var(--lime);">7 min</span>
+                  </div>
+                </div>
+
+                <button class="btn-lime" style="width: 100%; margin-top: 16px;" onclick="advanceTripStage()">
+                  <span>${currentTripStage === 'ON_THE_WAY' ? 'Simulate Reached Pickup ➔' : currentTripStage === 'REACHED' ? 'Start Trip ➔' : 'Complete Trip & Settle ➔'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. DRIVER DASHBOARD & GIGS INNER CONTENT
+    function getDriverDashboardInnerHtml() {
+      return `
+        <div class="view-content-wrapper">
+          <div class="driver-os-grid">
+            <div class="driver-main-col">
+              <!-- Header -->
+              <div class="greeting-header">
+                <h1>Good Morning, Ramesh 👋</h1>
+                <p>Ready for a new ride?</p>
+              </div>
+
+              <!-- 4 Metrics Row -->
+              <div class="driver-metrics-row">
+                <div class="metric-card">
+                  <div class="metric-label">TODAY'S EARNINGS</div>
+                  <div class="metric-val" style="color: var(--lime);">₹ 3,420</div>
+                  <div class="metric-sub green">↑ 12% vs yesterday</div>
+                </div>
+
+                <div class="metric-card">
+                  <div class="metric-label">ONLINE TIME</div>
+                  <div class="metric-val">5h 42m</div>
+                  <div class="metric-sub green">Active Shift</div>
+                </div>
+
+                <div class="metric-card">
+                  <div class="metric-label">COMPLETED TRIPS</div>
+                  <div class="metric-val">8</div>
+                  <div class="metric-sub green">↑ 25% target</div>
+                </div>
+
+                <div class="metric-card">
+                  <div class="metric-label">NEXT BREAK</div>
+                  <div class="metric-val" style="color: var(--amber);">in 18 min ☕</div>
+                  <div class="metric-sub muted">Recommended</div>
+                </div>
+              </div>
+
+              <!-- Go Offline / Online Button -->
+              <button class="btn-duty-action" onclick="isDriverOnline = !isDriverOnline; renderApp();">
+                ${isDriverOnline ? 'Go Offline' : 'Go Online (Ready for Gigs)'}
+              </button>
+
+              <!-- Split: Upcoming Jobs + Fatigue Monitor -->
+              <div class="driver-split-row">
+                <!-- Upcoming Jobs -->
+                <div class="upcoming-jobs-card">
+                  <div class="jobs-header">
+                    <h4>Upcoming Jobs</h4>
+                    <a onclick="alert('Viewing all scheduled jobs...')">View All →</a>
+                  </div>
+
+                  <div class="job-item">
+                    <div class="job-left">
+                      <span>🛫</span>
+                      <div>
+                        <div class="job-title">Airport Drop</div>
+                        <div class="job-route">Koramangala ➔ Airport</div>
+                      </div>
+                    </div>
+                    <div style="text-align: right; display: flex; align-items: center;">
+                      <div>
+                        <div class="job-time">10:30 AM</div>
+                        <div class="job-price">₹ 720</div>
+                      </div>
+                      <button class="job-btn-view" onclick="switchView('LIVE')">View</button>
+                    </div>
+                  </div>
+
+                  <div class="job-item">
+                    <div class="job-left">
+                      <span>👨‍✈️</span>
+                      <div>
+                        <div class="job-title">Chauffeur</div>
+                        <div class="job-route">MG Road Roundtrip</div>
+                      </div>
+                    </div>
+                    <div style="text-align: right; display: flex; align-items: center;">
+                      <div>
+                        <div class="job-time">1:00 PM</div>
+                        <div class="job-price">₹ 1,200</div>
+                      </div>
+                      <button class="job-btn-view" onclick="alert('Job #2: MG Road Chauffeur confirmed')">View</button>
+                    </div>
+                  </div>
+
+                  <div class="job-item">
+                    <div class="job-left">
+                      <span>🚗</span>
+                      <div>
+                        <div class="job-title">City Ride</div>
+                        <div class="job-route">Indiranagar ➔ Whitefield</div>
+                      </div>
+                    </div>
+                    <div style="text-align: right; display: flex; align-items: center;">
+                      <div>
+                        <div class="job-time">3:30 PM</div>
+                        <div class="job-price">₹ 480</div>
+                      </div>
+                      <button class="job-btn-view" onclick="alert('Job #3: Indiranagar City Ride')">View</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Fatigue Monitor Card -->
+                <div class="fatigue-monitor-card">
+                  <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 4px;">FATIGUE MONITOR</div>
+                  <div class="fatigue-gauge-wrap">
+                    <svg class="gauge-svg" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="8"/>
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="#D2FF00" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="75" stroke-linecap="round"/>
+                    </svg>
+                    <div class="gauge-center-text">
+                      <span class="gauge-hrs">5h 42m</span>
+                      <span class="gauge-lbl">Driving today</span>
+                    </div>
+                  </div>
+                  <div class="fatigue-info-line">Recommended break: <span>in 18 min</span></div>
+                  <div class="fatigue-info-line">Available for another trip: <span>2h 18m</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Available Gigs Panel (Right) -->
+            <div class="available-gigs-panel">
+              <div class="gigs-panel-top">
+                <h3>Available Gigs</h3>
+                <p>Flexible jobs. Better earnings.</p>
+              </div>
+
+              <div class="gigs-filter-row">
+                <div class="gig-filter-chip active">All</div>
+                <div class="gig-filter-chip">Chauffeur</div>
+                <div class="gig-filter-chip">Event</div>
+                <div class="gig-filter-chip">Outstation</div>
+              </div>
+
+              <!-- Gig 1 -->
+              <div class="gig-card-item">
+                <div class="gig-thumb">🚗</div>
+                <div class="gig-details">
+                  <div class="gig-name">2h Chauffeur - Corporate</div>
+                  <div class="gig-rate">₹ 700 – ₹ 900</div>
+                  <div class="gig-meta">2 hours • Automatic • Koramangala</div>
+                </div>
+                <button class="btn-apply-gig" onclick="alert('Application submitted for 2h Corporate Chauffeur!')">Apply</button>
+              </div>
+
+              <!-- Gig 2 -->
+              <div class="gig-card-item">
+                <div class="gig-thumb">✨</div>
+                <div class="gig-details">
+                  <div class="gig-name">Wedding Event</div>
+                  <div class="gig-rate">₹ 3,500+</div>
+                  <div class="gig-meta">6 hours • Manual • Whitefield</div>
+                </div>
+                <button class="btn-apply-gig" onclick="alert('Application submitted for Wedding Event Chauffeur!')">Apply</button>
+              </div>
+
+              <!-- Gig 3 -->
+              <div class="gig-card-item">
+                <div class="gig-thumb">🛣️</div>
+                <div class="gig-details">
+                  <div class="gig-name">Jaipur Outstation</div>
+                  <div class="gig-rate">₹ 4,500+</div>
+                  <div class="gig-meta">2 days • Manual • Bengaluru</div>
+                </div>
+                <button class="btn-apply-gig" onclick="alert('Application submitted for Jaipur Outstation Road Trip!')">Apply</button>
+              </div>
+
+              <!-- Gig 4 -->
+              <div class="gig-card-item">
+                <div class="gig-thumb">🛫</div>
+                <div class="gig-details">
+                  <div class="gig-name">Airport Transfer</div>
+                  <div class="gig-rate">₹ 1,200</div>
+                  <div class="gig-meta">1.5 hours • Automatic • Airport</div>
+                </div>
+                <button class="btn-apply-gig" onclick="alert('Airport Transfer claimed!')">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // MASTER APP RENDER DISPATCHER
+    // ==========================================
+    function renderApp() {
+      const container = document.getElementById('main-view-container');
+
+      if (currentActiveView === 'SHOWCASE') {
+        container.innerHTML = `
+          <div class="master-showcase-view">
+            <!-- Row 1: Rider Home & Book a Cab -->
+            <div class="showcase-row-2col">
+              <!-- Top Left: Rider Home -->
+              <div class="showcase-card-frame">
+                ${getSidebarHtml('RIDER', 'home')}
+                <div class="main-viewport">
+                  ${getTopBarHtml('Alex Carter', 'RIDER')}
+                  ${getRiderHomeInnerHtml()}
+                </div>
+              </div>
+
+              <!-- Top Right: Book a Cab -->
+              <div class="showcase-card-frame">
+                ${getSidebarHtml('RIDER', 'book')}
+                <div class="main-viewport">
+                  ${getTopBarHtml('Alex Carter', 'RIDER')}
+                  ${getBookACabInnerHtml()}
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Live Trip & Driver OS Dashboard -->
+            <div class="showcase-row-2col">
+              <!-- Bottom Left: Live Trip -->
+              <div class="showcase-card-frame">
+                ${getSidebarHtml('RIDER', 'trips')}
+                <div class="main-viewport">
+                  ${getTopBarHtml('Alex Carter', 'RIDER')}
+                  ${getLiveTripInnerHtml()}
+                </div>
+              </div>
+
+              <!-- Bottom Right: Driver OS Dashboard -->
+              <div class="showcase-card-frame">
+                ${getSidebarHtml('DRIVER', 'dashboard')}
+                <div class="main-viewport">
+                  ${getTopBarHtml('Ramesh Kumar', 'DRIVER')}
+                  ${getDriverDashboardInnerHtml()}
+                </div>
               </div>
             </div>
           </div>
         `;
-      } else {
-        modalSlot.innerHTML = '';
+      } else if (currentActiveView === 'HOME') {
+        container.innerHTML = `
+          <div class="webapp-shell">
+            ${getSidebarHtml('RIDER', 'home')}
+            <div class="main-viewport">
+              ${getTopBarHtml('Alex Carter', 'RIDER')}
+              ${getRiderHomeInnerHtml()}
+            </div>
+          </div>
+        `;
+      } else if (currentActiveView === 'BOOKING') {
+        container.innerHTML = `
+          <div class="webapp-shell">
+            ${getSidebarHtml('RIDER', 'book')}
+            <div class="main-viewport">
+              ${getTopBarHtml('Alex Carter', 'RIDER')}
+              ${getBookACabInnerHtml()}
+            </div>
+          </div>
+        `;
+      } else if (currentActiveView === 'LIVE') {
+        container.innerHTML = `
+          <div class="webapp-shell">
+            ${getSidebarHtml('RIDER', 'trips')}
+            <div class="main-viewport">
+              ${getTopBarHtml('Alex Carter', 'RIDER')}
+              ${getLiveTripInnerHtml()}
+            </div>
+          </div>
+        `;
+      } else if (currentActiveView === 'DRIVER') {
+        container.innerHTML = `
+          <div class="webapp-shell">
+            ${getSidebarHtml('DRIVER', 'dashboard')}
+            <div class="main-viewport">
+              ${getTopBarHtml('Ramesh Kumar', 'DRIVER')}
+              ${getDriverDashboardInnerHtml()}
+            </div>
+          </div>
+        `;
       }
     }
 
-    // Initial Boots
-    renderRider();
-    renderDriver();
+    // Initial render
+    renderApp();
   </script>
 </body>
 </html>
