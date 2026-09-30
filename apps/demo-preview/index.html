@@ -3,55 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RideDriveAhead — Dual-Platform Simulator (Light Mode)</title>
+  <title>RideDriveAhead — Two ways. One platform. Book a Cab | Hire a Driver</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Clean Light Theme */
-      --bg-page: #F3F4F6;
-      --bg-surface: #FFFFFF;
-      --bg-muted: #F8FAFC;
-      --bg-subtle: #F1F5F9;
-      --border-light: #E2E8F0;
-      --border-focus: #94A3B8;
-      
+      /* Deep Navy & Electric Lime Brand Palette */
+      --bg-space: #070B19;
+      --bg-app: #0B132B;
+      --bg-card: #131C38;
+      --bg-card-hover: #19264D;
+      --bg-card-light: #FFFFFF;
+      --border-dark: rgba(255, 255, 255, 0.08);
+      --border-lime: rgba(210, 255, 0, 0.35);
+
       /* Primary Colors */
-      --primary-slate: #0F172A;
-      --primary-hover: #1E293B;
-      --emerald-600: #059669;
-      --emerald-700: #047857;
-      --emerald-50: #ECFDF5;
-      --emerald-100: #D1FAE5;
-      --emerald-border: #A7F3D0;
-      
-      --blue-600: #2563EB;
-      --blue-50: #EFF6FF;
-      --blue-border: #BFDBFE;
-      
-      --amber-600: #D97706;
-      --amber-50: #FFFBEB;
-      --amber-border: #FDE68A;
-      
-      --red-600: #DC2626;
-      --red-50: #FEF2F2;
-      --red-border: #FECACA;
-      
+      --electric-lime: #D2FF00;
+      --lime-glow: rgba(210, 255, 0, 0.4);
+      --navy-deep: #0A1128;
+      --emerald-500: #10B981;
+      --emerald-400: #34D399;
+      --amber-400: #FBBF24;
+      --red-500: #EF4444;
+
       /* Text Hierarchy */
-      --text-900: #0F172A;
-      --text-700: #334155;
-      --text-500: #64748B;
-      --text-400: #94A3B8;
-      
-      --radius-xl: 20px;
-      --radius-lg: 14px;
-      --radius-md: 10px;
-      --radius-sm: 6px;
-      
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-      --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-      --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --text-white: #FFFFFF;
+      --text-slate: #CBD5E1;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --text-navy: #0A1128;
+
+      /* Radius */
+      --radius-2xl: 28px;
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
     }
 
     * {
@@ -63,18 +51,20 @@
     }
 
     body {
-      background-color: var(--bg-page);
-      background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
-      background-size: 24px 24px;
-      color: var(--text-900);
+      background-color: var(--bg-space);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(210, 255, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px;
+      color: var(--text-white);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px 40px 16px;
+      padding: 24px 16px 50px 16px;
     }
 
-    /* Master Top Bar Header */
+    /* Master Header */
     header {
       text-align: center;
       margin-bottom: 24px;
@@ -82,27 +72,29 @@
       width: 100%;
     }
 
-    .brand-title-wrap {
+    .brand-pill-wrap {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: #FFFFFF;
-      padding: 8px 22px;
+      gap: 10px;
+      background: rgba(19, 28, 56, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 8px 24px;
       border-radius: 30px;
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-lime);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
     }
 
     .brand-title {
-      font-size: 19px;
-      font-weight: 800;
-      color: var(--text-900);
-      letter-spacing: -0.3px;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-white);
+      letter-spacing: -0.2px;
     }
+    .brand-title span { color: var(--electric-lime); }
 
     .brand-tagline {
-      color: var(--text-500);
-      font-size: 13px;
+      color: var(--text-slate);
+      font-size: 13.5px;
       font-weight: 500;
       margin-top: 8px;
     }
@@ -120,15 +112,23 @@
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       padding: 4px 12px;
       border-radius: 20px;
-      background: #FFFFFF;
-      border: 1px solid var(--border-light);
-      color: var(--text-700);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-dark);
+      color: var(--text-slate);
     }
-    .pill-badge.green { background: var(--emerald-50); border-color: var(--emerald-border); color: var(--emerald-700); }
-    .pill-badge.blue { background: var(--blue-50); border-color: var(--blue-border); color: var(--blue-600); }
+    .pill-badge.lime {
+      background: rgba(210, 255, 0, 0.12);
+      border-color: var(--border-lime);
+      color: var(--electric-lime);
+    }
+    .pill-badge.green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--emerald-400);
+    }
 
     /* Simulator Stage */
     .simulator-stage {
@@ -137,7 +137,7 @@
       justify-content: center;
       flex-wrap: wrap;
       width: 100%;
-      max-width: 980px;
+      max-width: 960px;
     }
 
     .device-column {
@@ -148,32 +148,33 @@
 
     .device-label {
       font-size: 12px;
-      font-weight: 700;
-      color: var(--text-500);
-      margin-bottom: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.4px;
       text-transform: uppercase;
     }
+
     .device-chip {
       font-size: 10px;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 6px;
       font-weight: 800;
     }
-    .chip-rider { background: var(--blue-50); color: var(--blue-600); border: 1px solid var(--blue-border); }
-    .chip-driver { background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-border); }
+    .chip-rider { background: rgba(210, 255, 0, 0.15); color: var(--electric-lime); border: 1px solid var(--border-lime); }
+    .chip-driver { background: rgba(16, 185, 129, 0.18); color: var(--emerald-400); border: 1px solid rgba(16, 185, 129, 0.4); }
 
     /* Phone Shell */
     .phone-frame {
-      width: 410px;
-      height: 830px;
-      background: #FFFFFF;
-      border-radius: 44px;
-      border: 8px solid #E2E8F0;
-      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.14), 0 0 0 1px #CBD5E1;
+      width: 400px;
+      height: 840px;
+      background: var(--bg-app);
+      border-radius: 46px;
+      border: 8px solid #1E293B;
+      box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -182,29 +183,30 @@
 
     /* Dynamic Island & Status Bar */
     .phone-statusbar {
-      height: 38px;
-      padding: 0 18px;
+      height: 40px;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 11px;
       font-weight: 700;
-      color: var(--text-700);
+      color: var(--text-muted);
       z-index: 50;
-      background: #FFFFFF;
+      background: var(--bg-app);
       position: relative;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      flex-shrink: 0;
     }
     .status-time {
       font-size: 12px;
-      font-weight: 800;
-      color: var(--text-900);
-      width: 50px;
+      font-weight: 900;
+      color: var(--text-white);
+      width: 48px;
     }
     .dynamic-island {
       width: 96px;
       height: 20px;
-      background: #0F172A;
+      background: #000000;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -219,93 +221,6 @@
     .island-sensor { width: 5px; height: 5px; border-radius: 50%; background: #334155; }
     .status-right { display: flex; align-items: center; gap: 6px; font-size: 10px; }
 
-    /* Clean App Topbar */
-    .app-topbar {
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--border-light);
-      z-index: 20;
-      flex-shrink: 0;
-    }
-    .app-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      flex: 1;
-    }
-    .app-icon-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: #0F172A;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .app-icon-circle.driver { background: var(--emerald-600); }
-    .app-name {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-900);
-      line-height: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .app-sub {
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--emerald-700);
-      letter-spacing: 0.3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-      margin-left: 8px;
-    }
-
-    .btn-sos {
-      background: var(--red-50);
-      border: 1px solid var(--red-border);
-      color: var(--red-600);
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .btn-sos:hover { background: #FEE2E2; }
-
-    .user-avatar-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-700);
-      cursor: pointer;
-    }
-
     /* Screen Scrollable Body */
     .screen-content {
       flex: 1;
@@ -313,860 +228,1055 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      background: #F8FAFC;
-      padding-bottom: 40px;
+      background: var(--bg-app);
     }
     .screen-content::-webkit-scrollbar { width: 3px; }
-    .screen-content::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
-
-    /* Dual Mode Switcher */
-    .service-switcher-bar {
-      display: flex;
-      gap: 8px;
-      padding: 10px 14px;
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .service-mode-btn {
-      flex: 1;
-      background: var(--bg-muted);
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 8px 10px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-    }
-    .service-mode-btn:hover { background: var(--bg-subtle); }
-    .service-mode-btn.active {
-      background: #0F172A;
-      border-color: #0F172A;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-    }
-    .service-btn-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2px;
-    }
-    .service-mode-name {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-700);
-    }
-    .service-mode-btn.active .service-mode-name {
-      color: #FFFFFF;
-    }
-    .service-badge-pill {
-      font-size: 8px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: var(--emerald-50);
-      color: var(--emerald-700);
-      border: 1px solid var(--emerald-border);
-    }
-    .service-mode-btn.active .service-badge-pill {
-      background: #FEF3C7;
-      color: #92400E;
-      border-color: #FDE68A;
-      font-weight: 900;
-    }
-    .service-badge-pill.cab {
-      background: var(--blue-50);
-      color: var(--blue-600);
-      border-color: var(--blue-border);
-    }
-    .service-mode-btn.active .service-badge-pill.cab {
-      background: #ECFDF5;
-      color: #047857;
-      border-color: #A7F3D0;
-    }
-    .service-mode-desc {
-      font-size: 10px;
-      color: var(--text-500);
-    }
-    .service-mode-btn.active .service-mode-desc {
-      color: #CBD5E1;
-    }
-
-    /* Cards */
-    .pro-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 14px 16px;
-      margin: 0 14px 12px 14px;
-      box-shadow: var(--shadow-card);
-    }
-    .pro-card.green-accent {
-      border-color: var(--emerald-border);
-      background: #FFFFFF;
-    }
-    .pro-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .pro-card-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-700);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Chauffeur Package Card */
-    .chauffeur-pkg-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.15s;
-      position: relative;
-      overflow: hidden;
-    }
-    .chauffeur-pkg-card:hover {
-      border-color: var(--border-focus);
-      background: var(--bg-muted);
-    }
-    .chauffeur-pkg-card.active {
-      border-color: #0F172A;
-      background: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-    }
-    .chauffeur-pkg-card.active::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: #D4AF37;
-    }
-    .pkg-title-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .pkg-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--text-900);
-    }
-    .pkg-sub {
-      font-size: 10px;
-      color: var(--text-500);
-      margin-top: 2px;
-    }
-    .pkg-price-col {
-      text-align: right;
-    }
-    .pkg-price {
-      font-size: 16px;
-      font-weight: 900;
-      color: #0F172A;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .chauffeur-pkg-card.active .pkg-price {
-      color: var(--emerald-700);
-    }
-    .pkg-hours {
-      font-size: 9px;
-      color: var(--text-400);
-      font-weight: 700;
-    }
-
-    /* Transmission Selector */
-    .transmission-toggle {
-      display: flex;
-      gap: 8px;
-      margin: 8px 0 12px 0;
-    }
-    .trans-btn {
-      flex: 1;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid var(--border-light);
-      background: var(--bg-muted);
-      color: var(--text-700);
-      font-size: 11px;
-      font-weight: 700;
-      text-align: center;
-      cursor: pointer;
-    }
-    .trans-btn.active {
-      background: #0F172A;
-      color: #FFFFFF;
-      border-color: #0F172A;
-    }
-
-    /* Preset Vehicle Chips */
-    .car-preset-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 6px 0 10px 0;
-    }
-    .car-preset-chip {
-      padding: 5px 10px;
-      border-radius: 6px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
-      color: var(--text-700);
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .car-preset-chip.active {
-      background: var(--blue-50);
-      border-color: var(--blue-border);
-      color: var(--blue-600);
-      font-weight: 800;
-    }
+    .screen-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
 
     /* Bottom Nav Bar */
-    .app-nav-bar {
-      height: 58px;
-      background: #FFFFFF;
-      border-top: 1px solid var(--border-light);
+    .app-bottom-nav {
+      height: 62px;
+      background: var(--navy-deep);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
+      align-items: center;
       justify-content: space-around;
-      align-items: center;
-      padding: 0 4px;
-      z-index: 30;
+      padding: 0 10px;
       flex-shrink: 0;
+      z-index: 40;
     }
-    .app-nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
+    .nav-tab-btn {
       background: none;
       border: none;
-      color: var(--text-400);
-      cursor: pointer;
-      padding: 6px 0;
-      transition: color 0.15s;
-    }
-    .app-nav-btn.active {
-      color: #0F172A;
-    }
-    .app-nav-btn span {
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    /* Docked Bottom CTA */
-    .cta-container {
-      padding: 10px 14px;
-      background: #FFFFFF;
-      border-top: 1px solid var(--border-light);
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.04);
-      z-index: 25;
-      flex-shrink: 0;
-    }
-    .btn-primary {
-      width: 100%;
-      background: #0F172A;
-      color: #FFFFFF;
-      border: none;
-      border-radius: var(--radius-md);
-      padding: 13px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.15s;
-    }
-    .btn-primary:hover { background: #1E293B; }
-    .btn-primary.green { background: var(--emerald-600); }
-    .btn-primary.green:hover { background: var(--emerald-700); }
-
-    /* Category Strip */
-    .category-strip {
-      display: flex;
-      gap: 8px;
-      padding: 10px 14px 6px 14px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .category-strip::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      flex: 0 0 auto;
-      background: var(--bg-muted);
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 8px 10px;
+      color: var(--text-muted);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
-      cursor: pointer;
-      min-width: 72px;
-    }
-    .cat-btn.active {
-      background: #FFFFFF;
-      border-color: #0F172A;
-      box-shadow: var(--shadow-sm);
-    }
-    .cat-btn-label { font-size: 10px; font-weight: 700; color: var(--text-700); }
-    .cat-btn.active .cat-btn-label { color: var(--text-900); font-weight: 800; }
-    .cat-btn-tag { font-size: 8px; font-weight: 800; color: var(--emerald-700); }
-
-    /* Route Box */
-    .route-input-card {
-      background: #FFFFFF;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 12px 14px;
-      margin: 10px 14px 10px 14px;
-      position: relative;
-    }
-    .route-track-line {
-      position: absolute;
-      left: 20px;
-      top: 26px;
-      bottom: 26px;
-      width: 2px;
-      background: #CBD5E1;
-    }
-    .route-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      position: relative;
-      z-index: 2;
-    }
-    .route-row:first-child { margin-bottom: 10px; }
-    .point-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-top: 3px;
-      border: 2px solid #FFFFFF;
-      box-shadow: var(--shadow-sm);
-    }
-    .point-dot.origin { background: var(--blue-600); }
-    .point-dot.dest { background: var(--emerald-600); border-radius: 2px; }
-    .route-caption { font-size: 9px; font-weight: 800; color: var(--text-400); }
-    .route-text { font-size: 12px; font-weight: 700; color: var(--text-900); margin-top: 1px; }
-
-    /* Trust Strip */
-    .trust-strip {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      padding: 0 14px;
-      margin-bottom: 12px;
-    }
-    .trust-item {
-      flex: 1;
-      background: #FFFFFF;
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      padding: 8px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .trust-item span {
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 700;
-      color: var(--text-700);
-      margin-top: 4px;
+      cursor: pointer;
+      position: relative;
+      padding: 6px 12px;
+      transition: color 0.15s;
+    }
+    .nav-tab-btn.active {
+      color: var(--text-white);
+    }
+    .nav-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--electric-lime);
+    }
+    .nav-tab-icon {
+      font-size: 16px;
     }
 
-    /* Timer HUD */
-    .timer-hud-card {
-      background: #090D16;
-      border: 1.5px solid #1E293B;
+    /* Common Components & Utility Classes */
+    .btn-lime {
+      background: var(--electric-lime);
+      color: var(--navy-deep);
+      border: none;
       border-radius: var(--radius-lg);
-      padding: 18px 16px;
-      text-align: center;
-      margin: 10px 14px 12px 14px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-    .timer-digits {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 34px;
+      font-size: 13.5px;
       font-weight: 900;
-      color: #FFFFFF;
-      letter-spacing: 3px;
-      margin: 6px 0;
-    }
-    .otp-hud-card {
-      background: #FFFBEB;
-      border: 1.5px solid #FDE68A;
-      border-radius: var(--radius-lg);
-      padding: 14px 16px;
-      text-align: center;
-      margin: 0 14px 12px 14px;
-    }
-    .pin-boxes-row {
+      padding: 14px 20px;
+      cursor: pointer;
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 8px;
-      margin: 8px 0;
+      box-shadow: 0 4px 16px var(--lime-glow);
+      transition: transform 0.1s, opacity 0.15s;
     }
-    .pin-digit-box {
-      width: 40px;
-      height: 44px;
-      background: #FFFFFF;
-      border: 1.5px solid #F59E0B;
-      border-radius: 8px;
+    .btn-lime:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+    .btn-lime:active {
+      transform: translateY(0);
+    }
+
+    /* ================================================= */
+    /* SCREEN 1: RIDER HOME STYLES                       */
+    /* ================================================= */
+    .home-top-bar {
+      padding: 14px 18px 8px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .greeting-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .greeting-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-white);
+      margin-top: 1px;
+    }
+    .city-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10.5px;
+      color: var(--text-slate);
+      font-weight: 700;
+      margin-top: 5px;
+      border: 1px solid var(--border-dark);
+    }
+    .notif-bell-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 19px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dark);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 20px;
-      font-weight: 900;
-      color: #0F172A;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+    }
+    .notif-dot {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--electric-lime);
     }
 
-    /* Driver Specific Elements */
-    .driver-status-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--emerald-border);
-      border-radius: var(--radius-lg);
-      padding: 12px 14px;
-      margin: 12px 14px;
+    /* Hero Dual Services Row */
+    .hero-dual-row {
+      display: flex;
+      gap: 12px;
+      padding: 12px 18px;
+    }
+    .hero-card {
+      flex: 1;
+      height: 190px;
+      border-radius: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Left: Book a Cab (Navy) */
+    .hero-card.cab-card {
+      background: var(--navy-deep);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 24px -5px rgba(0, 0, 0, 0.5);
+    }
+    .hero-card.cab-card .hero-tag {
+      background: rgba(210, 255, 0, 0.15);
+      color: var(--electric-lime);
+      border: 1px solid var(--border-lime);
+    }
+    .hero-card.cab-card .hero-title {
+      color: var(--text-white);
+    }
+    .hero-card.cab-card .hero-desc {
+      color: var(--text-muted);
+    }
+    .hero-card.cab-card .hero-arrow-btn {
+      background: var(--electric-lime);
+      color: var(--navy-deep);
+    }
+
+    /* Right: Hire a Driver (White) */
+    .hero-card.driver-card {
+      background: var(--bg-card-light);
+      border: 1.5px solid #FFFFFF;
+      box-shadow: 0 10px 24px -5px rgba(0, 0, 0, 0.4);
+    }
+    .hero-card.driver-card .hero-tag {
+      background: rgba(10, 17, 40, 0.08);
+      color: var(--navy-deep);
+      border: 1px solid rgba(10, 17, 40, 0.12);
+    }
+    .hero-card.driver-card .hero-title {
+      color: var(--navy-deep);
+    }
+    .hero-card.driver-card .hero-desc {
+      color: #64748B;
+    }
+    .hero-card.driver-card .hero-arrow-btn {
+      background: var(--navy-deep);
+      color: var(--electric-lime);
+    }
+
+    .hero-card-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .switch-btn {
-      background: #0F172A;
-      color: #FFFFFF;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 11px;
+    .hero-icon {
+      font-size: 26px;
+    }
+    .hero-tag {
+      font-size: 9px;
       font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
+    }
+    .hero-title {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 20px;
+      margin-top: 10px;
+    }
+    .hero-desc {
+      font-size: 11px;
+      margin-top: 3px;
+      line-height: 14px;
+    }
+    .hero-arrow-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      align-self: flex-end;
+    }
+
+    /* Instant / Schedule Toggle Pill */
+    .booking-toggle-row {
+      display: flex;
+      background: var(--bg-card);
+      border-radius: 16px;
+      margin: 4px 18px 14px 18px;
+      padding: 4px;
+      border: 1px solid var(--border-dark);
+    }
+    .booking-toggle-btn {
+      flex: 1;
+      padding: 9px;
+      text-align: center;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
       cursor: pointer;
+      border: none;
+      background: none;
+      transition: all 0.15s;
     }
-    .metrics-2grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 0 14px;
-      margin-bottom: 12px;
+    .booking-toggle-btn.active {
+      background: var(--bg-card-hover);
+      color: var(--electric-lime);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    .metric-box {
-      background: #FFFFFF;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 10px 12px;
-    }
-    .metric-caption { font-size: 9px; font-weight: 800; color: var(--text-400); letter-spacing: 0.3px; }
-    .metric-value { font-size: 20px; font-weight: 900; color: var(--text-900); font-family: 'JetBrains Mono', monospace; margin: 2px 0; }
-    .metric-note { font-size: 10px; color: var(--emerald-700); font-weight: 600; }
 
-    /* Map HUD Vector */
-    .map-preview-box {
-      height: 155px;
-      position: relative;
-      background: #F1F5F9;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .map-svg { width: 100%; height: 100%; }
-
-    /* Vehicle Tiers */
-    .tier-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 10px 12px;
+    /* Saved Places Horizontal Row */
+    .section-title-row {
+      padding: 0 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .saved-places-row {
+      display: flex;
+      gap: 8px;
+      padding: 0 18px;
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    .saved-places-row::-webkit-scrollbar { display: none; }
+    .place-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      padding: 8px 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-white);
+      white-space: nowrap;
       cursor: pointer;
+    }
+    .place-chip:hover {
+      border-color: var(--border-lime);
+    }
+
+    /* Recent Trip Card */
+    .recent-trip-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 14px 16px;
+      margin: 0 18px 14px 18px;
+      border: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .recent-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .recent-icon-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .recent-route {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .recent-meta {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .recent-price {
+      font-size: 14.5px;
+      font-weight: 900;
+      color: var(--electric-lime);
+    }
+
+    /* Safety Banner */
+    .safety-banner {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin: 0 18px 20px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .safety-icon {
+      font-size: 22px;
+    }
+    .safety-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--emerald-400);
+    }
+    .safety-sub {
+      font-size: 10px;
+      color: #A7F3D0;
+      margin-top: 1px;
+    }
+
+    /* ================================================= */
+    /* SCREEN 2: BOOKING / FARE ESTIMATE STYLES          */
+    /* ================================================= */
+    .sub-top-nav {
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .back-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-dark);
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .sub-nav-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-white);
+      text-align: center;
+    }
+    .sub-nav-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    /* Map Surface */
+    .map-surface-container {
+      height: 180px;
+      background: #0F1A3A;
+      position: relative;
+      overflow: hidden;
+      margin: 12px 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border-dark);
+    }
+    .map-svg-canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .floating-map-chip {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(10, 17, 40, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border-lime);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .chip-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--electric-lime);
+    }
+
+    /* Floating Route Card */
+    .floating-route-card {
+      background: var(--bg-card-light);
+      border-radius: 20px;
+      padding: 14px;
+      margin: 0 18px 14px 18px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    .route-dots-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 12px;
+    }
+    .dot-pickup { width: 9px; height: 9px; border-radius: 5px; background: var(--emerald-500); }
+    .dot-line { width: 2px; height: 22px; background: #CBD5E1; margin: 3px 0; }
+    .dot-drop { width: 9px; height: 9px; border-radius: 2px; background: var(--navy-deep); }
+    .route-text-col { flex: 1; }
+    .route-label { font-size: 9px; font-weight: 800; color: #94A3B8; letter-spacing: 0.4px; }
+    .route-val { font-size: 12px; font-weight: 700; color: var(--navy-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 250px; }
+    .route-div { height: 1px; background: #F1F5F9; margin: 5px 0; }
+    .swap-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      background: #F1F5F9;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--navy-deep);
+      cursor: pointer;
+      margin-left: 8px;
+    }
+
+    /* In-Screen Dual Switcher */
+    .screen-mode-switcher {
+      display: flex;
+      background: var(--bg-card);
+      border-radius: 16px;
+      margin: 0 18px 14px 18px;
+      padding: 4px;
+      border: 1px solid var(--border-dark);
+    }
+    .screen-mode-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       transition: all 0.15s;
     }
-    .tier-card.selected {
-      border-color: #0F172A;
-      background: #FFFFFF;
-      box-shadow: var(--shadow-sm);
+    .screen-mode-tab.active-cab {
+      background: var(--electric-lime);
+      color: var(--navy-deep);
     }
-    .tier-name { font-size: 13px; font-weight: 800; color: var(--text-900); }
-    .tier-desc { font-size: 10px; color: var(--text-500); }
-    .tier-price { font-size: 16px; font-weight: 900; color: var(--text-900); font-family: 'JetBrains Mono', monospace; }
-
-    /* Sound Modal Overlay */
-    .modal-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(2px);
-      display: flex;
-      align-items: flex-end;
-      z-index: 100;
-    }
-    .modal-sheet {
+    .screen-mode-tab.active-driver {
       background: #FFFFFF;
-      width: 100%;
-      border-radius: 24px 24px 0 0;
-      padding: 20px 16px 24px 16px;
-      border-top: 2px solid var(--border-light);
-      box-shadow: var(--shadow-elevated);
+      color: var(--navy-deep);
     }
 
-    /* Auth & Login/Signup UI Elements */
-    .auth-container {
-      padding: 16px 14px;
-    }
-    .auth-toggle-bar {
-      display: flex;
-      background: #E2E8F0;
-      border-radius: 10px;
-      padding: 3px;
+    /* Vehicle Tier / Package Cards */
+    .tier-list-container {
+      padding: 0 18px;
       margin-bottom: 14px;
     }
-    .auth-toggle-btn {
-      flex: 1;
-      padding: 7px 0;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-500);
-      background: transparent;
-      border: none;
-      border-radius: 7px;
+    .tier-card {
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      border: 1.5px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
-      text-align: center;
       transition: all 0.15s;
     }
-    .auth-toggle-btn.active {
-      background: #FFFFFF;
-      color: var(--text-900);
-      font-weight: 800;
-      box-shadow: var(--shadow-sm);
+    .tier-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
     }
-    .auth-field {
+    .tier-card.selected {
+      background: var(--bg-card-hover);
+      border-color: var(--electric-lime);
+    }
+    .tier-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tier-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .tier-name-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tier-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .tier-seats-pill {
+      font-size: 9.5px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--text-muted);
+    }
+    .tier-popular-tag {
+      font-size: 8px;
+      font-weight: 900;
+      background: rgba(210, 255, 0, 0.2);
+      color: var(--electric-lime);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .tier-sub {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+    .tier-eta {
+      font-size: 10px;
+      color: var(--emerald-400);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .tier-right {
+      text-align: right;
+    }
+    .tier-fare {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text-white);
+    }
+    .tier-card.selected .tier-fare {
+      color: var(--electric-lime);
+    }
+    .tier-select-badge {
+      font-size: 9px;
+      font-weight: 900;
+      background: var(--electric-lime);
+      color: var(--navy-deep);
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    /* Transmission & Class Selectors */
+    .config-box {
+      padding: 0 18px;
       margin-bottom: 12px;
     }
-    .auth-label {
+    .config-label {
       font-size: 10px;
       font-weight: 800;
-      color: var(--text-500);
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      margin-bottom: 5px;
-      display: block;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      margin-bottom: 6px;
     }
-    .auth-input-wrap {
+    .trans-row {
+      display: flex;
+      gap: 8px;
+    }
+    .trans-pill {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      padding: 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      cursor: pointer;
+    }
+    .trans-pill.active {
+      background: var(--bg-card-hover);
+      border-color: var(--electric-lime);
+      color: var(--electric-lime);
+      font-weight: 800;
+    }
+
+    /* Payment Row */
+    .payment-row {
+      display: flex;
+      gap: 8px;
+      padding: 0 18px;
+      margin-bottom: 18px;
+    }
+    .pay-chip {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      padding: 9px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      cursor: pointer;
+    }
+    .pay-chip.active {
+      border-color: var(--electric-lime);
+      color: var(--text-white);
+      background: var(--bg-card-hover);
+    }
+
+    /* Bottom Fixed CTA Dock */
+    .bottom-cta-dock {
+      background: var(--navy-deep);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 18px 24px 18px;
       display: flex;
       align-items: center;
-      background: #F8FAFC;
-      border: 1px solid #CBD5E1;
-      border-radius: 8px;
-      padding: 0 10px;
+      justify-content: space-between;
+      flex-shrink: 0;
     }
-    .auth-input-prefix {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-900);
-      margin-right: 6px;
-    }
-    .auth-input {
-      width: 100%;
-      background: transparent;
+    .dock-fare-label { font-size: 10px; color: var(--text-muted); font-weight: 700; }
+    .dock-fare-val { font-size: 18px; font-weight: 900; color: var(--electric-lime); }
+    .dock-cta-btn {
+      background: var(--electric-lime);
+      color: var(--navy-deep);
       border: none;
-      padding: 9px 0;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-900);
-      outline: none;
-      font-family: inherit;
-    }
-    .auth-otp-field {
-      letter-spacing: 6px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 800;
-      font-family: 'JetBrains Mono', monospace;
-      color: #0284C7;
-      padding: 10px;
-      border-color: #0284C7;
-      background: #F8FAFC;
-      border: 1.5px solid #0284C7;
-      border-radius: 8px;
-      width: 100%;
-      outline: none;
-    }
-    .auth-autofill-btn {
-      margin-top: 8px;
-      background: #F8FAFC;
-      border: 1px dashed #CBD5E1;
-      border-radius: 8px;
-      padding: 7px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--blue-600);
+      border-radius: 16px;
+      padding: 12px 20px;
+      font-size: 13.5px;
+      font-weight: 900;
       cursor: pointer;
-      text-align: center;
-      width: 100%;
-    }
-    .auth-autofill-btn:hover {
-      background: var(--blue-50);
-      border-color: var(--blue-border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px var(--lime-glow);
     }
 
-    /* Live Backend & Database Inspector Console */
-    .backend-console {
-      max-width: 980px;
-      width: 100%;
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 12px 18px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
+    /* ================================================= */
+    /* SCREEN 3: LIVE TRIP STYLES                        */
+    /* ================================================= */
+    .live-map-full {
+      height: 240px;
+      background: #0F1A3A;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
     }
-    .backend-console-header {
+    .live-eta-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10, 17, 40, 0.9);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-lime);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-white);
+    }
+    .live-eta-badge span { color: var(--electric-lime); }
+
+    .bottom-sheet {
+      background: #0F172A;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      margin-top: -24px;
+      padding: 12px 18px 24px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 10;
+      flex: 1;
+    }
+    .sheet-pill-handle {
+      width: 36px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 0 auto 14px auto;
+    }
+
+    /* Driver Profile Card */
+    .driver-hud-card {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 12px 14px;
+      border: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .driver-hud-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .driver-avatar-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 22px;
+      background: #1E293B;
+      border: 2px solid var(--electric-lime);
+      color: var(--electric-lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      position: relative;
+    }
+    .driver-tick-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      background: var(--emerald-500);
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--bg-card);
+    }
+    .driver-hud-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rating-pill {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--electric-lime);
+      background: rgba(210, 255, 0, 0.15);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+    .driver-hud-car {
+      font-size: 11px;
+      color: var(--text-slate);
+      margin-top: 1px;
+    }
+    .driver-hud-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .hud-action-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    /* OTP Card */
+    .otp-hud-card {
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-lime);
+      margin-bottom: 12px;
+    }
+    .otp-card-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .otp-hud-label {
+      font-size: 10px;
+      font-weight: 900;
+      color: var(--electric-lime);
+      letter-spacing: 0.5px;
+    }
+    .otp-ins-badge {
+      font-size: 8.5px;
+      font-weight: 800;
+      color: var(--emerald-400);
+      background: rgba(16, 185, 129, 0.18);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .otp-digits-row {
+      display: flex;
+      justify-content: center;
       gap: 10px;
+      margin: 4px 0 6px 0;
     }
-    .backend-status-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-900);
-    }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--emerald-600);
-      box-shadow: 0 0 0 3px var(--emerald-100);
-    }
-    .backend-metrics-strip {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .backend-metric-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--bg-muted);
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      padding: 4px 9px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-700);
-    }
-    .backend-metric-badge strong {
-      color: var(--text-900);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .backend-console-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .btn-console {
-      background: var(--bg-muted);
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      padding: 5px 12px;
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-700);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-console:hover {
-      background: #FFFFFF;
-      border-color: var(--text-900);
-      color: var(--text-900);
-    }
-    .api-log-ticker {
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid var(--border-light);
+    .otp-digit-box {
+      width: 44px;
+      height: 46px;
+      border-radius: 12px;
+      background: #1A2548;
+      border: 1.5px solid var(--electric-lime);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--text-500);
-      font-family: 'JetBrains Mono', monospace;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--electric-lime);
     }
-    .api-log-ticker span {
-      color: var(--emerald-700);
-      font-weight: 700;
+    .otp-sub-hint {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-align: center;
     }
 
-    /* Modal for Raw DB Inspector */
-    .db-modal-overlay {
-      position: fixed;
+    /* Stepper */
+    .stepper-box {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border-dark);
+    }
+    .stepper-line-track {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      position: relative;
+      margin: 6px 14px 10px 14px;
+    }
+    .stepper-line-fill {
+      height: 100%;
+      background: var(--electric-lime);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .stepper-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .stepper-labels span.active { color: var(--electric-lime); font-weight: 800; }
+
+    /* Stats Grid */
+    .stats-hud-grid {
+      display: flex;
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 10px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border-dark);
+    }
+    .stats-hud-col {
+      flex: 1;
+      text-align: center;
+    }
+    .stats-hud-col:not(:last-child) {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .stat-hud-lbl { font-size: 9px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.3px; }
+    .stat-hud-val { font-size: 14px; font-weight: 900; color: var(--text-white); margin-top: 2px; }
+    .stat-hud-sub { font-size: 9px; color: var(--text-dim); }
+
+    /* ================================================= */
+    /* DRIVER PARTNER APP SPECIFIC STYLES                */
+    /* ================================================= */
+    .fatigue-hud-card {
+      background: var(--bg-card);
+      border-radius: 22px;
+      padding: 16px;
+      margin: 12px 18px;
+      border: 1.5px solid var(--border-dark);
+    }
+    .fatigue-hud-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .fatigue-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .fatigue-zone-pill {
+      font-size: 9px;
+      font-weight: 800;
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--emerald-400);
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+    .fatigue-cols-row {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .fatigue-col {
+      flex: 1;
+      text-align: center;
+    }
+    .fatigue-col:not(:last-child) {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .fatigue-lbl { font-size: 8.5px; font-weight: 800; color: var(--text-muted); }
+    .fatigue-val { font-size: 14.5px; font-weight: 900; color: var(--text-white); margin-top: 2px; }
+    .fatigue-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .fatigue-fill {
+      height: 100%;
+      background: var(--electric-lime);
+      border-radius: 3px;
+    }
+    .fatigue-sub-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5px;
+      color: var(--text-dim);
+    }
+
+    /* Modal Styles */
+    .modal-backdrop {
+      position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
     }
-    .db-modal-content {
-      background: #FFFFFF;
+    .modal-sheet {
+      background: #0F172A;
       width: 100%;
-      max-width: 800px;
-      max-height: 85vh;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-elevated);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .db-modal-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border-light);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .db-modal-body {
-      padding: 16px 20px;
-      overflow-y: auto;
-      flex: 1;
-      background: #F8FAFC;
-    }
-    .db-json-view {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #0F172A;
-      white-space: pre-wrap;
-      word-break: break-all;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      padding: 20px 18px 28px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
     }
   </style>
 </head>
 <body>
 
-  <!-- Clean Top System Header -->
+  <!-- MASTER TOP BANNER -->
   <header>
-    <div class="brand-title-wrap">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
-        <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>
-      </svg>
-      <span class="brand-title">RideDriveAhead</span>
+    <div class="brand-pill-wrap">
+      <div class="brand-title">RideDrive<span>Ahead</span></div>
+      <div style="width: 1px; height: 16px; background: rgba(255, 255, 255, 0.2);"></div>
+      <div style="font-size: 11px; font-weight: 800; color: var(--electric-lime); letter-spacing: 0.5px;">DUAL MOBILITY OS</div>
     </div>
     <div class="brand-tagline">
-      Dual-Sided Mobility Platform • On-Demand Chauffeur for Your Car + Cab Booking
+      Two ways. One platform. Book a Cab or Hire a Pro Driver for your own car.
     </div>
     <div class="pill-badges">
-      <span class="pill-badge green">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-        Hire a Driver for Your Car (2h–8h & 1-2 Days)
-      </span>
-      <span class="pill-badge blue">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-        Book a Cab (Ola / Uber Model)
-      </span>
-      <span class="pill-badge green">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        AES-256 Vault KYC
-      </span>
+      <span class="pill-badge lime">⚡ Electric Lime & Navy Theme</span>
+      <span class="pill-badge green">🛡️ Driver OS Fatigue Protection</span>
+      <span class="pill-badge">🔒 Upfront Locked Fares</span>
+      <span class="pill-badge">🔑 4-Digit Handover OTP</span>
     </div>
   </header>
 
-  <!-- Live Backend & Database Inspector Console -->
-  <div class="backend-console">
-    <div class="backend-console-header">
-      <div class="backend-status-indicator">
-        <div class="status-dot"></div>
-        <span>Backend REST API & Database: <span style="color: var(--emerald-700);">CONNECTED (PORT 3000)</span></span>
-      </div>
-
-      <div class="backend-metrics-strip">
-        <div class="backend-metric-badge">
-          <span>Users:</span>
-          <strong id="db-stat-users">3</strong>
-        </div>
-        <div class="backend-metric-badge">
-          <span>Drivers:</span>
-          <strong id="db-stat-drivers">2</strong>
-        </div>
-        <div class="backend-metric-badge">
-          <span>Bookings:</span>
-          <strong id="db-stat-bookings">1</strong>
-        </div>
-        <div class="backend-metric-badge">
-          <span>Marketplace Gigs:</span>
-          <strong id="db-stat-gigs">4</strong>
-        </div>
-      </div>
-
-      <div class="backend-console-actions">
-        <button class="btn-console" onclick="openDbInspectorModal()">
-          <span>Inspect Database JSON</span>
-        </button>
-        <button class="btn-console" onclick="syncWithBackendDb()">
-          <span>↻ Sync State</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="api-log-ticker">
-      <div>API Traffic: <span id="latest-api-log">GET /api/v1/health ➔ 200 OK</span></div>
-      <div style="font-size: 10px; color: var(--text-400);">Storage: backend/database.json</div>
-    </div>
-  </div>
-
-  <!-- Raw Database JSON Viewer Modal -->
-  <div class="db-modal-overlay" id="db-modal-overlay" onclick="closeDbInspectorModal(event)">
-    <div class="db-modal-content" onclick="event.stopPropagation()">
-      <div class="db-modal-header">
-        <div>
-          <div style="font-size: 15px; font-weight: 800; color: var(--text-900);">Live PostgreSQL / JSON Database Inspector</div>
-          <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">File: backend/database.json • Real-time Data Store</div>
-        </div>
-        <button class="btn-console" onclick="closeDbInspectorModal()">Close ✕</button>
-      </div>
-      <div class="db-modal-body">
-        <pre class="db-json-view" id="db-raw-json">Loading database state...</pre>
-      </div>
-    </div>
-  </div>
-
-  <!-- Dual Device Simulator Stage -->
+  <!-- DUAL PHONE SIMULATOR STAGE -->
   <div class="simulator-stage">
 
     <!-- ============================================== -->
-    <!-- LEFT: RIDER / CAR OWNER APP (LIGHT MODE)       -->
+    <!-- LEFT: RIDER / CAR OWNER APP                    -->
     <!-- ============================================== -->
     <div class="device-column">
       <div class="device-label">
-        <span class="device-chip chip-rider">Rider / Owner App</span>
+        <span class="device-chip chip-rider">Rider App</span>
         <span>Passenger & Car Owner Experience</span>
       </div>
 
@@ -1184,81 +1294,43 @@
           </div>
         </div>
 
-        <!-- App Topbar -->
-        <div class="app-topbar">
-          <div class="app-brand">
-            <div class="app-icon-circle">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-            </div>
-            <div>
-              <div class="app-name">RideDriveAhead</div>
-              <div class="app-sub">Chauffeur & Cab Platform</div>
-            </div>
-          </div>
-          <div class="topbar-actions">
-            <button class="btn-sos" onclick="switchRiderScreen('sos')">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
-              SOS
-            </button>
-            <div class="user-avatar-btn" id="rider-topbar-avatar" onclick="switchRiderScreen('profile')">AV</div>
-          </div>
-        </div>
-
-        <!-- Primary Dual-Mode Service Switcher -->
-        <div class="service-switcher-bar">
-          <div class="service-mode-btn active" id="btn-mode-hire" onclick="setServiceMode('HIRE_DRIVER')">
-            <div class="service-btn-top">
-              <span class="service-mode-name">Hire a Driver</span>
-              <span class="service-badge-pill">YOUR CAR</span>
-            </div>
-            <div class="service-mode-desc">Hourly, Events, 1-2 Days</div>
-          </div>
-          <div class="service-mode-btn" id="btn-mode-cab" onclick="setServiceMode('BOOK_CAB')">
-            <div class="service-btn-top">
-              <span class="service-mode-name">Book a Cab</span>
-              <span class="service-badge-pill cab">CAB + DRIVER</span>
-            </div>
-            <div class="service-mode-desc">Instant City & Airport</div>
-          </div>
-        </div>
-
-        <!-- Screen Content Container -->
+        <!-- Dynamic Screen Content -->
         <div class="screen-content" id="rider-screen">
-          <!-- Rendered dynamically via JS -->
+          <!-- Rendered dynamically -->
         </div>
 
-        <!-- Dedicated Bottom Action Button Dock -->
-        <div class="cta-container" id="rider-cta-dock" style="display: none;"></div>
+        <!-- Sticky Bottom CTA Dock (Used in Booking Options) -->
+        <div id="rider-bottom-dock" style="display: none;"></div>
 
         <!-- Bottom Navigation Bar -->
-        <div class="app-nav-bar">
-          <button class="app-nav-btn active" id="rider-tab-home" onclick="switchRiderScreen('home')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span>Book</span>
+        <div class="app-bottom-nav">
+          <button class="nav-tab-btn active" id="rider-nav-home" onclick="setRiderScreen('HOME')">
+            <span class="nav-tab-icon">🏠</span>
+            <span>Home</span>
           </button>
-          <button class="app-nav-btn" id="rider-tab-tracking" onclick="switchRiderScreen('tracking')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Duty HUD</span>
+          <button class="nav-tab-btn" id="rider-nav-trips" onclick="setRiderScreen('LIVE')">
+            <span class="nav-tab-icon">🚗</span>
+            <span>Trips</span>
           </button>
-          <button class="app-nav-btn" id="rider-tab-history" onclick="switchRiderScreen('history')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
-            <span>History</span>
+          <button class="nav-tab-btn" id="rider-nav-wallet" onclick="alert('Wallet balance: ₹ 2,450. AutoPay active.')">
+            <span class="nav-tab-icon">💳</span>
+            <span>Wallet</span>
           </button>
-          <button class="app-nav-btn" id="rider-tab-profile" onclick="switchRiderScreen('profile')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span>Account</span>
+          <button class="nav-tab-btn" id="rider-nav-profile" onclick="setRiderScreen('SOS')">
+            <span class="nav-tab-icon">🛡️</span>
+            <span>Safety</span>
           </button>
         </div>
       </div>
     </div>
 
     <!-- ============================================== -->
-    <!-- RIGHT: DRIVER PARTNER APP (LIGHT MODE)         -->
+    <!-- RIGHT: DRIVER PARTNER APP                      -->
     <!-- ============================================== -->
     <div class="device-column">
       <div class="device-label">
         <span class="device-chip chip-driver">Driver Partner App</span>
-        <span>Operating System for Drivers</span>
+        <span>Driver OS & Gig Marketplace</span>
       </div>
 
       <div class="phone-frame">
@@ -1269,62 +1341,38 @@
             <div class="island-sensor"></div>
             <div class="island-lens"></div>
           </div>
-          <div class="status-right" style="color: var(--emerald-700); font-weight: 800;">
-            <span>Online</span>
+          <div class="status-right" style="color: var(--electric-lime); font-weight: 800;">
+            <span>ONLINE</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
           </div>
         </div>
 
-        <!-- App Topbar -->
-        <div class="app-topbar">
-          <div class="app-brand">
-            <div class="app-icon-circle driver">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <div>
-              <div class="app-name">Partner OS</div>
-              <div class="app-sub">LMV Pro Chauffeur & Cab Driver</div>
-            </div>
-          </div>
-          <div class="topbar-actions">
-            <span class="pill-badge" style="font-size: 9px; font-weight: 800; padding: 3px 8px;">DL 01 AB 9988</span>
-            <div class="user-avatar-btn" id="driver-topbar-avatar" style="border-color: var(--emerald-border); color: var(--emerald-700);" onclick="switchDriverScreen('profile')">RK</div>
-          </div>
-        </div>
-
-        <!-- Screen Content Container -->
+        <!-- Dynamic Screen Content -->
         <div class="screen-content" id="driver-screen">
-          <!-- Rendered dynamically via JS -->
+          <!-- Rendered dynamically -->
         </div>
-
-        <!-- Dedicated Bottom Action Button Dock for Driver -->
-        <div class="cta-container" id="driver-cta-dock" style="display: none;"></div>
 
         <!-- Bottom Navigation Bar -->
-        <div class="app-nav-bar">
-          <button class="app-nav-btn active" id="driver-tab-home" onclick="switchDriverScreen('home')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <span>Duty</span>
+        <div class="app-bottom-nav">
+          <button class="nav-tab-btn active" id="driver-nav-home" onclick="setDriverScreen('HOME')">
+            <span class="nav-tab-icon">🎛️</span>
+            <span>Cockpit</span>
           </button>
-          <button class="app-nav-btn" id="driver-tab-pool" onclick="switchDriverScreen('pool')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <button class="nav-tab-btn" id="driver-nav-gigs" onclick="alert('14 open gigs available near Koramangala.')">
+            <span class="nav-tab-icon">📋</span>
             <span>Gigs</span>
           </button>
-          <button class="app-nav-btn" id="driver-tab-trip" onclick="switchDriverScreen('trip')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-            <span>Active</span>
-          </button>
-          <button class="app-nav-btn" id="driver-tab-earnings" onclick="switchDriverScreen('earnings')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3a4 4 0 0 0 0-8"/></svg>
+          <button class="nav-tab-btn" id="driver-nav-earnings" onclick="alert('Today: ₹ 3,420 • This Week: ₹ 18,900. Ready for instant payout.')">
+            <span class="nav-tab-icon">💰</span>
             <span>Earnings</span>
           </button>
-          <button class="app-nav-btn" id="driver-tab-vault" onclick="switchDriverScreen('vault')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>KYC</span>
+          <button class="nav-tab-btn" id="driver-nav-profile" onclick="alert('Captain Rohit Kumar • LMV Commercial DL • AT/MT Certified Pro')">
+            <span class="nav-tab-icon">👤</span>
+            <span>Profile</span>
           </button>
         </div>
 
-        <!-- Modal Slot -->
+        <!-- Driver Modal Slot -->
         <div id="driver-modal-slot"></div>
       </div>
     </div>
@@ -1332,1607 +1380,722 @@
   </div>
 
   <script>
-    // SHARED APPLICATION STATE
-    const sharedState = {
-      // Rider Account
-      riderLoggedIn: true,
-      riderName: 'Arjun Verma',
-      riderPhone: '+91 98101 23456',
-      riderEmail: 'arjun.verma@example.com',
-      riderCity: 'Gurugram / Delhi NCR',
-      riderInitials: 'AV',
-      riderRating: 4.95,
+    // ==========================================
+    // SIMULATOR STATE
+    // ==========================================
+    const simState = {
+      // Rider State
+      riderScreen: 'HOME', // 'HOME', 'BOOKING', 'LIVE', 'SOS'
+      serviceMode: 'BOOK_CAB', // 'BOOK_CAB' or 'HIRE_DRIVER'
+      bookingType: 'INSTANT', // 'INSTANT' or 'SCHEDULED'
+      selectedCabTier: 'SEDAN', // 'SEDAN', 'SUV', 'LUXURY'
+      selectedPkgId: 'HOURLY_4H',
+      transmission: 'AUTOMATIC',
+      carCategory: 'SEDAN',
+      paymentMethod: 'UPI',
 
-      // Driver Partner Account
-      driverLoggedIn: true,
-      driverName: 'Rajesh Kumar',
-      driverPhone: '+91 98111 56789',
-      driverCity: 'Delhi NCR / Gurugram',
-      driverDl: 'DL-0420210088992',
-      driverInitials: 'RK',
+      // Live Trip State
+      tripStage: 'ON_THE_WAY', // 'ASSIGNED', 'ON_THE_WAY', 'ARRIVED', 'TRIP_STARTED', 'COMPLETED'
+      otp: '4792',
+      fareAmount: 1248,
+      driverName: 'Rohit Kumar',
+      driverPhone: '+91 98765 43210',
+      driverRating: 4.88,
+      vehiclePlate: 'KA 01 AB 1234',
+
+      // Driver OS State
+      driverScreen: 'HOME',
       isDriverOnline: true,
-      driverSkills: ['LMV Commercial Pro', 'Automatic (AT)', 'Manual (MT)', 'Luxury Certified'],
-      driverRating: 4.92,
-      driverTrips: 582,
-      driverEarnings: 3250,
-      drivingHours: 3.5,
-      maxDrivingHours: 8.0,
-
-      // Active booking (starts with an active chauffeur duty)
-      activeBooking: {
-        id: 'CHF-9241',
-        serviceMode: 'HIRE_DRIVER', // 'HIRE_DRIVER' or 'BOOK_CAB'
-        pkgName: '4 Hours Half-Day Chauffeur',
-        durationHours: 4,
-        carModel: 'Honda City (Automatic AT)',
-        transmission: 'AUTOMATIC',
-        pickup: 'Sector 43, Golf Course Road, Gurugram',
-        drop: 'City Local Travel & Shopping Round-Trip',
-        distanceKm: 28.0,
-        fare: 549,
-        overtimeRate: 99,
-        otp: '4821',
-        status: 'IN_PROGRESS', // 'SCHEDULED_CONFIRMED', 'ARRIVED', 'IN_PROGRESS', 'COMPLETED'
-        elapsedSeconds: 8325, // ~ 2 hrs 18 mins
-        fuelHandover: '80% Full',
-        odometerStart: 34812
-      },
-
-      // Gig Marketplace Offers
-      gigMarketplace: [
-        {
-          id: 'GIG-101',
-          type: 'HOURLY',
-          title: '4-Hour Local Chauffeur',
-          car: 'Customer\'s Honda City (Automatic AT)',
-          time: 'Today, 02:00 PM',
-          pickup: 'Sector 43, Golf Course Road, Gurugram',
-          drop: 'City Round-Trip (Shopping & Meetings)',
-          fare: 549,
-          hours: 4,
-          isClaimed: true
-        },
-        {
-          id: 'GIG-102',
-          type: 'EVENT',
-          title: 'Wedding Evening Chauffeur',
-          car: 'Customer\'s Hyundai Creta (Manual MT)',
-          time: 'Tonight, 06:00 PM - 12 AM',
-          pickup: 'Vasant Vihar, South Delhi',
-          drop: 'Chhatarpur Farmhouse & Safe Return',
-          fare: 799,
-          hours: 6,
-          isClaimed: false
-        },
-        {
-          id: 'GIG-103',
-          type: 'OUTSTATION',
-          title: '2-Day Weekend Road Trip to Jaipur',
-          car: 'Customer\'s Toyota Fortuner 4x4 (AT)',
-          time: 'Saturday 06:00 AM (2 Days)',
-          pickup: 'Golf Links, Central Delhi',
-          drop: 'Jaipur Heritage Resort & Return',
-          fare: 2799,
-          hours: 24,
-          isClaimed: false
-        },
-        {
-          id: 'GIG-104',
-          type: 'CAB',
-          title: 'Advance Airport Run (Commercial Sedan)',
-          car: 'Commercial Taxi • DL 01 AB 9988',
-          time: 'Tomorrow, 05:00 AM',
-          pickup: 'Sector 56, Gurugram',
-          drop: 'IGI Airport Terminal 3 (AI 102)',
-          fare: 750,
-          hours: 1.5,
-          isClaimed: false
-        }
-      ]
+      drivingHours: '5h 42m',
+      breakIn: '18 min',
+      availableHours: '2h 18m',
+      todayEarnings: 3420,
+      todayTrips: 5,
+      showIncomingModal: false
     };
 
-    // Application View State
-    let serviceMode = 'HIRE_DRIVER'; // 'HIRE_DRIVER' or 'BOOK_CAB'
-    let riderScreen = 'home'; // 'home', 'fare', 'tracking', 'history', 'profile', 'sos', 'auth'
-    let driverScreen = 'home'; // 'home', 'pool', 'trip', 'earnings', 'vault', 'profile', 'auth'
-
-    let riderAuthTab = 'LOGIN'; // 'LOGIN' or 'SIGNUP'
-    let driverAuthTab = 'LOGIN'; // 'LOGIN' or 'SIGNUP'
-
-    function switchRiderAuthTab(tab) {
-      riderAuthTab = tab;
-      renderRiderApp();
-    }
-
-    function switchRiderAuthTab(tab) {
-      riderAuthTab = tab;
-      renderRiderApp();
-    }
-
-    function switchDriverAuthTab(tab) {
-      driverAuthTab = tab;
-      renderDriverApp();
-    }
-
-    // Real API Call: Rider Login
-    async function submitRiderLogin() {
-      const phoneInput = document.getElementById('rider-login-phone');
-      const otpInput = document.getElementById('rider-login-otp');
-      const phone = phoneInput ? phoneInput.value.trim() : '9810123456';
-      const otp = otpInput ? otpInput.value.trim() : '123456';
-
-      if (!phone || phone.length < 10) {
-        alert('Please enter a valid 10-digit mobile number');
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/v1/auth/otp/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phoneNumber: '+91' + phone.replace('+91', '').trim(), otpCode: otp, userRole: 'RIDER' })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
-          sharedState.riderLoggedIn = true;
-          sharedState.riderName = data.user.fullName || 'Arjun Verma';
-          sharedState.riderPhone = data.user.phoneNumber;
-          sharedState.riderEmail = data.user.email || 'arjun.verma@example.com';
-          sharedState.riderCity = data.user.city || 'Gurugram / Delhi NCR';
-          sharedState.riderInitials = sharedState.riderName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-          alert(`Welcome back, ${sharedState.riderName}! Authentication successful via Phone OTP.`);
-          switchRiderScreen('home');
-          syncWithBackendDb();
-        }
-      } catch (e) {
-        // Fallback gracefully
-        sharedState.riderLoggedIn = true;
-        switchRiderScreen('home');
-      }
-    }
-
-    // Real API Call: Rider Signup
-    async function submitRiderSignup() {
-      const nameInput = document.getElementById('rider-signup-name');
-      const phoneInput = document.getElementById('rider-signup-phone');
-      const emailInput = document.getElementById('rider-signup-email');
-      const cityInput = document.getElementById('rider-signup-city');
-
-      const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Priya Sharma';
-      const phone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '9811122233';
-      const email = emailInput ? emailInput.value.trim() : 'priya@example.com';
-      const city = cityInput ? cityInput.value.trim() : 'Gurugram / Delhi NCR';
-
-      try {
-        const res = await fetch('/api/v1/auth/otp/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            phoneNumber: '+91' + phone.replace('+91', '').trim(),
-            fullName: name,
-            email: email,
-            city: city,
-            userRole: 'RIDER'
-          })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
-          sharedState.riderLoggedIn = true;
-          sharedState.riderName = data.user.fullName;
-          sharedState.riderPhone = data.user.phoneNumber;
-          sharedState.riderEmail = data.user.email;
-          sharedState.riderCity = data.user.city;
-          sharedState.riderInitials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-          alert(`Account created and saved to database for ${name}! Welcome to RideDriveAhead.`);
-          switchRiderScreen('home');
-          syncWithBackendDb();
-        }
-      } catch (e) {
-        sharedState.riderLoggedIn = true;
-        switchRiderScreen('home');
-      }
-    }
-
-    function autofillRiderAuth(mode) {
-      if (mode === 'LOGIN') {
-        const p = document.getElementById('rider-login-phone');
-        const o = document.getElementById('rider-login-otp');
-        if (p) p.value = '9810123456';
-        if (o) o.value = '123456';
-      } else {
-        const n = document.getElementById('rider-signup-name');
-        const p = document.getElementById('rider-signup-phone');
-        const e = document.getElementById('rider-signup-email');
-        const c = document.getElementById('rider-signup-city');
-        if (n) n.value = 'Priya Sharma';
-        if (p) p.value = '9811122233';
-        if (e) e.value = 'priya.sharma@example.com';
-        if (c) c.value = 'Gurugram / Delhi NCR';
-      }
-    }
-
-    function logoutRider() {
-      sharedState.riderLoggedIn = false;
-      riderScreen = 'auth';
-      document.querySelectorAll('.device-column:first-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
-      renderRiderApp();
-    }
-
-    // Real API Call: Driver Login
-    async function submitDriverLogin() {
-      const phoneInput = document.getElementById('driver-login-phone');
-      const otpInput = document.getElementById('driver-login-otp');
-      const phone = phoneInput ? phoneInput.value.trim() : '9811156789';
-      const otp = otpInput ? otpInput.value.trim() : '123456';
-
-      if (!phone || phone.length < 10) {
-        alert('Please enter a valid 10-digit mobile number');
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/v1/auth/otp/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phoneNumber: '+91' + phone.replace('+91', '').trim(), otpCode: otp, userRole: 'DRIVER' })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
-          sharedState.driverLoggedIn = true;
-          sharedState.driverName = data.user.fullName || 'Rajesh Kumar';
-          sharedState.driverPhone = data.user.phoneNumber;
-          sharedState.driverDl = data.user.licenseNumber || 'DL-0420210088992';
-          sharedState.driverInitials = sharedState.driverName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-          alert(`Welcome back, Partner ${sharedState.driverName}! Shift OS active.`);
-          switchDriverScreen('home');
-          syncWithBackendDb();
-        }
-      } catch (e) {
-        sharedState.driverLoggedIn = true;
-        switchDriverScreen('home');
-      }
-    }
-
-    // Real API Call: Driver Signup
-    async function submitDriverSignup() {
-      const nameInput = document.getElementById('driver-signup-name');
-      const phoneInput = document.getElementById('driver-signup-phone');
-      const dlInput = document.getElementById('driver-signup-dl');
-      const cityInput = document.getElementById('driver-signup-city');
-
-      const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : 'Suresh Rawat';
-      const phone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '9871234567';
-      const dl = dlInput && dlInput.value.trim() ? dlInput.value.trim() : 'DL-0420210088992';
-      const city = cityInput ? cityInput.value.trim() : 'Gurugram / Delhi NCR';
-
-      try {
-        const res = await fetch('/api/v1/auth/otp/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            phoneNumber: '+91' + phone.replace('+91', '').trim(),
-            fullName: name,
-            licenseNumber: dl,
-            city: city,
-            userRole: 'DRIVER',
-            skills: ['AUTOMATIC', 'MANUAL', 'LUXURY']
-          })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
-          sharedState.driverLoggedIn = true;
-          sharedState.driverName = data.user.fullName;
-          sharedState.driverPhone = data.user.phoneNumber;
-          sharedState.driverDl = data.user.licenseNumber;
-          sharedState.driverCity = data.user.city;
-          sharedState.driverInitials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-          alert(`Partner Onboarded & Saved to Database! License ${dl} verified for Chauffeur duties. Welcome, ${name}!`);
-          switchDriverScreen('home');
-          syncWithBackendDb();
-        }
-      } catch (e) {
-        sharedState.driverLoggedIn = true;
-        switchDriverScreen('home');
-      }
-    }
-
-    function autofillDriverAuth(mode) {
-      if (mode === 'LOGIN') {
-        const p = document.getElementById('driver-login-phone');
-        const o = document.getElementById('driver-login-otp');
-        if (p) p.value = '9811156789';
-        if (o) o.value = '123456';
-      } else {
-        const n = document.getElementById('driver-signup-name');
-        const p = document.getElementById('driver-signup-phone');
-        const dl = document.getElementById('driver-signup-dl');
-        const c = document.getElementById('driver-signup-city');
-        if (n) n.value = 'Suresh Rawat';
-        if (p) p.value = '9871234567';
-        if (dl) dl.value = 'DL-0420210088992';
-        if (c) c.value = 'Gurugram / Delhi NCR';
-      }
-    }
-
-    function logoutDriver() {
-      sharedState.driverLoggedIn = false;
-      driverScreen = 'auth';
-      document.querySelectorAll('.device-column:last-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
-      renderDriverApp();
-    }
-
-    // Real-Time DB Inspector & Sync Functions
-    async function syncWithBackendDb() {
-      try {
-        const res = await fetch('/api/v1/db/inspect');
-        const data = await res.json();
-        if (data && data.summary) {
-          const uEl = document.getElementById('db-stat-users');
-          const dEl = document.getElementById('db-stat-drivers');
-          const bEl = document.getElementById('db-stat-bookings');
-          const gEl = document.getElementById('db-stat-gigs');
-          if (uEl) uEl.innerText = data.summary.totalUsers;
-          if (dEl) dEl.innerText = data.summary.totalDrivers;
-          if (bEl) bEl.innerText = data.summary.totalBookings;
-          if (gEl) gEl.innerText = data.summary.totalGigs;
-
-          if (data.data && data.data.apiLogs && data.data.apiLogs.length > 0) {
-            const latest = data.data.apiLogs[0];
-            const logEl = document.getElementById('latest-api-log');
-            if (logEl) logEl.innerText = `${latest.time} - ${latest.method} ${latest.endpoint} ➔ ${latest.status}`;
-          }
-
-          const rawPre = document.getElementById('db-raw-json');
-          if (rawPre) rawPre.innerText = JSON.stringify(data.data, null, 2);
-        }
-      } catch (e) {
-        console.error('Failed to sync DB inspector:', e);
-      }
-    }
-
-    function openDbInspectorModal() {
-      syncWithBackendDb();
-      const modal = document.getElementById('db-modal-overlay');
-      if (modal) modal.style.display = 'flex';
-    }
-
-    function closeDbInspectorModal(e) {
-      const modal = document.getElementById('db-modal-overlay');
-      if (modal) modal.style.display = 'none';
-    }
-
-    // Chauffeur booking selections
-    let selectedChauffeurPkg = 1; // 0=2h, 1=4h, 2=8h, 3=Event, 4=1Day, 5=2Days
-    let selectedTransmission = 'AUTOMATIC';
-    let selectedCarModel = 'Honda City';
-
-    // Cab booking selections
-    let selectedCabCategory = 'AIRPORT';
-    let riderCabMode = 'SCHEDULED';
-    let selectedCabTier = 1;
-    let selectedDate = 'Tomorrow';
-    let selectedTime = '05:00 AM';
-
-    // Timer interval
-    let dutyTimerInterval = null;
-
-    // Chauffeur Packages List
-    const chauffeurPackages = [
-      { id: 0, name: '2 Hours Express', hours: 2, fare: 299, desc: 'Quick local visits, clinic, errands', tag: 'QUICK' },
-      { id: 1, name: '4 Hours Half-Day', hours: 4, fare: 549, desc: 'Shopping, dining, city meetings', tag: 'POPULAR' },
-      { id: 2, name: '8 Hours Full-Day', hours: 8, fare: 999, desc: 'All-day office, multi-stop commute', tag: 'FULL DAY' },
-      { id: 3, name: 'Party & Wedding Chauffeur', hours: 6, fare: 799, desc: '6h evening duty, zero DUI worry & safe return', tag: 'NIGHT SAFE' },
-      { id: 4, name: '1-Day Outstation Trip', hours: 12, fare: 1499, desc: 'Round-trip day trip (Agra / Neemrana)', tag: 'HIGHWAY' },
-      { id: 5, name: '2-Day Weekend Road Trip', hours: 24, fare: 2799, desc: 'Round-trip to Jaipur/Chandigarh (+ driver stay)', tag: '1-2 DAYS' }
+    // Packages Definition
+    const CHAUFFEUR_PACKAGES = [
+      { id: 'HOURLY_2H', name: '2 Hours Local Duty', hours: 2, fare: 699, tag: 'Quick Run', desc: 'City errands, medical visits, shopping' },
+      { id: 'HOURLY_4H', name: '4 Hours Half Day', hours: 4, fare: 1199, tag: 'Most Popular', desc: 'Meetings, dinner dining, multi-stops' },
+      { id: 'HOURLY_8H', name: '8 Hours Full Day', hours: 8, fare: 2199, tag: 'Best Value', desc: 'Full day city travel & family day' },
+      { id: 'SPECIAL_EVENT', name: 'Wedding Chauffeur', hours: 8, fare: 3499, tag: 'White Glove', desc: 'Formal elite chauffeur for luxury events' }
     ];
 
-    // Cab Vehicle Tiers
-    const vehicleTiers = [
-      { id: 0, name: 'Go Compact', seats: '4 seats', desc: 'WagonR, Swift • Daily transit', fare: 490 },
-      { id: 1, name: 'Premier Sedan', seats: '4 seats', desc: 'Honda City, Ciaz • Spacious & AC', fare: 750 },
-      { id: 2, name: 'SUV Executive XL', seats: '6 seats', desc: 'Innova Crysta, Ertiga • Family trip', fare: 1150 },
-      { id: 3, name: 'Green Electric EV', seats: '4 seats', desc: 'Tata Tigor EV • Zero emission', fare: 690 }
-    ];
-
-    // Start Live Duty Clock
-    function startDutyClock() {
-      if (dutyTimerInterval) clearInterval(dutyTimerInterval);
-      dutyTimerInterval = setInterval(() => {
-        if (sharedState.activeBooking && sharedState.activeBooking.status === 'IN_PROGRESS') {
-          sharedState.activeBooking.elapsedSeconds += 1;
-          const timerEl = document.getElementById('duty-elapsed-digits');
-          if (timerEl) {
-            timerEl.innerText = formatTime(sharedState.activeBooking.elapsedSeconds);
-          }
-          const driverTimerEl = document.getElementById('driver-duty-elapsed-digits');
-          if (driverTimerEl) {
-            driverTimerEl.innerText = formatTime(sharedState.activeBooking.elapsedSeconds);
-          }
-        }
-      }, 1000);
+    // ==========================================
+    // RIDER APP RENDERERS
+    // ==========================================
+    function setRiderScreen(screen) {
+      simState.riderScreen = screen;
+      document.querySelectorAll('#rider-nav-home, #rider-nav-trips, #rider-nav-wallet, #rider-nav-profile').forEach(b => b.classList.remove('active'));
+      if (screen === 'HOME') document.getElementById('rider-nav-home').classList.add('active');
+      if (screen === 'LIVE') document.getElementById('rider-nav-trips').classList.add('active');
+      renderRider();
     }
 
-    function formatTime(totalSec) {
-      const h = Math.floor(totalSec / 3600).toString().padStart(2, '0');
-      const m = Math.floor((totalSec % 3600) / 60).toString().padStart(2, '0');
-      const s = (totalSec % 60).toString().padStart(2, '0');
-      return `${h}:${m}:${s}`;
-    }
-
-    // Toggle Service Mode (Hire a Driver vs Book a Cab)
     function setServiceMode(mode) {
-      serviceMode = mode;
-      document.getElementById('btn-mode-hire').classList.toggle('active', mode === 'HIRE_DRIVER');
-      document.getElementById('btn-mode-cab').classList.toggle('active', mode === 'BOOK_CAB');
-      renderRiderApp();
+      simState.serviceMode = mode;
+      simState.riderScreen = 'BOOKING';
+      renderRider();
     }
 
-    function selectChauffeurPackage(idx) {
-      selectedChauffeurPkg = idx;
-      renderRiderApp();
-    }
-
-    function setTransmission(trans) {
-      selectedTransmission = trans;
-      renderRiderApp();
-    }
-
-    function setCarPreset(model) {
-      selectedCarModel = model;
-      renderRiderApp();
-    }
-
-    function selectCabTier(idx) {
-      selectedCabTier = idx;
-      renderRiderApp();
-    }
-
-    function setCabCategory(cat) {
-      selectedCabCategory = cat;
-      renderRiderApp();
-    }
-
-    function setRiderCabMode(mode) {
-      riderCabMode = mode;
-      renderRiderApp();
-    }
-
-    function selectDate(date) {
-      selectedDate = date;
-      renderRiderApp();
-    }
-
-    function selectTime(time) {
-      selectedTime = time;
-      renderRiderApp();
-    }
-
-    // Screen Navigation
-    function switchRiderScreen(screen) {
-      riderScreen = screen;
-      document.querySelectorAll('.device-column:first-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
-      const activeTab = document.getElementById(`rider-tab-${screen}`);
-      if (activeTab) activeTab.classList.add('active');
-      renderRiderApp();
-    }
-
-    function switchDriverScreen(screen) {
-      driverScreen = screen;
-      document.querySelectorAll('.device-column:last-child .app-nav-btn').forEach(btn => btn.classList.remove('active'));
-      const activeTab = document.getElementById(`driver-tab-${screen}`);
-      if (activeTab) activeTab.classList.add('active');
-      renderDriverApp();
-    }
-
-    function toggleDriverOnline() {
-      sharedState.isDriverOnline = !sharedState.isDriverOnline;
-      renderDriverApp();
-    }
-
-    async function claimGig(gigId) {
-      const gig = sharedState.gigMarketplace.find(g => g.id === gigId);
-      if (gig) {
-        gig.isClaimed = true;
-        try {
-          await fetch('/api/v1/drivers/gigs/' + gigId + '/claim', { method: 'POST' });
-          syncWithBackendDb();
-        } catch (e) {}
-        alert(`Gig Claimed: ${gig.title}! ₹${gig.fare} locked into database.`);
-        renderDriverApp();
-      }
-    }
-
-    async function confirmBooking() {
-      if (serviceMode === 'HIRE_DRIVER') {
-        const pkg = chauffeurPackages[selectedChauffeurPkg];
-        sharedState.activeBooking = {
-          id: 'CHF-' + Math.floor(1000 + Math.random() * 9000),
-          serviceMode: 'HIRE_DRIVER',
-          pkgName: pkg.name,
-          durationHours: pkg.hours,
-          carModel: `${selectedCarModel} (${selectedTransmission === 'AUTOMATIC' ? 'Automatic AT' : 'Manual MT'})`,
-          transmission: selectedTransmission,
-          pickup: 'Sector 43, Golf Course Road, Gurugram',
-          drop: 'City Local Travel & Shopping Round-Trip',
-          distanceKm: 28.0,
-          fare: pkg.fare,
-          overtimeRate: 99,
-          otp: String(Math.floor(1000 + Math.random() * 9000)),
-          status: 'SCHEDULED_CONFIRMED',
-          elapsedSeconds: 0,
-          fuelHandover: '80% Full',
-          odometerStart: 34812,
-          riderName: sharedState.riderName,
-          driverName: sharedState.driverName
-        };
-      } else {
-        const tier = vehicleTiers[selectedCabTier];
-        sharedState.activeBooking = {
-          id: 'CAB-' + Math.floor(1000 + Math.random() * 9000),
-          serviceMode: 'BOOK_CAB',
-          pkgName: tier.name,
-          durationHours: 1,
-          carModel: 'Commercial Sedan (DL 01 AB 9988)',
-          transmission: 'MANUAL',
-          pickup: 'Sector 43, Golf Course Road, Gurugram',
-          drop: 'Indira Gandhi International Airport, Terminal 3',
-          distanceKm: 18.5,
-          fare: tier.fare,
-          overtimeRate: 0,
-          otp: String(Math.floor(1000 + Math.random() * 9000)),
-          status: 'SCHEDULED_CONFIRMED',
-          elapsedSeconds: 0,
-          fuelHandover: 'N/A',
-          odometerStart: 0,
-          riderName: sharedState.riderName,
-          driverName: sharedState.driverName
-        };
-      }
-
-      // Persist to real backend API & database
-      try {
-        await fetch('/api/v1/bookings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(sharedState.activeBooking)
-        });
-        syncWithBackendDb();
-      } catch (e) {}
-
-      switchRiderScreen('tracking');
-      renderDriverApp();
-    }
-
-    async function startDutyOtpVerified() {
-      sharedState.activeBooking.status = 'IN_PROGRESS';
-      try {
-        await fetch('/api/v1/bookings/verify-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ otp: sharedState.activeBooking.otp })
-        });
-        syncWithBackendDb();
-      } catch (e) {}
-      renderRiderApp();
-      renderDriverApp();
-    }
-
-    async function completeDuty() {
-      sharedState.activeBooking.status = 'COMPLETED';
-      sharedState.driverEarnings += sharedState.activeBooking.fare;
-      try {
-        await fetch('/api/v1/bookings/complete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bookingId: sharedState.activeBooking.id })
-        });
-        syncWithBackendDb();
-      } catch (e) {}
-      alert(`Duty Completed! Total settled: ₹${sharedState.activeBooking.fare} via UPI AutoPay. Saved to PostgreSQL / JSON database.`);
-      renderRiderApp();
-      renderDriverApp();
-    }
-
-    // ==========================================
-    // RIDER APP RENDERER
-    // ==========================================
-    function renderRiderApp() {
+    function renderRider() {
       const container = document.getElementById('rider-screen');
-      const ctaDock = document.getElementById('rider-cta-dock');
+      const dock = document.getElementById('rider-bottom-dock');
+      dock.style.display = 'none';
 
-      // Update dedicated bottom CTA dock
-      if (riderScreen === 'home') {
-        ctaDock.style.display = 'block';
-        if (serviceMode === 'HIRE_DRIVER') {
-          const pkg = chauffeurPackages[selectedChauffeurPkg];
-          ctaDock.innerHTML = `
-            <button class="btn-primary green" onclick="switchRiderScreen('fare')">
-              <span>Review Chauffeur Booking (₹${pkg.fare})</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          `;
-        } else {
-          ctaDock.innerHTML = `
-            <button class="btn-primary green" onclick="switchRiderScreen('fare')">
-              <span>${riderCabMode === 'SCHEDULED' ? 'Lock Upfront Fare & Schedule' : 'See Upfront Fare & Book Now'}</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          `;
-        }
-      } else if (riderScreen === 'fare') {
-        ctaDock.style.display = 'block';
-        if (serviceMode === 'HIRE_DRIVER') {
-          const pkg = chauffeurPackages[selectedChauffeurPkg];
-          ctaDock.innerHTML = `
-            <button class="btn-primary green" onclick="confirmBooking()">
-              <span>Confirm & Lock Chauffeur (₹${pkg.fare})</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          `;
-        } else {
-          const tier = vehicleTiers[selectedCabTier];
-          ctaDock.innerHTML = `
-            <button class="btn-primary green" onclick="confirmBooking()">
-              <span>Confirm & Lock ${tier.name} (₹${tier.fare})</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          `;
-        }
-      } else {
-        ctaDock.style.display = 'none';
-        ctaDock.innerHTML = '';
-      }
-
-      // 1. HOME SCREEN
-      if (riderScreen === 'home') {
-        if (serviceMode === 'HIRE_DRIVER') {
-          const pkg = chauffeurPackages[selectedChauffeurPkg];
-          container.innerHTML = `
-            <!-- Chauffeur Top Hero Strip -->
-            <div class="pro-card green-accent" style="margin-top: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="pill-badge green" style="font-size: 9px;">DRIVE MY CAR</span>
-                <span style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">VERIFIED LMV PRO</span>
-              </div>
-              <div style="font-size: 14px; font-weight: 800; color: var(--text-900); margin-top: 4px;">
-                Book a Verified Chauffeur for Your Car
-              </div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
-                Hire professional drivers for hours, special events/weddings, or 1-2 day road trips.
-              </div>
-            </div>
-
-            <!-- Trust Strip -->
-            <div class="trust-strip">
-              <div class="trust-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                <span>Police Verified</span>
-              </div>
-              <div class="trust-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-600)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Hourly to 2-Days</span>
-              </div>
-              <div class="trust-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2.5"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <span>Zero DUI Risk</span>
-              </div>
-            </div>
-
-            <!-- Packages List -->
-            <div style="padding: 0 14px;">
-              <div style="font-size: 11px; font-weight: 800; color: var(--text-700); margin-bottom: 8px;">
-                CHOOSE CHAUFFEUR PACKAGE
-              </div>
-              ${chauffeurPackages.map(p => `
-                <div class="chauffeur-pkg-card ${selectedChauffeurPkg === p.id ? 'active' : ''}" onclick="selectChauffeurPackage(${p.id})">
-                  <div>
-                    <div class="pkg-title-row">
-                      <span class="pkg-title">${p.name}</span>
-                      <span class="service-badge-pill">${p.tag}</span>
-                    </div>
-                    <div class="pkg-sub">${p.desc}</div>
-                  </div>
-                  <div class="pkg-price-col">
-                    <div class="pkg-price">₹${p.fare}</div>
-                    <div class="pkg-hours">${p.hours}h included</div>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-
-            <!-- Vehicle & Transmission Config Card -->
-            <div class="pro-card" style="margin-top: 6px;">
-              <div class="pro-card-title">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/></svg>
-                Your Vehicle Transmission & Model
-              </div>
-              <div style="font-size: 10px; color: var(--text-500); margin-top: 2px;">
-                We assign a driver certified specifically for your car's gearbox
-              </div>
-
-              <div class="transmission-toggle">
-                <div class="trans-btn ${selectedTransmission === 'AUTOMATIC' ? 'active' : ''}" onclick="setTransmission('AUTOMATIC')">
-                  Automatic (AT / DCT / CVT)
-                </div>
-                <div class="trans-btn ${selectedTransmission === 'MANUAL' ? 'active' : ''}" onclick="setTransmission('MANUAL')">
-                  Manual (MT / Stick)
-                </div>
-              </div>
-
-              <div style="font-size: 10px; font-weight: 700; color: var(--text-400); margin-top: 6px;">QUICK SELECT VEHICLE:</div>
-              <div class="car-preset-row">
-                <div class="car-preset-chip ${selectedCarModel === 'Honda City' ? 'active' : ''}" onclick="setCarPreset('Honda City')">Honda City</div>
-                <div class="car-preset-chip ${selectedCarModel === 'Hyundai Creta' ? 'active' : ''}" onclick="setCarPreset('Hyundai Creta')">Hyundai Creta</div>
-                <div class="car-preset-chip ${selectedCarModel === 'Maruti Baleno' ? 'active' : ''}" onclick="setCarPreset('Maruti Baleno')">Maruti Baleno</div>
-                <div class="car-preset-chip ${selectedCarModel === 'Toyota Fortuner' ? 'active' : ''}" onclick="setCarPreset('Toyota Fortuner')">Toyota Fortuner</div>
-                <div class="car-preset-chip ${selectedCarModel === 'BMW 3 Series' ? 'active' : ''}" onclick="setCarPreset('BMW 3 Series')">BMW 3 Series</div>
-              </div>
-            </div>
-
-            <!-- Route Reporting Location -->
-            <div class="route-input-card">
-              <div class="route-track-line"></div>
-              <div class="route-row">
-                <div class="point-dot origin"></div>
-                <div>
-                  <div class="route-caption">DRIVER REPORTING LOCATION</div>
-                  <div class="route-text">Sector 43, Golf Course Road, Gurugram</div>
-                </div>
-              </div>
-              <div class="route-row">
-                <div class="point-dot dest"></div>
-                <div>
-                  <div class="route-caption">TRAVEL SCOPE</div>
-                  <div class="route-text">${pkg.hours >= 12 ? 'Intercity Highway / Round-Trip' : 'City Local Round-Trip & Errands'}</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Transparent Rates Summary -->
-            <div class="pro-card" style="margin-bottom: 20px;">
-              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
-                <span style="color: var(--text-500);">Base Package Fare (${pkg.hours}h)</span>
-                <span style="font-weight: 800; color: var(--text-900);">₹${pkg.fare}</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
-                <span style="color: var(--text-500);">Overtime Duty Rate</span>
-                <span style="color: var(--emerald-700); font-weight: 700;">₹99 / extra hr</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 11px;">
-                <span style="color: var(--text-500);">Night Charge (after 10 PM)</span>
-                <span style="color: var(--text-700); font-weight: 600;">₹150 (if applicable)</span>
-              </div>
-            </div>
-          `;
-        } else {
-          // CAB BOOKING MODE (Ola / Uber model)
-          container.innerHTML = `
-            <!-- Vector Map Preview -->
-            <div class="map-preview-box">
-              <svg class="map-svg" viewBox="0 0 400 155">
-                <line x1="10" y1="35" x2="390" y2="35" stroke="#E2E8F0" stroke-width="2" />
-                <line x1="10" y1="80" x2="390" y2="80" stroke="#E2E8F0" stroke-width="2" />
-                <line x1="70" y1="10" x2="70" y2="155" stroke="#E2E8F0" stroke-width="2" />
-                <line x1="200" y1="10" x2="200" y2="155" stroke="#E2E8F0" stroke-width="2" />
-                <line x1="320" y1="10" x2="320" y2="155" stroke="#E2E8F0" stroke-width="2" />
-                <path d="M 60 120 Q 150 140 230 100 T 330 70" fill="none" stroke="#2563EB" stroke-width="5" stroke-linecap="round" />
-                <circle cx="60" cy="120" r="6" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" />
-                <rect x="323" y="63" width="14" height="14" rx="3" fill="#059669" stroke="#FFFFFF" stroke-width="2" />
-                <g transform="translate(200, 95)">
-                  <circle cx="9" cy="9" r="12" fill="#0F172A" stroke="#FFFFFF" stroke-width="2"/>
-                  <path d="M6 9h6l1.5 2.5H4.5L6 9z" fill="#FFFFFF"/>
-                </g>
-              </svg>
-            </div>
-
-            <!-- Categories -->
-            <div class="category-strip">
-              <div class="cat-btn ${selectedCabCategory === 'AIRPORT' ? 'active' : ''}" onclick="setCabCategory('AIRPORT')">
-                <span class="cat-btn-label">Airport</span>
-                <span class="cat-btn-tag">ZERO SURGE</span>
-              </div>
-              <div class="cat-btn ${selectedCabCategory === 'CAB' ? 'active' : ''}" onclick="setCabCategory('CAB')">
-                <span class="cat-btn-label">Daily Cab</span>
-                <span class="cat-btn-tag" style="color: var(--blue-600);">PREMIUM</span>
-              </div>
-              <div class="cat-btn ${selectedCabCategory === 'AUTO' ? 'active' : ''}" onclick="setCabCategory('AUTO')">
-                <span class="cat-btn-label">Auto Prime</span>
-                <span class="cat-btn-tag">ECONOMY</span>
-              </div>
-              <div class="cat-btn ${selectedCabCategory === 'OUTSTATION' ? 'active' : ''}" onclick="setCabCategory('OUTSTATION')">
-                <span class="cat-btn-label">Outstation</span>
-                <span class="cat-btn-tag">INTERCITY</span>
-              </div>
-            </div>
-
-            <!-- Cab Mode Switcher -->
-            <div style="display: flex; gap: 8px; padding: 10px 14px 0 14px;">
-              <div class="service-mode-btn ${riderCabMode === 'INSTANT' ? 'active' : ''}" onclick="setRiderCabMode('INSTANT')">
-                <div class="service-mode-name">Ride Now</div>
-                <div class="service-mode-desc">Instant 3-min pickup</div>
-              </div>
-              <div class="service-mode-btn ${riderCabMode === 'SCHEDULED' ? 'active' : ''}" onclick="setRiderCabMode('SCHEDULED')">
-                <div class="service-mode-name">Advance Scheduled</div>
-                <div class="service-mode-desc">Zero Surge Guaranteed</div>
-              </div>
-            </div>
-
-            <!-- Route Inputs -->
-            <div class="route-input-card">
-              <div class="route-track-line"></div>
-              <div class="route-row">
-                <div class="point-dot origin"></div>
-                <div>
-                  <div class="route-caption">PICKUP ADDRESS</div>
-                  <div class="route-text">Sector 43, Golf Course Road, Gurugram</div>
-                </div>
-              </div>
-              <div class="route-row">
-                <div class="point-dot dest"></div>
-                <div>
-                  <div class="route-caption">DROP DESTINATION</div>
-                  <div class="route-text">Indira Gandhi International Airport, Terminal 3</div>
-                </div>
-              </div>
-            </div>
-
-            <div style="height: 16px;"></div>
-          `;
-        }
-      }
-
-      // 2. FARE ESTIMATE / REVIEW SCREEN
-      else if (riderScreen === 'fare') {
-        if (serviceMode === 'HIRE_DRIVER') {
-          const pkg = chauffeurPackages[selectedChauffeurPkg];
-          container.innerHTML = `
-            <div style="padding: 14px 16px 8px 16px;">
-              <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Chauffeur Booking Review</div>
-              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px; font-weight: 700;">
-                Verified Driver for Your Personal Car • Upfront Locked Rate
-              </div>
-            </div>
-
-            <div class="pro-card green-accent">
-              <div class="pro-card-header">
-                <span class="pill-badge green" style="font-size: 9px;">${pkg.tag}</span>
-                <span style="font-size: 18px; font-weight: 900; color: var(--emerald-700);">₹${pkg.fare}</span>
-              </div>
-              <div style="font-size: 15px; font-weight: 800; color: var(--text-900);">${pkg.name}</div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
-                ${pkg.hours} hours duty included • Dedicated pro chauffeur
-              </div>
-
-              <div style="height: 1px; background: var(--border-light); margin: 10px 0;"></div>
-
-              <div style="font-size: 11px; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span style="color: var(--text-500);">Your Vehicle:</span>
-                <span style="font-weight: 700; color: var(--text-900);">${selectedCarModel} (${selectedTransmission === 'AUTOMATIC' ? 'Automatic AT' : 'Manual MT'})</span>
-              </div>
-              <div style="font-size: 11px; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                <span style="color: var(--text-500);">Extra Overtime:</span>
-                <span style="font-weight: 700; color: var(--emerald-700);">₹99 / hr</span>
-              </div>
-              <div style="font-size: 11px; display: flex; justify-content: space-between;">
-                <span style="color: var(--text-500);">Payment:</span>
-                <span style="font-weight: 700; color: var(--text-900);">UPI AutoPay (settled upon duty completion)</span>
-              </div>
-            </div>
-
-            <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50);">
-              <div style="font-size: 12px; font-weight: 800; color: var(--blue-600); margin-bottom: 4px;">
-                Driver Handover Checklist Assurance
-              </div>
-              <div style="font-size: 11px; color: var(--text-700); line-height: 15px;">
-                ✓ Initial fuel gauge & odometer verified before taking steering.<br/>
-                ✓ Pre-existing exterior scratches inspected.<br/>
-                ✓ Uniform-ready pro chauffeur with valid LMV commercial license.
-              </div>
-            </div>
-            <div style="height: 16px;"></div>
-          `;
-        } else {
-          container.innerHTML = `
-            <div style="padding: 14px 16px 8px 16px;">
-              <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Select Cab Tier</div>
-              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px; font-weight: 700;">
-                Guaranteed Upfront Fare • 18.5 km (~34 mins)
-              </div>
-            </div>
-
-            <div style="padding: 6px 14px;">
-              ${vehicleTiers.map(t => `
-                <div class="tier-card ${selectedCabTier === t.id ? 'selected' : ''}" onclick="selectCabTier(${t.id})">
-                  <div>
-                    <div class="tier-name">${t.name} <span style="font-size: 10px; color: var(--text-400);">• ${t.seats}</span></div>
-                    <div class="tier-desc">${t.desc}</div>
-                  </div>
-                  <div class="tier-price">₹${t.fare}</div>
-                </div>
-              `).join('')}
-            </div>
-            <div style="height: 16px;"></div>
-          `;
-        }
-      }
-
-      // 3. TRACKING / DUTY HUD SCREEN
-      else if (riderScreen === 'tracking') {
-        const b = sharedState.activeBooking;
-        if (b.serviceMode === 'HIRE_DRIVER') {
-          container.innerHTML = `
-            <!-- Live Duty Elapsed Clock HUD -->
-            <div class="timer-hud-card">
-              <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 10px; font-weight: 900; color: #10B981; letter-spacing: 0.6px;">
-                <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
-                LIVE CHAUFFEUR DUTY CLOCK
-              </div>
-              <div class="timer-digits" id="duty-elapsed-digits">${formatTime(b.elapsedSeconds)}</div>
-              <div style="font-size: 11px; color: #94A3B8; font-weight: 600;">
-                Package: ${b.durationHours} hrs duty • Overtime: ₹${b.overtimeRate}/hr extra
-              </div>
-            </div>
-
-            <!-- OTP Card -->
-            <div class="otp-hud-card">
-              <div style="font-size: 10px; font-weight: 900; color: #92400E; letter-spacing: 0.5px;">
-                KEY HANDOVER VERIFICATION PIN
-              </div>
-              <div class="pin-boxes-row">
-                ${b.otp.split('').map(d => `<div class="pin-digit-box">${d}</div>`).join('')}
-              </div>
-              <div style="font-size: 10.5px; color: #78350F; line-height: 14px;">
-                Share with Chauffeur when handing over car keys to activate official duty insurance.
-              </div>
-            </div>
-
-            <!-- Assigned Driver Profile -->
-            <div class="pro-card">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <div class="user-avatar-btn" style="width: 40px; height: 40px; font-size: 14px; font-weight: 800; background: #0F172A; color: #FFFFFF;">
-                    RK
-                  </div>
-                  <div>
-                    <div style="font-size: 14px; font-weight: 800; color: var(--text-900);">${sharedState.driverName}</div>
-                    <div style="font-size: 11px; color: var(--amber-600); font-weight: 700;">
-                      ★ ${sharedState.driverRating} • 582 completed duties
-                    </div>
-                  </div>
-                </div>
-                <span class="pill-badge green" style="font-size: 9px;">VERIFIED PRO</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 8px;">
-                Car: ${b.carModel} • Handover Fuel: ${b.fuelHandover}
-              </div>
-            </div>
-
-            <!-- Complete Duty Button for Simulator -->
-            <div style="padding: 0 14px;">
-              <button class="btn-primary green" onclick="completeDuty()">
-                <span>Complete Duty & Settle ₹${b.fare}</span>
-              </button>
-            </div>
-            <div style="height: 16px;"></div>
-          `;
-        } else {
-          // CAB TRACKING
-          container.innerHTML = `
-            <div class="pro-card green-accent" style="margin-top: 14px; text-align: center;">
-              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">CAB TRIP IN PROGRESS</div>
-              <div style="font-size: 20px; font-weight: 900; color: var(--text-900); margin: 4px 0;">
-                En Route to IGI Airport T3
-              </div>
-              <div style="font-size: 11px; color: var(--text-500);">ETA 28 mins • Commercial Sedan (DL 01 AB 9988)</div>
-            </div>
-
-            <div class="pro-card" style="text-align: center;">
-              <div style="font-size: 10px; font-weight: 800; color: var(--text-400);">TRIP START OTP</div>
-              <div style="font-size: 26px; font-weight: 900; letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; color: var(--text-900);">
-                ${b.otp}
-              </div>
-            </div>
-            <div style="height: 16px;"></div>
-          `;
-        }
-      }
-
-      // 4. HISTORY SCREEN
-      else if (riderScreen === 'history') {
+      // 1. SCREEN 1: RIDER HOME
+      if (simState.riderScreen === 'HOME') {
         container.innerHTML = `
-          <div style="padding: 14px 16px 8px 16px;">
-            <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Ride & Duty History</div>
-          </div>
-          <div class="pro-card" style="margin-bottom: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="pill-badge green" style="font-size: 9px;">CHAUFFEUR DUTY</span>
-              <span style="font-size: 14px; font-weight: 800; color: var(--emerald-700);">₹549</span>
-            </div>
-            <div style="font-size: 13px; font-weight: 800; margin-top: 4px;">4-Hour City Chauffeur • Honda City AT</div>
-            <div style="font-size: 11px; color: var(--text-500);">Sector 43, Gurugram • 10 Sep 2026</div>
-          </div>
-          <div class="pro-card">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="pill-badge blue" style="font-size: 9px;">AIRPORT CAB</span>
-              <span style="font-size: 14px; font-weight: 800; color: var(--emerald-700);">₹750</span>
-            </div>
-            <div style="font-size: 13px; font-weight: 800; margin-top: 4px;">Premier Sedan to IGI Airport T3</div>
-            <div style="font-size: 11px; color: var(--text-500);">Flight AI 102 • 06 Sep 2026</div>
-          </div>
-        `;
-      }
-
-      // 5. PROFILE SCREEN
-      else if (riderScreen === 'profile') {
-        container.innerHTML = `
-          <div style="padding: 16px 14px;">
-            <div class="pro-card" style="text-align: center; margin: 0 0 12px 0;">
-              <div class="user-avatar-btn" style="width: 50px; height: 50px; font-size: 18px; margin: 0 auto 8px auto; background: #0F172A; color: #FFFFFF;">
-                ${sharedState.riderInitials}
-              </div>
-              <div style="font-size: 15px; font-weight: 800;">${sharedState.riderName}</div>
-              <div style="font-size: 11px; color: var(--text-500);">${sharedState.riderPhone} • ${sharedState.riderEmail}</div>
-              <div style="display: inline-flex; align-items: center; gap: 4px; background: var(--amber-50); border: 1px solid var(--amber-border); padding: 2px 8px; border-radius: 4px; margin-top: 6px; font-size: 10px; font-weight: 800; color: var(--amber-600);">
-                ★ ${sharedState.riderRating} Rider Rating
-              </div>
-            </div>
-
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div class="pro-card-title">My Registered Cars for Chauffeur</div>
-              <div style="font-size: 12px; font-weight: 700; margin-top: 6px;">Honda City (2022) • Automatic AT</div>
-              <div style="font-size: 10px; color: var(--text-500);">Plate: DL 01 AB 9988 • Insured with HDFC ERGO</div>
-            </div>
-
-            <!-- Account & Session Management -->
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div class="pro-card-title">Account & Security</div>
-              <div style="font-size: 11px; color: var(--text-500); margin: 4px 0 10px 0;">
-                Logged in as <b>${sharedState.riderName}</b> (${sharedState.riderCity}). Tap below to switch account.
-              </div>
-              <button class="btn-primary" style="background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; padding: 11px;" onclick="logoutRider()">
-                <span>Sign Out / Switch Account</span>
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      // 6. AUTH / LOGIN / SIGNUP SCREEN
-      else if (riderScreen === 'auth') {
-        container.innerHTML = `
-          <div class="auth-container">
-            <div style="text-align: center; margin-bottom: 14px;">
-              <span class="pill-badge" style="background: #0F172A; color: #38BDF8; font-weight: 800; font-size: 10px; padding: 4px 10px;">RIDER ACCOUNT</span>
-              <div style="font-size: 16px; font-weight: 800; color: var(--text-900); margin-top: 6px;">RideDriveAhead Account</div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">Sign in or create account to book chauffeurs & cabs</div>
-            </div>
-
-            <div class="auth-toggle-bar">
-              <button class="auth-toggle-btn ${riderAuthTab === 'LOGIN' ? 'active' : ''}" onclick="switchRiderAuthTab('LOGIN')">Sign In</button>
-              <button class="auth-toggle-btn ${riderAuthTab === 'SIGNUP' ? 'active' : ''}" onclick="switchRiderAuthTab('SIGNUP')">Create Account</button>
-            </div>
-
-            ${riderAuthTab === 'LOGIN' ? `
-              <div class="pro-card" style="margin-top: 0;">
-                <div class="auth-field">
-                  <label class="auth-label">Mobile Number</label>
-                  <div class="auth-input-wrap">
-                    <span class="auth-input-prefix">+91</span>
-                    <input type="tel" id="rider-login-phone" class="auth-input" value="${sharedState.riderPhone.replace('+91 ', '').replace('+91', '')}" placeholder="9810123456" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">6-Digit One-Time Password (OTP)</label>
-                  <input type="text" id="rider-login-otp" class="auth-otp-field" value="123456" maxlength="6" />
-                  <div style="font-size: 10px; color: var(--emerald-700); text-align: center; margin-top: 4px; font-weight: 700;">
-                    Demo Code: 123456 (Dispatched via SMS)
-                  </div>
-                </div>
-
-                <button class="btn-primary" style="margin-top: 10px;" onclick="submitRiderLogin()">
-                  <span>Verify OTP & Sign In ➔</span>
-                </button>
-
-                <button class="auth-autofill-btn" onclick="autofillRiderAuth('LOGIN')">
-                  Autofill Arjun Verma (+91 98101 23456)
-                </button>
-              </div>
-            ` : `
-              <div class="pro-card" style="margin-top: 0;">
-                <div class="auth-field">
-                  <label class="auth-label">Full Name</label>
-                  <div class="auth-input-wrap">
-                    <input type="text" id="rider-signup-name" class="auth-input" value="Priya Sharma" placeholder="e.g. Priya Sharma" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">Mobile Number</label>
-                  <div class="auth-input-wrap">
-                    <span class="auth-input-prefix">+91</span>
-                    <input type="tel" id="rider-signup-phone" class="auth-input" value="9811122233" placeholder="9811122233" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">Email Address (Tax Invoices)</label>
-                  <div class="auth-input-wrap">
-                    <input type="email" id="rider-signup-email" class="auth-input" value="priya.sharma@example.com" placeholder="priya@example.com" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">City / Region</label>
-                  <div class="auth-input-wrap">
-                    <input type="text" id="rider-signup-city" class="auth-input" value="Gurugram / Delhi NCR" />
-                  </div>
-                </div>
-
-                <button class="btn-primary" style="margin-top: 10px;" onclick="submitRiderSignup()">
-                  <span>Register & Enter Platform ➔</span>
-                </button>
-
-                <button class="auth-autofill-btn" onclick="autofillRiderAuth('SIGNUP')">
-                  Autofill Priya Sharma (New Rider)
-                </button>
-              </div>
-            `}
-
-            <div style="text-align: center; margin-top: 12px; font-size: 10px; color: var(--text-400);">
-              AES-256 GCM Encrypted Vault • DPDP Act Compliant
-            </div>
-          </div>
-        `;
-      }
-
-      // 7. SOS SCREEN
-      else if (riderScreen === 'sos') {
-        container.innerHTML = `
-          <div style="padding: 16px 14px;">
-            <div class="pro-card" style="border-color: var(--red-border); background: var(--red-50); text-align: center; margin: 0 0 12px 0;">
-              <div style="font-size: 14px; font-weight: 800; color: var(--red-600);">Emergency Safety Center</div>
-              <div style="font-size: 11px; color: var(--text-700); margin-top: 4px;">
-                24x7 Direct Police Dispatch & Platform Response Unit
-              </div>
-            </div>
-            <button class="btn-primary" style="background: var(--red-600); margin-bottom: 10px;" onclick="alert('Emergency Alert triggered to 112 Police Control Room & Emergency Contacts')">
-              Call Police (112)
-            </button>
-            <button class="btn-primary" style="background: #0F172A;" onclick="switchRiderScreen('home')">
-              Back to Home
-            </button>
-          </div>
-        `;
-      }
-
-      // Sync topbar avatar
-      const rAvatar = document.getElementById('rider-topbar-avatar');
-      if (rAvatar) {
-        rAvatar.innerText = sharedState.riderLoggedIn ? sharedState.riderInitials : '?';
-      }
-    }
-
-    // ==========================================
-    // DRIVER PARTNER APP RENDERER
-    // ==========================================
-    function renderDriverApp() {
-      const container = document.getElementById('driver-screen');
-      const ctaDock = document.getElementById('driver-cta-dock');
-
-      // Update dedicated bottom CTA dock for driver
-      if (driverScreen === 'trip') {
-        const b = sharedState.activeBooking;
-        if (ctaDock) {
-          ctaDock.style.display = 'block';
-          if (b.status === 'SCHEDULED_CONFIRMED' || b.status === 'ARRIVED') {
-            ctaDock.innerHTML = `
-              <button class="btn-primary green" onclick="startDutyOtpVerified()">
-                <span>Verify PIN & Start Official Duty</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              </button>
-            `;
-          } else if (b.status === 'IN_PROGRESS') {
-            ctaDock.innerHTML = `
-              <button class="btn-primary green" onclick="completeDuty()">
-                <span>Complete Duty & Settle ₹${b.fare}</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </button>
-            `;
-          } else {
-            ctaDock.style.display = 'none';
-          }
-        }
-      } else {
-        if (ctaDock) {
-          ctaDock.style.display = 'none';
-          ctaDock.innerHTML = '';
-        }
-      }
-
-      // 1. DRIVER DUTY HOME SCREEN
-      if (driverScreen === 'home') {
-        container.innerHTML = `
-          <!-- Online/Offline Status -->
-          <div class="driver-status-card">
+          <!-- Top Greeting Bar -->
+          <div class="home-top-bar">
             <div>
-              <div style="font-size: 10px; font-weight: 800; color: var(--text-400); letter-spacing: 0.4px;">DUTY STATUS</div>
-              <div style="font-size: 14px; font-weight: 800; color: var(--text-900); margin-top: 2px;">
-                ${sharedState.isDriverOnline ? 'Online • Ready for Driving Gigs' : 'Offline'}
+              <div class="greeting-sub">Your journey, your way</div>
+              <div class="greeting-title">Good Morning, Alex 👋</div>
+              <div class="city-pill">📍 Bengaluru, Karnataka ⌵</div>
+            </div>
+            <div class="notif-bell-btn" onclick="alert('Notification: Upfront fare lock active for your next airport run.')">
+              <span>🔔</span>
+              <div class="notif-dot"></div>
+            </div>
+          </div>
+
+          <!-- Hero Dual Services Side-by-Side -->
+          <div class="hero-dual-row">
+            <!-- Book a Cab (Navy) -->
+            <div class="hero-card cab-card" onclick="setServiceMode('BOOK_CAB')">
+              <div class="hero-card-top">
+                <span class="hero-icon">🚕</span>
+                <span class="hero-tag">UPFRONT LOCK</span>
+              </div>
+              <div>
+                <div class="hero-title">Book a Cab</div>
+                <div class="hero-desc">Instant or scheduled city & airport taxi</div>
+              </div>
+              <div class="hero-arrow-btn">→</div>
+            </div>
+
+            <!-- Hire a Driver (White) -->
+            <div class="hero-card driver-card" onclick="setServiceMode('HIRE_DRIVER')">
+              <div class="hero-card-top">
+                <span class="hero-icon">👨‍✈️</span>
+                <span class="hero-tag">YOUR CAR</span>
+              </div>
+              <div>
+                <div class="hero-title">Hire a Driver</div>
+                <div class="hero-desc">Verified chauffeur for your personal vehicle</div>
+              </div>
+              <div class="hero-arrow-btn">→</div>
+            </div>
+          </div>
+
+          <!-- Instant / Schedule Pill Toggle -->
+          <div class="booking-toggle-row">
+            <button class="booking-toggle-btn ${simState.bookingType === 'INSTANT' ? 'active' : ''}" onclick="simState.bookingType='INSTANT'; renderRider();">
+              ⚡ Instant Booking
+            </button>
+            <button class="booking-toggle-btn ${simState.bookingType === 'SCHEDULED' ? 'active' : ''}" onclick="simState.bookingType='SCHEDULED'; renderRider();">
+              📅 Advance Schedule
+            </button>
+          </div>
+
+          <!-- Saved Places -->
+          <div class="section-title-row">
+            <span class="section-label">SAVED PLACES</span>
+            <span style="font-size: 10.5px; color: var(--electric-lime); font-weight: 800; cursor: pointer;">Manage</span>
+          </div>
+          <div class="saved-places-row">
+            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">🏠 Home</div>
+            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">💼 Work (ITPB)</div>
+            <div class="place-chip" onclick="setServiceMode('BOOK_CAB')">✈️ BLR Airport</div>
+            <div class="place-chip" onclick="alert('Add Place dialog')">+ Add Place</div>
+          </div>
+
+          <!-- Recent Trip Card -->
+          <div class="section-title-row">
+            <span class="section-label">REPEAT RECENT TRIP</span>
+          </div>
+          <div class="recent-trip-card" onclick="setServiceMode('BOOK_CAB')">
+            <div class="recent-left">
+              <div class="recent-icon-circle">🛫</div>
+              <div>
+                <div class="recent-route">BLR Airport ➔ Koramangala</div>
+                <div class="recent-meta">Yesterday • White Toyota Etios</div>
               </div>
             </div>
-            <button class="switch-btn" onclick="toggleDriverOnline()">
-              ${sharedState.isDriverOnline ? 'Go Offline' : 'Go Online'}
-            </button>
+            <div class="recent-price">₹ 1,248</div>
           </div>
 
-          <!-- Driver Verified Skills Badges -->
-          <div class="pro-card" style="margin-top: 0; padding: 12px 14px;">
-            <div style="font-size: 10px; font-weight: 800; color: var(--text-400); letter-spacing: 0.4px; margin-bottom: 6px;">
-              VERIFIED DRIVING QUALIFICATIONS
+          <!-- Safety First Banner -->
+          <div class="safety-banner" onclick="setRiderScreen('SOS')">
+            <div class="safety-icon">🛡️</div>
+            <div>
+              <div class="safety-title">Safety First Always Active</div>
+              <div class="safety-sub">Every ride is GPS tracked, insured & monitored 24/7.</div>
             </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-              <span class="pill-badge green" style="font-size: 9px;">LMV Commercial Pro</span>
-              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Automatic (AT) Certified</span>
-              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Manual (MT) Expert</span>
-              <span class="pill-badge" style="font-size: 9px; background: var(--bg-subtle);">Luxury Car Badge</span>
-            </div>
-          </div>
-
-          <!-- Shift & Driving Hours Metrics -->
-          <div class="metrics-2grid">
-            <div class="metric-box">
-              <div class="metric-caption">TODAY'S NET EARNINGS</div>
-              <div class="metric-value" style="color: var(--emerald-700);">₹${sharedState.driverEarnings}</div>
-              <div class="metric-note">6 duties completed</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-caption">DRIVING HOURS</div>
-              <div class="metric-value" style="color: var(--blue-600);">${sharedState.drivingHours}h</div>
-              <div class="metric-note" style="color: var(--text-500);">4.5h left before rest</div>
-            </div>
-          </div>
-
-          <!-- Committed Duty Alert Card -->
-          <div class="pro-card green-accent">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="pill-badge green" style="font-size: 9px;">COMMITTED GIG</span>
-              <span style="font-size: 15px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">₹549</span>
-            </div>
-            <div style="font-size: 13px; font-weight: 800; margin-top: 6px; color: var(--text-900);">
-              4-Hour Chauffeur on Customer's Honda City AT
-            </div>
-            <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
-              Rider: Arjun Verma • Sector 43 Gurugram
-            </div>
-            <button class="btn-primary" style="margin-top: 10px; padding: 10px; font-size: 11px;" onclick="switchDriverScreen('trip')">
-              Open Duty Dashboard & Checklist →
-            </button>
-          </div>
-
-          <!-- Gig Marketplace Shortcut Banner -->
-          <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50); margin-bottom: 20px;">
-            <div style="font-size: 12px; font-weight: 800; color: var(--blue-600);">Gig Marketplace Available</div>
-            <div style="font-size: 11px; color: var(--text-700); margin: 4px 0 8px 0;">
-              3 open driving gigs (hourly, weddings, and 1-2 day road trips) available to claim.
-            </div>
-            <button class="btn-primary" style="background: var(--blue-600); padding: 8px 12px; font-size: 11px; width: auto;" onclick="switchDriverScreen('pool')">
-              Browse Gig Board →
-            </button>
           </div>
           <div style="height: 16px;"></div>
         `;
       }
 
-      // 2. GIG MARKETPLACE / POOL SCREEN
-      else if (driverScreen === 'pool') {
+      // 2. SCREEN 2: BOOKING OPTIONS / FARE ESTIMATE
+      else if (simState.riderScreen === 'BOOKING') {
+        const isCab = simState.serviceMode === 'BOOK_CAB';
+        const finalPrice = isCab
+          ? (simState.selectedCabTier === 'SEDAN' ? 1248 : simState.selectedCabTier === 'SUV' ? 1742 : 2980)
+          : (CHAUFFEUR_PACKAGES.find(p => p.id === simState.selectedPkgId)?.fare || 1199);
+
+        dock.style.display = 'flex';
+        dock.className = 'bottom-cta-dock';
+        dock.innerHTML = `
+          <div>
+            <div class="dock-fare-label">Locked Upfront Fare</div>
+            <div class="dock-fare-val">₹ ${finalPrice}</div>
+          </div>
+          <button class="dock-cta-btn" onclick="confirmRiderBooking(${finalPrice})">
+            <span>Continue • ₹ ${finalPrice}</span>
+            <span>→</span>
+          </button>
+        `;
+
         container.innerHTML = `
-          <div style="padding: 14px 16px 8px 16px;">
-            <div style="font-size: 16px; font-weight: 800; color: var(--text-900);">Gig & Duty Marketplace</div>
-            <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px;">
-              Lock your driving earnings for hours, special events, or 1-2 day trips
+          <!-- Top Subnav -->
+          <div class="sub-top-nav">
+            <div class="back-btn" onclick="setRiderScreen('HOME')">←</div>
+            <div>
+              <div class="sub-nav-title">Trip Options</div>
+              <div class="sub-nav-desc">Koramangala ➔ BLR Airport</div>
+            </div>
+            <div class="back-btn" onclick="alert('Upfront Fare Guarantee: Price is 100% locked.')">ⓘ</div>
+          </div>
+
+          <!-- Stylized Map Surface -->
+          <div class="map-surface-container">
+            <svg class="map-svg-canvas" viewBox="0 0 360 180">
+              <!-- Grid Roads -->
+              <rect width="360" height="180" fill="#0F1A3A"/>
+              <line x1="0" y1="50" x2="360" y2="50" stroke="#16234D" stroke-width="16"/>
+              <line x1="0" y1="130" x2="360" y2="130" stroke="#16234D" stroke-width="20"/>
+              <line x1="80" y1="0" x2="80" y2="180" stroke="#16234D" stroke-width="18"/>
+              <line x1="260" y1="0" x2="260" y2="180" stroke="#16234D" stroke-width="22"/>
+              <!-- Electric Lime Route Polyline -->
+              <path d="M 50 130 C 120 130, 160 50, 290 50" fill="none" stroke="#D2FF00" stroke-width="5" stroke-linecap="round"/>
+              <!-- Origin Marker -->
+              <circle cx="50" cy="130" r="10" fill="rgba(210, 255, 0, 0.3)"/>
+              <circle cx="50" cy="130" r="5" fill="#D2FF00"/>
+              <!-- Dest Marker -->
+              <circle cx="290" cy="50" r="6" fill="#EF4444"/>
+              <!-- Moving Vehicle -->
+              <g transform="translate(170, 78)">
+                <circle cx="8" cy="8" r="14" fill="#0A1128" stroke="#D2FF00" stroke-width="1.5"/>
+                <text x="8" y="12" font-size="12" text-anchor="middle">🚗</text>
+              </g>
+            </svg>
+            <div class="floating-map-chip">
+              <div class="chip-pulse-dot"></div>
+              <span>22 km • 35 min away</span>
             </div>
           </div>
 
-          <div style="padding: 0 14px 20px 14px;">
-            ${sharedState.gigMarketplace.map(gig => `
-              <div class="pro-card ${gig.isClaimed ? 'green-accent' : ''}" style="margin: 0 0 10px 0;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span class="pill-badge ${gig.type === 'OUTSTATION' ? 'blue' : 'green'}" style="font-size: 9px;">
-                    ${gig.type}
-                  </span>
-                  <span style="font-size: 16px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">
-                    ₹${gig.fare}
-                  </span>
-                </div>
-                <div style="font-size: 13px; font-weight: 800; margin-top: 6px; color: var(--text-900);">${gig.title}</div>
-                <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">${gig.car}</div>
-                <div style="font-size: 10px; color: var(--text-400); margin-top: 4px;">Time: ${gig.time} • Location: ${gig.pickup}</div>
-                
-                ${gig.isClaimed ? `
-                  <div style="margin-top: 8px; font-size: 10px; font-weight: 800; color: var(--emerald-700);">
-                    ✓ Claimed by You • Ready on Duty
+          <!-- Floating Route Card -->
+          <div class="floating-route-card">
+            <div class="route-dots-col">
+              <div class="dot-pickup"></div>
+              <div class="dot-line"></div>
+              <div class="dot-drop"></div>
+            </div>
+            <div class="route-text-col">
+              <div class="route-label">PICKUP LOCATION</div>
+              <div class="route-val">Koramangala, 6th Block, Bengaluru</div>
+              <div class="route-div"></div>
+              <div class="route-label">DESTINATION</div>
+              <div class="route-val">BLR Airport, Devanahalli</div>
+            </div>
+            <button class="swap-btn" onclick="alert('Origin and destination reversed')">⇅</button>
+          </div>
+
+          <!-- In-Screen Dual Switcher -->
+          <div class="screen-mode-switcher">
+            <button class="screen-mode-tab ${isCab ? 'active-cab' : ''}" onclick="simState.serviceMode='BOOK_CAB'; renderRider();">
+              🚕 Book a Cab
+            </button>
+            <button class="screen-mode-tab ${!isCab ? 'active-driver' : ''}" onclick="simState.serviceMode='HIRE_DRIVER'; renderRider();">
+              👨‍✈️ Hire a Driver
+            </button>
+          </div>
+
+          <!-- Tier or Package List -->
+          ${isCab ? `
+            <div class="tier-list-container">
+              <div class="section-title-row" style="padding: 0 0 8px 0;">
+                <span class="section-label">SELECT CAB TIER</span>
+                <span class="pill-badge lime" style="font-size: 8.5px;">UPFRONT LOCKED</span>
+              </div>
+
+              <!-- Sedan -->
+              <div class="tier-card ${simState.selectedCabTier === 'SEDAN' ? 'selected' : ''}" onclick="simState.selectedCabTier='SEDAN'; renderRider();">
+                <div class="tier-left">
+                  <div class="tier-icon-box">🚘</div>
+                  <div>
+                    <div class="tier-name-row">
+                      <span class="tier-title">Sedan</span>
+                      <span class="tier-seats-pill">👤 4</span>
+                      <span class="tier-popular-tag">LOCKED</span>
+                    </div>
+                    <div class="tier-sub">Maruti Dzire, Honda Amaze</div>
+                    <div class="tier-eta">⚡ 3 min away</div>
                   </div>
-                ` : `
-                  <button class="btn-primary green" style="margin-top: 8px; padding: 8px 12px; font-size: 11px;" onclick="claimGig('${gig.id}')">
-                    Claim Gig & Lock ₹${gig.fare} Payout →
-                  </button>
-                `}
+                </div>
+                <div class="tier-right">
+                  <div class="tier-fare">₹ 1,248</div>
+                  ${simState.selectedCabTier === 'SEDAN' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
+                </div>
               </div>
-            `).join('')}
+
+              <!-- SUV -->
+              <div class="tier-card ${simState.selectedCabTier === 'SUV' ? 'selected' : ''}" onclick="simState.selectedCabTier='SUV'; renderRider();">
+                <div class="tier-left">
+                  <div class="tier-icon-box">🚙</div>
+                  <div>
+                    <div class="tier-name-row">
+                      <span class="tier-title">SUV</span>
+                      <span class="tier-seats-pill">👤 6</span>
+                    </div>
+                    <div class="tier-sub">Toyota Innova, Ertiga</div>
+                    <div class="tier-eta">⚡ 5 min away</div>
+                  </div>
+                </div>
+                <div class="tier-right">
+                  <div class="tier-fare">₹ 1,742</div>
+                  ${simState.selectedCabTier === 'SUV' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
+                </div>
+              </div>
+
+              <!-- Luxury -->
+              <div class="tier-card ${simState.selectedCabTier === 'LUXURY' ? 'selected' : ''}" onclick="simState.selectedCabTier='LUXURY'; renderRider();">
+                <div class="tier-left">
+                  <div class="tier-icon-box">✨</div>
+                  <div>
+                    <div class="tier-name-row">
+                      <span class="tier-title">Luxury Chauffeur</span>
+                      <span class="tier-seats-pill">👤 4</span>
+                    </div>
+                    <div class="tier-sub">Mercedes E-Class, BMW 5</div>
+                    <div class="tier-eta">⚡ 8 min away</div>
+                  </div>
+                </div>
+                <div class="tier-right">
+                  <div class="tier-fare">₹ 2,980</div>
+                  ${simState.selectedCabTier === 'LUXURY' ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
+                </div>
+              </div>
+            </div>
+          ` : `
+            <div class="tier-list-container">
+              <div class="section-title-row" style="padding: 0 0 8px 0;">
+                <span class="section-label">SELECT CHAUFFEUR PACKAGE</span>
+                <span class="pill-badge green" style="font-size: 8.5px;">POLICE VERIFIED</span>
+              </div>
+              ${CHAUFFEUR_PACKAGES.map(pkg => `
+                <div class="tier-card ${simState.selectedPkgId === pkg.id ? 'selected' : ''}" onclick="simState.selectedPkgId='${pkg.id}'; renderRider();">
+                  <div>
+                    <div class="tier-name-row">
+                      <span class="tier-title">${pkg.name}</span>
+                      <span class="tier-popular-tag">${pkg.tag}</span>
+                    </div>
+                    <div class="tier-sub">${pkg.desc}</div>
+                    <div class="tier-eta">⏱️ ${pkg.hours} hours included</div>
+                  </div>
+                  <div class="tier-right">
+                    <div class="tier-fare">₹ ${pkg.fare}</div>
+                    ${simState.selectedPkgId === pkg.id ? '<span class="tier-select-badge">✓ SELECTED</span>' : ''}
+                  </div>
+                </div>
+              `).join('')}
+
+              <!-- Transmission Preference -->
+              <div class="config-box" style="padding: 10px 0 0 0;">
+                <div class="config-label">YOUR CAR TRANSMISSION</div>
+                <div class="trans-row">
+                  <div class="trans-pill ${simState.transmission === 'AUTOMATIC' ? 'active' : ''}" onclick="simState.transmission='AUTOMATIC'; renderRider();">
+                    ⚙️ Automatic (AT)
+                  </div>
+                  <div class="trans-pill ${simState.transmission === 'MANUAL' ? 'active' : ''}" onclick="simState.transmission='MANUAL'; renderRider();">
+                    🕹️ Manual (MT)
+                  </div>
+                </div>
+              </div>
+            </div>
+          `}
+
+          <!-- Payment Method Selector -->
+          <div class="section-title-row" style="margin-top: 4px;">
+            <span class="section-label">PAYMENT METHOD</span>
           </div>
+          <div class="payment-row">
+            <div class="pay-chip ${simState.paymentMethod === 'UPI' ? 'active' : ''}" onclick="simState.paymentMethod='UPI'; renderRider();">
+              ⚡ UPI AutoPay ✓
+            </div>
+            <div class="pay-chip ${simState.paymentMethod === 'CARD' ? 'active' : ''}" onclick="simState.paymentMethod='CARD'; renderRider();">
+              💳 Credit / Debit
+            </div>
+            <div class="pay-chip ${simState.paymentMethod === 'CASH' ? 'active' : ''}" onclick="simState.paymentMethod='CASH'; renderRider();">
+              💵 Cash on Duty
+            </div>
+          </div>
+          <div style="height: 10px;"></div>
         `;
       }
 
-      // 3. ACTIVE DUTY SCREEN
-      else if (driverScreen === 'trip') {
-        const b = sharedState.activeBooking;
+      // 3. SCREEN 3: LIVE TRIP TRACKING
+      else if (simState.riderScreen === 'LIVE') {
+        const isChauffeur = simState.serviceMode === 'HIRE_DRIVER';
+
         container.innerHTML = `
-          <!-- Active Duty Banner -->
-          <div class="pro-card green-accent" style="margin-top: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="pill-badge green" style="font-size: 9px;">ACTIVE CHAUFFEUR DUTY</span>
-              <span style="font-size: 16px; font-weight: 900; color: var(--emerald-700); font-family: 'JetBrains Mono', monospace;">₹${b.fare}</span>
-            </div>
-            <div style="font-size: 14px; font-weight: 800; margin-top: 6px; color: var(--text-900);">
-              ${b.carModel}
-            </div>
-            <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">
-              Customer: Arjun Verma (+91 98101 23456)
-            </div>
-          </div>
-
-          <!-- Live Timer HUD for Driver -->
-          <div class="timer-hud-card" style="margin-top: 0;">
-            <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">ELAPSED CHAUFFEUR DUTY TIME</div>
-            <div class="timer-digits" id="driver-duty-elapsed-digits">${formatTime(b.elapsedSeconds)}</div>
-            <div style="font-size: 10px; color: var(--text-500);">Included: ${b.durationHours}h • Overtime: ₹${b.overtimeRate}/hr</div>
-          </div>
-
-          <!-- Pre-Trip Handover Checklist Card -->
-          <div class="pro-card" style="margin-top: 0;">
-            <div class="pro-card-title">Customer Vehicle Handover Checklist</div>
-            <div style="font-size: 11px; color: var(--text-700); line-height: 18px; margin-top: 6px;">
-              ✓ Initial Fuel Gauge: <strong>${b.fuelHandover}</strong><br/>
-              ✓ Odometer Reading: <strong>${b.odometerStart} km</strong><br/>
-              ✓ Exterior Body: <strong>Clean & Inspected</strong>
+          <!-- Full-width Map Surface -->
+          <div class="live-map-full">
+            <svg class="map-svg-canvas" viewBox="0 0 360 240">
+              <rect width="360" height="240" fill="#0F1A3A"/>
+              <line x1="0" y1="80" x2="360" y2="80" stroke="#16234D" stroke-width="20"/>
+              <line x1="0" y1="160" x2="360" y2="160" stroke="#16234D" stroke-width="26"/>
+              <line x1="90" y1="0" x2="90" y2="240" stroke="#16234D" stroke-width="22"/>
+              <line x1="270" y1="0" x2="270" y2="240" stroke="#16234D" stroke-width="24"/>
+              <!-- Glowing polyline -->
+              <path d="M 60 160 C 130 160, 160 80, 300 80" fill="none" stroke="#D2FF00" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="60" cy="160" r="10" fill="rgba(210, 255, 0, 0.3)"/>
+              <circle cx="60" cy="160" r="5" fill="#D2FF00"/>
+              <text x="295" y="70" font-size="20">✈️</text>
+              <!-- Moving Vehicle -->
+              <g transform="translate(180, 105)">
+                <circle cx="10" cy="10" r="16" fill="rgba(210, 255, 0, 0.25)"/>
+                <circle cx="10" cy="10" r="12" fill="#0A1128" stroke="#D2FF00" stroke-width="1.5"/>
+                <text x="10" y="14" font-size="12" text-anchor="middle">🚕</text>
+              </g>
+            </svg>
+            <div class="live-eta-badge">
+              <div class="chip-pulse-dot"></div>
+              <span>ETA 18 min</span> • 12.4 km remaining
             </div>
           </div>
 
-          <!-- PIN Verification Input -->
-          <div class="pro-card" style="border-color: var(--blue-border); text-align: center;">
-            <div style="font-size: 12px; font-weight: 800; color: var(--blue-600);">Customer Duty PIN</div>
-            <div style="font-size: 20px; font-weight: 900; letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; color: var(--text-900); margin: 6px 0;">
-              ${b.otp}
-            </div>
-            <div style="font-size: 10px; color: var(--text-500);">PIN verified for insurance & safe duty initiation</div>
-          </div>
-          <div style="height: 16px;"></div>
-        `;
-      }
+          <!-- Curved Bottom Sheet -->
+          <div class="bottom-sheet">
+            <div class="sheet-pill-handle"></div>
 
-      // 4. EARNINGS SCREEN
-      else if (driverScreen === 'earnings') {
-        container.innerHTML = `
-          <div style="padding: 16px 14px;">
-            <div class="pro-card green-accent" style="text-align: center; padding: 20px; margin: 0 0 12px 0;">
-              <div style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">NET EARNINGS TODAY</div>
-              <div style="font-size: 32px; font-weight: 900; color: var(--text-900); margin-top: 4px; font-family: 'JetBrains Mono', monospace;">
-                ₹${sharedState.driverEarnings}
-              </div>
-              <div style="font-size: 11px; color: var(--emerald-700); margin-top: 2px;">
-                Includes ₹150 Punctuality Bonus
-              </div>
-            </div>
-
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div class="pro-card-header">
-                <span class="pro-card-title">Instant IMPS Bank Transfer</span>
-                <span class="pill-badge green" style="font-size: 9px;">ZERO FEE</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Driver Card -->
+            <div class="driver-hud-card">
+              <div class="driver-hud-left">
+                <div class="driver-avatar-circle">
+                  <span>RK</span>
+                  <div class="driver-tick-badge">✓</div>
+                </div>
                 <div>
-                  <div style="font-size: 13px; font-weight: 800;">HDFC Bank •••• 4891</div>
-                  <div style="font-size: 10px; color: var(--text-500);">Rajesh Kumar</div>
+                  <div class="driver-hud-name">
+                    <span>${simState.driverName}</span>
+                    <span class="rating-pill">★ ${simState.driverRating}</span>
+                  </div>
+                  <div class="driver-hud-car">
+                    ${isChauffeur ? `Customer Car (${simState.transmission} AT)` : `White Toyota Etios • ${simState.vehiclePlate}`}
+                  </div>
                 </div>
-                <button class="btn-primary" style="padding: 7px 12px; font-size: 11px; width: auto;" onclick="alert('₹' + sharedState.driverEarnings + ' transferred instantly to HDFC Bank via IMPS!')">
-                  Transfer to Bank
-                </button>
+              </div>
+              <div class="driver-hud-actions">
+                <button class="hud-action-btn" onclick="alert('Calling driver via masked privacy number...')">📞</button>
+                <button class="hud-action-btn" onclick="alert('Opening in-app secure chat...')">💬</button>
               </div>
             </div>
+
+            <!-- Ride Start OTP Card -->
+            <div class="otp-hud-card">
+              <div class="otp-card-top">
+                <span class="otp-hud-label">RIDE START OTP</span>
+                <span class="otp-ins-badge">🛡️ INSURANCE ACTIVE</span>
+              </div>
+              <div class="otp-digits-row">
+                <div class="otp-digit-box">4</div>
+                <div class="otp-digit-box">7</div>
+                <div class="otp-digit-box">9</div>
+                <div class="otp-digit-box">2</div>
+              </div>
+              <div class="otp-sub-hint">Share with driver before boarding vehicle to start official duty</div>
+            </div>
+
+            <!-- Trip Progress Stepper Bar -->
+            <div class="stepper-box">
+              <div class="stepper-line-track">
+                <div class="stepper-line-fill" style="width: ${simState.tripStage === 'ASSIGNED' ? '20%' : simState.tripStage === 'ON_THE_WAY' ? '50%' : simState.tripStage === 'ARRIVED' ? '75%' : '100%'};"></div>
+              </div>
+              <div class="stepper-labels">
+                <span class="active">Assigned</span>
+                <span class="${simState.tripStage !== 'ASSIGNED' ? 'active' : ''}">On Way</span>
+                <span class="${simState.tripStage === 'ARRIVED' || simState.tripStage === 'TRIP_STARTED' ? 'active' : ''}">Arrived</span>
+                <span class="${simState.tripStage === 'TRIP_STARTED' ? 'active' : ''}">Started</span>
+              </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-hud-grid">
+              <div class="stats-hud-col">
+                <div class="stat-hud-lbl">ETA</div>
+                <div class="stat-hud-val">18 min</div>
+                <div class="stat-hud-sub">On time</div>
+              </div>
+              <div class="stats-hud-col">
+                <div class="stat-hud-lbl">DISTANCE</div>
+                <div class="stat-hud-val">12.4 km</div>
+                <div class="stat-hud-sub">Fast route</div>
+              </div>
+              <div class="stats-hud-col">
+                <div class="stat-hud-lbl">FARE LOCKED</div>
+                <div class="stat-hud-val" style="color: var(--electric-lime);">₹ ${simState.fareAmount}</div>
+                <div class="stat-hud-sub">UPI AutoPay</div>
+              </div>
+            </div>
+
+            <!-- Action CTAs -->
+            <button class="btn-lime" style="width: 100%; margin-bottom: 8px;" onclick="advanceTripStage()">
+              <span>${simState.tripStage === 'ON_THE_WAY' ? 'Simulate Driver Arrival ➔' : simState.tripStage === 'ARRIVED' ? 'Verify OTP & Start Trip ➔' : 'Complete Trip & Settle ➔'}</span>
+            </button>
+            <button style="width: 100%; background: rgba(239, 68, 68, 0.15); color: var(--red-500); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 14px; padding: 10px; font-weight: 800; cursor: pointer;" onclick="setRiderScreen('SOS')">
+              ⚠️ Emergency SOS Assistance
+            </button>
           </div>
         `;
       }
 
-      // 5. KYC VAULT SCREEN
-      else if (driverScreen === 'vault') {
+      // 4. SCREEN 4: SOS EMERGENCY
+      else if (simState.riderScreen === 'SOS') {
         container.innerHTML = `
-          <div style="padding: 16px 14px;">
-            <div class="pro-card" style="border-color: var(--blue-border); background: var(--blue-50); margin: 0 0 12px 0;">
-              <div class="pro-card-title" style="color: var(--blue-600);">AES-256 Vault Protection</div>
-              <div style="font-size: 11px; color: var(--text-700); margin-top: 4px;">
-                Driver KYC and driving credentials are encrypted at rest with AES-256-GCM.
-              </div>
+          <div class="sub-top-nav">
+            <div class="back-btn" onclick="setRiderScreen('HOME')">←</div>
+            <div class="sub-nav-title" style="color: var(--red-500);">Emergency SOS Center</div>
+            <div style="width: 36px;"></div>
+          </div>
+          <div style="padding: 18px;">
+            <div style="background: rgba(239, 68, 68, 0.15); border: 1.5px solid var(--red-500); border-radius: 20px; padding: 18px; text-align: center; margin-bottom: 16px;">
+              <div style="font-size: 32px; margin-bottom: 6px;">🚨</div>
+              <div style="font-size: 16px; font-weight: 900; color: #FFFFFF;">24x7 Rapid Response</div>
+              <div style="font-size: 11.5px; color: #FECACA; margin-top: 4px;">Direct dispatch to local police control room & RideDriveAhead emergency monitoring team.</div>
             </div>
-
-            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 13px; font-weight: 800;">Commercial Driving License (LMV)</div>
-                <div style="font-size: 10px; color: var(--text-500);">DL-04********921 • Valid till 2031</div>
-              </div>
-              <span class="pill-badge green" style="font-size: 9px;">VERIFIED</span>
-            </div>
-
-            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 13px; font-weight: 800;">Aadhaar Card (UIDAI)</div>
-                <div style="font-size: 10px; color: var(--text-500);">XXXX-XXXX-3019</div>
-              </div>
-              <span class="pill-badge green" style="font-size: 9px;">VERIFIED</span>
-            </div>
-
-            <div class="pro-card" style="margin: 0 0 8px 0; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 13px; font-weight: 800;">Police Background Verification</div>
-                <div style="font-size: 10px; color: var(--text-500);">Clear Record • Delhi Police Cert #8921</div>
-              </div>
-              <span class="pill-badge green" style="font-size: 9px;">CLEARED</span>
-            </div>
+            <button style="width: 100%; background: var(--red-500); color: #FFFFFF; border: none; border-radius: 16px; padding: 14px; font-size: 14px; font-weight: 900; cursor: pointer; margin-bottom: 10px;" onclick="alert('Calling Police Emergency 112 with live telemetry...')">
+              📞 Call Police (112)
+            </button>
+            <button style="width: 100%; background: var(--bg-card); color: var(--text-white); border: 1px solid var(--border-dark); border-radius: 16px; padding: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer;" onclick="alert('Live GPS link broadcast to your 3 emergency contacts.')">
+              📡 Broadcast Live GPS Link to Family
+            </button>
           </div>
         `;
-      }
-
-      // 6. DRIVER PROFILE SCREEN
-      else if (driverScreen === 'profile') {
-        container.innerHTML = `
-          <div style="padding: 16px 14px;">
-            <div class="pro-card" style="text-align: center; margin: 0 0 12px 0;">
-              <div class="user-avatar-btn" style="width: 50px; height: 50px; font-size: 18px; margin: 0 auto 8px auto; background: #047857; color: #FFFFFF;">
-                ${sharedState.driverInitials}
-              </div>
-              <div style="font-size: 15px; font-weight: 800;">${sharedState.driverName}</div>
-              <div style="font-size: 11px; color: var(--text-500);">${sharedState.driverPhone} • Commercial LMV Pro</div>
-              <div style="display: flex; justify-content: center; gap: 8px; margin-top: 6px;">
-                <span class="pill-badge" style="background: var(--amber-50); border: 1px solid var(--amber-border); color: var(--amber-600); font-weight: 800; font-size: 10px;">★ ${sharedState.driverRating} Rating</span>
-                <span class="pill-badge" style="font-weight: 800; font-size: 10px;">${sharedState.driverTrips} Duties</span>
-              </div>
-            </div>
-
-            <!-- Driving Qualifications -->
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div class="pro-card-title">Verified Driving Qualifications</div>
-              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ LMV Commercial DL: ${sharedState.driverDl}</div>
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Automatic (AT) / DSG Certified</div>
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Manual (MT) Stick Shift Expert</div>
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-900);">✓ Police Background Verification Cleared</div>
-              </div>
-            </div>
-
-            <!-- Fatigue Monitor -->
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="pro-card-title">Fatigue & Safety Monitor</span>
-                <span style="font-size: 10px; font-weight: 800; color: var(--emerald-700);">${sharedState.drivingHours}h / ${sharedState.maxDrivingHours}h</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 4px;">4.5h left before mandatory rest period.</div>
-            </div>
-
-            <!-- Partner Session & Sign Out -->
-            <div class="pro-card" style="margin: 0 0 12px 0;">
-              <div class="pro-card-title">Partner Session & Account</div>
-              <div style="font-size: 11px; color: var(--text-500); margin: 4px 0 10px 0;">
-                Logged in as <b>${sharedState.driverName}</b>. Sign out to switch partner accounts.
-              </div>
-              <button class="btn-primary" style="background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; padding: 11px;" onclick="logoutDriver()">
-                <span>Sign Out / Switch Driver Account</span>
-              </button>
-            </div>
-          </div>
-        `;
-      }
-
-      // 7. DRIVER AUTH / ONBOARDING SCREEN
-      else if (driverScreen === 'auth') {
-        container.innerHTML = `
-          <div class="auth-container">
-            <div style="text-align: center; margin-bottom: 14px;">
-              <span class="pill-badge green" style="font-weight: 800; font-size: 10px; padding: 4px 10px;">DRIVER PARTNER</span>
-              <div style="font-size: 16px; font-weight: 800; color: var(--text-900); margin-top: 6px;">Partner Dashboard Login</div>
-              <div style="font-size: 11px; color: var(--text-500); margin-top: 2px;">Earn driving customer cars or operating cabs</div>
-            </div>
-
-            <div class="auth-toggle-bar">
-              <button class="auth-toggle-btn ${driverAuthTab === 'LOGIN' ? 'active' : ''}" onclick="switchDriverAuthTab('LOGIN')">Partner Sign In</button>
-              <button class="auth-toggle-btn ${driverAuthTab === 'SIGNUP' ? 'active' : ''}" onclick="switchDriverAuthTab('SIGNUP')">Join as Driver</button>
-            </div>
-
-            ${driverAuthTab === 'LOGIN' ? `
-              <div class="pro-card" style="margin-top: 0;">
-                <div class="auth-field">
-                  <label class="auth-label">Registered Mobile Number</label>
-                  <div class="auth-input-wrap">
-                    <span class="auth-input-prefix">+91</span>
-                    <input type="tel" id="driver-login-phone" class="auth-input" value="${sharedState.driverPhone.replace('+91 ', '').replace('+91', '')}" placeholder="9811156789" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">6-Digit OTP Code</label>
-                  <input type="text" id="driver-login-otp" class="auth-otp-field" style="color: #047857; border-color: #047857;" value="123456" maxlength="6" />
-                  <div style="font-size: 10px; color: var(--emerald-700); text-align: center; margin-top: 4px; font-weight: 700;">
-                    Demo Code: 123456
-                  </div>
-                </div>
-
-                <button class="btn-primary green" style="margin-top: 10px;" onclick="submitDriverLogin()">
-                  <span>Verify OTP & Open Partner OS ➔</span>
-                </button>
-
-                <button class="auth-autofill-btn" style="color: var(--emerald-700);" onclick="autofillDriverAuth('LOGIN')">
-                  Autofill Rajesh Kumar (+91 98111 56789)
-                </button>
-              </div>
-            ` : `
-              <div class="pro-card" style="margin-top: 0;">
-                <div class="auth-field">
-                  <label class="auth-label">Full Legal Name (as per DL)</label>
-                  <div class="auth-input-wrap">
-                    <input type="text" id="driver-signup-name" class="auth-input" value="Suresh Rawat" placeholder="e.g. Suresh Rawat" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">Mobile Number</label>
-                  <div class="auth-input-wrap">
-                    <span class="auth-input-prefix">+91</span>
-                    <input type="tel" id="driver-signup-phone" class="auth-input" value="9871234567" placeholder="9871234567" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">Commercial DL (LMV)</label>
-                  <div class="auth-input-wrap">
-                    <input type="text" id="driver-signup-dl" class="auth-input" value="DL-0420210088992" placeholder="DL-0420210088992" />
-                  </div>
-                </div>
-
-                <div class="auth-field">
-                  <label class="auth-label">Base City</label>
-                  <div class="auth-input-wrap">
-                    <input type="text" id="driver-signup-city" class="auth-input" value="Gurugram / Delhi NCR" />
-                  </div>
-                </div>
-
-                <button class="btn-primary green" style="margin-top: 10px;" onclick="submitDriverSignup()">
-                  <span>Complete Onboarding & Start ➔</span>
-                </button>
-
-                <button class="auth-autofill-btn" style="color: var(--emerald-700);" onclick="autofillDriverAuth('SIGNUP')">
-                  Autofill Suresh Rawat (New Driver)
-                </button>
-              </div>
-            `}
-
-            <div style="text-align: center; margin-top: 12px; font-size: 10px; color: var(--text-400);">
-              Police Verification & DL Verified • Daily IMPS Payouts
-            </div>
-          </div>
-        `;
-      }
-
-      // Sync driver topbar avatar
-      const dAvatar = document.getElementById('driver-topbar-avatar');
-      if (dAvatar) {
-        dAvatar.innerText = sharedState.driverLoggedIn ? sharedState.driverInitials : '?';
       }
     }
 
-    // Initial render & timer start
-    renderRiderApp();
-    renderDriverApp();
-    startDutyClock();
-    syncWithBackendDb();
+    // Confirm booking flow
+    function confirmRiderBooking(fare) {
+      simState.fareAmount = fare;
+      simState.tripStage = 'ON_THE_WAY';
+      simState.riderScreen = 'LIVE';
+      renderRider();
+      // Also notify driver phone simulator
+      simState.showIncomingModal = true;
+      renderDriver();
+    }
+
+    function advanceTripStage() {
+      if (simState.tripStage === 'ON_THE_WAY') {
+        simState.tripStage = 'ARRIVED';
+      } else if (simState.tripStage === 'ARRIVED') {
+        simState.tripStage = 'TRIP_STARTED';
+      } else {
+        alert(`Trip Completed! ₹${simState.fareAmount} auto-settled via UPI. Thank you for riding with RideDriveAhead!`);
+        simState.todayEarnings += simState.fareAmount;
+        simState.todayTrips += 1;
+        simState.riderScreen = 'HOME';
+        renderDriver();
+      }
+      renderRider();
+    }
+
+    // ==========================================
+    // DRIVER PARTNER APP RENDERERS
+    // ==========================================
+    function setDriverScreen(screen) {
+      simState.driverScreen = screen;
+      document.querySelectorAll('#driver-nav-home, #driver-nav-gigs, #driver-nav-earnings, #driver-nav-profile').forEach(b => b.classList.remove('active'));
+      if (screen === 'HOME') document.getElementById('driver-nav-home').classList.add('active');
+      renderDriver();
+    }
+
+    function renderDriver() {
+      const container = document.getElementById('driver-screen');
+      const modalSlot = document.getElementById('driver-modal-slot');
+
+      container.innerHTML = `
+        <!-- Availability Hero Card -->
+        <div style="background: var(--bg-card); border-radius: 22px; padding: 16px; margin: 12px 18px; border: 1.5px solid ${simState.isDriverOnline ? 'var(--border-lime)' : 'var(--border-dark)'};">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <div style="width: 7px; height: 7px; border-radius: 4px; background: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#94A3B8'};"></div>
+                <span style="font-size: 10px; font-weight: 800; color: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#94A3B8'}; letter-spacing: 0.5px;">
+                  ${simState.isDriverOnline ? 'DUTY SYSTEM ACTIVE' : 'DUTY PAUSED'}
+                </span>
+              </div>
+              <div style="font-size: 15px; font-weight: 900; color: var(--text-white); margin-top: 2px;">
+                ${simState.isDriverOnline ? 'Ready for Gigs & Airport Runs' : 'Shift Currently Offline'}
+              </div>
+            </div>
+            <button style="background: ${simState.isDriverOnline ? 'rgba(210, 255, 0, 0.15)' : '#1E293B'}; color: ${simState.isDriverOnline ? 'var(--electric-lime)' : '#FFFFFF'}; border: 1px solid ${simState.isDriverOnline ? 'var(--border-lime)' : 'var(--border-dark)'}; border-radius: 12px; padding: 8px 14px; font-size: 11.5px; font-weight: 800; cursor: pointer;" onclick="simState.isDriverOnline = !simState.isDriverOnline; renderDriver();">
+              ${simState.isDriverOnline ? 'Go Offline' : 'Go Online'}
+            </button>
+          </div>
+          <div style="font-size: 10.5px; color: var(--text-muted); line-height: 15px;">
+            Matched with verified personal car duties (2h-8h), party returns, 1-2 day road trips & city cabs.
+          </div>
+        </div>
+
+        <!-- Driver OS Fatigue Engine Cockpit -->
+        <div class="fatigue-hud-card">
+          <div class="fatigue-hud-header">
+            <div class="fatigue-title-row">
+              <span>🛡️</span>
+              <span>DRIVER OS FATIGUE ENGINE</span>
+            </div>
+            <span class="fatigue-zone-pill">SAFE ZONE</span>
+          </div>
+          <div class="fatigue-cols-row">
+            <div class="fatigue-col">
+              <div class="fatigue-lbl">DRIVING TODAY</div>
+              <div class="fatigue-val">${simState.drivingHours}</div>
+            </div>
+            <div class="fatigue-col">
+              <div class="fatigue-lbl">RECOMMENDED BREAK</div>
+              <div class="fatigue-val" style="color: var(--amber-400);">in ${simState.breakIn}</div>
+            </div>
+            <div class="fatigue-col">
+              <div class="fatigue-lbl">AVAILABLE DUTY</div>
+              <div class="fatigue-val" style="color: var(--electric-lime);">${simState.availableHours}</div>
+            </div>
+          </div>
+          <div class="fatigue-track">
+            <div class="fatigue-fill" style="width: 71%;"></div>
+          </div>
+          <div class="fatigue-sub-labels">
+            <span>0h Start</span>
+            <span>Break at 6h</span>
+            <span>8h Max Daily Limit</span>
+          </div>
+        </div>
+
+        <!-- Shift Net Earnings -->
+        <div style="background: var(--bg-card); border-radius: 20px; padding: 14px 16px; margin: 0 18px 12px 18px; border: 1px solid var(--border-dark);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.4px;">TODAY'S NET EARNINGS</span>
+            <span class="pill-badge lime" style="font-size: 8.5px;">⚡ UPI READY</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 6px 0;">
+            <span style="font-size: 24px; font-weight: 900; color: var(--electric-lime);">₹ ${simState.todayEarnings}</span>
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">${simState.todayTrips} Duties Completed</span>
+          </div>
+        </div>
+
+        <!-- Verified Qualifications -->
+        <div style="padding: 0 18px; margin-bottom: 12px;">
+          <div style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px;">VERIFIED QUALIFICATIONS</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span class="place-chip" style="font-size: 10px;">LMV Commercial DL</span>
+            <span class="place-chip" style="font-size: 10px; border-color: var(--border-lime); color: var(--electric-lime);">AT Pro</span>
+            <span class="place-chip" style="font-size: 10px; border-color: var(--border-lime); color: var(--electric-lime);">MT Expert</span>
+            <span class="place-chip" style="font-size: 10px; color: var(--emerald-400);">Police Verified ✓</span>
+          </div>
+        </div>
+
+        <!-- Gig Marketplace -->
+        <div style="padding: 0 18px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 10.5px; font-weight: 800; color: var(--text-muted); letter-spacing: 0.4px;">GIG MARKETPLACE</span>
+          <span style="font-size: 10.5px; font-weight: 800; color: var(--electric-lime); cursor: pointer;" onclick="alert('Opening gig marketplace...')">View All (14) →</span>
+        </div>
+        <div style="padding: 0 18px; margin-bottom: 16px;">
+          <!-- Gig 1 -->
+          <div class="tier-card" style="margin-bottom: 8px;" onclick="alert('Gig Claimed! Added to your schedule.')">
+            <div>
+              <div class="tier-name-row">
+                <span class="tier-title">2h Chauffeur (Honda City AT)</span>
+                <span class="pill-badge green" style="font-size: 8px;">QUICK GIG</span>
+              </div>
+              <div class="tier-sub">📍 Koramangala ➔ Indiranagar Roundtrip</div>
+              <div class="tier-eta">Today at 4:30 PM</div>
+            </div>
+            <div class="tier-right">
+              <div class="tier-fare">₹ 750</div>
+              <span style="font-size: 9.5px; color: var(--electric-lime); font-weight: 800;">Claim →</span>
+            </div>
+          </div>
+
+          <!-- Gig 2 -->
+          <div class="tier-card" onclick="alert('Wedding gig claimed! Dress code: Formal suit.')">
+            <div>
+              <div class="tier-name-row">
+                <span class="tier-title">Wedding Chauffeur (Mercedes E)</span>
+                <span class="pill-badge lime" style="font-size: 8px;">HIGH VALUE</span>
+              </div>
+              <div class="tier-sub">📍 Palace Grounds ➔ Whitefield</div>
+              <div class="tier-eta">Tomorrow • 6 Hours Duty</div>
+            </div>
+            <div class="tier-right">
+              <div class="tier-fare" style="color: var(--electric-lime);">₹ 3,500</div>
+              <span style="font-size: 9.5px; color: var(--electric-lime); font-weight: 800;">Claim →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulator Dispatch Trigger -->
+        <div style="background: var(--bg-card); border-radius: 18px; padding: 14px; margin: 0 18px 24px 18px; border: 1px solid var(--border-dark);">
+          <div style="font-size: 11px; font-weight: 800; color: var(--text-white); margin-bottom: 4px;">TEST DISPATCH NOTIFICATION</div>
+          <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 10px;">Simulate incoming 30-second ride dispatch modal popup.</div>
+          <button style="width: 100%; background: #1E293B; color: var(--electric-lime); border: 1px solid var(--border-lime); border-radius: 12px; padding: 10px; font-weight: 800; font-size: 12px; cursor: pointer;" onclick="simState.showIncomingModal = true; renderDriver();">
+            Trigger Incoming Ride Modal →
+          </button>
+        </div>
+      `;
+
+      // Render Modal if Active
+      if (simState.showIncomingModal) {
+        modalSlot.innerHTML = `
+          <div class="modal-backdrop">
+            <div class="modal-sheet">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="pill-badge lime">⚡ INCOMING DISPATCH (30s)</span>
+                <span style="font-size: 18px; font-weight: 900; color: var(--electric-lime);">₹ 1,248</span>
+              </div>
+              <div style="font-size: 15px; font-weight: 900; color: #FFFFFF; margin-bottom: 2px;">
+                Personal Car Chauffeur (Honda City AT)
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-slate); margin-bottom: 12px;">
+                📍 Koramangala 6th Block ➔ Kempegowda Airport (BLR)
+              </div>
+              <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                <span class="place-chip" style="font-size: 10px;">Automatic AT</span>
+                <span class="place-chip" style="font-size: 10px;">22 km</span>
+                <span class="place-chip" style="font-size: 10px;">Rider: Alex (★ 4.9)</span>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button style="flex: 1; background: #1E293B; color: #94A3B8; border: 1px solid var(--border-dark); border-radius: 14px; padding: 12px; font-weight: 800; cursor: pointer;" onclick="simState.showIncomingModal = false; renderDriver();">
+                  Decline
+                </button>
+                <button style="flex: 2; background: var(--electric-lime); color: var(--navy-deep); border: none; border-radius: 14px; padding: 12px; font-weight: 900; cursor: pointer;" onclick="simState.showIncomingModal = false; alert('Dispatch Accepted! Heading to Koramangala 6th Block.'); renderDriver();">
+                  Accept Duty (₹ 1,248) →
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        modalSlot.innerHTML = '';
+      }
+    }
+
+    // Initial Boots
+    renderRider();
+    renderDriver();
   </script>
 </body>
 </html>

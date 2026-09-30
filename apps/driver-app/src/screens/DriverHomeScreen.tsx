@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { DriverHeader } from '../components/DriverHeader';
 import { IncomingRideModal } from '../components/IncomingRideModal';
 import { useDriverStore } from '../store/useDriverStore';
@@ -15,7 +21,6 @@ export const DriverHomeScreen: React.FC = () => {
   } = useDriverStore();
 
   const [showIncomingModal, setShowIncomingModal] = useState(false);
-  const [selectedPreference, setSelectedPreference] = useState<'ALL' | 'CHAUFFEUR' | 'OUTSTATION'>('ALL');
 
   // Find claimed scheduled ride or chauffeur gig
   const upcomingScheduled = scheduledRides.find((r) => r.isClaimed);
@@ -26,13 +31,13 @@ export const DriverHomeScreen: React.FC = () => {
       id: 'instant-duty-' + Date.now(),
       riderName: 'Vikram Malhotra',
       riderPhone: '+91 99****8822',
-      pickupAddress: 'Cyber Hub, Building 8B, DLF Phase 2, Gurugram',
-      dropAddress: 'City Round-Trip (Customer\'s Creta AT)',
+      pickupAddress: 'Koramangala 6th Block, Bengaluru',
+      dropAddress: 'BLR Airport, Terminal 2',
       scheduledPickupTime: new Date().toISOString(),
-      fareAmount: 549,
-      durationHours: 4,
-      carModel: 'Hyundai Creta (Automatic AT)',
-      distanceKm: 22.0,
+      fareAmount: 1248,
+      durationHours: 2,
+      carModel: 'Toyota Innova Crysta (Automatic AT)',
+      distanceKm: 34.0,
       isClaimed: true
     });
   };
@@ -49,7 +54,7 @@ export const DriverHomeScreen: React.FC = () => {
         {/* Availability Hero Banner */}
         <View style={[styles.heroCard, driver.isOnline ? styles.heroOnline : styles.heroOffline]}>
           <View style={styles.heroTop}>
-            <View>
+            <View style={{ flex: 1 }}>
               <View style={styles.statusIndicatorRow}>
                 <View style={[styles.statusBeacon, driver.isOnline ? styles.beaconOnline : styles.beaconOffline]} />
                 <Text style={[styles.heroStatusLabel, driver.isOnline ? styles.labelOnline : styles.labelOffline]}>
@@ -57,7 +62,7 @@ export const DriverHomeScreen: React.FC = () => {
                 </Text>
               </View>
               <Text style={styles.heroStatusTitle}>
-                {driver.isOnline ? 'Receiving Gigs & Airport Runs' : 'Shift Currently Paused'}
+                {driver.isOnline ? 'Ready for Dispatches & Gigs' : 'Shift Currently Paused'}
               </Text>
             </View>
             <TouchableOpacity
@@ -65,7 +70,9 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={toggleOnline}
               activeOpacity={0.85}
             >
-              <Text style={styles.heroToggleText}>{driver.isOnline ? 'Go Offline' : 'Go Online'}</Text>
+              <Text style={[styles.heroToggleText, driver.isOnline ? styles.heroToggleTextActive : styles.heroToggleTextInactive]}>
+                {driver.isOnline ? 'Go Offline' : 'Go Online'}
+              </Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.heroHint}>
@@ -75,12 +82,81 @@ export const DriverHomeScreen: React.FC = () => {
           </Text>
         </View>
 
+        {/* Fatigue Protection Cockpit */}
+        <View style={styles.fatigueCard}>
+          <View style={styles.fatigueHeaderRow}>
+            <View style={styles.fatigueTitleRow}>
+              <Text style={styles.fatigueIcon}>🛡️</Text>
+              <Text style={styles.fatigueTitle}>DRIVER OS FATIGUE ENGINE</Text>
+            </View>
+            <View style={styles.fatigueSafeBadge}>
+              <Text style={styles.fatigueSafeBadgeText}>SAFE ZONE</Text>
+            </View>
+          </View>
+
+          {/* Fatigue Metric Cards */}
+          <View style={styles.fatigueMetricsRow}>
+            <View style={styles.fatigueMetricCol}>
+              <Text style={styles.fatigueMetricLabel}>DRIVING TODAY</Text>
+              <Text style={styles.fatigueMetricValue}>5h 42m</Text>
+              <Text style={styles.fatigueMetricSub}>71% of daily cap</Text>
+            </View>
+            <View style={styles.fatigueDivider} />
+            <View style={styles.fatigueMetricCol}>
+              <Text style={styles.fatigueMetricLabel}>RECOMMENDED BREAK</Text>
+              <Text style={[styles.fatigueMetricValue, { color: '#FBBF24' }]}>in 18 min</Text>
+              <Text style={styles.fatigueMetricSub}>15-min tea pause</Text>
+            </View>
+            <View style={styles.fatigueDivider} />
+            <View style={styles.fatigueMetricCol}>
+              <Text style={styles.fatigueMetricLabel}>AVAILABLE DUTY</Text>
+              <Text style={[styles.fatigueMetricValue, { color: '#D2FF00' }]}>2h 18m</Text>
+              <Text style={styles.fatigueMetricSub}>Remaining today</Text>
+            </View>
+          </View>
+
+          {/* Visual Fatigue Meter */}
+          <View style={styles.fatigueMeterTrack}>
+            <View style={[styles.fatigueMeterFill, { width: '71%' }]} />
+          </View>
+          <View style={styles.fatigueLabelsRow}>
+            <Text style={styles.fatigueMeterSub}>0h Start</Text>
+            <Text style={styles.fatigueMeterSub}>Break at 6h</Text>
+            <Text style={styles.fatigueMeterSub}>8h Max Safe Limit</Text>
+          </View>
+        </View>
+
+        {/* Shift Net Earnings Cockpit */}
+        <View style={styles.earningsCard}>
+          <View style={styles.earningsHeaderRow}>
+            <Text style={styles.earningsLabel}>TODAY'S NET EARNINGS</Text>
+            <View style={styles.settlePill}>
+              <Text style={styles.settlePillText}>⚡ UPI INSTANT READY</Text>
+            </View>
+          </View>
+          <View style={styles.earningsValueRow}>
+            <Text style={styles.earningsValue}>₹ {earnings.todayEarnings || 3420}</Text>
+            <TouchableOpacity
+              style={styles.payoutBtn}
+              onPress={() => navigate('EARNINGS')}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.payoutBtnText}>Withdraw →</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.earningsFooterRow}>
+            <Text style={styles.earningsSub}>
+              {earnings.todayCompletedTrips || 5} Duties Completed • ₹0 Platform Deductions
+            </Text>
+          </View>
+        </View>
+
         {/* Transmission & Skill Badges */}
         <View style={styles.skillsCard}>
           <View style={styles.skillsHeaderRow}>
-            <Text style={styles.skillsTitle}>YOUR CERTIFIED DRIVER CREDENTIALS</Text>
+            <Text style={styles.skillsTitle}>YOUR CERTIFIED CREDENTIALS</Text>
             <View style={styles.badgeVerified}>
-              <Text style={styles.badgeVerifiedText}>POLICE VERIFIED</Text>
+              <Text style={styles.badgeVerifiedText}>POLICE VERIFIED ✓</Text>
             </View>
           </View>
           <View style={styles.badgeRow}>
@@ -88,33 +164,18 @@ export const DriverHomeScreen: React.FC = () => {
               <Text style={styles.skillBadgeBullet}>◆</Text>
               <Text style={styles.skillBadgeText}>LMV Commercial DL</Text>
             </View>
-            <View style={styles.skillBadge}>
+            <View style={[styles.skillBadge, styles.skillBadgeActive]}>
               <Text style={styles.skillBadgeBulletGold}>◆</Text>
-              <Text style={styles.skillBadgeText}>Automatic (AT) Pro</Text>
+              <Text style={styles.skillBadgeTextActive}>Automatic (AT) Pro</Text>
             </View>
-            <View style={styles.skillBadge}>
+            <View style={[styles.skillBadge, styles.skillBadgeActive]}>
               <Text style={styles.skillBadgeBulletGold}>◆</Text>
-              <Text style={styles.skillBadgeText}>Manual (MT) Expert</Text>
+              <Text style={styles.skillBadgeTextActive}>Manual (MT) Expert</Text>
             </View>
             <View style={styles.skillBadge}>
               <Text style={styles.skillBadgeBullet}>◆</Text>
               <Text style={styles.skillBadgeText}>Luxury Car Certified</Text>
             </View>
-          </View>
-        </View>
-
-        {/* Shift Summary Cards */}
-        <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>TODAY'S NET EARNINGS</Text>
-            <Text style={styles.statValue}>₹{earnings.todayEarnings}</Text>
-            <Text style={styles.statSub}>{earnings.todayCompletedTrips} Duties Completed</Text>
-          </View>
-
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>DRIVING HOURS TODAY</Text>
-            <Text style={[styles.statValue, { color: '#0F172A' }]}>{driver.drivingHoursToday}h</Text>
-            <Text style={styles.statSub}>4.5h left before fatigue limit</Text>
           </View>
         </View>
 
@@ -153,36 +214,72 @@ export const DriverHomeScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
-        {/* Gig Marketplace Banner */}
-        <TouchableOpacity
-          style={styles.marketplaceBanner}
-          onPress={() => navigate('SCHEDULED_RIDES')}
-          activeOpacity={0.88}
-        >
-          <View style={styles.marketLeft}>
-            <View style={styles.marketBadge}>
-              <Text style={styles.marketBadgeText}>GIG MARKETPLACE</Text>
+        {/* Gig Marketplace Cards */}
+        <View style={styles.marketplaceSection}>
+          <View style={styles.marketHeaderRow}>
+            <View>
+              <Text style={styles.marketHeading}>GIG MARKETPLACE</Text>
+              <Text style={styles.marketSub}>High-earning personal car chauffeur duties</Text>
             </View>
-            <Text style={styles.marketTitle}>Browse Hourly & 1-2 Day Driving Gigs</Text>
-            <Text style={styles.marketSub}>
-              Earn ₹299–₹2,799 driving customer vehicles. Flexible hours, zero taxi overhead.
-            </Text>
+            <TouchableOpacity
+              onPress={() => navigate('SCHEDULED_RIDES')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.viewAllText}>View All (14) →</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.marketActionBtn}>
-            <Text style={styles.marketActionText}>Explore →</Text>
-          </View>
-        </TouchableOpacity>
+
+          {/* Sample Gig Card 1 */}
+          <TouchableOpacity
+            style={styles.gigCard}
+            onPress={() => navigate('SCHEDULED_RIDES')}
+            activeOpacity={0.85}
+          >
+            <View style={styles.gigCardTop}>
+              <View style={styles.gigBadge}>
+                <Text style={styles.gigBadgeText}>2-HOUR CHAUFFEUR</Text>
+              </View>
+              <Text style={styles.gigPayout}>₹ 750</Text>
+            </View>
+            <Text style={styles.gigTitle}>Customer Car: Honda City (Automatic AT)</Text>
+            <Text style={styles.gigRoute}>📍 Koramangala ➔ Indiranagar Roundtrip</Text>
+            <View style={styles.gigFooter}>
+              <Text style={styles.gigTime}>Today at 4:30 PM</Text>
+              <Text style={styles.gigClaimBtn}>Claim Gig →</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Sample Gig Card 2 */}
+          <TouchableOpacity
+            style={styles.gigCard}
+            onPress={() => navigate('SCHEDULED_RIDES')}
+            activeOpacity={0.85}
+          >
+            <View style={styles.gigCardTop}>
+              <View style={[styles.gigBadge, { backgroundColor: 'rgba(210, 255, 0, 0.15)', borderColor: 'rgba(210, 255, 0, 0.3)' }]}>
+                <Text style={[styles.gigBadgeText, { color: '#D2FF00' }]}>WEDDING WHITE GLOVE</Text>
+              </View>
+              <Text style={[styles.gigPayout, { color: '#D2FF00' }]}>₹ 3,500</Text>
+            </View>
+            <Text style={styles.gigTitle}>Customer Car: Mercedes E-Class (Automatic AT)</Text>
+            <Text style={styles.gigRoute}>📍 Palace Grounds ➔ Whitefield</Text>
+            <View style={styles.gigFooter}>
+              <Text style={styles.gigTime}>Tomorrow • 6 Hours Duty</Text>
+              <Text style={styles.gigClaimBtn}>Claim Gig →</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         {/* Instant Dispatch Simulator Trigger */}
         <View style={styles.simCard}>
           <View style={styles.simHeaderRow}>
             <Text style={styles.simTitle}>SIMULATE INCOMING REQUEST</Text>
             <View style={styles.simPill}>
-              <Text style={styles.simPillText}>TEST DISPATCH</Text>
+              <Text style={styles.simPillText}>DISPATCH TEST</Text>
             </View>
           </View>
           <Text style={styles.simSub}>
-            Test incoming 30-second dispatch modal with car transmission & hourly duty specs.
+            Test incoming 30-second dispatch popup modal with car transmission & hourly duty specs.
           </Text>
           <TouchableOpacity
             style={styles.simBtn}
@@ -209,7 +306,7 @@ export const DriverHomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC'
+    backgroundColor: '#0B132B'
   },
   scrollArea: {
     flex: 1
@@ -221,104 +318,257 @@ const styles = StyleSheet.create({
 
   /* Hero Status Banner */
   heroCard: {
-    borderRadius: 18,
+    borderRadius: 22,
     padding: 18,
     marginBottom: 14,
     borderWidth: 1.5,
-    shadowColor: '#0F172A',
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 3
   },
   heroOnline: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#A7F3D0'
+    backgroundColor: '#131C38',
+    borderColor: '#D2FF00'
   },
   heroOffline: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E2E8F0'
+    backgroundColor: '#131C38',
+    borderColor: 'rgba(255, 255, 255, 0.1)'
   },
   heroTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 10
+    alignItems: 'center',
+    marginBottom: 8
   },
   statusIndicatorRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    marginBottom: 3
+    marginBottom: 4
   },
   statusBeacon: {
     width: 8,
     height: 8,
-    borderRadius: 4
+    borderRadius: 4,
+    marginRight: 8
   },
   beaconOnline: {
-    backgroundColor: '#10B981'
+    backgroundColor: '#D2FF00'
   },
   beaconOffline: {
     backgroundColor: '#94A3B8'
   },
   heroStatusLabel: {
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 0.6
+    fontSize: 10.5,
+    fontWeight: '800',
+    letterSpacing: 0.5
   },
   labelOnline: {
-    color: '#059669'
+    color: '#D2FF00'
   },
   labelOffline: {
-    color: '#64748B'
+    color: '#94A3B8'
   },
   heroStatusTitle: {
-    color: '#0F172A',
     fontSize: 15,
-    fontWeight: '900',
-    letterSpacing: -0.2
+    fontWeight: '800',
+    color: '#FFFFFF'
   },
   heroToggleBtn: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    borderWidth: 1.5
   },
   heroToggleBtnActive: {
-    backgroundColor: '#0F172A'
+    backgroundColor: 'rgba(210, 255, 0, 0.15)',
+    borderColor: '#D2FF00'
   },
   heroToggleBtnInactive: {
-    backgroundColor: '#059669'
+    backgroundColor: '#1E293B',
+    borderColor: 'rgba(255, 255, 255, 0.15)'
   },
   heroToggleText: {
-    color: '#FFFFFF',
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '800'
   },
+  heroToggleTextActive: {
+    color: '#D2FF00'
+  },
+  heroToggleTextInactive: {
+    color: '#FFFFFF'
+  },
   heroHint: {
-    color: '#64748B',
-    fontSize: 11.5,
+    fontSize: 11,
+    color: '#94A3B8',
     lineHeight: 16
+  },
+
+  /* Fatigue Protection Cockpit */
+  fatigueCard: {
+    backgroundColor: '#131C38',
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 14,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  fatigueHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12
+  },
+  fatigueTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6
+  },
+  fatigueIcon: {
+    fontSize: 14
+  },
+  fatigueTitle: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.5
+  },
+  fatigueSafeBadge: {
+    backgroundColor: 'rgba(16, 185, 129, 0.18)',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 8
+  },
+  fatigueSafeBadgeText: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#34D399'
+  },
+  fatigueMetricsRow: {
+    flexDirection: 'row',
+    paddingVertical: 4
+  },
+  fatigueMetricCol: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  fatigueDivider: {
+    width: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  fatigueMetricLabel: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.4
+  },
+  fatigueMetricValue: {
+    fontSize: 15,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    marginTop: 2
+  },
+  fatigueMetricSub: {
+    fontSize: 9.5,
+    color: '#64748B',
+    marginTop: 1
+  },
+  fatigueMeterTrack: {
+    height: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: 3,
+    marginTop: 12,
+    marginBottom: 6,
+    overflow: 'hidden'
+  },
+  fatigueMeterFill: {
+    height: '100%',
+    backgroundColor: '#D2FF00',
+    borderRadius: 3
+  },
+  fatigueLabelsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  fatigueMeterSub: {
+    fontSize: 9,
+    color: '#64748B'
+  },
+
+  /* Earnings Cockpit */
+  earningsCard: {
+    backgroundColor: '#131C38',
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 14,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  earningsHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4
+  },
+  earningsLabel: {
+    fontSize: 10.5,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.5
+  },
+  settlePill: {
+    backgroundColor: 'rgba(210, 255, 0, 0.15)',
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderRadius: 8
+  },
+  settlePillText: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#D2FF00'
+  },
+  earningsValueRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 4
+  },
+  earningsValue: {
+    fontSize: 26,
+    fontWeight: '900',
+    color: '#D2FF00'
+  },
+  payoutBtn: {
+    backgroundColor: '#D2FF00',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 12
+  },
+  payoutBtnText: {
+    fontSize: 12,
+    fontWeight: '900',
+    color: '#0A1128'
+  },
+  earningsFooterRow: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.06)',
+    paddingTop: 8,
+    marginTop: 4
+  },
+  earningsSub: {
+    fontSize: 11,
+    color: '#94A3B8'
   },
 
   /* Skills & Credentials */
   skillsCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#131C38',
+    borderRadius: 20,
     padding: 14,
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
     marginBottom: 14,
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
   },
   skillsHeaderRow: {
     flexDirection: 'row',
@@ -327,222 +577,214 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   skillsTitle: {
-    fontSize: 9.5,
-    fontWeight: '900',
-    color: '#0F172A',
-    letterSpacing: 0.5
+    fontSize: 10.5,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.4
   },
   badgeVerified: {
-    backgroundColor: '#ECFDF5',
-    paddingHorizontal: 6,
+    backgroundColor: 'rgba(16, 185, 129, 0.15)',
     paddingVertical: 2,
-    borderRadius: 4
+    paddingHorizontal: 8,
+    borderRadius: 8
   },
   badgeVerifiedText: {
-    fontSize: 8,
-    fontWeight: '900',
-    color: '#047857'
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#34D399'
   },
   badgeRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 6
+    gap: 8
   },
   skillBadge: {
-    backgroundColor: '#F8FAFC',
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4
+    backgroundColor: '#1E293B',
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    gap: 6
+  },
+  skillBadgeActive: {
+    backgroundColor: 'rgba(210, 255, 0, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(210, 255, 0, 0.3)'
   },
   skillBadgeBullet: {
-    fontSize: 7,
-    color: '#059669'
+    fontSize: 8,
+    color: '#94A3B8'
   },
   skillBadgeBulletGold: {
-    fontSize: 7,
-    color: '#D97706'
+    fontSize: 8,
+    color: '#D2FF00'
   },
   skillBadgeText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#334155'
+    fontSize: 11,
+    color: '#CBD5E1',
+    fontWeight: '600'
+  },
+  skillBadgeTextActive: {
+    fontSize: 11,
+    color: '#D2FF00',
+    fontWeight: '800'
   },
 
-  /* Stats Row */
-  statsRow: {
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 14
-  },
-  statCard: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 14,
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2
-  },
-  statLabel: {
-    color: '#64748B',
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 0.4
-  },
-  statValue: {
-    color: '#047857',
-    fontSize: 22,
-    fontWeight: '900',
-    marginVertical: 4
-  },
-  statSub: {
-    color: '#64748B',
-    fontSize: 10.5,
-    fontWeight: '500'
-  },
-
-  /* Scheduled Alert Card */
+  /* Upcoming Scheduled Alert */
   scheduledAlertCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#19264D',
+    borderRadius: 20,
     padding: 16,
-    borderWidth: 1.5,
-    borderColor: '#059669',
     marginBottom: 14,
-    shadowColor: '#059669',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3
+    borderWidth: 1.5,
+    borderColor: '#D2FF00'
   },
   scheduledAlertTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8
+    marginBottom: 6
   },
   badgeScheduled: {
-    backgroundColor: '#ECFDF5',
+    backgroundColor: 'rgba(210, 255, 0, 0.2)',
+    paddingVertical: 2,
     paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
-    borderWidth: 0.5,
-    borderColor: '#A7F3D0'
+    borderRadius: 8
   },
   badgeScheduledText: {
-    color: '#047857',
     fontSize: 9,
     fontWeight: '900',
-    letterSpacing: 0.3
+    color: '#D2FF00'
   },
   alertFare: {
-    color: '#047857',
-    fontSize: 20,
-    fontWeight: '900'
+    fontSize: 16,
+    fontWeight: '900',
+    color: '#D2FF00'
   },
   alertHeading: {
-    color: '#0F172A',
     fontSize: 14,
-    fontWeight: '800'
+    fontWeight: '800',
+    color: '#FFFFFF',
+    marginBottom: 2
   },
   alertRoute: {
-    color: '#64748B',
-    fontSize: 12,
-    marginTop: 4
+    fontSize: 11.5,
+    color: '#CBD5E1',
+    marginBottom: 8
   },
   alertFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
-    paddingTop: 10,
+    alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#F1F5F9'
+    borderTopColor: 'rgba(255, 255, 255, 0.08)',
+    paddingTop: 8
   },
   alertRider: {
-    color: '#475569',
     fontSize: 11,
-    fontWeight: '700'
+    color: '#94A3B8'
   },
   alertAction: {
-    color: '#0284C7',
     fontSize: 11,
+    color: '#D2FF00',
     fontWeight: '800'
   },
 
-  /* Gig Marketplace Banner */
-  marketplaceBanner: {
-    backgroundColor: '#0F172A',
-    borderRadius: 18,
-    padding: 16,
-    marginBottom: 14,
+  /* Gig Marketplace */
+  marketplaceSection: {
+    marginBottom: 14
+  },
+  marketHeaderRow: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 4
+    alignItems: 'flex-end',
+    marginBottom: 10
   },
-  marketLeft: {
-    flex: 1,
-    marginRight: 10
+  marketHeading: {
+    fontSize: 11.5,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.5
   },
-  marketBadge: {
-    backgroundColor: '#1E293B',
-    paddingHorizontal: 6,
+  marketSub: {
+    fontSize: 10.5,
+    color: '#64748B',
+    marginTop: 1
+  },
+  viewAllText: {
+    fontSize: 11.5,
+    fontWeight: '800',
+    color: '#D2FF00'
+  },
+  gigCard: {
+    backgroundColor: '#131C38',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  gigCardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6
+  },
+  gigBadge: {
+    backgroundColor: 'rgba(16, 185, 129, 0.15)',
     paddingVertical: 2,
-    borderRadius: 4,
-    alignSelf: 'flex-start',
-    marginBottom: 6,
-    borderWidth: 0.5,
-    borderColor: '#334155'
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(16, 185, 129, 0.3)'
   },
-  marketBadgeText: {
-    fontSize: 8,
-    fontWeight: '900',
-    color: '#D4AF37',
-    letterSpacing: 0.4
+  gigBadgeText: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#34D399'
   },
-  marketTitle: {
-    fontSize: 13,
+  gigPayout: {
+    fontSize: 15,
     fontWeight: '900',
     color: '#FFFFFF'
   },
-  marketSub: {
+  gigTitle: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#FFFFFF'
+  },
+  gigRoute: {
     fontSize: 11,
     color: '#94A3B8',
-    marginTop: 3,
-    lineHeight: 14
+    marginVertical: 4
   },
-  marketActionBtn: {
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 10
+  gigFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.06)',
+    paddingTop: 8,
+    marginTop: 2
   },
-  marketActionText: {
-    color: '#0F172A',
+  gigTime: {
+    fontSize: 10.5,
+    color: '#64748B'
+  },
+  gigClaimBtn: {
     fontSize: 11,
-    fontWeight: '900'
+    fontWeight: '800',
+    color: '#D2FF00'
   },
 
   /* Simulator Card */
   simCard: {
-    backgroundColor: '#FFFBEB',
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1.5,
-    borderColor: '#FDE68A'
+    backgroundColor: '#131C38',
+    borderRadius: 18,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
   },
   simHeaderRow: {
     flexDirection: 'row',
@@ -551,43 +793,38 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   simTitle: {
-    color: '#92400E',
     fontSize: 10.5,
-    fontWeight: '900',
-    letterSpacing: 0.4
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.5
   },
   simPill: {
-    backgroundColor: '#FEF3C7',
-    paddingHorizontal: 6,
+    backgroundColor: '#1E293B',
     paddingVertical: 2,
-    borderRadius: 4
+    paddingHorizontal: 6,
+    borderRadius: 6
   },
   simPillText: {
-    color: '#B45309',
-    fontSize: 7.5,
-    fontWeight: '900'
+    fontSize: 8.5,
+    fontWeight: '800',
+    color: '#94A3B8'
   },
   simSub: {
-    color: '#78350F',
     fontSize: 11,
-    marginTop: 2,
-    lineHeight: 15
+    color: '#64748B',
+    marginBottom: 10
   },
   simBtn: {
-    backgroundColor: '#D97706',
-    paddingVertical: 11,
-    borderRadius: 10,
+    backgroundColor: '#1E293B',
+    paddingVertical: 10,
+    borderRadius: 12,
     alignItems: 'center',
-    marginTop: 10,
-    shadowColor: '#D97706',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 2
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)'
   },
   simBtnText: {
-    color: '#FFFFFF',
     fontSize: 12,
-    fontWeight: '800'
+    fontWeight: '800',
+    color: '#D2FF00'
   }
 });

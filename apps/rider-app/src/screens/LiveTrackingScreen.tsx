@@ -1,268 +1,366 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { CallChatModal } from '../components/CallChatModal';
-import { Header } from '../components/Header';
-import { MapMock } from '../components/MapMock';
 import { useRiderStore } from '../store/useRiderStore';
 
+type TripStage = 'ASSIGNED' | 'ON_THE_WAY' | 'ARRIVED' | 'TRIP_STARTED';
+
 export const LiveTrackingScreen: React.FC = () => {
-  const { activeBooking, cancelActiveBooking, completeActiveBooking, navigate } = useRiderStore();
+  const {
+    activeBooking,
+    cancelActiveBooking,
+    completeActiveBooking,
+    navigate
+  } = useRiderStore();
+
   const [showCallChat, setShowCallChat] = useState(false);
-  const [elapsedSeconds, setElapsedSeconds] = useState(activeBooking?.serviceMode === 'HIRE_DRIVER' ? 8325 : 0);
-  const [dutyStatus, setDutyStatus] = useState<'ASSIGNED' | 'ARRIVED' | 'IN_PROGRESS' | 'COMPLETED'>('IN_PROGRESS');
+  const [tripStage, setTripStage] = useState<TripStage>('ON_THE_WAY');
+  const [elapsedSeconds, setElapsedSeconds] = useState(142);
 
+  // Timer simulation
   useEffect(() => {
-    let interval: any = null;
-    if (activeBooking?.serviceMode === 'HIRE_DRIVER' && dutyStatus === 'IN_PROGRESS') {
-      interval = setInterval(() => {
-        setElapsedSeconds((prev) => prev + 1);
-      }, 1000);
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [dutyStatus, activeBooking]);
+    const timer = setInterval(() => {
+      setElapsedSeconds((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
-  if (!activeBooking) {
-    return (
-      <View style={styles.container}>
-        <Header title="Active Ride" showBack backTo="HOME" />
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyTitle}>No Active Booking</Text>
-          <Text style={styles.emptySub}>You do not currently have a ride or chauffeur duty in progress.</Text>
-          <TouchableOpacity style={styles.bookRideBtn} onPress={() => navigate('HOME')}>
-            <Text style={styles.bookRideBtnText}>Book Chauffeur or Cab</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-
-  const isChauffeur = activeBooking.serviceMode === 'HIRE_DRIVER';
+  // Safe fallback if activeBooking is not yet created
+  const isChauffeur = activeBooking?.serviceMode === 'HIRE_DRIVER';
+  const driverName = activeBooking?.driverName || 'Rohit Kumar';
+  const driverRating = activeBooking?.driverRating || 4.88;
+  const vehicleDetails = isChauffeur
+    ? `${activeBooking?.carModel || 'Personal Car'} (${activeBooking?.carTransmission || 'Automatic AT'})`
+    : activeBooking?.vehicleModel
+    ? `${activeBooking.vehicleModel} • ${activeBooking.vehiclePlate || 'KA 01 AB 1234'}`
+    : 'White Toyota Etios • KA 01 AB 1234';
+  const otpCode = activeBooking?.otpCode || '4792';
+  const fare = activeBooking?.fareAmount || (isChauffeur ? 1199 : 1248);
+  const pickup = activeBooking?.pickupAddress || 'Koramangala, 6th Block, Bengaluru';
+  const drop = activeBooking?.dropAddress || 'Kempegowda International Airport (BLR)';
 
   const formatElapsed = (sec: number) => {
-    const h = Math.floor(sec / 3600).toString().padStart(2, '0');
-    const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
     const s = (sec % 60).toString().padStart(2, '0');
-    return `${h}:${m}:${s}`;
+    return `${m}:${s}`;
+  };
+
+  const handleAdvanceStage = () => {
+    if (tripStage === 'ASSIGNED') setTripStage('ON_THE_WAY');
+    else if (tripStage === 'ON_THE_WAY') setTripStage('ARRIVED');
+    else if (tripStage === 'ARRIVED') setTripStage('TRIP_STARTED');
+    else {
+      completeActiveBooking();
+      navigate('TRIP_SUMMARY');
+    }
   };
 
   const handleCancel = () => {
-    if (confirm('Do you wish to cancel this booking?')) {
-      cancelActiveBooking('User cancelled');
-    }
+    cancelActiveBooking('User cancelled trip');
+    navigate('HOME');
   };
 
   const handleComplete = () => {
     completeActiveBooking();
+    navigate('TRIP_SUMMARY');
   };
 
   return (
     <View style={styles.container}>
-      <Header
-        title={isChauffeur ? 'Live Chauffeur Duty' : 'Live Cab Tracking'}
-        showBack
-        backTo="HOME"
-      />
+      {/* Top App Header */}
+      <View style={styles.topHeader}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigate('HOME')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+        <View style={styles.headerTitleCenter}>
+          <Text style={styles.headerTitle}>
+            {isChauffeur ? 'Personal Chauffeur Duty' : 'En Route to BLR Airport'}
+          </Text>
+          <View style={styles.headerLiveRow}>
+            <View style={styles.liveGreenDot} />
+            <Text style={styles.headerSubtitle}>
+              {tripStage === 'ON_THE_WAY'
+                ? 'Driver approaching pickup'
+                : tripStage === 'ARRIVED'
+                ? 'Driver arrived at location'
+                : 'Trip in progress'}
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          style={styles.sosTopBtn}
+          onPress={() => navigate('SOS')}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.sosTopText}>SOS</Text>
+        </TouchableOpacity>
+      </View>
 
+      {/* Main Content Area */}
       <ScrollView
         style={styles.scrollArea}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {isChauffeur ? (
-          /* ================================================= */
-          /* CHAUFFEUR LIVE DUTY HUD                           */
-          /* ================================================= */
-          <View>
-            {/* Live Duty Clock Banner */}
-            <View style={styles.dutyTimerCard}>
-              <View style={styles.timerHeader}>
-                <View style={styles.pulseDot} />
-                <Text style={styles.timerLabel}>LIVE DUTY CLOCK RUNNING</Text>
-                <View style={styles.activeDutyBadge}>
-                  <Text style={styles.activeDutyBadgeText}>INSURED TRIP</Text>
-                </View>
+        {/* Full-width Stylized Live Map Canvas */}
+        <View style={styles.mapSurface}>
+          {/* Map Grid Roads */}
+          <View style={styles.mapGridLines}>
+            <View style={styles.gridRoadH1} />
+            <View style={styles.gridRoadH2} />
+            <View style={styles.gridRoadV1} />
+            <View style={styles.gridRoadV2} />
+            <View style={styles.routePolyline} />
+
+            {/* Origin Pin */}
+            <View style={styles.originMarker}>
+              <View style={styles.originWave} />
+              <View style={styles.originDot} />
+            </View>
+
+            {/* Destination Pin */}
+            <View style={styles.destMarker}>
+              <Text style={styles.destPinEmoji}>✈️</Text>
+            </View>
+
+            {/* Animated Car Marker */}
+            <View
+              style={[
+                styles.movingCarMarker,
+                tripStage === 'ARRIVED' && { left: 45, top: 120 },
+                tripStage === 'TRIP_STARTED' && { left: 160, top: 75 }
+              ]}
+            >
+              <View style={styles.carGlowRing} />
+              <Text style={styles.carIcon}>🚕</Text>
+            </View>
+          </View>
+
+          {/* Floating ETA Badge */}
+          <View style={styles.floatingEtaPill}>
+            <View style={styles.livePulseDot} />
+            <Text style={styles.floatingEtaValue}>ETA 18 min</Text>
+            <Text style={styles.floatingEtaDivider}>•</Text>
+            <Text style={styles.floatingEtaDistance}>12.4 km remaining</Text>
+          </View>
+
+          {/* Simulation Stage Controller */}
+          <TouchableOpacity
+            style={styles.simStagePill}
+            onPress={handleAdvanceStage}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.simStageText}>
+              Simulate: {tripStage === 'ASSIGNED' ? 'On Way ➔' : tripStage === 'ON_THE_WAY' ? 'Arrived ➔' : tripStage === 'ARRIVED' ? 'Start Trip ➔' : 'Complete ➔'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Curved Bottom Sheet Card */}
+        <View style={styles.bottomSheetCard}>
+          {/* Sheet Handle */}
+          <View style={styles.sheetHandle} />
+
+          {/* Driver Profile Card */}
+          <View style={styles.driverProfileRow}>
+            <View style={styles.driverAvatarContainer}>
+              <View style={styles.driverAvatar}>
+                <Text style={styles.avatarInitials}>RK</Text>
               </View>
-              <Text style={styles.timerDigits}>{formatElapsed(elapsedSeconds)}</Text>
-              <View style={styles.timerSubRow}>
-                <Text style={styles.timerSubText}>
-                  Package: {activeBooking.dutyHoursIncluded || 4} Hours Duty
-                </Text>
-                <Text style={styles.timerSubDivider}>•</Text>
-                <Text style={styles.timerSubRate}>
-                  Overtime: ₹{activeBooking.overtimeRatePerHour || 99}/hr
-                </Text>
+              <View style={styles.verifiedTickBadge}>
+                <Text style={styles.verifiedTickText}>✓</Text>
               </View>
             </View>
 
-            {/* OTP Security Pin Card */}
-            <View style={styles.otpCard}>
-              <View style={styles.otpHeaderRow}>
-                <Text style={styles.otpLabel}>KEY HANDOVER VERIFICATION PIN</Text>
-                <View style={styles.securityShieldPill}>
-                  <Text style={styles.securityShieldText}>INSURANCE ACTIVATOR</Text>
+            <View style={styles.driverInfoCol}>
+              <View style={styles.driverNameRow}>
+                <Text style={styles.driverNameText}>{driverName}</Text>
+                <View style={styles.ratingBadge}>
+                  <Text style={styles.ratingText}>★ {driverRating}</Text>
                 </View>
               </View>
-              <View style={styles.pinDigitsRow}>
-                {(activeBooking.otpCode || '4821').split('').map((char, idx) => (
-                  <View key={idx} style={styles.pinBox}>
-                    <Text style={styles.pinBoxDigit}>{char}</Text>
-                  </View>
-                ))}
-              </View>
-              <Text style={styles.otpHint}>
-                Share this PIN with your Chauffeur when handing over car keys to activate the official duty clock.
+              <Text style={styles.vehicleDetailsText}>{vehicleDetails}</Text>
+              <Text style={styles.driverExpText}>
+                {isChauffeur
+                  ? 'Police Background Verified • AT/MT Expert'
+                  : 'Commercial DL • 1,240 trips • 99% 5-star'}
               </Text>
             </View>
 
-            {/* Vehicle Handover Confirmation */}
-            <View style={styles.cardBox}>
-              <View style={styles.cardHeaderRow}>
-                <Text style={styles.cardTitle}>CUSTOMER VEHICLE INSPECTION CHECKLIST</Text>
-                <View style={styles.verifiedChecklistPill}>
-                  <Text style={styles.verifiedChecklistText}>VERIFIED OK</Text>
-                </View>
-              </View>
-              <View style={styles.checkItem}>
-                <View style={styles.checkCircleGreen}><Text style={styles.checkIcon}>✓</Text></View>
-                <Text style={styles.checkText}>
-                  Vehicle: <Text style={{ fontWeight: '800', color: '#0F172A' }}>{activeBooking.carModel || 'Honda City'}</Text> ({activeBooking.carTransmission || 'Automatic AT'})
+            <View style={styles.driverActionsCol}>
+              <TouchableOpacity
+                style={styles.driverActionBtn}
+                onPress={() => setShowCallChat(true)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.driverActionIcon}>📞</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.driverActionBtn, styles.chatActionBtn]}
+                onPress={() => setShowCallChat(true)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.driverActionIcon}>💬</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Ride Start OTP Card */}
+          <View style={styles.otpCard}>
+            <View style={styles.otpHeaderRow}>
+              <View style={styles.otpLabelRow}>
+                <Text style={styles.otpKeyIcon}>🔑</Text>
+                <Text style={styles.otpTitle}>
+                  {isChauffeur ? 'KEY HANDOVER VERIFICATION PIN' : 'RIDE START OTP'}
                 </Text>
               </View>
-              <View style={styles.checkItem}>
-                <View style={styles.checkCircleGreen}><Text style={styles.checkIcon}>✓</Text></View>
-                <Text style={styles.checkText}>Initial Fuel Level: 80% Full logged</Text>
-              </View>
-              <View style={styles.checkItem}>
-                <View style={styles.checkCircleGreen}><Text style={styles.checkIcon}>✓</Text></View>
-                <Text style={styles.checkText}>Initial Odometer: 34,812 km recorded</Text>
-              </View>
-              <View style={styles.checkItem}>
-                <View style={styles.checkCircleGreen}><Text style={styles.checkIcon}>✓</Text></View>
-                <Text style={styles.checkText}>Exterior Walkaround: Zero pre-existing damages noted</Text>
+              <View style={styles.otpShieldBadge}>
+                <Text style={styles.otpShieldText}>INSURANCE ACTIVE</Text>
               </View>
             </View>
 
-            {/* Assigned Driver Profile Card */}
-            <View style={styles.driverCard}>
-              <View style={styles.driverTop}>
-                <View style={styles.driverAvatar}>
-                  <Text style={styles.driverAvatarText}>RK</Text>
+            <View style={styles.otpBoxesRow}>
+              {otpCode.split('').map((digit, idx) => (
+                <View key={idx} style={styles.otpBox}>
+                  <Text style={styles.otpDigit}>{digit}</Text>
                 </View>
-                <View style={{ flex: 1 }}>
-                  <View style={styles.driverNameRow}>
-                    <Text style={styles.driverName}>{activeBooking.driverName || 'Rajesh Kumar'}</Text>
-                    <View style={styles.driverRatingPill}>
-                      <Text style={styles.driverRatingText}>★ 4.92</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.driverDutyCount}>582 Completed Chauffeur Duties</Text>
-                  <View style={styles.badgeRow}>
-                    <View style={styles.driverBadge}>
-                      <Text style={styles.driverBadgeText}>LMV Commercial DL</Text>
-                    </View>
-                    <View style={styles.driverBadge}>
-                      <Text style={styles.driverBadgeText}>AT & MT Certified</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.actionRow}>
-                <TouchableOpacity
-                  style={styles.actionBtn}
-                  onPress={() => setShowCallChat(true)}
-                  activeOpacity={0.85}
-                >
-                  <Text style={styles.actionBtnText}>Call / Chat Chauffeur</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[styles.actionBtn, styles.sosActionBtn]}
-                  onPress={() => navigate('SOS')}
-                  activeOpacity={0.85}
-                >
-                  <Text style={styles.sosActionText}>Emergency SOS</Text>
-                </TouchableOpacity>
-              </View>
+              ))}
             </View>
 
-            {/* End Duty CTA */}
+            <Text style={styles.otpInstruction}>
+              {isChauffeur
+                ? 'Share this PIN when handing over car keys to start the insured duty clock.'
+                : 'Share this 4-digit code with the driver before boarding the cab.'}
+            </Text>
+          </View>
+
+          {/* Trip Progress Stepper Bar */}
+          <View style={styles.stepperContainer}>
+            <View style={styles.stepperTrack}>
+              <View
+                style={[
+                  styles.stepperFillBar,
+                  tripStage === 'ASSIGNED' && { width: '15%' },
+                  tripStage === 'ON_THE_WAY' && { width: '45%' },
+                  tripStage === 'ARRIVED' && { width: '75%' },
+                  tripStage === 'TRIP_STARTED' && { width: '100%' }
+                ]}
+              />
+            </View>
+
+            <View style={styles.stepperStepsRow}>
+              <View style={styles.stepItem}>
+                <View
+                  style={[
+                    styles.stepDot,
+                    (tripStage === 'ASSIGNED' || tripStage === 'ON_THE_WAY' || tripStage === 'ARRIVED' || tripStage === 'TRIP_STARTED') && styles.stepDotActive
+                  ]}
+                />
+                <Text style={styles.stepLabel}>Assigned</Text>
+              </View>
+
+              <View style={styles.stepItem}>
+                <View
+                  style={[
+                    styles.stepDot,
+                    (tripStage === 'ON_THE_WAY' || tripStage === 'ARRIVED' || tripStage === 'TRIP_STARTED') && styles.stepDotActive
+                  ]}
+                />
+                <Text style={styles.stepLabel}>On Way</Text>
+              </View>
+
+              <View style={styles.stepItem}>
+                <View
+                  style={[
+                    styles.stepDot,
+                    (tripStage === 'ARRIVED' || tripStage === 'TRIP_STARTED') && styles.stepDotActive
+                  ]}
+                />
+                <Text style={styles.stepLabel}>Arrived</Text>
+              </View>
+
+              <View style={styles.stepItem}>
+                <View
+                  style={[
+                    styles.stepDot,
+                    tripStage === 'TRIP_STARTED' && styles.stepDotActive
+                  ]}
+                />
+                <Text style={styles.stepLabel}>Trip Started</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Trip Stats Row */}
+          <View style={styles.statsCard}>
+            <View style={styles.statCol}>
+              <Text style={styles.statLabel}>ESTIMATED TIME</Text>
+              <Text style={styles.statValue}>18 min</Text>
+              <Text style={styles.statSub}>On schedule</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statCol}>
+              <Text style={styles.statLabel}>DISTANCE</Text>
+              <Text style={styles.statValue}>12.4 km</Text>
+              <Text style={styles.statSub}>Fastest route</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statCol}>
+              <Text style={styles.statLabel}>LOCKED FARE</Text>
+              <Text style={[styles.statValue, { color: '#D2FF00' }]}>₹ {fare}</Text>
+              <Text style={styles.statSub}>UPI AutoPay</Text>
+            </View>
+          </View>
+
+          {/* Action CTAs */}
+          <View style={styles.bottomActionsArea}>
             <TouchableOpacity
-              style={styles.completeBtn}
+              style={styles.completeTripBtn}
               onPress={handleComplete}
               activeOpacity={0.88}
             >
-              <Text style={styles.completeBtnText}>
-                Complete Duty & Settle ₹{activeBooking.fareAmount} →
-              </Text>
+              <Text style={styles.completeTripText}>Simulate Destination Arrival →</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.cancelBtn}
-              onPress={handleCancel}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.cancelBtnText}>Cancel Duty</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          /* ================================================= */
-          /* CAB TRACKING FLOW                                 */
-          /* ================================================= */
-          <View>
-            <MapMock
-              pickupAddress={activeBooking.pickupAddress}
-              dropAddress={activeBooking.dropAddress}
-              driverName={activeBooking.driverName}
-              vehiclePlate={activeBooking.vehiclePlate}
-              isLiveTracking={true}
-            />
+            <View style={styles.auxActionsRow}>
+              <TouchableOpacity
+                style={styles.sosButton}
+                onPress={() => navigate('SOS')}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.sosButtonText}>⚠️ Emergency SOS</Text>
+              </TouchableOpacity>
 
-            <View style={styles.otpCard}>
-              <Text style={styles.otpLabel}>TRIP START OTP</Text>
-              <View style={styles.pinDigitsRow}>
-                {(activeBooking.otpCode || '4821').split('').map((char, idx) => (
-                  <View key={idx} style={styles.pinBox}>
-                    <Text style={styles.pinBoxDigit}>{char}</Text>
-                  </View>
-                ))}
-              </View>
-              <Text style={styles.otpHint}>Share with driver before boarding the cab</Text>
+              <TouchableOpacity
+                style={styles.cancelTripBtn}
+                onPress={handleCancel}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.cancelTripText}>Cancel Ride</Text>
+              </TouchableOpacity>
             </View>
-
-            <View style={styles.driverCard}>
-              <View style={styles.driverTop}>
-                <View style={styles.driverAvatar}>
-                  <Text style={styles.driverAvatarText}>RK</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.driverName}>{activeBooking.driverName || 'Rajesh Kumar'}</Text>
-                  <Text style={styles.driverRating}>★ 4.88 • White Honda City</Text>
-                  <Text style={styles.plateText}>Plate: DL 01 AB 9988</Text>
-                </View>
-              </View>
-            </View>
-
-            <TouchableOpacity
-              style={styles.completeBtn}
-              onPress={handleComplete}
-              activeOpacity={0.88}
-            >
-              <Text style={styles.completeBtnText}>Simulate Destination Arrival →</Text>
-            </TouchableOpacity>
           </View>
-        )}
+        </View>
 
         <View style={{ height: 40 }} />
       </ScrollView>
 
+      {/* Call & Chat Modal Component */}
       <CallChatModal
         visible={showCallChat}
         onClose={() => setShowCallChat(false)}
-        driverName={activeBooking.driverName || 'Rajesh Kumar'}
-        driverPhone={activeBooking.driverPhone || '+91 98111 56789'}
+        driverName={driverName}
+        driverPhone="+91 98765 43210"
       />
     </View>
   );
@@ -271,406 +369,582 @@ export const LiveTrackingScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC'
+    backgroundColor: '#0B132B'
   },
+  topHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 48,
+    paddingBottom: 14,
+    backgroundColor: '#0B132B'
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)'
+  },
+  backButtonText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '700'
+  },
+  headerTitleCenter: {
+    alignItems: 'center'
+  },
+  headerTitle: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '800'
+  },
+  headerLiveRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2
+  },
+  liveGreenDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#10B981',
+    marginRight: 6
+  },
+  headerSubtitle: {
+    color: '#94A3B8',
+    fontSize: 11,
+    fontWeight: '600'
+  },
+  sosTopBtn: {
+    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(239, 68, 68, 0.35)'
+  },
+  sosTopText: {
+    color: '#EF4444',
+    fontSize: 11.5,
+    fontWeight: '900',
+    letterSpacing: 0.5
+  },
+
   scrollArea: {
     flex: 1
   },
   scrollContent: {
-    padding: 16,
-    paddingBottom: 40
-  },
-  emptyContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30
-  },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: '800',
-    color: '#0F172A',
-    marginBottom: 6
-  },
-  emptySub: {
-    fontSize: 12,
-    color: '#64748B',
-    textAlign: 'center',
-    marginBottom: 16
-  },
-  bookRideBtn: {
-    backgroundColor: '#0F172A',
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 12
-  },
-  bookRideBtnText: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '800'
+    paddingBottom: 20
   },
 
-  /* Duty Chronograph (Dark Obsidian) */
-  dutyTimerCard: {
-    backgroundColor: '#090D16',
-    borderRadius: 18,
-    padding: 20,
-    borderWidth: 1.5,
-    borderColor: '#1E293B',
-    alignItems: 'center',
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.25,
+  /* Live Map Canvas */
+  mapSurface: {
+    height: 230,
+    backgroundColor: '#101B39',
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  mapGridLines: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  gridRoadH1: {
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    right: 0,
+    height: 24,
+    backgroundColor: '#16234D',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#1F3068'
+  },
+  gridRoadH2: {
+    position: 'absolute',
+    top: 150,
+    left: 0,
+    right: 0,
+    height: 32,
+    backgroundColor: '#16234D',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#1F3068'
+  },
+  gridRoadV1: {
+    position: 'absolute',
+    left: 80,
+    top: 0,
+    bottom: 0,
+    width: 28,
+    backgroundColor: '#16234D',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#1F3068'
+  },
+  gridRoadV2: {
+    position: 'absolute',
+    right: 90,
+    top: 0,
+    bottom: 0,
+    width: 32,
+    backgroundColor: '#16234D',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: '#1F3068'
+  },
+  routePolyline: {
+    position: 'absolute',
+    top: 70,
+    left: 45,
+    right: 70,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#D2FF00',
+    shadowColor: '#D2FF00',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.9,
     shadowRadius: 10,
-    elevation: 6
+    elevation: 8
   },
-  timerHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 8
-  },
-  pulseDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#10B981'
-  },
-  timerLabel: {
-    fontSize: 10,
-    fontWeight: '900',
-    color: '#10B981',
-    letterSpacing: 0.8
-  },
-  activeDutyBadge: {
-    backgroundColor: '#1E293B',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4
-  },
-  activeDutyBadgeText: {
-    color: '#94A3B8',
-    fontSize: 8,
-    fontWeight: '800'
-  },
-  timerDigits: {
-    fontSize: 38,
-    fontWeight: '900',
-    color: '#FFFFFF',
-    letterSpacing: 3,
-    fontFamily: 'monospace',
-    marginVertical: 4
-  },
-  timerSubRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginTop: 4
-  },
-  timerSubText: {
-    fontSize: 11,
-    color: '#94A3B8',
-    fontWeight: '600'
-  },
-  timerSubDivider: {
-    color: '#475569',
-    fontSize: 12
-  },
-  timerSubRate: {
-    fontSize: 11,
-    color: '#10B981',
-    fontWeight: '700'
-  },
-
-  /* OTP Card (Warm Gold Security Theme) */
-  otpCard: {
-    backgroundColor: '#FFFBEB',
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1.5,
-    borderColor: '#FDE68A',
-    alignItems: 'center',
-    marginBottom: 12,
-    shadowColor: '#D97706',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 2
-  },
-  otpHeaderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 10
-  },
-  otpLabel: {
-    fontSize: 10,
-    fontWeight: '900',
-    color: '#92400E',
-    letterSpacing: 0.5
-  },
-  securityShieldPill: {
-    backgroundColor: '#FEF3C7',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#FCD34D'
-  },
-  securityShieldText: {
-    fontSize: 7.5,
-    fontWeight: '900',
-    color: '#B45309'
-  },
-  pinDigitsRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginVertical: 6
-  },
-  pinBox: {
-    width: 44,
-    height: 48,
-    borderRadius: 10,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1.5,
-    borderColor: '#F59E0B',
+  originMarker: {
+    position: 'absolute',
+    left: 40,
+    top: 130,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 3,
-    elevation: 1
+    width: 26,
+    height: 26
   },
-  pinBoxDigit: {
-    fontSize: 24,
-    fontWeight: '900',
-    color: '#0F172A',
-    fontFamily: 'monospace'
+  originWave: {
+    position: 'absolute',
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: 'rgba(210, 255, 0, 0.25)'
   },
-  otpHint: {
-    fontSize: 10.5,
-    color: '#78350F',
-    textAlign: 'center',
-    marginTop: 6,
-    lineHeight: 14
+  originDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#D2FF00'
   },
-
-  /* Card Box */
-  cardBox: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    marginBottom: 12,
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2
+  destMarker: {
+    position: 'absolute',
+    right: 65,
+    top: 55
   },
-  cardHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10
+  destPinEmoji: {
+    fontSize: 24
   },
-  cardTitle: {
-    fontSize: 10.5,
-    fontWeight: '900',
-    color: '#0F172A',
-    letterSpacing: 0.4
-  },
-  verifiedChecklistPill: {
-    backgroundColor: '#ECFDF5',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4
-  },
-  verifiedChecklistText: {
-    color: '#047857',
-    fontSize: 8,
-    fontWeight: '900'
-  },
-  checkItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 7
-  },
-  checkCircleGreen: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: '#ECFDF5',
-    borderWidth: 1,
-    borderColor: '#A7F3D0',
+  movingCarMarker: {
+    position: 'absolute',
+    left: 110,
+    top: 60,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  checkIcon: {
-    fontSize: 10,
-    fontWeight: '900',
-    color: '#047857'
+  carGlowRing: {
+    position: 'absolute',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: 'rgba(210, 255, 0, 0.35)'
   },
-  checkText: {
+  carIcon: {
+    fontSize: 20
+  },
+  floatingEtaPill: {
+    position: 'absolute',
+    top: 14,
+    left: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(10, 17, 40, 0.92)',
+    paddingVertical: 7,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(210, 255, 0, 0.45)'
+  },
+  livePulseDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: '#D2FF00',
+    marginRight: 8
+  },
+  floatingEtaValue: {
+    color: '#D2FF00',
+    fontSize: 12,
+    fontWeight: '800'
+  },
+  floatingEtaDivider: {
+    color: 'rgba(255, 255, 255, 0.4)',
+    marginHorizontal: 6,
+    fontSize: 12
+  },
+  floatingEtaDistance: {
+    color: '#FFFFFF',
     fontSize: 11.5,
-    color: '#475569',
-    fontWeight: '500'
+    fontWeight: '600'
+  },
+  simStagePill: {
+    position: 'absolute',
+    top: 14,
+    right: 14,
+    backgroundColor: '#1E293B',
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)'
+  },
+  simStageText: {
+    color: '#94A3B8',
+    fontSize: 10.5,
+    fontWeight: '700'
   },
 
-  /* Driver Profile Card */
-  driverCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    marginBottom: 14,
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2
+  /* Curved Bottom Sheet */
+  bottomSheetCard: {
+    backgroundColor: '#0F172A',
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    marginTop: -20,
+    paddingTop: 12,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: -6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 12
   },
-  driverTop: {
+  sheetHandle: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    alignSelf: 'center',
+    marginBottom: 16
+  },
+
+  /* Driver Profile */
+  driverProfileRow: {
     flexDirection: 'row',
-    gap: 12,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#131C38',
+    borderRadius: 22,
+    padding: 14,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  driverAvatarContainer: {
+    position: 'relative',
+    marginRight: 12
   },
   driverAvatar: {
     width: 48,
     height: 48,
-    borderRadius: 14,
-    backgroundColor: '#0F172A',
+    borderRadius: 24,
+    backgroundColor: '#1E293B',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 2
+    borderWidth: 2,
+    borderColor: '#D2FF00'
   },
-  driverAvatarText: {
-    color: '#D4AF37',
+  avatarInitials: {
+    color: '#D2FF00',
     fontSize: 16,
     fontWeight: '900'
+  },
+  verifiedTickBadge: {
+    position: 'absolute',
+    bottom: -2,
+    right: -2,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: '#10B981',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: '#131C38'
+  },
+  verifiedTickText: {
+    color: '#FFFFFF',
+    fontSize: 10,
+    fontWeight: '900'
+  },
+  driverInfoCol: {
+    flex: 1
   },
   driverNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8
   },
-  driverName: {
+  driverNameText: {
     fontSize: 15,
     fontWeight: '800',
-    color: '#0F172A'
+    color: '#FFFFFF'
   },
-  driverRatingPill: {
-    backgroundColor: '#FFFBEB',
+  ratingBadge: {
+    backgroundColor: 'rgba(210, 255, 0, 0.15)',
+    paddingVertical: 2,
     paddingHorizontal: 6,
-    paddingVertical: 1.5,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#FDE68A'
+    borderRadius: 6
   },
-  driverRatingText: {
-    fontSize: 10,
-    fontWeight: '900',
-    color: '#B45309'
+  ratingText: {
+    color: '#D2FF00',
+    fontSize: 10.5,
+    fontWeight: '800'
   },
-  driverRating: {
-    fontSize: 11,
-    color: '#D97706',
+  vehicleDetailsText: {
+    fontSize: 12,
+    color: '#CBD5E1',
     fontWeight: '700',
-    marginTop: 1
-  },
-  plateText: {
-    fontSize: 11,
-    color: '#64748B',
     marginTop: 2
   },
-  driverDutyCount: {
+  driverExpText: {
+    fontSize: 10,
+    color: '#94A3B8',
+    marginTop: 2
+  },
+  driverActionsCol: {
+    flexDirection: 'row',
+    gap: 8,
+    marginLeft: 8
+  },
+  driverActionBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#1E293B',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)'
+  },
+  chatActionBtn: {
+    backgroundColor: 'rgba(210, 255, 0, 0.12)',
+    borderColor: 'rgba(210, 255, 0, 0.35)'
+  },
+  driverActionIcon: {
+    fontSize: 16
+  },
+
+  /* Ride Start OTP Card */
+  otpCard: {
+    backgroundColor: '#131C38',
+    borderRadius: 20,
+    padding: 14,
+    marginBottom: 14,
+    borderWidth: 1.5,
+    borderColor: 'rgba(210, 255, 0, 0.4)'
+  },
+  otpHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
+  },
+  otpLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6
+  },
+  otpKeyIcon: {
+    fontSize: 14
+  },
+  otpTitle: {
     fontSize: 11,
+    fontWeight: '800',
+    color: '#D2FF00',
+    letterSpacing: 0.6
+  },
+  otpShieldBadge: {
+    backgroundColor: 'rgba(16, 185, 129, 0.18)',
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderRadius: 8
+  },
+  otpShieldText: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#34D399'
+  },
+  otpBoxesRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 12,
+    marginVertical: 4
+  },
+  otpBox: {
+    width: 50,
+    height: 52,
+    borderRadius: 14,
+    backgroundColor: '#1A2548',
+    borderWidth: 1.5,
+    borderColor: '#D2FF00',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  otpDigit: {
+    fontSize: 24,
+    fontWeight: '900',
+    color: '#D2FF00'
+  },
+  otpInstruction: {
+    fontSize: 10.5,
+    color: '#94A3B8',
+    textAlign: 'center',
+    marginTop: 8
+  },
+
+  /* Stepper */
+  stepperContainer: {
+    backgroundColor: '#131C38',
+    borderRadius: 18,
+    padding: 14,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  stepperTrack: {
+    height: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 2,
+    position: 'relative',
+    marginHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 10
+  },
+  stepperFillBar: {
+    height: '100%',
+    backgroundColor: '#D2FF00',
+    borderRadius: 2
+  },
+  stepperStepsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 4
+  },
+  stepItem: {
+    alignItems: 'center'
+  },
+  stepDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    marginBottom: 4
+  },
+  stepDotActive: {
+    backgroundColor: '#D2FF00'
+  },
+  stepLabel: {
+    fontSize: 10,
+    color: '#94A3B8',
+    fontWeight: '700'
+  },
+
+  /* Stats Row */
+  statsCard: {
+    flexDirection: 'row',
+    backgroundColor: '#131C38',
+    borderRadius: 18,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  statCol: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  statDivider: {
+    width: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  statLabel: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#94A3B8',
+    letterSpacing: 0.4
+  },
+  statValue: {
+    fontSize: 15,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    marginTop: 3
+  },
+  statSub: {
+    fontSize: 10,
     color: '#64748B',
     marginTop: 1
   },
-  badgeRow: {
+
+  /* CTAs */
+  bottomActionsArea: {
+    gap: 10
+  },
+  completeTripBtn: {
+    backgroundColor: '#D2FF00',
+    paddingVertical: 14,
+    borderRadius: 16,
+    alignItems: 'center',
+    shadowColor: '#D2FF00',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 3
+  },
+  completeTripText: {
+    color: '#0A1128',
+    fontSize: 14,
+    fontWeight: '900'
+  },
+  auxActionsRow: {
     flexDirection: 'row',
-    gap: 6,
-    marginTop: 6
+    gap: 10
   },
-  driverBadge: {
-    backgroundColor: '#F1F5F9',
-    paddingHorizontal: 7,
-    paddingVertical: 2.5,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#E2E8F0'
-  },
-  driverBadgeText: {
-    fontSize: 8.5,
-    fontWeight: '800',
-    color: '#334155'
-  },
-  actionRow: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 14,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9'
-  },
-  actionBtn: {
+  sosButton: {
     flex: 1,
-    paddingVertical: 10,
-    borderRadius: 10,
-    borderWidth: 1.5,
-    borderColor: '#CBD5E1',
-    backgroundColor: '#F8FAFC',
-    alignItems: 'center'
-  },
-  actionBtnText: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: '#0F172A'
-  },
-  sosActionBtn: {
-    borderColor: '#FECACA',
-    backgroundColor: '#FEF2F2'
-  },
-  sosActionText: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: '#DC2626'
-  },
-  completeBtn: {
-    backgroundColor: '#0F172A',
-    paddingVertical: 15,
+    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+    paddingVertical: 12,
     borderRadius: 14,
     alignItems: 'center',
-    marginBottom: 10,
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 4
+    borderWidth: 1,
+    borderColor: 'rgba(239, 68, 68, 0.4)'
   },
-  completeBtnText: {
-    color: '#FFFFFF',
-    fontSize: 13.5,
-    fontWeight: '800',
-    letterSpacing: 0.2
+  sosButtonText: {
+    color: '#EF4444',
+    fontSize: 12,
+    fontWeight: '800'
   },
-  cancelBtn: {
-    paddingVertical: 10,
-    alignItems: 'center'
+  cancelTripBtn: {
+    flex: 1,
+    backgroundColor: '#1E293B',
+    paddingVertical: 12,
+    borderRadius: 14,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)'
   },
-  cancelBtnText: {
-    color: '#DC2626',
+  cancelTripText: {
+    color: '#94A3B8',
     fontSize: 12,
     fontWeight: '700'
   }
