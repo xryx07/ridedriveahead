@@ -1,4 +1,10 @@
-export type ServiceMode = 'HIRE_DRIVER' | 'BOOK_CAB';
+export type ServiceMode =
+  | 'HIRE_DRIVER'
+  | 'BOOK_CAB'
+  | 'BIKE_TAXI'
+  | 'AUTO'
+  | 'RENTALS'
+  | 'PARCEL';
 
 export type BookingType = 'INSTANT' | 'SCHEDULED';
 
@@ -34,7 +40,15 @@ export type BookingStatus =
   | 'COMPLETED'
   | 'CANCELLED';
 
-export type VehicleType = 'HATCHBACK' | 'SEDAN' | 'SUV' | 'PREMIER';
+export type VehicleType =
+  | 'BIKE'
+  | 'AUTO'
+  | 'HATCHBACK'
+  | 'SEDAN'
+  | 'SUV'
+  | 'PREMIER'
+  | 'RENTAL'
+  | 'PARCEL';
 
 export type PaymentMethod = 'UPI' | 'CARD' | 'WALLET' | 'CASH';
 

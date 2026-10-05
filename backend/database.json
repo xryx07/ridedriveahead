@@ -155,32 +155,92 @@
   ],
   "cabTiers": [
     {
-      "id": "cab-1",
-      "name": "Go Compact",
-      "seats": "4 seats",
-      "desc": "WagonR, Swift • Daily transit",
-      "fare": 490
+      "id": "tier-bike",
+      "icon": "🛵",
+      "name": "Bike Taxi (Moto)",
+      "provider": "Rapido Style",
+      "seats": "1 seat",
+      "desc": "Beat traffic with verified rider, helmet provided",
+      "fare": 49,
+      "eta": "2 min",
+      "tag": "FASTEST ⚡"
     },
     {
-      "id": "cab-2",
+      "id": "tier-auto",
+      "icon": "🛺",
+      "name": "Auto Rickshaw",
+      "provider": "Ola / Rapido Style",
+      "seats": "3 seats",
+      "desc": "Doorstep pickup, upfront meter-locked fare",
+      "fare": 89,
+      "eta": "3 min",
+      "tag": "POPULAR 🛺"
+    },
+    {
+      "id": "tier-go",
+      "icon": "🚕",
+      "name": "Go Economy / Mini",
+      "provider": "Uber Go / Ola Mini",
+      "seats": "4 seats",
+      "desc": "WagonR, Swift • AC affordable everyday rides",
+      "fare": 189,
+      "eta": "4 min",
+      "tag": "BEST VALUE"
+    },
+    {
+      "id": "tier-sedan",
+      "icon": "🚘",
       "name": "Premier Sedan",
+      "provider": "Uber Premier / Ola Prime",
       "seats": "4 seats",
-      "desc": "Honda City, Ciaz • Spacious & AC",
-      "fare": 750
+      "desc": "Dzire, Honda City • Top-rated drivers & extra legroom",
+      "fare": 269,
+      "eta": "5 min",
+      "tag": "COMFORT"
     },
     {
-      "id": "cab-3",
-      "name": "SUV Executive XL",
+      "id": "tier-xl",
+      "icon": "🚙",
+      "name": "Executive SUV XL",
+      "provider": "Uber XL / Ola Prime SUV",
       "seats": "6 seats",
-      "desc": "Innova Crysta, Ertiga • Family trip",
-      "fare": 1150
+      "desc": "Innova Crysta, Ertiga • Large luggage & group rides",
+      "fare": 399,
+      "eta": "6 min",
+      "tag": "6 SEATER"
     },
     {
-      "id": "cab-4",
-      "name": "Green Electric EV",
-      "seats": "4 seats",
-      "desc": "Tata Tigor EV • Zero emission",
-      "fare": 690
+      "id": "tier-rental",
+      "icon": "⏱️",
+      "name": "Hourly Rentals",
+      "provider": "Ola Rentals Style",
+      "seats": "4-6 seats",
+      "desc": "Keep cab & driver: 1h/10km, 2h/20km, 4h/40km multi-stops",
+      "fare": 449,
+      "eta": "Instant",
+      "tag": "MULTI-STOP"
+    },
+    {
+      "id": "tier-parcel",
+      "icon": "📦",
+      "name": "Express Parcel Delivery",
+      "provider": "Rapido / Uber Connect",
+      "seats": "Up to 5 kg",
+      "desc": "Instant doorstep package & document delivery",
+      "fare": 59,
+      "eta": "2 min",
+      "tag": "DOORSTEP 📦"
+    },
+    {
+      "id": "tier-chauffeur",
+      "icon": "👨‍✈️",
+      "name": "Hire Personal Chauffeur",
+      "provider": "Drive My Car Superpower",
+      "seats": "Your Car (AT/MT)",
+      "desc": "Verified chauffeur for your car (2h/4h/8h/Outstation)",
+      "fare": 599,
+      "eta": "15 min",
+      "tag": "CHAUFFEUR"
     }
   ],
   "gigs": [

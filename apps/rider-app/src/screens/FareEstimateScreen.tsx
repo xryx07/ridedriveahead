@@ -97,7 +97,7 @@ export const FareEstimateScreen: React.FC = () => {
 
   const [localMode, setLocalMode] = useState<ServiceMode>(serviceMode || 'BOOK_CAB');
   const [loading, setLoading] = useState(false);
-  const [selectedCabType, setSelectedCabType] = useState<'SEDAN' | 'SUV' | 'LUXURY'>('SEDAN');
+  const [selectedCabType, setSelectedCabType] = useState<'BIKE' | 'AUTO' | 'HATCHBACK' | 'SEDAN' | 'SUV' | 'RENTAL' | 'PARCEL' | 'LUXURY'>('SEDAN');
   const [selectedPkgId, setSelectedPkgId] = useState<ChauffeurPackage>(chauffeurPackage || 'HOURLY_4H');
   const [selectedTransmission, setSelectedTransmission] = useState<TransmissionType>(carTransmission || 'AUTOMATIC');
   const [selectedCarCategory, setSelectedCarCategory] = useState<CarCategory>(carCategory || 'SEDAN');
@@ -112,36 +112,83 @@ export const FareEstimateScreen: React.FC = () => {
 
   const selectedPkg = CHAUFFEUR_PACKAGES.find((p) => p.id === selectedPkgId) || CHAUFFEUR_PACKAGES[1];
 
-  // Pricing definitions matching the mockups
+  // Pricing definitions combining Rapido (Bike/Parcel), Ola (Auto/Rentals), Uber (Go/Premier/XL) & RDA (Chauffeur)
   const CAB_TIERS = [
     {
-      id: 'SEDAN' as const,
-      name: 'Sedan',
-      sub: 'Maruti Dzire, Honda Amaze',
-      fare: 1248,
-      seats: 4,
+      id: 'BIKE' as const,
+      icon: '🛵',
+      name: 'Bike Taxi (Rapido Moto)',
+      sub: 'Fastest commute through traffic • Helmet provided',
+      fare: 49,
+      seats: 1,
+      eta: '2 min',
+      tag: 'FASTEST ⚡',
+      isPopular: false
+    },
+    {
+      id: 'AUTO' as const,
+      icon: '🛺',
+      name: 'Auto Rickshaw (Ola / Rapido)',
+      sub: 'Doorstep pickup, meter guaranteed, no haggling',
+      fare: 89,
+      seats: 3,
       eta: '3 min',
+      tag: 'POPULAR 🛺',
+      isPopular: false
+    },
+    {
+      id: 'HATCHBACK' as const,
+      icon: '🚕',
+      name: 'Go Economy / Mini (Uber Go)',
+      sub: 'WagonR, Swift • AC affordable everyday rides',
+      fare: 189,
+      seats: 4,
+      eta: '4 min',
+      tag: 'BEST VALUE',
+      isPopular: false
+    },
+    {
+      id: 'SEDAN' as const,
+      icon: '🚘',
+      name: 'Premier Sedan (Prime)',
+      sub: 'Dzire, Honda City • Top-rated drivers & extra legroom',
+      fare: 269,
+      seats: 4,
+      eta: '5 min',
       tag: 'UPFRONT LOCKED',
       isPopular: true
     },
     {
       id: 'SUV' as const,
-      name: 'SUV',
-      sub: 'Toyota Innova, Ertiga',
-      fare: 1742,
+      icon: '🚙',
+      name: 'Executive SUV XL (Uber XL)',
+      sub: 'Innova Crysta, Ertiga • 6 seater for airport luggage',
+      fare: 399,
       seats: 6,
-      eta: '5 min',
+      eta: '6 min',
       tag: 'EXTRA ROOM',
       isPopular: false
     },
     {
-      id: 'LUXURY' as const,
-      name: 'Luxury Chauffeur',
-      sub: 'Mercedes E-Class, BMW 5',
-      fare: 2980,
+      id: 'RENTAL' as const,
+      icon: '⏱️',
+      name: 'Hourly Rentals (Ola Style)',
+      sub: 'Keep cab & driver: 2h/20km with multiple stops',
+      fare: 449,
       seats: 4,
-      eta: '8 min',
-      tag: 'WHITE GLOVE',
+      eta: 'Instant',
+      tag: 'MULTI-STOP',
+      isPopular: false
+    },
+    {
+      id: 'PARCEL' as const,
+      icon: '📦',
+      name: 'Express Parcel Delivery',
+      sub: 'Doorstep instant package delivery across city (up to 5kg)',
+      fare: 59,
+      seats: 1,
+      eta: '2 min',
+      tag: 'DOORSTEP 📦',
       isPopular: false
     }
   ];
@@ -385,9 +432,7 @@ export const FareEstimateScreen: React.FC = () => {
                 >
                   <View style={styles.cabTierLeft}>
                     <View style={styles.cabTierIconCircle}>
-                      <Text style={styles.cabCarEmoji}>
-                        {tier.id === 'SEDAN' ? '🚘' : tier.id === 'SUV' ? '🚙' : '✨'}
-                      </Text>
+                      <Text style={styles.cabCarEmoji}>{tier.icon}</Text>
                     </View>
                     <View style={styles.cabTierInfo}>
                       <View style={styles.cabTierTitleRow}>

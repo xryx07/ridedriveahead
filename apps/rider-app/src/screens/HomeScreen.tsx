@@ -124,6 +124,120 @@ export const HomeScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
+        {/* OLA / UBER / RAPIDO MULTI-MODAL CATEGORY BAR */}
+        <View style={styles.categoryBarWrap}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryBarContent}
+          >
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>🛵</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Bike Taxi</Text>
+              <Text style={styles.categorySub}>Rapido ⚡</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>🛺</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Auto</Text>
+              <Text style={styles.categorySub}>Doorstep 🛺</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>🚕</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Cabs</Text>
+              <Text style={styles.categorySub}>Uber / Ola</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('HIRE_DRIVER');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={[styles.categoryIconCircle, styles.categoryChauffeurCircle]}>
+                <Text style={styles.categoryEmoji}>👨‍✈️</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Drive My Car</Text>
+              <Text style={[styles.categorySub, { color: '#0F172A', fontWeight: '800' }]}>Chauffeur</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>⏱️</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Rentals</Text>
+              <Text style={styles.categorySub}>Hourly</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>📦</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Parcel</Text>
+              <Text style={styles.categorySub}>Instant 📦</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                setServiceMode('BOOK_CAB');
+                navigate('FARE_ESTIMATE');
+              }}
+              activeOpacity={0.85}
+            >
+              <View style={styles.categoryIconCircle}>
+                <Text style={styles.categoryEmoji}>✈️</Text>
+              </View>
+              <Text style={styles.categoryTitle}>Airport</Text>
+              <Text style={styles.categorySub}>Reserve</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+
         {/* HERO DUAL SERVICES CARDS */}
         <View style={styles.dualServicesContainer}>
           {/* Card 1: Book a Cab (Deep Navy) */}
@@ -512,6 +626,55 @@ const styles = StyleSheet.create({
     color: '#A3E635',
     fontSize: 11,
     fontWeight: '800'
+  },
+
+  /* Multi-modal Category Strip (Ola / Uber / Rapido) */
+  categoryBarWrap: {
+    marginTop: 14,
+    marginBottom: 4
+  },
+  categoryBarContent: {
+    paddingHorizontal: 16,
+    gap: 12
+  },
+  categoryItem: {
+    alignItems: 'center',
+    width: 72
+  },
+  categoryIconCircle: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+    marginBottom: 6
+  },
+  categoryChauffeurCircle: {
+    backgroundColor: '#D2FF00',
+    borderColor: '#B4E600'
+  },
+  categoryEmoji: {
+    fontSize: 24
+  },
+  categoryTitle: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#0F172A',
+    textAlign: 'center'
+  },
+  categorySub: {
+    fontSize: 9.5,
+    color: '#64748B',
+    textAlign: 'center',
+    marginTop: 1
   },
 
   /* Hero Dual Services Cards */
