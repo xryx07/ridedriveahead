@@ -62,7 +62,7 @@ export const DriverHomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Availability Hero Banner */}
+        {/* Availability Hero Banner with Online Switch */}
         <View style={[styles.heroCard, driver.isOnline ? styles.heroOnline : styles.heroOffline]}>
           <View style={styles.heroTop}>
             <View style={{ flex: 1 }}>
@@ -82,15 +82,46 @@ export const DriverHomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <Text style={[styles.heroToggleText, driver.isOnline ? styles.heroToggleTextActive : styles.heroToggleTextInactive]}>
-                {driver.isOnline ? 'Go Offline' : 'Go Online'}
+                {driver.isOnline ? 'Online' : 'Offline'}
               </Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.heroHint}>
-            {driver.isOnline
-              ? 'Matched with verified personal car duties (2h-8h), party returns, 1-2 day outstation road trips & city cab requests.'
-              : 'Switch online to view open customer gigs and start receiving direct dispatches.'}
-          </Text>
+        </View>
+
+        {/* Today's Earnings Card */}
+        <View style={{ backgroundColor: '#121619', borderRadius: 16, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: 'rgba(199,255,61,0.25)', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View>
+            <Text style={{ fontSize: 11, color: '#8094A6', fontWeight: '600' }}>Today's Earnings</Text>
+            <Text style={{ fontSize: 24, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>₹ 2,480</Text>
+          </View>
+          <View style={{ backgroundColor: 'rgba(199,255,61,0.1)', paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6 }}>
+            <Text style={{ fontSize: 11, fontWeight: '800', color: '#C7FF3D' }}>+ 12%</Text>
+          </View>
+        </View>
+
+        {/* Stats Row */}
+        <View style={{ flexDirection: 'row', gap: 8, marginBottom: 12 }}>
+          <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>6</Text>
+            <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Completed</Text>
+          </View>
+          <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>2h 45m</Text>
+            <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Online Time</Text>
+          </View>
+          <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#C7FF3D' }}>4.8</Text>
+            <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Rating</Text>
+          </View>
+        </View>
+
+        {/* Motivational Card */}
+        <View style={{ backgroundColor: 'rgba(199,255,61,0.08)', borderRadius: 12, padding: 12, marginBottom: 14, flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, borderColor: 'rgba(199,255,61,0.25)' }}>
+          <Text style={{ fontSize: 20 }}>🏆</Text>
+          <View>
+            <Text style={{ fontSize: 12, fontWeight: '800', color: '#F4F6F3' }}>Keep Going!</Text>
+            <Text style={{ fontSize: 10, color: '#8094A6' }}>You're doing great today.</Text>
+          </View>
         </View>
         
         {/* GO ONLINE AS (DRIVER MODES SELECTOR) */}

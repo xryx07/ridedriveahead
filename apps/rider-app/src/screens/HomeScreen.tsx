@@ -41,24 +41,25 @@ export const HomeScreen: React.FC = () => {
             style={styles.locationSelector}
             onPress={() =>
               setCurrentCity((prev) =>
-                prev.includes('Bengaluru') ? 'Gurugram, Delhi NCR' : 'Bengaluru, Karnataka'
+                prev.includes('Hyderabad') ? 'Banjara Hills, Hyderabad' : 'Hyderabad'
               )
             }
             activeOpacity={0.8}
           >
             <Text style={styles.locationPinIcon}>◉</Text>
-            <Text style={styles.locationCityText}>{currentCity}</Text>
+            <Text style={styles.locationCityText}>{currentCity.includes('Hyderabad') ? currentCity : 'Banjara Hills, Hyderabad'}</Text>
             <Text style={styles.dropdownChevron}>⌵</Text>
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity
           style={styles.notificationBtn}
-          onPress={() => alert('All systems operational. Telemetry active.')}
+          onPress={() => navigate('PROFILE')}
           activeOpacity={0.8}
         >
-          <Text style={styles.bellIcon}>◎</Text>
-          <View style={styles.notificationBadgeDot} />
+          <View style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: '#181D20', borderWidth: 1.5, borderColor: '#C7FF3D', alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ color: '#C7FF3D', fontWeight: '900', fontSize: 12 }}>AS</Text>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -67,49 +68,37 @@ export const HomeScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Active Booking Banner */}
-        {activeBooking && (
-          <TouchableOpacity
-            style={styles.activeRideBanner}
-            onPress={() => navigate('LIVE_TRACKING')}
-            activeOpacity={0.88}
-          >
-            <View style={styles.activeRideLeft}>
-              <View style={styles.activeBadgeRow}>
-                <View style={styles.pulseLiveDot} />
-                <Text style={styles.activeBadgeText}>
-                  {activeBooking.serviceMode === 'HIRE_DRIVER'
-                    ? 'ACTIVE CHAUFFEUR DUTY'
-                    : 'ACTIVE TRIP'}
-                </Text>
-              </View>
-              <Text style={styles.activeRideTitle}>
-                OTP PIN: {activeBooking.otpCode} • Driver Assigned
-              </Text>
-              <Text style={styles.activeRideSub} numberOfLines={1}>
-                {activeBooking.pickupAddress} ➔ {activeBooking.dropAddress}
-              </Text>
-            </View>
-            <View style={styles.activeRideAction}>
-              <Text style={styles.activeRideActionText}>Track →</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        {/* Skyline Greeting Banner */}
+        <View style={{ backgroundColor: '#121619', borderRadius: 16, padding: 18, marginBottom: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
+          <Text style={{ fontSize: 13, color: '#8094A6', fontWeight: '600' }}>Good morning,</Text>
+          <Text style={{ fontSize: 22, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>Aditya 👋</Text>
+        </View>
 
         {/* WHERE ARE YOU GOING? DESTINATION SEARCH BOX */}
-        <View style={styles.searchSection}>
-          <Text style={styles.searchPromptLabel}>Where are you going?</Text>
-          <TouchableOpacity
-            style={styles.searchBarBox}
-            onPress={() => navigate('FARE_ESTIMATE')}
-            activeOpacity={0.88}
-          >
-            <Text style={styles.searchGlassIcon}>⌕</Text>
-            <Text style={styles.searchPlaceholderText}>Search destination, airport, or tech park...</Text>
+        <View style={{ backgroundColor: '#121619', borderRadius: 16, padding: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', marginBottom: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <TouchableOpacity style={{ flex: 1 }} onPress={() => navigate('FARE_ESTIMATE')} activeOpacity={0.85}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+              <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#C7FF3D' }} />
+              <View>
+                <Text style={{ fontSize: 9, color: '#8094A6', fontWeight: '700' }}>PICKUP</Text>
+                <Text style={{ fontSize: 13, fontWeight: '700', color: '#F4F6F3' }}>Current location</Text>
+              </View>
+            </View>
+            <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.06)', marginLeft: 18, marginBottom: 8 }} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+              <View style={{ width: 8, height: 8, borderRadius: 2, backgroundColor: '#17D68A' }} />
+              <View>
+                <Text style={{ fontSize: 9, color: '#8094A6', fontWeight: '700' }}>DESTINATION</Text>
+                <Text style={{ fontSize: 13, fontWeight: '600', color: '#8094A6' }}>Enter destination</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: '#C7FF3D', alignItems: 'center', justifyContent: 'center' }} onPress={() => navigate('FARE_ESTIMATE')}>
+            <Text style={{ color: '#0B0D0F', fontWeight: '900', fontSize: 18 }}>→</Text>
           </TouchableOpacity>
         </View>
 
-        {/* 8-TILE CORE MOBILITY PLATFORM GRID */}
+        {/* 9-TILE CORE MOBILITY PLATFORM GRID */}
         <View style={styles.mobilityGridSection}>
           <Text style={styles.sectionTitle}>Mobility Options</Text>
           <View style={styles.mobilityTilesGrid}>
