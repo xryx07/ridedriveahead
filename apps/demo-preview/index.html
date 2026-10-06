@@ -3,56 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RideDriveAhead - One app. Every way to move.</title>
+    <title>RideDriveAhead — One App. Every Way to Move.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet.js Free OpenStreetMap & CartoDB Maps (Zero API Key Needed) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <style>
-        :root {
-            /* Light Mode Variables */
-            --bg-color: #FFFFFF;
-            --surface-color: #F5F7FA;
-            --surface-2-color: #ECEEF2;
-            --text-color: #0B0D0F;
-            --text-muted: rgba(0, 0, 0, 0.5);
-            --border-color: rgba(0, 0, 0, 0.1);
-            --accent-color: #C7FF3D;
-            --accent-text: #0B0D0F;
-            --nav-blur: rgba(255, 255, 255, 0.8);
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            --gradient-start: #E0E8F5;
-            --gradient-end: #F5F7FA;
+        /* =========================================================
+           RIDEDRIVEAHEAD PREMIUM MOBILITY DESIGN SYSTEM (UI/UX PRO MAX)
+           60% Neutral Ground | 30% Elevated Surface | 10% Electric Lime
+           ========================================================= */
+        :root, [data-theme="dark"] {
+            --bg: #0B0D0F;
+            --surface: #121619;
+            --surface-2: #181E23;
+            --surface-3: #222B32;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --border-active: #C7FF3D;
+            
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            
+            --accent: #C7FF3D;             /* Electric Lime signature */
+            --accent-glow: rgba(199, 255, 61, 0.18);
+            --accent-hover: #D5FF66;
+            --accent-contrast: #0B0D0F;
+            
+            --nav-bg: rgba(11, 13, 15, 0.85);
+            --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.65);
+            --modal-backdrop: rgba(4, 6, 8, 0.75);
+            
+            --hero-overlay-start: rgba(11, 13, 15, 0.55);
+            --hero-overlay-end: #0B0D0F;
+            --map-tile-url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+            --map-subdomains: 'abcd';
         }
 
-        [data-theme="dark"] {
-            /* Dark Mode Variables */
-            --bg-color: #0B0D0F;
-            --surface-color: #121619;
-            --surface-2-color: #181D20;
-            --text-color: #F4F6F3;
-            --text-muted: rgba(255, 255, 255, 0.5);
-            --border-color: rgba(255, 255, 255, 0.1);
-            --accent-color: #C7FF3D;
-            --accent-text: #0B0D0F;
-            --nav-blur: rgba(11, 13, 15, 0.8);
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            --gradient-start: #0a1128;
-            --gradient-end: #0B0D0F;
+        [data-theme="light"] {
+            --bg: #FFFFFF;
+            --surface: #F8FAFC;
+            --surface-2: #F1F5F9;
+            --surface-3: #E2E8F0;
+            --border: rgba(15, 23, 42, 0.08);
+            --border-hover: rgba(15, 23, 42, 0.18);
+            --border-active: #0F172A;
+            
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            
+            --accent: #C7FF3D;
+            --accent-glow: rgba(199, 255, 61, 0.35);
+            --accent-hover: #B8F22A;
+            --accent-contrast: #0B0D0F;
+            
+            --nav-bg: rgba(255, 255, 255, 0.88);
+            --card-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.08);
+            --modal-backdrop: rgba(15, 23, 42, 0.5);
+            
+            --hero-overlay-start: rgba(255, 255, 255, 0.35);
+            --hero-overlay-end: #FFFFFF;
+            --map-tile-url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+            --map-subdomains: 'abcd';
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
             line-height: 1.5;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.25s ease, color 0.25s ease;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         a {
@@ -60,1342 +95,2198 @@
             color: inherit;
         }
 
-        button {
-            border: none;
-            background: none;
-            cursor: pointer;
+        button, input, select {
             font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
             color: inherit;
         }
 
-        /* Container */
+        button {
+            cursor: pointer;
+        }
+
+        button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
         .container {
-            max-width: 1440px;
+            max-width: 1360px;
             margin: 0 auto;
-            padding: 0 5%;
+            padding: 0 24px;
         }
 
-        /* Buttons */
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: var(--accent-text);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: transform 0.2s, opacity 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        .btn-outline {
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--accent-color);
-            color: var(--accent-text);
-        }
-
-        /* Header */
-        header {
+        /* =========================================================
+           TOP NAVIGATION BAR
+           ========================================================= */
+        header.site-header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             z-index: 1000;
-            background-color: var(--nav-blur);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s, border-color 0.3s;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.25s ease, border-color 0.25s ease;
         }
 
         .header-inner {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 80px;
+            justify-content: space-between;
+            height: 76px;
         }
 
-        .logo-area {
+        .brand-logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
         }
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
+        .brand-icon-wrap {
+            width: 40px;
+            height: 40px;
+            background: var(--surface-2);
+            border: 1px solid var(--border-hover);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-text);
-            font-weight: 900;
-            font-size: 18px;
+            color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
+        }
+        .brand-logo:hover .brand-icon-wrap {
+            transform: scale(1.05);
         }
 
-        .logo-text {
-            font-size: 20px;
+        .brand-text-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 19px;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            line-height: 1.15;
         }
 
-        .logo-tagline {
-            font-size: 12px;
+        .brand-subtitle {
+            font-size: 11px;
+            font-weight: 500;
             color: var(--text-muted);
-            margin-left: 8px;
-            display: none;
+            letter-spacing: -0.01em;
         }
 
-        @media (min-width: 1024px) {
-            .logo-tagline { display: inline-block; }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .nav-links {
-            display: none;
-            gap: 24px;
-        }
-
-        @media (min-width: 1024px) {
-            .nav-links { display: flex; }
-        }
-
-        .nav-link {
+        .nav-item {
+            padding: 8px 14px;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 15px;
-            color: var(--text-color);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            transition: color 0.15s ease, background-color 0.15s ease;
             position: relative;
-            padding: 8px 0;
         }
 
-        .nav-link.active {
-            color: var(--text-color);
+        .nav-item:hover {
+            color: var(--text-primary);
+            background-color: var(--surface);
         }
 
-        .nav-link::after {
+        .nav-item.active {
+            color: var(--text-primary);
+        }
+
+        .nav-item.active::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0%;
+            bottom: -2px;
+            left: 14px;
+            right: 14px;
             height: 2px;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link.active::after, .nav-link:hover::after {
-            width: 100%;
+            background-color: var(--accent);
+            border-radius: 2px;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .icon-btn {
-            font-size: 20px;
+        .action-icon-btn {
             width: 40px;
             height: 40px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background-color: var(--surface-color);
-            transition: background-color 0.2s;
+            color: var(--text-secondary);
+            transition: all 0.15s ease;
+        }
+        .action-icon-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            background: var(--surface-2);
         }
 
-        .icon-btn:hover {
-            background-color: var(--surface-2-color);
-        }
-
-        .login-link {
+        .login-btn {
+            font-size: 14px;
             font-weight: 600;
-            font-size: 15px;
-            display: none;
+            padding: 8px 16px;
+            color: var(--text-primary);
+            border-radius: 8px;
+            transition: background 0.15s ease;
         }
-        
-        @media (min-width: 768px) {
-            .login-link { display: block; }
+        .login-btn:hover {
+            background: var(--surface);
         }
 
-        /* Hero Section */
-        .hero {
-            padding-top: 120px;
-            padding-bottom: 80px;
-            background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+        .cta-btn-primary {
+            background-color: var(--accent);
+            color: var(--accent-contrast);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 10px 22px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px var(--accent-glow);
+            transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        }
+        .cta-btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+        .cta-btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           HERO SECTION WITH CINEMATIC PHOTOGRAPHY & BOOKING HUB
+           ========================================================= */
+        .hero-section {
             position: relative;
+            padding-top: 140px;
+            padding-bottom: 90px;
+            min-height: 820px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             overflow: hidden;
         }
-        
-        .hero::before {
-            content: '';
+
+        .hero-bg-media {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(to top, var(--bg-color), transparent);
-            pointer-events: none;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center 38%;
+            background-repeat: no-repeat;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="dark"] .hero-bg-media {
+            /* High-res cinematic urban twilight skyline with modern luxury car */
+            background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2200&q=82');
+        }
+
+        [data-theme="light"] .hero-bg-media {
+            /* Modern daytime skyline with clean luxury mobility */
+            background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=2200&q=82');
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(180deg, 
+                var(--hero-overlay-start) 0%, 
+                rgba(11, 13, 15, 0.7) 45%, 
+                var(--hero-overlay-end) 95%
+            );
+        }
+
+        [data-theme="light"] .hero-overlay {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.4) 0%, 
+                rgba(255, 255, 255, 0.85) 60%, 
+                #FFFFFF 98%
+            );
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 1040px;
         }
 
-        .breadcrumb {
-            font-size: 12px;
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
             font-weight: 700;
-            color: var(--accent-color);
-            letter-spacing: 1px;
-            margin-bottom: 24px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            background: rgba(199, 255, 61, 0.08);
+            border: 1px solid rgba(199, 255, 61, 0.25);
+            padding: 6px 16px;
+            border-radius: 100px;
+            backdrop-filter: blur(12px);
+        }
+
+        [data-theme="light"] .hero-eyebrow {
+            background: rgba(15, 23, 42, 0.06);
+            border-color: rgba(15, 23, 42, 0.15);
+            color: #0F172A;
         }
 
         .hero-title {
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
-            margin-bottom: 16px;
+            font-size: 68px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 20px;
         }
-        
-        .hero-title .highlight {
-            color: var(--accent-color);
+
+        .hero-title .accent-text {
+            color: var(--accent);
             display: block;
+        }
+
+        [data-theme="light"] .hero-title .accent-text {
+            color: #10B981;
         }
 
         .hero-subtitle {
             font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 48px;
-            white-space: pre-line;
+            font-weight: 500;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.5;
         }
 
-        .service-icons {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            padding-bottom: 16px;
-            margin-bottom: 32px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            justify-content: flex-start;
-        }
-        
-        @media (min-width: 1024px) {
-            .service-icons { justify-content: center; }
-        }
-
-        .service-icons::-webkit-scrollbar {
-            display: none;
-        }
-
-        .service-icon-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            min-width: 80px;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-
-        .service-icon-btn.active, .service-icon-btn:hover {
-            opacity: 1;
-        }
-
-        .service-icon-box {
-            width: 64px;
-            height: 64px;
-            background-color: var(--surface-color);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .service-icon-btn.active .service-icon-box {
-            border-color: var(--accent-color);
-            background-color: var(--surface-2-color);
-        }
-
-        .service-icon-label {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .booking-widget {
-            background-color: var(--surface-color);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .booking-widget {
-                flex-direction: row;
-                align-items: center;
-                padding: 12px 12px 12px 24px;
-                border-radius: 100px;
-            }
-        }
-
-        .booking-field {
+        /* Service Selector Icons Row */
+        .service-nav-strip {
             display: flex;
             align-items: center;
             gap: 12px;
-            flex: 1;
+            margin-bottom: 28px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        .service-nav-strip::-webkit-scrollbar {
+            display: none;
         }
 
-        .booking-icon {
-            font-size: 20px;
-            color: var(--text-muted);
-        }
-
-        .booking-input-wrap {
+        .service-pill-btn {
             display: flex;
             flex-direction: column;
-            flex: 1;
+            align-items: center;
+            justify-content: center;
+            min-width: 86px;
+            height: 84px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        .booking-label {
+        .service-pill-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 1.8;
+            margin-bottom: 8px;
+            transition: transform 0.2s ease, stroke 0.2s ease;
+        }
+
+        .service-pill-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        .service-pill-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            background: var(--surface-2);
+        }
+
+        .service-pill-btn.active {
+            background: var(--surface-2);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .service-pill-btn.active svg {
+            stroke: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Floating Booking Widget Bar */
+        .booking-widget-bar {
+            display: flex;
+            align-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border-hover);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            margin-bottom: 24px;
+        }
+
+        .widget-input-slot {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px;
+            position: relative;
+        }
+
+        .widget-input-slot:not(:last-of-type)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .slot-icon-wrap {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slot-icon-wrap.pickup {
+            color: var(--accent);
+        }
+
+        .slot-text-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .slot-label {
             font-size: 11px;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
         }
 
-        .booking-input {
-            background: none;
-            border: none;
-            color: var(--text-color);
+        .slot-input {
             font-size: 15px;
             font-weight: 600;
-            font-family: inherit;
-            outline: none;
+            color: var(--text-primary);
             width: 100%;
         }
-
-        .booking-input::placeholder {
-            color: var(--text-color);
-            font-weight: 600;
-            opacity: 0.7;
-        }
-
-        .booking-divider {
-            width: 100%;
-            height: 1px;
-            background-color: var(--border-color);
-        }
-
-        @media (min-width: 768px) {
-            .booking-divider {
-                width: 1px;
-                height: 32px;
-            }
-        }
-
-        .booking-btn {
-            border-radius: 12px;
-            padding: 16px;
-            min-width: 120px;
-        }
-
-        @media (min-width: 768px) {
-            .booking-btn {
-                border-radius: 100px;
-            }
-        }
-
-        .trust-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px 32px;
-            margin-top: 32px;
-        }
-
-        .trust-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
+        .slot-input::placeholder {
+            color: var(--text-secondary);
             font-weight: 500;
-            color: var(--text-muted);
-        }
-        
-        .trust-badge-icon {
-            color: var(--accent-color);
-            font-size: 16px;
         }
 
-        /* Section Global */
-        section {
-            padding: 80px 0;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: clamp(28px, 4vw, 40px);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 8px;
-        }
-
-        .section-subtitle {
-            font-size: 16px;
-            color: var(--text-muted);
-        }
-
-        .view-all {
-            color: var(--accent-color);
-            font-weight: 600;
+        .widget-action-btn {
+            padding: 16px 36px;
+            border-radius: 14px;
+            background: var(--accent);
+            color: var(--accent-contrast);
             font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 18px var(--accent-glow);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .widget-action-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
+            box-shadow: 0 6px 24px var(--accent-glow);
+        }
+
+        /* Trust Badges Strip */
+        .trust-badges-strip {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge-item {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        .view-all:hover {
-            text-decoration: underline;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        /* Popular Services */
-        .services-scroll {
+        .trust-badge-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(199, 255, 61, 0.15);
+            color: var(--accent);
             display: flex;
-            gap: 24px;
-            overflow-x: auto;
-            padding-bottom: 24px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            margin: 0 -5%;
-            padding: 0 5% 24px;
+            align-items: center;
+            justify-content: center;
         }
-        
-        .services-scroll::-webkit-scrollbar { display: none; }
 
-        .service-card {
-            min-width: 280px;
-            height: 360px;
-            border-radius: 16px;
-            position: relative;
+        [data-theme="light"] .trust-badge-icon {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+        }
+
+        /* =========================================================
+           INTERACTIVE MAP & SMART DISPATCH DRAWER (LEAFLET)
+           ========================================================= */
+        .live-map-container {
+            margin-top: 36px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
             overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--card-shadow);
+            display: none; /* Shown dynamically upon search */
+            animation: fadeInMap 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInMap {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .map-interactive-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .map-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(199, 255, 61, 0.7);
+            animation: pulseWave 1.8s infinite;
+        }
+        @keyframes pulseWave {
+            0% { box-shadow: 0 0 0 0 rgba(199, 255, 61, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(199, 255, 61, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(199, 255, 61, 0); }
+        }
+
+        .map-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 390px;
+            min-height: 480px;
+        }
+
+        #rideMap {
+            width: 100%;
+            height: 100%;
+            min-height: 480px;
+            background: #0B0D0F;
+        }
+
+        .dispatch-ride-options {
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 520px;
+        }
+
+        .dispatch-title {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fare-lock-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(199, 255, 61, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .ride-tier-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .ride-tier-card:hover {
+            border-color: var(--border-hover);
+            transform: translateX(2px);
+        }
+        .ride-tier-card.selected {
+            border-color: var(--accent);
+            background: rgba(199, 255, 61, 0.05);
+        }
+
+        .tier-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tier-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--surface-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
+
+        .tier-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .tier-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .tier-price-box {
+            text-align: right;
+        }
+        .tier-price {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .tier-subprice {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .confirm-booking-btn {
+            margin-top: 14px;
+            background: var(--accent);
+            color: var(--accent-contrast);
+            font-size: 15px;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.15s ease;
+        }
+        .confirm-booking-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* =========================================================
+           POPULAR SERVICES SECTION (EDITORIAL PHOTOGRAPHY CARDS)
+           ========================================================= */
+        .section-popular {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .section-heading-block h2 {
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .section-heading-block p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .view-all-link {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s ease;
+        }
+        .view-all-link:hover {
+            gap: 10px;
+        }
+
+        [data-theme="light"] .view-all-link {
+            color: #0F172A;
+        }
+
+        .services-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .service-photo-card {
+            position: relative;
+            height: 380px;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             padding: 24px;
-            text-decoration: none;
-            color: #fff;
-            transition: transform 0.3s;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
         }
 
-        .service-card:hover {
-            transform: translateY(-8px);
+        .service-photo-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
         }
 
-        .service-card-bg {
+        .card-bg-img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+            z-index: 0;
+        }
+        .service-photo-card:hover .card-bg-img {
+            transform: scale(1.06);
+        }
+
+        .card-gradient-overlay {
+            position: absolute;
+            inset: 0;
             z-index: 1;
-            background: linear-gradient(135deg, #2A313C, #121619);
+            background: linear-gradient(180deg, 
+                rgba(11, 13, 15, 0.1) 0%, 
+                rgba(11, 13, 15, 0.5) 50%, 
+                rgba(11, 13, 15, 0.95) 100%
+            );
         }
 
-        .service-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            z-index: 2;
-        }
-
-        .service-card-content {
+        .card-content-bottom {
             position: relative;
-            z-index: 3;
+            z-index: 2;
             display: flex;
-            justify-content: space-between;
             align-items: flex-end;
-        }
-        
-        .service-card-text h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .service-card-text p {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-
-        .service-card-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-            color: var(--accent-text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        /* Why Section */
-        .why-section {
-            background-color: #0B0D0F; /* Always dark */
-            color: #F4F6F3;
-        }
-
-        .why-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 48px;
-            align-items: center;
-        }
-
-        @media (min-width: 1024px) {
-            .why-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .why-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: rgba(255,255,255,0.5);
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .why-title {
-            font-size: clamp(36px, 5vw, 48px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 8px;
-        }
-
-        .why-subtitle {
-            font-size: clamp(24px, 3vw, 32px);
-            font-weight: 700;
-            color: #C7FF3D;
-            font-style: italic;
-            margin-bottom: 40px;
-        }
-
-        .why-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .why-feature-title {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .why-feature-title span {
-            color: #C7FF3D;
-        }
-
-        .why-feature-desc {
-            font-size: 14px;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .why-image {
-            height: 400px;
-            background: linear-gradient(45deg, #181D20, #2A313C);
-            border-radius: 24px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .why-image::after {
-            content: '🚗';
-            font-size: 120px;
-            opacity: 0.5;
-        }
-
-        /* Hire Banner CTA */
-        .hire-banner-container {
-            padding: 0 5%;
-        }
-
-        .hire-banner {
-            background-color: #1a2332; /* Navy */
-            border-radius: 24px;
-            padding: 48px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        @media (min-width: 768px) {
-            .hire-banner {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-
-        .hire-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hire-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 8px;
-        }
-
-        .hire-title {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .hire-tagline {
-            font-size: 18px;
-            color: #C7FF3D;
-            margin-bottom: 24px;
-        }
-
-        /* Rental Marketplace */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 32px;
-        }
-
-        .tab-btn {
-            padding: 12px 24px;
-            border-radius: 100px;
-            font-weight: 600;
-            font-size: 15px;
-            background-color: var(--surface-color);
-            color: var(--text-color);
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            background-color: var(--text-color);
-            color: var(--bg-color);
-        }
-
-        .rental-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        .rental-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-
-        .rental-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .rental-img {
-            height: 180px;
-            background: linear-gradient(135deg, var(--surface-2-color), var(--surface-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-        }
-
-        .rental-info {
-            padding: 20px;
-        }
-
-        .rental-header {
-            display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+        }
+
+        .card-titles-wrap h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .card-titles-wrap p {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-arrow-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .service-photo-card:hover .card-arrow-circle {
+            background: var(--accent);
+            color: var(--accent-contrast);
+            transform: translateX(4px);
+        }
+
+        /* =========================================================
+           WHY RIDEDRIVEAHEAD (MORE THAN JUST RIDES) FEATURE SECTION
+           ========================================================= */
+        .section-why-experience {
+            padding: 80px 0;
+        }
+
+        .why-feature-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 60px;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .why-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
             margin-bottom: 12px;
         }
 
-        .rental-name {
-            font-size: 18px;
-            font-weight: 700;
+        .why-headline-main {
+            font-size: 44px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 8px;
         }
 
-        .rental-rating {
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .rental-rating::before {
-            content: '⭐';
-        }
-
-        .rental-specs {
-            display: flex;
-            gap: 12px;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .rental-spec {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background-color: var(--surface-2-color);
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .rental-price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .rental-price {
-            font-size: 20px;
+        .why-headline-sub {
+            font-size: 32px;
             font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+            margin-bottom: 36px;
         }
 
-        .rental-price span {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
+        [data-theme="light"] .why-headline-sub {
+            color: #10B981;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--surface-color);
-            padding: 80px 0 40px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-grid {
+        .why-grid-perks {
             display: grid;
-            grid-template-columns: 2fr repeat(2, 1fr);
-            gap: 40px;
-            margin-bottom: 60px;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px 24px;
+            margin-bottom: 40px;
         }
 
-        @media (min-width: 1024px) {
-            .footer-grid { grid-template-columns: 2fr repeat(4, 1fr); }
-        }
-
-        .footer-brand .logo-area {
-            margin-bottom: 16px;
-        }
-
-        .footer-desc {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 24px;
-            max-width: 300px;
-        }
-
-        .social-links {
+        .why-perk-item {
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .social-link {
-            width: 40px;
-            height: 40px;
+        .perk-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .perk-check {
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background-color: var(--surface-2-color);
+            background: rgba(199, 255, 61, 0.12);
+            color: var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            transition: background-color 0.2s;
         }
 
-        .social-link:hover {
-            background-color: var(--accent-color);
-            color: var(--accent-text);
+        [data-theme="light"] .perk-check {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
         }
 
-        .footer-col-title {
-            font-size: 16px;
+        .perk-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding-left: 28px;
+        }
+
+        .why-editorial-media {
+            position: relative;
+            height: 440px;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .why-editorial-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* =========================================================
+           HIRE A DRIVER BANNER (FOR OWN CAR)
+           ========================================================= */
+        .section-driver-banner {
+            padding: 40px 0 80px;
+        }
+
+        .driver-cta-card {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 48px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .driver-cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 580px;
+        }
+
+        .driver-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(199, 255, 61, 0.1);
+            border: 1px solid rgba(199, 255, 61, 0.2);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
             font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        [data-theme="light"] .driver-badge-pill {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+
+        .driver-cta-heading {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .driver-cta-subtext {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .driver-cta-media {
+            position: relative;
+            z-index: 1;
+            width: 440px;
+            height: 220px;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        .driver-cta-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* =========================================================
+           RENTAL MARKETPLACE SHOWCASE (CARS & BIKES)
+           ========================================================= */
+        .section-rental-marketplace {
+            padding: 80px 0 100px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rental-tabs-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .rental-category-tab {
+            font-size: 15px;
+            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 100px;
+            color: var(--text-secondary);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+        .rental-category-tab:hover {
+            color: var(--text-primary);
+        }
+        .rental-category-tab.active {
+            background: var(--accent);
+            color: var(--accent-contrast);
+            border-color: var(--accent);
+        }
+
+        .rental-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .rental-item-card {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        .rental-item-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+        }
+
+        .rental-card-img-wrap {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        .rental-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .rental-item-card:hover .rental-card-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .rental-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(11, 13, 15, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .rental-card-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .rental-title-price {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .rental-car-name {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .rental-car-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .rental-rate-amount {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-align: right;
+        }
+        .rental-rate-period {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .rental-features-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
             margin-bottom: 20px;
         }
 
-        .footer-links {
+        .rental-tag-pill {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--surface-3);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .rental-cta-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rental-book-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--accent);
+            color: var(--accent-contrast);
+            font-size: 13px;
+            font-weight: 800;
+            border-radius: 10px;
+            text-align: center;
+            transition: background 0.15s ease;
+        }
+        .rental-book-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* =========================================================
+           COMMERCIAL FOOTER
+           ========================================================= */
+        footer.site-footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid-cols {
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand-summary {
+            max-width: 320px;
+        }
+
+        .footer-brand-summary p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
             list-style: none;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .footer-links a {
-            color: var(--text-muted);
+        .footer-col a {
             font-size: 14px;
-            transition: color 0.2s;
+            color: var(--text-secondary);
+            transition: color 0.15s ease;
+        }
+        .footer-col a:hover {
+            color: var(--text-primary);
         }
 
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .footer-bottom {
+        .footer-bottom-row {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            justify-content: space-between;
             padding-top: 32px;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border);
+            font-size: 13px;
             color: var(--text-muted);
-            font-size: 14px;
         }
 
-        @media (min-width: 768px) {
-            .footer-bottom {
-                flex-direction: row;
-                justify-content: space-between;
+        /* =========================================================
+           RESPONSIVE REFLOW (375px, 768px, 1024px, 1440px)
+           ========================================================= */
+        @media (max-width: 1180px) {
+            .services-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .why-feature-container {
+                grid-template-columns: 1fr;
+            }
+            .driver-cta-card {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+            .driver-cta-media {
+                width: 100%;
             }
         }
-        
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
+
+        @media (max-width: 900px) {
+            .nav-menu {
+                display: none;
+            }
+            .hero-title {
+                font-size: 48px;
+            }
+            .booking-widget-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .widget-input-slot:not(:last-of-type)::after {
+                display: none;
+            }
+            .widget-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .services-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .rental-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .map-layout-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid-cols {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .modal {
-            background-color: var(--surface-color);
-            padding: 32px;
-            border-radius: 24px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            transform: translateY(20px);
-            transition: transform 0.3s;
-        }
-        
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
-        
-        .modal h3 {
-            margin: 16px 0 8px;
-        }
-        
-        .modal p {
-            color: var(--text-muted);
-            margin-bottom: 24px;
+
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 38px;
+            }
+            .services-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .trust-badges-strip {
+                gap: 16px;
+            }
+            .why-grid-perks {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid-cols {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header id="header">
+    <!-- =========================================================
+         SITE HEADER
+         ========================================================= -->
+    <header class="site-header">
         <div class="container header-inner">
-            <div class="logo-area">
-                <div class="logo-icon">R</div>
-                <div class="logo-text">RideDriveAhead</div>
-                <div class="logo-tagline">One app. Every way to move.</div>
+            <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="brand-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                        <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6"></path>
+                    </svg>
+                </div>
+                <div class="brand-text-wrap">
+                    <span class="brand-title">RideDriveAhead</span>
+                    <span class="brand-subtitle">One app. Every way to move.</span>
+                </div>
             </div>
-            
-            <nav class="nav-links">
-                <a href="#ride" class="nav-link active">Ride</a>
-                <a href="#rent" class="nav-link">Rent</a>
-                <a href="#hire" class="nav-link">Hire Driver</a>
-                <a href="#outstation" class="nav-link">Outstation</a>
-                <a href="#airport" class="nav-link">Airport</a>
-                <a href="#delivery" class="nav-link">Delivery</a>
-                <a href="#business" class="nav-link">Business</a>
+
+            <nav class="nav-menu">
+                <a href="#ride" class="nav-item active" onclick="selectService('cab')">Ride</a>
+                <a href="#rent" class="nav-item" onclick="selectService('rent-car')">Rent</a>
+                <a href="#hire-driver" class="nav-item" onclick="selectService('hire-driver')">Hire Driver</a>
+                <a href="#outstation" class="nav-item" onclick="selectService('outstation')">Outstation</a>
+                <a href="#airport" class="nav-item" onclick="selectService('airport')">Airport</a>
+                <a href="#delivery" class="nav-item" onclick="selectService('delivery')">Delivery</a>
+                <a href="#business" class="nav-item">Business</a>
             </nav>
 
             <div class="header-actions">
-                <button class="icon-btn" aria-label="Help">❔</button>
-                <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme">🌙</button>
-                <a href="#" class="login-link">Login</a>
-                <button class="btn-primary">Book Now</button>
+                <button class="action-icon-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode">
+                    <!-- Sun / Moon SVG dynamically rendered -->
+                    <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                </button>
+                <a href="#login" class="login-btn">Login</a>
+                <button class="cta-btn-primary" onclick="focusBookingSearch()">
+                    Book Now
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="ride">
+    <!-- =========================================================
+         HERO SECTION: BOOKING HUB & DISPATCH WIDGET
+         ========================================================= -->
+    <section class="hero-section" id="ride">
+        <div class="hero-bg-media"></div>
+        <div class="hero-overlay"></div>
+
         <div class="container hero-content">
-            <div class="breadcrumb">RIDE · RENT · HIRE DRIVER · OUTSTATION · AIRPORT · DELIVERY</div>
+            <div class="hero-eyebrow">
+                RIDE · RENT · HIRE DRIVER · OUTSTATION · AIRPORT · DELIVERY
+            </div>
+
             <h1 class="hero-title">
                 Your journey.
-                <span class="highlight">Our priority.</span>
+                <span class="accent-text">Our priority.</span>
             </h1>
-            <p class="hero-subtitle">Taxis, rentals, professional drivers and more —<br>all in one place.</p>
-            
-            <div class="service-icons">
-                <button class="service-icon-btn active">
-                    <div class="service-icon-box">🚕</div>
-                    <span class="service-icon-label">Cab</span>
+
+            <p class="hero-subtitle">
+                Taxis, rentals, professional drivers and more — all in one unified mobility platform.
+            </p>
+
+            <!-- 9 Service Selection Pills -->
+            <div class="service-nav-strip">
+                <button class="service-pill-btn active" data-service="cab" onclick="selectService('cab')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0H9"/></svg>
+                    <span class="service-pill-label">Cab</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">🛺</div>
-                    <span class="service-icon-label">Auto</span>
+                <button class="service-pill-btn" data-service="auto" onclick="selectService('auto')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3l1-8 6-3h4l4 4 1 7h-2M9 17h6M10 6v5"/></svg>
+                    <span class="service-pill-label">Auto</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">🏍️</div>
-                    <span class="service-icon-label">Bike</span>
+                <button class="service-pill-btn" data-service="bike" onclick="selectService('bike')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5" cy="16" r="3"/><circle cx="19" cy="16" r="3"/><path d="M12 16l4-7h3M5 16l4-7 4 3 3-5"/></svg>
+                    <span class="service-pill-label">Bike</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">🚗</div>
-                    <span class="service-icon-label">Rent Car</span>
+                <button class="service-pill-btn" data-service="rent-car" onclick="selectService('rent-car')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    <span class="service-pill-label">Rent Car</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">🛵</div>
-                    <span class="service-icon-label">Rent Bike</span>
+                <button class="service-pill-btn" data-service="rent-bike" onclick="selectService('rent-bike')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6M12 17V8l3-3M6 14l3-6h4"/></svg>
+                    <span class="service-pill-label">Rent Bike</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">👨‍✈️</div>
-                    <span class="service-icon-label">Hire Driver</span>
+                <button class="service-pill-btn" data-service="hire-driver" onclick="selectService('hire-driver')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M12 3a9 9 0 0 0-9 9"/></svg>
+                    <span class="service-pill-label">Hire Driver</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">✈️</div>
-                    <span class="service-icon-label">Airport</span>
+                <button class="service-pill-btn" data-service="airport" onclick="selectService('airport')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+                    <span class="service-pill-label">Airport</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">🛣️</div>
-                    <span class="service-icon-label">Outstation</span>
+                <button class="service-pill-btn" data-service="outstation" onclick="selectService('outstation')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 3v18M16 3v18M12 7v2M12 15v2"/></svg>
+                    <span class="service-pill-label">Outstation</span>
                 </button>
-                <button class="service-icon-btn">
-                    <div class="service-icon-box">📦</div>
-                    <span class="service-icon-label">Delivery</span>
+                <button class="service-pill-btn" data-service="delivery" onclick="selectService('delivery')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+                    <span class="service-pill-label">Delivery</span>
                 </button>
             </div>
 
-            <div class="booking-widget">
-                <div class="booking-field">
-                    <div class="booking-icon">📍</div>
-                    <div class="booking-input-wrap">
-                        <span class="booking-label">Pickup Location</span>
-                        <input type="text" class="booking-input" placeholder="Enter pickup location">
+            <!-- Booking Widget Bar -->
+            <div class="booking-widget-bar">
+                <div class="widget-input-slot">
+                    <div class="slot-icon-wrap pickup">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="slot-text-content">
+                        <label class="slot-label" for="pickupInput">Pickup Location</label>
+                        <input type="text" id="pickupInput" class="slot-input" value="Indira Gandhi Intl Airport, T3" placeholder="Enter pickup address" />
                     </div>
                 </div>
-                
-                <div class="booking-divider"></div>
-                
-                <div class="booking-field">
-                    <div class="booking-icon">🏁</div>
-                    <div class="booking-input-wrap">
-                        <span class="booking-label">Destination</span>
-                        <input type="text" class="booking-input" placeholder="Where to?">
+
+                <div class="widget-input-slot">
+                    <div class="slot-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="slot-text-content">
+                        <label class="slot-label" for="dropInput">Destination</label>
+                        <input type="text" id="dropInput" class="slot-input" value="DLF Cyber City, Phase 2, Gurugram" placeholder="Where to?" />
                     </div>
                 </div>
-                
-                <div class="booking-divider"></div>
-                
-                <div class="booking-field">
-                    <div class="booking-icon">⏰</div>
-                    <div class="booking-input-wrap">
-                        <span class="booking-label">Date & Time</span>
-                        <select class="booking-input" style="appearance: none; cursor: pointer;">
-                            <option>Today, 10:00 AM</option>
-                            <option>Today, 11:00 AM</option>
-                            <option>Today, 12:00 PM</option>
+
+                <div class="widget-input-slot" style="max-width: 240px;">
+                    <div class="slot-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="slot-text-content">
+                        <label class="slot-label" for="scheduleSelect">Date & Time</label>
+                        <select id="scheduleSelect" class="slot-input" style="cursor: pointer;">
+                            <option>Now · Instant Dispatch</option>
+                            <option>Today · 06:30 PM</option>
+                            <option>Tomorrow · 06:00 AM (Airport)</option>
+                            <option>Custom Advance Booking</option>
                         </select>
                     </div>
-                    <div class="booking-icon" style="font-size: 14px;">⌄</div>
                 </div>
-                
-                <button class="btn-primary booking-btn" onclick="openModal()">🔍 Search</button>
+
+                <button class="widget-action-btn" onclick="executeRouteSearch()">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    Search
+                </button>
             </div>
 
-            <div class="trust-badges">
-                <div class="trust-badge"><span class="trust-badge-icon">✓</span> 24/7 Mobility</div>
-                <div class="trust-badge"><span class="trust-badge-icon">✓</span> Verified Drivers</div>
-                <div class="trust-badge"><span class="trust-badge-icon">✓</span> Transparent Pricing</div>
-                <div class="trust-badge"><span class="trust-badge-icon">✓</span> Safe & Reliable</div>
+            <!-- Trust Badges Strip -->
+            <div class="trust-badges-strip">
+                <div class="trust-badge-item">
+                    <span class="trust-badge-icon">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    24/7 Mobility
+                </div>
+                <div class="trust-badge-item">
+                    <span class="trust-badge-icon">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    Verified Drivers
+                </div>
+                <div class="trust-badge-item">
+                    <span class="trust-badge-icon">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    Transparent Pricing
+                </div>
+                <div class="trust-badge-item">
+                    <span class="trust-badge-icon">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    Safe & Reliable
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Popular Services -->
-    <section class="container">
-        <div class="section-header">
-            <div>
-                <h2 class="section-title">Popular Services</h2>
-                <p class="section-subtitle">Choose from a wide range of mobility options designed for your needs.</p>
-            </div>
-            <a href="#" class="view-all">View all services →</a>
-        </div>
-        
-        <div class="services-scroll">
-            <a href="#" class="service-card">
-                <div class="service-card-bg" style="background: linear-gradient(135deg, #1e3c72, #2a5298);"></div>
-                <div class="service-card-content">
-                    <div class="service-card-text">
-                        <h3>Ride</h3>
-                        <p>Cab, Auto & Bike</p>
+            <!-- Interactive Live Map & Smart Dispatch (Leaflet) -->
+            <div class="live-map-container" id="mapContainer">
+                <div class="map-interactive-header">
+                    <div class="map-status-pill">
+                        <span class="pulse-dot"></span>
+                        <span id="routeSummaryLabel">14.2 km · 28 mins via NH 48</span>
                     </div>
-                    <div class="service-card-btn">→</div>
-                </div>
-            </a>
-            
-            <a href="#rent" class="service-card">
-                <div class="service-card-bg" style="background: linear-gradient(135deg, #FF416C, #FF4B2B);"></div>
-                <div class="service-card-content">
-                    <div class="service-card-text">
-                        <h3>Rent</h3>
-                        <p>Cars & Bikes</p>
+                    <div style="font-size: 13px; color: var(--text-muted);">
+                        Locked Fare Guarantee (Zero Surge)
                     </div>
-                    <div class="service-card-btn">→</div>
                 </div>
-            </a>
-            
-            <a href="#hire" class="service-card">
-                <div class="service-card-bg" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
-                <div class="service-card-content">
-                    <div class="service-card-text">
-                        <h3>Hire a Driver</h3>
-                        <p>Your car, our professionals</p>
-                    </div>
-                    <div class="service-card-btn">→</div>
-                </div>
-            </a>
-            
-            <a href="#outstation" class="service-card">
-                <div class="service-card-bg" style="background: linear-gradient(135deg, #F2994A, #F2C94C);"></div>
-                <div class="service-card-content">
-                    <div class="service-card-text">
-                        <h3>Outstation</h3>
-                        <p>Explore beyond the city</p>
-                    </div>
-                    <div class="service-card-btn">→</div>
-                </div>
-            </a>
-            
-            <a href="#airport" class="service-card">
-                <div class="service-card-bg" style="background: linear-gradient(135deg, #8E2DE2, #4A00E0);"></div>
-                <div class="service-card-content">
-                    <div class="service-card-text">
-                        <h3>Airport</h3>
-                        <p>Reliable airport transfers</p>
-                    </div>
-                    <div class="service-card-btn">→</div>
-                </div>
-            </a>
-        </div>
-    </section>
+                <div class="map-layout-grid">
+                    <div id="rideMap"></div>
+                    <div class="dispatch-ride-options">
+                        <div class="dispatch-title">
+                            <span>Available Services</span>
+                            <span class="fare-lock-badge">✓ Guaranteed</span>
+                        </div>
 
-    <!-- Why Section -->
-    <section class="why-section">
-        <div class="container why-grid">
-            <div>
-                <span class="why-label">WHY RIDE DRIVE AHEAD</span>
-                <h2 class="why-title">More than just rides.</h2>
-                <h3 class="why-subtitle">It's a better way to move.</h3>
-                
-                <div class="why-features">
-                    <div>
-                        <div class="why-feature-title"><span>✓</span> Verified Drivers</div>
-                        <p class="why-feature-desc">Background & license checked</p>
-                    </div>
-                    <div>
-                        <div class="why-feature-title"><span>✓</span> Transparent Pricing</div>
-                        <p class="why-feature-desc">No hidden charges</p>
-                    </div>
-                    <div>
-                        <div class="why-feature-title"><span>✓</span> 24/7 Support</div>
-                        <p class="why-feature-desc">We're always here</p>
-                    </div>
-                    <div>
-                        <div class="why-feature-title"><span>✓</span> Safety First</div>
-                        <p class="why-feature-desc">Live tracking & SOS</p>
-                    </div>
-                </div>
-                
-                <button class="btn-outline">Learn more →</button>
-            </div>
-            
-            <div class="why-image"></div>
-        </div>
-    </section>
+                        <div class="ride-tier-card selected" onclick="selectTier(this, 'Cab Sedan', 389)">
+                            <div class="tier-details">
+                                <div class="tier-avatar">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0 2 2 0 1 0-4 0M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0H9"/></svg>
+                                </div>
+                                <div>
+                                    <div class="tier-name">Cab Sedan</div>
+                                    <div class="tier-meta">3 min away · Honda Amaze / Dzire</div>
+                                </div>
+                            </div>
+                            <div class="tier-price-box">
+                                <div class="tier-price">₹389</div>
+                                <div class="tier-subprice">Fastest</div>
+                            </div>
+                        </div>
 
-    <!-- Hire Banner CTA -->
-    <section class="hire-banner-container" id="hire">
-        <div class="hire-banner">
-            <div class="hire-content">
-                <p class="hire-subtitle">Have your own car?</p>
-                <h2 class="hire-title">Hire a professional driver.</h2>
-                <p class="hire-tagline">Safe. Verified. Professional.</p>
-            </div>
-            <button class="btn-primary" style="align-self: flex-start;">Book Driver →</button>
-        </div>
-    </section>
+                        <div class="ride-tier-card" onclick="selectTier(this, 'Auto Standard', 165)">
+                            <div class="tier-details">
+                                <div class="tier-avatar">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3l1-8 6-3h4l4 4 1 7h-2M9 17h6"/></svg>
+                                </div>
+                                <div>
+                                    <div class="tier-name">Auto Standard</div>
+                                    <div class="tier-meta">2 min away · Metered fare</div>
+                                </div>
+                            </div>
+                            <div class="tier-price-box">
+                                <div class="tier-price">₹165</div>
+                                <div class="tier-subprice">Pocket saver</div>
+                            </div>
+                        </div>
 
-    <!-- Rental Marketplace Section -->
-    <section class="container" id="rent">
-        <h2 class="section-title" style="margin-bottom: 24px;">Rent a car or bike</h2>
-        
-        <div class="tabs">
-            <button class="tab-btn active">Cars</button>
-            <button class="tab-btn">Bikes</button>
-        </div>
-        
-        <div class="rental-grid">
-            <!-- Card 1 -->
-            <div class="rental-card">
-                <div class="rental-img">🚙</div>
-                <div class="rental-info">
-                    <div class="rental-header">
-                        <div class="rental-name">Compact SUV</div>
-                        <div class="rental-rating">4.8</div>
-                    </div>
-                    <div class="rental-specs">
-                        <span class="rental-spec">Manual</span>
-                        <span class="rental-spec">Petrol</span>
-                        <span class="rental-spec">5 Seats</span>
-                    </div>
-                    <div class="rental-price-row">
-                        <div class="rental-price">₹1,500 <span>/ day</span></div>
-                        <button class="btn-primary" style="padding: 8px 16px;">Book</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="rental-card">
-                <div class="rental-img">🚘</div>
-                <div class="rental-info">
-                    <div class="rental-header">
-                        <div class="rental-name">Premium Sedan</div>
-                        <div class="rental-rating">4.9</div>
-                    </div>
-                    <div class="rental-specs">
-                        <span class="rental-spec">Auto</span>
-                        <span class="rental-spec">Diesel</span>
-                        <span class="rental-spec">5 Seats</span>
-                    </div>
-                    <div class="rental-price-row">
-                        <div class="rental-price">₹2,200 <span>/ day</span></div>
-                        <button class="btn-primary" style="padding: 8px 16px;">Book</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="rental-card">
-                <div class="rental-img">🚐</div>
-                <div class="rental-info">
-                    <div class="rental-header">
-                        <div class="rental-name">Family MUV</div>
-                        <div class="rental-rating">4.7</div>
-                    </div>
-                    <div class="rental-specs">
-                        <span class="rental-spec">Manual</span>
-                        <span class="rental-spec">Diesel</span>
-                        <span class="rental-spec">7 Seats</span>
-                    </div>
-                    <div class="rental-price-row">
-                        <div class="rental-price">₹2,800 <span>/ day</span></div>
-                        <button class="btn-primary" style="padding: 8px 16px;">Book</button>
+                        <div class="ride-tier-card" onclick="selectTier(this, 'Bike Taxi', 92)">
+                            <div class="tier-details">
+                                <div class="tier-avatar">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="16" r="3"/><circle cx="19" cy="16" r="3"/><path d="M12 16l4-7h3M5 16l4-7 4 3 3-5"/></svg>
+                                </div>
+                                <div>
+                                    <div class="tier-name">Bike Taxi</div>
+                                    <div class="tier-meta">1 min away · Solo commuter</div>
+                                </div>
+                            </div>
+                            <div class="tier-price-box">
+                                <div class="tier-price">₹92</div>
+                                <div class="tier-subprice">Beat traffic</div>
+                            </div>
+                        </div>
+
+                        <div class="ride-tier-card" onclick="selectTier(this, 'Hire Chauffeur (Own Car)', 549)">
+                            <div class="tier-details">
+                                <div class="tier-avatar">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                                </div>
+                                <div>
+                                    <div class="tier-name">Hire Chauffeur (Own Car)</div>
+                                    <div class="tier-meta">4-Hour Package · AT/MT Certified</div>
+                                </div>
+                            </div>
+                            <div class="tier-price-box">
+                                <div class="tier-price">₹549</div>
+                                <div class="tier-subprice">Your vehicle</div>
+                            </div>
+                        </div>
+
+                        <button class="confirm-booking-btn" id="confirmRideBtn" onclick="confirmTripAction()">
+                            Request Ride · ₹389
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <!-- =========================================================
+         POPULAR SERVICES: EDITORIAL PHOTOGRAPHY CARDS (MATCHES MOCK)
+         ========================================================= -->
+    <section class="section-popular" id="services">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="logo-area">
-                        <div class="logo-icon">R</div>
-                        <div class="logo-text">RideDriveAhead</div>
-                    </div>
-                    <p class="footer-desc">One app. Every way to move. Making mobility seamless, safe, and accessible for everyone.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">X</a>
-                        <a href="#" class="social-link">in</a>
-                        <a href="#" class="social-link">ig</a>
+            <div class="section-header-row">
+                <div class="section-heading-block">
+                    <h2>Popular Services</h2>
+                    <p>Choose from a wide range of mobility options designed for your needs.</p>
+                </div>
+                <a href="#all-services" class="view-all-link">
+                    View all services
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+            <div class="services-cards-grid">
+                <!-- 1. Ride Card -->
+                <div class="service-photo-card" onclick="selectService('cab')">
+                    <div class="card-bg-img" style="background-image: url('https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-gradient-overlay"></div>
+                    <div class="card-content-bottom">
+                        <div class="card-titles-wrap">
+                            <h3>Ride</h3>
+                            <p>Cab, Auto & Bike</p>
+                        </div>
+                        <div class="card-arrow-circle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
                     </div>
                 </div>
-                
-                <div>
-                    <h4 class="footer-col-title">Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="#">Blog</a></li>
+
+                <!-- 2. Rent Card -->
+                <div class="service-photo-card" onclick="selectService('rent-car')">
+                    <div class="card-bg-img" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-gradient-overlay"></div>
+                    <div class="card-content-bottom">
+                        <div class="card-titles-wrap">
+                            <h3>Rent</h3>
+                            <p>Cars & Bikes</p>
+                        </div>
+                        <div class="card-arrow-circle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Hire a Driver Card -->
+                <div class="service-photo-card" onclick="selectService('hire-driver')">
+                    <div class="card-bg-img" style="background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-gradient-overlay"></div>
+                    <div class="card-content-bottom">
+                        <div class="card-titles-wrap">
+                            <h3>Hire a Driver</h3>
+                            <p>Your car, our professional drivers</p>
+                        </div>
+                        <div class="card-arrow-circle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Outstation Card -->
+                <div class="service-photo-card" onclick="selectService('outstation')">
+                    <div class="card-bg-img" style="background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-gradient-overlay"></div>
+                    <div class="card-content-bottom">
+                        <div class="card-titles-wrap">
+                            <h3>Outstation</h3>
+                            <p>Explore beyond the city</p>
+                        </div>
+                        <div class="card-arrow-circle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Airport Card -->
+                <div class="service-photo-card" onclick="selectService('airport')">
+                    <div class="card-bg-img" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80');"></div>
+                    <div class="card-gradient-overlay"></div>
+                    <div class="card-content-bottom">
+                        <div class="card-titles-wrap">
+                            <h3>Airport</h3>
+                            <p>Reliable airport transfers</p>
+                        </div>
+                        <div class="card-arrow-circle">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         WHY RIDEDRIVEAHEAD (MORE THAN JUST RIDES)
+         ========================================================= -->
+    <section class="section-why-experience">
+        <div class="container">
+            <div class="why-feature-container">
+                <div class="why-text-content">
+                    <div class="why-eyebrow">WHY RIDE DRIVE AHEAD</div>
+                    <h2 class="why-headline-main">More than just rides.</h2>
+                    <h3 class="why-headline-sub">It's a better way to move.</h3>
+
+                    <div class="why-grid-perks">
+                        <div class="why-perk-item">
+                            <div class="perk-header">
+                                <span class="perk-check">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                                Verified Drivers
+                            </div>
+                            <div class="perk-desc">Background & license checked</div>
+                        </div>
+
+                        <div class="why-perk-item">
+                            <div class="perk-header">
+                                <span class="perk-check">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                                Transparent Pricing
+                            </div>
+                            <div class="perk-desc">No hidden charges or surge shock</div>
+                        </div>
+
+                        <div class="why-perk-item">
+                            <div class="perk-header">
+                                <span class="perk-check">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                                24/7 Support
+                            </div>
+                            <div class="perk-desc">Dedicated human assistance anytime</div>
+                        </div>
+
+                        <div class="why-perk-item">
+                            <div class="perk-header">
+                                <span class="perk-check">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                                Safety First
+                            </div>
+                            <div class="perk-desc">Live trip sharing & roadside telemetry</div>
+                        </div>
+                    </div>
+
+                    <button class="cta-btn-primary" style="background: transparent; border: 1px solid var(--accent); color: var(--accent); box-shadow: none;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                        Learn more
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+
+                <div class="why-editorial-media">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=800&q=80" alt="Comfortable Ride Experience" class="why-editorial-img" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         HIRE A DRIVER CALLOUT BANNER (OWN CAR)
+         ========================================================= -->
+    <section class="section-driver-banner" id="hire-driver">
+        <div class="container">
+            <div class="driver-cta-card">
+                <div class="driver-cta-content">
+                    <div class="driver-badge-pill">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+                        Professional Chauffeur Marketplace
+                    </div>
+                    <div class="why-eyebrow" style="color: var(--text-secondary); margin-bottom: 6px;">Have your own car?</div>
+                    <h2 class="driver-cta-heading">Hire a professional driver.</h2>
+                    <p class="driver-cta-subtext">Safe. Verified. Professional. Certified for Automatic (AT) and Manual (MT) transmissions.</p>
+                    
+                    <button class="cta-btn-primary" onclick="focusBookingSearch('Hire a Driver')">
+                        Book Driver
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+
+                <div class="driver-cta-media">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80" alt="Premium Car Chauffeur" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         RENTAL MARKETPLACE SECTION (CARS & BIKES SHOWCASE)
+         ========================================================= -->
+    <section class="section-rental-marketplace" id="rent">
+        <div class="container">
+            <div class="section-header-row">
+                <div class="section-heading-block">
+                    <h2>Rent a Car or Bike</h2>
+                    <p>Verified fleet from local partners. Choose self-drive or travel with a professional captain.</p>
+                </div>
+                <div style="font-size: 13px; color: var(--accent); font-weight: 700;">
+                    ✓ Zero Security Deposit on Select Fleets
+                </div>
+            </div>
+
+            <div class="rental-tabs-row">
+                <button class="rental-category-tab active" onclick="switchRentalTab('cars', this)">Cars (Self-Drive / With Driver)</button>
+                <button class="rental-category-tab" onclick="switchRentalTab('bikes', this)">Bikes & Scooters</button>
+            </div>
+
+            <div class="rental-cards-grid" id="rentalCardsContainer">
+                <!-- Vehicle 1: Honda City -->
+                <div class="rental-item-card">
+                    <div class="rental-card-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80" alt="Honda City ZX AT" />
+                        <span class="rental-card-badge">★ 4.92 · 140+ Trips</span>
+                    </div>
+                    <div class="rental-card-body">
+                        <div class="rental-title-price">
+                            <div>
+                                <div class="rental-car-name">Honda City ZX</div>
+                                <div class="rental-car-meta">Automatic · Petrol · 5 Seater</div>
+                            </div>
+                            <div>
+                                <div class="rental-rate-amount">₹1,800</div>
+                                <div class="rental-rate-period">per day</div>
+                            </div>
+                        </div>
+                        <div class="rental-features-tags">
+                            <span class="rental-tag-pill">Self-Drive ₹1,800/d</span>
+                            <span class="rental-tag-pill">+ Driver ₹3,200/d</span>
+                            <span class="rental-tag-pill">Free 250 km/day</span>
+                        </div>
+                        <div class="rental-cta-footer">
+                            <button class="rental-book-btn" onclick="reserveRentalVehicle('Honda City ZX')">Reserve Vehicle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle 2: Mahindra Thar 4x4 -->
+                <div class="rental-item-card">
+                    <div class="rental-card-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80" alt="Mahindra Thar 4x4" />
+                        <span class="rental-card-badge">★ 4.96 · 88 Trips</span>
+                    </div>
+                    <div class="rental-card-body">
+                        <div class="rental-title-price">
+                            <div>
+                                <div class="rental-car-name">Mahindra Thar 4x4</div>
+                                <div class="rental-car-meta">Automatic · Diesel · 4 Seater</div>
+                            </div>
+                            <div>
+                                <div class="rental-rate-amount">₹3,400</div>
+                                <div class="rental-rate-period">per day</div>
+                            </div>
+                        </div>
+                        <div class="rental-features-tags">
+                            <span class="rental-tag-pill">Adventure Ready</span>
+                            <span class="rental-tag-pill">Doorstep Delivery</span>
+                            <span class="rental-tag-pill">Zero Hidden Cost</span>
+                        </div>
+                        <div class="rental-cta-footer">
+                            <button class="rental-book-btn" onclick="reserveRentalVehicle('Mahindra Thar 4x4')">Reserve Vehicle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle 3: Tata Nexon EV Max -->
+                <div class="rental-item-card">
+                    <div class="rental-card-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80" alt="Tata Nexon EV Max" />
+                        <span class="rental-card-badge">★ 4.88 · EV Green</span>
+                    </div>
+                    <div class="rental-card-body">
+                        <div class="rental-title-price">
+                            <div>
+                                <div class="rental-car-name">Tata Nexon EV Max</div>
+                                <div class="rental-car-meta">Electric · Automatic · 5 Seater</div>
+                            </div>
+                            <div>
+                                <div class="rental-rate-amount">₹2,100</div>
+                                <div class="rental-rate-period">per day</div>
+                            </div>
+                        </div>
+                        <div class="rental-features-tags">
+                            <span class="rental-tag-pill">437 km Range</span>
+                            <span class="rental-tag-pill">Free Fast Charging</span>
+                            <span class="rental-tag-pill">Clean Green</span>
+                        </div>
+                        <div class="rental-cta-footer">
+                            <button class="rental-book-btn" onclick="reserveRentalVehicle('Tata Nexon EV Max')">Reserve Vehicle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         COMMERCIAL ENTERPRISE FOOTER
+         ========================================================= -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid-cols">
+                <div class="footer-brand-summary">
+                    <div class="brand-logo">
+                        <div class="brand-icon-wrap">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6"/></svg>
+                        </div>
+                        <div class="brand-text-wrap">
+                            <span class="brand-title">RideDriveAhead</span>
+                            <span class="brand-subtitle">Mobility Operating System</span>
+                        </div>
+                    </div>
+                    <p>
+                        A unified mobility platform empowering passengers with taxis, rentals, and verified chauffeurs for personal vehicles. Built for scale, safety, and reliability.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Mobility</h4>
+                    <ul>
+                        <li><a href="#ride" onclick="selectService('cab')">Book a Cab</a></li>
+                        <li><a href="#ride" onclick="selectService('auto')">Auto Rickshaw</a></li>
+                        <li><a href="#ride" onclick="selectService('bike')">Bike Taxi</a></li>
+                        <li><a href="#ride" onclick="selectService('airport')">Airport Transfers</a></li>
+                        <li><a href="#ride" onclick="selectService('outstation')">Outstation Rides</a></li>
                     </ul>
                 </div>
-                
-                <div>
-                    <h4 class="footer-col-title">Products</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Ride</a></li>
-                        <li><a href="#">Rent</a></li>
-                        <li><a href="#">Hire Driver</a></li>
-                        <li><a href="#">Business</a></li>
+
+                <div class="footer-col">
+                    <h4>Rent & Drive</h4>
+                    <ul>
+                        <li><a href="#rent">Rent a Car</a></li>
+                        <li><a href="#rent">Rent a Bike</a></li>
+                        <li><a href="#hire-driver">Hire a Chauffeur</a></li>
+                        <li><a href="#partner">Host Your Vehicle</a></li>
+                        <li><a href="#pricing">Handover Protocol</a></li>
                     </ul>
                 </div>
-                
-                <div>
-                    <h4 class="footer-col-title">Support</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Safety</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+
+                <div class="footer-col">
+                    <h4>Business</h4>
+                    <ul>
+                        <li><a href="#corporate">Corporate Mobility</a></li>
+                        <li><a href="#gst">Consolidated GST</a></li>
+                        <li><a href="#fleet">Fleet Enterprise</a></li>
+                        <li><a href="#developers">OpenAPI & Webhooks</a></li>
+                        <li><a href="#security">Compliance & KYC</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support & Safety</h4>
+                    <ul>
+                        <li><a href="#help">Help Desk 24/7</a></li>
+                        <li><a href="#safety">Trip Guardian</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#grievance">Grievance Officer</a></li>
                     </ul>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 RideDriveAhead Technologies Inc. All rights reserved.</p>
-                <div style="display: flex; gap: 16px;">
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy</a>
+
+            <div class="footer-bottom-row">
+                <div>
+                    &copy; 2026 RideDriveAhead Technologies Private Limited. All rights reserved.
+                </div>
+                <div style="display: flex; gap: 24px;">
+                    <a href="#terms">Terms</a>
+                    <a href="#privacy">Privacy</a>
+                    <a href="#safety">Trust & Safety</a>
+                    <a href="#sitemap">Sitemap</a>
                 </div>
             </div>
         </div>
     </footer>
-    
-    <!-- Modal -->
-    <div class="modal-overlay" id="searchModal" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-            <div style="font-size: 40px; margin-bottom: 16px;">🚕</div>
-            <h3>Searching for rides...</h3>
-            <p>Please wait while we find the best options for your journey.</p>
-            <button class="btn-primary" onclick="closeModal(event, true)">Cancel</button>
-        </div>
-    </div>
 
+    <!-- =========================================================
+         SCRIPT: LEAFLET MAP, ROUTING, THEME TOGGLE, SERVICE SWITCH
+         ========================================================= -->
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        
-        // Check local storage or system preference
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            htmlElement.setAttribute('data-theme', savedTheme);
-            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-        }
+        // State variables
+        let leafletMap = null;
+        let routePolyline = null;
+        let pickupMarker = null;
+        let dropMarker = null;
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlRoot = document.documentElement;
 
-        // Service Icons Selection
-        const serviceBtns = document.querySelectorAll('.service-icon-btn');
-        serviceBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                serviceBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // Header Scroll Effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>';
             } else {
-                header.style.boxShadow = 'none';
+                themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>';
             }
-        });
-        
-        // Tabs functionality
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                tabBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-        
-        // Modal functionality
-        function openModal() {
-            document.getElementById('searchModal').classList.add('active');
         }
-        
-        function closeModal(e, force = false) {
-            if (force || e.target === document.getElementById('searchModal')) {
-                document.getElementById('searchModal').classList.remove('active');
+
+        const savedTheme = localStorage.getItem('rda_theme') || 'dark';
+        htmlRoot.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const current = htmlRoot.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            htmlRoot.setAttribute('data-theme', target);
+            localStorage.setItem('rda_theme', target);
+            updateThemeIcon(target);
+
+            // Update Leaflet tile layer if map is initialized
+            if (leafletMap) {
+                initOrUpdateMap();
             }
+        });
+
+        // Service Selection Logic
+        function selectService(serviceKey) {
+            document.querySelectorAll('.service-pill-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.service === serviceKey);
+            });
+
+            // Contextual placeholder adjustments
+            const dropInput = document.getElementById('dropInput');
+            if (serviceKey === 'hire-driver') {
+                dropInput.value = '4 Hours Errand / City Commute';
+            } else if (serviceKey === 'airport') {
+                dropInput.value = 'Terminal 3 Departure Gates';
+            } else if (serviceKey === 'outstation') {
+                dropInput.value = 'Jaipur / Agra Weekend Trip';
+            } else if (serviceKey === 'delivery') {
+                dropInput.value = 'Express Package Drop Address';
+            }
+        }
+
+        function focusBookingSearch(serviceType = null) {
+            if (serviceType) {
+                const serviceKey = serviceType === 'Hire a Driver' ? 'hire-driver' : 'cab';
+                selectService(serviceKey);
+            }
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+            document.getElementById('pickupInput').focus();
+        }
+
+        // Leaflet Free OpenStreetMap & CartoDB Tile Initialization
+        function initOrUpdateMap() {
+            const mapContainer = document.getElementById('mapContainer');
+            mapContainer.style.display = 'block';
+
+            // Coordinates for IGI T3 Airport to DLF Cyber Hub (Delhi NCR)
+            const pickupCoords = [28.5562, 77.1000];
+            const dropCoords = [28.4950, 77.0895];
+
+            if (!leafletMap) {
+                leafletMap = L.map('rideMap', {
+                    zoomControl: false,
+                    attributionControl: false
+                }).setView([28.5256, 77.0947], 12);
+
+                L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
+            }
+
+            // Remove existing tile layers
+            leafletMap.eachLayer(layer => {
+                if (layer instanceof L.TileLayer) {
+                    leafletMap.removeLayer(layer);
+                }
+            });
+
+            const currentTheme = htmlRoot.getAttribute('data-theme');
+            const tileUrl = currentTheme === 'dark' 
+                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+                : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+
+            L.tileLayer(tileUrl, {
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(leafletMap);
+
+            // Add Custom Pickup & Drop Markers
+            if (pickupMarker) leafletMap.removeLayer(pickupMarker);
+            if (dropMarker) leafletMap.removeLayer(dropMarker);
+            if (routePolyline) leafletMap.removeLayer(routePolyline);
+
+            // Custom SVG Pin for Pickup
+            const pickupIcon = L.divIcon({
+                className: 'custom-map-pin',
+                html: `<div style="background:#C7FF3D; width:16px; height:16px; border-radius:50%; border:3px solid #0B0D0F; box-shadow:0 0 12px rgba(199,255,61,0.9);"></div>`,
+                iconSize: [16, 16],
+                iconAnchor: [8, 8]
+            });
+
+            // Custom SVG Pin for Drop
+            const dropIcon = L.divIcon({
+                className: 'custom-map-pin',
+                html: `<div style="background:#F8FAFC; width:16px; height:16px; border-radius:50%; border:3px solid #0B0D0F; box-shadow:0 0 12px rgba(255,255,255,0.7);"></div>`,
+                iconSize: [16, 16],
+                iconAnchor: [8, 8]
+            });
+
+            pickupMarker = L.marker(pickupCoords, { icon: pickupIcon }).addTo(leafletMap)
+                .bindPopup('<b>Pickup</b><br>Indira Gandhi Intl Airport, T3');
+
+            dropMarker = L.marker(dropCoords, { icon: dropIcon }).addTo(leafletMap)
+                .bindPopup('<b>Destination</b><br>DLF Cyber Hub, Gurugram');
+
+            // Realistic routing waypoints along NH 48
+            const routeCoords = [
+                pickupCoords,
+                [28.5450, 77.0980],
+                [28.5300, 77.0920],
+                [28.5150, 77.0850],
+                [28.5050, 77.0870],
+                dropCoords
+            ];
+
+            routePolyline = L.polyline(routeCoords, {
+                color: '#C7FF3D',
+                weight: 5,
+                opacity: 0.9,
+                lineCap: 'round',
+                lineJoin: 'round'
+            }).addTo(leafletMap);
+
+            leafletMap.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
+            setTimeout(() => { leafletMap.invalidateSize(); }, 200);
+        }
+
+        function executeRouteSearch() {
+            initOrUpdateMap();
+            const mapContainer = document.getElementById('mapContainer');
+            mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function selectTier(cardElement, tierName, price) {
+            document.querySelectorAll('.ride-tier-card').forEach(c => c.classList.remove('selected'));
+            cardElement.classList.add('selected');
+            document.getElementById('confirmRideBtn').innerText = `Request ${tierName} · ₹${price}`;
+        }
+
+        function confirmTripAction() {
+            const btn = document.getElementById('confirmRideBtn');
+            btn.innerHTML = `<span class="pulse-dot" style="background:#0B0D0F; width:8px; height:8px;"></span> Contacting nearby Captains...`;
+            setTimeout(() => {
+                alert('Trip Confirmed! Your Captain Arjun Verma (DL 01 AB 4912) is en route with estimated arrival in 3 mins. Start OTP: 4921.');
+                btn.innerText = 'Trip Dispatched · Driver En Route';
+            }, 1200);
+        }
+
+        function switchRentalTab(category, btnElement) {
+            document.querySelectorAll('.rental-category-tab').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const container = document.getElementById('rentalCardsContainer');
+            if (category === 'bikes') {
+                container.innerHTML = `
+                    <div class="rental-item-card">
+                        <div class="rental-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80" alt="Royal Enfield Classic 350" />
+                            <span class="rental-card-badge">★ 4.95 · Cruiser</span>
+                        </div>
+                        <div class="rental-card-body">
+                            <div class="rental-title-price">
+                                <div>
+                                    <div class="rental-car-name">Royal Enfield Classic 350</div>
+                                    <div class="rental-car-meta">Manual · 350cc Petrol · Gunmetal Grey</div>
+                                </div>
+                                <div>
+                                    <div class="rental-rate-amount">₹950</div>
+                                    <div class="rental-rate-period">per day</div>
+                                </div>
+                            </div>
+                            <div class="rental-features-tags">
+                                <span class="rental-tag-pill">₹1,500 Deposit</span>
+                                <span class="rental-tag-pill">2 Helmets Included</span>
+                                <span class="rental-tag-pill">Free 200 km</span>
+                            </div>
+                            <div class="rental-cta-footer">
+                                <button class="rental-book-btn" onclick="reserveRentalVehicle('Royal Enfield Classic 350')">Reserve Bike</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rental-item-card">
+                        <div class="rental-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80" alt="Ather 450X EV" />
+                            <span class="rental-card-badge">★ 4.91 · Fast EV</span>
+                        </div>
+                        <div class="rental-card-body">
+                            <div class="rental-title-price">
+                                <div>
+                                    <div class="rental-car-name">Ather 450X Gen 3</div>
+                                    <div class="rental-car-meta">Electric · Automatic · Space Grey</div>
+                                </div>
+                                <div>
+                                    <div class="rental-rate-amount">₹650</div>
+                                    <div class="rental-rate-period">per day</div>
+                                </div>
+                            </div>
+                            <div class="rental-features-tags">
+                                <span class="rental-tag-pill">110 km Range</span>
+                                <span class="rental-tag-pill">Free Ather Grid Charge</span>
+                                <span class="rental-tag-pill">Keyless App Unlock</span>
+                            </div>
+                            <div class="rental-cta-footer">
+                                <button class="rental-book-btn" onclick="reserveRentalVehicle('Ather 450X')">Reserve Scooter</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rental-item-card">
+                        <div class="rental-card-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=800&q=80" alt="Yamaha Aerox 155" />
+                            <span class="rental-card-badge">★ 4.88 · Maxi-Scooter</span>
+                        </div>
+                        <div class="rental-card-body">
+                            <div class="rental-title-price">
+                                <div>
+                                    <div class="rental-car-name">Yamaha Aerox 155</div>
+                                    <div class="rental-car-meta">Automatic · 155cc VVA · Racing Blue</div>
+                                </div>
+                                <div>
+                                    <div class="rental-rate-amount">₹800</div>
+                                    <div class="rental-rate-period">per day</div>
+                                </div>
+                            </div>
+                            <div class="rental-features-tags">
+                                <span class="rental-tag-pill">ABS Disc Brakes</span>
+                                <span class="rental-tag-pill">Underseat 24L Storage</span>
+                                <span class="rental-tag-pill">Doorstep Delivery</span>
+                            </div>
+                            <div class="rental-cta-footer">
+                                <button class="rental-book-btn" onclick="reserveRentalVehicle('Yamaha Aerox 155')">Reserve Scooter</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                location.reload(); // Reload default car catalog
+            }
+        }
+
+        function reserveRentalVehicle(vehicleName) {
+            alert(`Selected ${vehicleName} for Reservation!\nOur partner will confirm availability and schedule digital handover inspection.`);
         }
     </script>
 </body>
