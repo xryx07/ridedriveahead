@@ -21,6 +21,17 @@ export const DriverHomeScreen: React.FC = () => {
   } = useDriverStore();
 
   const [showIncomingModal, setShowIncomingModal] = useState(false);
+  const [activeModes, setActiveModes] = useState({
+    cab: true,
+    auto: false,
+    bike: false,
+    chauffeur: true,
+    delivery: true
+  });
+
+  const toggleMode = (modeKey: 'cab' | 'auto' | 'bike' | 'chauffeur' | 'delivery') => {
+    setActiveModes((prev) => ({ ...prev, [modeKey]: !prev[modeKey] }));
+  };
 
   // Find claimed scheduled ride or chauffeur gig
   const upcomingScheduled = scheduledRides.find((r) => r.isClaimed);
@@ -80,6 +91,57 @@ export const DriverHomeScreen: React.FC = () => {
               ? 'Matched with verified personal car duties (2h-8h), party returns, 1-2 day outstation road trips & city cab requests.'
               : 'Switch online to view open customer gigs and start receiving direct dispatches.'}
           </Text>
+        </View>
+        
+        {/* GO ONLINE AS (DRIVER MODES SELECTOR) */}
+        <View style={styles.driverModesCard}>
+          <Text style={styles.driverModesTitle}>GO ONLINE AS (QUALIFIED MODES)</Text>
+          <View style={styles.driverModesRow}>
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.cab && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('cab')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modeEmoji}>🚗</Text>
+              <Text style={[styles.modeText, activeModes.cab && styles.modeTextActive]}>Cab</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.auto && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('auto')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modeEmoji}>🛺</Text>
+              <Text style={[styles.modeText, activeModes.auto && styles.modeTextActive]}>Auto</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.bike && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('bike')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modeEmoji}>🏍</Text>
+              <Text style={[styles.modeText, activeModes.bike && styles.modeTextActive]}>Bike</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.chauffeur && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('chauffeur')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modeEmoji}>👨‍✈️</Text>
+              <Text style={[styles.modeText, activeModes.chauffeur && styles.modeTextActive]}>Chauffeur</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.delivery && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('delivery')}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.modeEmoji}>📦</Text>
+              <Text style={[styles.modeText, activeModes.delivery && styles.modeTextActive]}>Delivery</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Fatigue Protection Cockpit */}
@@ -826,5 +888,53 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '800',
     color: '#D2FF00'
+  },
+
+  /* Driver Modes Card */
+  driverModesCard: {
+    backgroundColor: '#121619',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 12,
+    marginBottom: 14
+  },
+  driverModesTitle: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#929A96',
+    letterSpacing: 0.5,
+    marginBottom: 8
+  },
+  driverModesRow: {
+    flexDirection: 'row',
+    gap: 6
+  },
+  modeTogglePill: {
+    flex: 1,
+    backgroundColor: '#181D20',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    paddingVertical: 6,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modeTogglePillActive: {
+    borderColor: '#C7FF3D',
+    backgroundColor: 'rgba(199, 255, 61, 0.1)'
+  },
+  modeEmoji: {
+    fontSize: 14,
+    marginBottom: 2
+  },
+  modeText: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#929A96'
+  },
+  modeTextActive: {
+    color: '#F4F6F3',
+    fontWeight: '800'
   }
 });

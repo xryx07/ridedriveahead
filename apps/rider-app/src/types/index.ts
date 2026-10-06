@@ -4,6 +4,8 @@ export type ServiceMode =
   | 'BIKE_TAXI'
   | 'AUTO'
   | 'RENTALS'
+  | 'OUTSTATION'
+  | 'AIRPORT'
   | 'PARCEL';
 
 export type BookingType = 'INSTANT' | 'SCHEDULED';
@@ -48,6 +50,8 @@ export type VehicleType =
   | 'SUV'
   | 'PREMIER'
   | 'RENTAL'
+  | 'OUTSTATION'
+  | 'AIRPORT'
   | 'PARCEL';
 
 export type PaymentMethod = 'UPI' | 'CARD' | 'WALLET' | 'CASH';

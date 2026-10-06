@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RideDriveAhead — Mobility Operating System</title>
+  <title>RideDriveAhead — One App. Every Way to Move.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     /* =========================================================
-       CALM & PROFESSIONAL MOBILITY DESIGN SYSTEM
-       80% Calm Interface | 15% Informative Data | 5% Lime Accent
+       CALM & MATURE MOBILITY OS DESIGN SYSTEM
+       80% Calm Dark/Light Interface | 15% Data | 5% Lime Emphasis
        ========================================================= */
     :root, [data-theme="dark"] {
       --theme: dark;
@@ -22,7 +22,7 @@
       --border-subtle: rgba(255, 255, 255, 0.04);
       --border-strong: rgba(255, 255, 255, 0.16);
 
-      --primary: #C7FF3D;          /* Lime used sparingly */
+      --primary: #C7FF3D;          /* Electric Lime used sparingly */
       --primary-dim: rgba(199, 255, 61, 0.12);
       --primary-border: rgba(199, 255, 61, 0.28);
       --primary-text: #0B0D0F;
@@ -98,7 +98,7 @@
     }
 
     /* =========================================================
-       GLOBAL PLATFORM BAR & PORTAL SELECTOR
+       GLOBAL PLATFORM BAR & 5-PRODUCT PORTAL SELECTOR
        ========================================================= */
     .platform-header {
       background: var(--surface);
@@ -219,13 +219,8 @@
       font-size: 14px;
       transition: all 0.15s;
     }
-    .theme-toggle-btn:hover {
-      border-color: var(--border-strong);
-    }
 
-    /* =========================================================
-       SUB-BAR FOR SUB-VIEWS
-       ========================================================= */
+    /* Subview Bar */
     .subview-bar {
       background: var(--surface);
       border-bottom: 1px solid var(--border-subtle);
@@ -235,6 +230,7 @@
       gap: 8px;
       overflow-x: auto;
     }
+    .subview-bar::-webkit-scrollbar { display: none; }
     .subview-tab {
       padding: 6px 12px;
       border-radius: 6px;
@@ -258,9 +254,7 @@
       font-weight: 700;
     }
 
-    /* =========================================================
-       CORE LAYOUT CONTAINERS
-       ========================================================= */
+    /* Workspace */
     .main-workspace {
       flex: 1;
       padding: 24px;
@@ -281,91 +275,13 @@
     .grid-3col {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 900px) {
       .grid-3col { grid-template-columns: 1fr; }
     }
 
-    /* =========================================================
-       INTENT SELECTION CARDS (THE CENTRAL USER DECISION)
-       ========================================================= */
-    .intent-hero {
-      margin-bottom: 24px;
-    }
-    .intent-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-    }
-    .intent-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 640px) {
-      .intent-grid { grid-template-columns: 1fr; }
-    }
-
-    .intent-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 24px;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      position: relative;
-    }
-    .intent-card:hover {
-      border-color: var(--border-strong);
-      background: var(--surface-2);
-    }
-    .intent-card.active {
-      border-color: var(--primary);
-      background: var(--surface);
-    }
-    .intent-badge {
-      display: inline-block;
-      align-self: flex-start;
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 6px;
-      margin-bottom: 4px;
-    }
-    .intent-card.active .intent-badge {
-      background: var(--primary-dim);
-      color: var(--text);
-      border: 1px solid var(--primary-border);
-    }
-    .intent-card:not(.active) .intent-badge {
-      background: var(--surface-2);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-    .intent-card-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-      color: var(--text);
-    }
-    .intent-card-sub {
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      line-height: 1.4;
-    }
-
-    /* =========================================================
-       CALM CARD COMPONENTS
-       ========================================================= */
+    /* Cards & Components */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -382,7 +298,6 @@
     .card-title {
       font-size: 14px;
       font-weight: 800;
-      letter-spacing: -0.2px;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -393,7 +308,6 @@
       color: var(--text-secondary);
     }
 
-    /* Buttons */
     .btn {
       padding: 10px 18px;
       border-radius: 10px;
@@ -435,8 +349,132 @@
     }
 
     /* =========================================================
-       ROUTE PLANNER WITH MULTI-STOP (+ ADD STOP)
+       8-TILE MOBILITY HUB GRID (HOME)
        ========================================================= */
+    .mobility-tiles-row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 1200px) {
+      .mobility-tiles-row { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .mobility-tiles-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .mobility-tile-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .mobility-tile-btn:hover {
+      border-color: var(--border-strong);
+      background: var(--surface-2);
+    }
+    .mobility-tile-btn.active {
+      border-color: var(--primary);
+      background: var(--surface-2);
+    }
+    .mobility-tile-btn.differentiator {
+      border-color: var(--primary-border);
+      background: var(--primary-dim);
+    }
+    .tile-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--primary-text);
+      background: var(--primary);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .tile-emoji-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .tile-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .tile-desc {
+      font-size: 9.5px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Destination Search Box */
+    .dest-search-bar {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+    }
+    .dest-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 600;
+      outline: none;
+      font-family: inherit;
+    }
+    .dest-search-input::placeholder { color: var(--text-tertiary); }
+
+    /* Price Control Bar: Fastest vs Saver vs Premium */
+    .price-control-strip {
+      display: flex;
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .price-control-tab {
+      flex: 1;
+      padding: 8px;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+    }
+    .price-control-tab:hover { color: var(--text); }
+    .price-control-tab.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Route Planner with Multi-Stop */
     .route-planner {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -472,31 +510,8 @@
       outline: none;
       font-family: inherit;
     }
-    .route-input::placeholder { color: var(--text-tertiary); }
 
-    .add-stop-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 6px;
-      border-top: 1px dashed var(--border);
-    }
-    .add-stop-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .add-stop-btn:hover { color: var(--text); }
-
-    /* =========================================================
-       VEHICLE / SERVICE SELECTION TIERS
-       ========================================================= */
+    /* Tiers List */
     .tiers-list {
       display: flex;
       flex-direction: column;
@@ -514,9 +529,7 @@
       cursor: pointer;
       transition: all 0.15s;
     }
-    .tier-row:hover {
-      border-color: var(--border-strong);
-    }
+    .tier-row:hover { border-color: var(--border-strong); }
     .tier-row.active {
       border-color: var(--primary);
       background: var(--surface-3);
@@ -546,13 +559,11 @@
       font-size: 11px;
       color: var(--text-secondary);
     }
-    .tier-right {
-      text-align: right;
-    }
     .tier-fare {
       font-size: 15px;
       font-weight: 800;
       color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
     }
     .tier-locked-badge {
       font-size: 9px;
@@ -562,38 +573,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* =========================================================
-       "MY CAR" ELEVATED PROFILE CARD
-       ========================================================= */
-    .my-car-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    .my-car-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-    .my-car-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .my-car-reg {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-secondary);
-      background: var(--surface);
-      padding: 2px 6px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      display: inline-block;
-      margin-top: 4px;
-    }
+    /* Verified pill */
     .verified-pill {
       display: inline-flex;
       align-items: center;
@@ -606,102 +586,7 @@
       border-radius: 12px;
     }
 
-    .car-specs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .car-spec-box {
-      background: var(--surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 8px 10px;
-    }
-    .car-spec-label {
-      font-size: 9.5px;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    .car-spec-val {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      margin-top: 2px;
-    }
-
-    .driver-req-box {
-      background: var(--surface);
-      border-radius: 10px;
-      padding: 12px;
-      border: 1px solid var(--border-subtle);
-    }
-    .driver-req-title {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .driver-req-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-    }
-    .req-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--text);
-      font-weight: 600;
-    }
-    .req-check {
-      color: var(--success);
-      font-weight: 800;
-    }
-
-    /* =========================================================
-       VEHICLE HANDOVER PROTOCOL (DIGITAL VERIFICATION)
-       ========================================================= */
-    .handover-protocol-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-    .handover-step-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    .handover-step-title {
-      font-size: 12.5px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .handover-status-badge {
-      font-size: 10px;
-      font-weight: 700;
-      background: var(--primary-dim);
-      color: var(--text);
-      padding: 3px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--primary-border);
-    }
-
-    .handover-metrics {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
+    /* Handover & Trust */
     .handover-metric-box {
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -714,411 +599,15 @@
       color: var(--text-secondary);
       text-transform: uppercase;
     }
-    .handover-metric-value {
+    .handover-metric-val {
       font-size: 18px;
       font-weight: 800;
       color: var(--text);
-      margin-top: 4px;
       font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* 360 Condition Checklist */
-    .checklist-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    @media (max-width: 640px) {
-      .checklist-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .checklist-item {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 10px;
-      text-align: center;
-    }
-    .checklist-side {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .checklist-status {
-      font-size: 10px;
-      color: var(--success);
-      font-weight: 700;
       margin-top: 2px;
     }
 
-    /* Dual Digital Signatures */
-    .signatures-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .sign-box {
-      background: var(--surface-2);
-      border: 1px dashed var(--border-strong);
-      border-radius: 8px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .sign-check {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--success-dim);
-      color: var(--success);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 800;
-    }
-    .sign-info {
-      font-size: 10.5px;
-      color: var(--text-secondary);
-    }
-    .sign-info strong {
-      display: block;
-      color: var(--text);
-      font-size: 11px;
-    }
-
-    /* =========================================================
-       COMPACT TRUST PROFILE (CHAUFFEUR VERIFICATION OUTCOMES)
-       ========================================================= */
-    .trust-profile-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    .trust-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .trust-driver-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .trust-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--surface-3);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .trust-driver-name {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .trust-driver-rating {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
-
-    .trust-badges-flow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .trust-chip {
-      background: var(--surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 3px 8px;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .trust-chip span { color: var(--success); }
-
-    .trust-bar-row {
-      margin-bottom: 6px;
-    }
-    .trust-bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: var(--text-secondary);
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .trust-bar-track {
-      height: 4px;
-      background: var(--surface-3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .trust-bar-fill {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 2px;
-    }
-
-    /* =========================================================
-       DRIVER OS: READINESS & FATIGUE COCKPIT
-       ========================================================= */
-    .driver-os-header {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    @media (max-width: 768px) {
-      .driver-os-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-    }
-
-    .readiness-cockpit-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .readiness-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .readiness-status-tag {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .readiness-status-tag.ready {
-      background: var(--success-dim);
-      color: var(--success);
-      border: 1px solid rgba(113, 216, 138, 0.2);
-    }
-    .readiness-status-tag.break {
-      background: var(--warning-dim);
-      color: var(--warning);
-      border: 1px solid rgba(245, 166, 35, 0.2);
-    }
-
-    .readiness-metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    @media (max-width: 768px) {
-      .readiness-metrics-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .readiness-metric-box {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-    }
-    .readiness-metric-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-    }
-    .readiness-metric-val {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      margin-top: 4px;
-    }
-
-    .readiness-progress-wrap {
-      margin-bottom: 12px;
-    }
-    .readiness-bar-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-    }
-    .readiness-track {
-      height: 8px;
-      background: var(--surface-2);
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .readiness-fill {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 4px;
-      width: 71%;
-    }
-
-    .readiness-note {
-      font-size: 11px;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* =========================================================
-       GIG MARKETPLACE CARDS
-       ========================================================= */
-    .gig-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: all 0.15s;
-    }
-    .gig-card:hover {
-      border-color: var(--border-strong);
-      background: var(--surface-3);
-    }
-    .gig-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .gig-category {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-secondary);
-    }
-    .gig-title {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text);
-      margin-top: 2px;
-    }
-    .gig-fare {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .gig-route {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-    }
-    .gig-tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .gig-tag {
-      background: var(--surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 3px 8px;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-    .gig-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 8px;
-      border-top: 1px solid var(--border-subtle);
-    }
-    .gig-dist {
-      font-size: 11px;
-      color: var(--text-tertiary);
-    }
-
-    /* =========================================================
-       AIRPORT TRIP ASSURANCE CARD
-       ========================================================= */
-    .assurance-card {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-    .assurance-step-row {
-      display: flex;
-      justify-content: space-between;
-      margin: 16px 0;
-      position: relative;
-    }
-    .assurance-step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      position: relative;
-      z-index: 1;
-    }
-    .assurance-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--surface-3);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-secondary);
-    }
-    .assurance-dot.done {
-      background: var(--success-dim);
-      border-color: var(--success);
-      color: var(--success);
-    }
-    .assurance-dot.current {
-      background: var(--primary-dim);
-      border-color: var(--primary);
-      color: var(--text);
-    }
-    .assurance-step-text {
-      font-size: 9.5px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      text-align: center;
-    }
-
-    /* =========================================================
-       ADMIN COMMAND CENTER CONSOLE
-       ========================================================= */
+    /* KPI Row */
     .kpi-row {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -1157,7 +646,7 @@
       margin-top: 2px;
     }
 
-    /* Operations Table */
+    /* Tables */
     .ops-table {
       width: 100%;
       border-collapse: collapse;
@@ -1170,7 +659,6 @@
       font-weight: 800;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       border-bottom: 1px solid var(--border);
     }
     .ops-table td {
@@ -1178,51 +666,9 @@
       border-bottom: 1px solid var(--border-subtle);
       color: var(--text);
     }
-    .ops-table tr:hover td {
-      background: var(--surface-2);
-    }
+    .ops-table tr:hover td { background: var(--surface-2); }
 
-    /* =========================================================
-       SAFETY CENTER STATUS (PROTECTED & TELEMETRY)
-       ========================================================= */
-    .safety-shield-box {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .shield-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .shield-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: var(--success-dim);
-      border: 1px solid rgba(113, 216, 138, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: var(--success);
-    }
-    .shield-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .shield-sub {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-    }
-
-    /* 4-Digit OTP PIN Boxes */
+    /* OTP Display */
     .otp-pin-display {
       display: flex;
       align-items: center;
@@ -1243,9 +689,7 @@
       color: var(--text);
     }
 
-    /* =========================================================
-       MOBILE APP EMULATION FRAMES
-       ========================================================= */
+    /* Mobile Duo */
     .mobile-duo-container {
       display: flex;
       gap: 32px;
@@ -1287,33 +731,26 @@
     }
     .phone-body::-webkit-scrollbar { display: none; }
     .phone-bottom-nav {
-      height: 50px;
+      height: 52px;
       background: var(--surface-2);
       border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-around;
-      font-size: 18px;
+      padding: 0 4px;
     }
-    .phone-nav-icon {
+    .phone-nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 9px;
+      font-weight: 700;
       color: var(--text-secondary);
       cursor: pointer;
+      gap: 2px;
     }
-    .phone-nav-icon.active { color: var(--primary); }
-
-    /* Map Surface */
-    .map-surface {
-      background: var(--map-land);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      height: 280px;
-      position: relative;
-      overflow: hidden;
-    }
-    .map-svg {
-      width: 100%;
-      height: 100%;
-    }
+    .phone-nav-tab.active { color: var(--primary); }
+    .phone-nav-tab span:first-child { font-size: 14px; }
   </style>
 </head>
 <body>
@@ -1326,31 +763,34 @@
       <div class="brand-logo-badge">🚗</div>
       <div>
         <div class="brand-title">RideDrive<span>Ahead</span></div>
-        <div class="brand-tagline">Your ride. Your car. Your driver.</div>
+        <div class="brand-tagline">One app. Every way to move.</div>
       </div>
     </div>
 
-    <!-- Portal Switcher -->
+    <!-- 5 Major Portals -->
     <nav class="portal-nav">
-      <button class="portal-tab active" id="tab-customer" onclick="setPortal('CUSTOMER')">
-        <span>👤</span> Customer Web
+      <button class="portal-tab active" id="tab-rider" onclick="setPortal('RIDER')">
+        <span>👤</span> Rider Web
       </button>
       <button class="portal-tab" id="tab-driver" onclick="setPortal('DRIVER')">
-        <span>👨‍✈️</span> Driver OS
+        <span>👨‍✈️</span> Captain OS
+      </button>
+      <button class="portal-tab" id="tab-business" onclick="setPortal('BUSINESS')">
+        <span>🏢</span> Business Platform
       </button>
       <button class="portal-tab" id="tab-admin" onclick="setPortal('ADMIN')">
-        <span>🏢</span> Admin Command Center
+        <span>🖥️</span> Admin Command
       </button>
       <button class="portal-tab" id="tab-mobile" onclick="setPortal('MOBILE')">
         <span>📱</span> Mobile Studio
       </button>
     </nav>
 
-    <!-- Platform Telemetry & Controls -->
+    <!-- Telemetry & Controls -->
     <div class="platform-actions">
       <div class="status-pill">
         <div class="status-dot-pulse"></div>
-        <span>184 Active Trips</span>
+        <span>2,481 Active Rides</span>
       </div>
       <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
         <span id="theme-icon">☀️</span>
@@ -1359,75 +799,72 @@
   </header>
 
   <!-- =========================================================
-       SUB-NAVIGATION FOR CUSTOMER & DRIVER EXPERIENCE
+       SUB-NAVIGATION FOR RIDER WEB
        ========================================================= -->
-  <div class="subview-bar" id="customer-subnav">
-    <button class="subview-tab active" onclick="setCustomerSub('OVERVIEW')">Overview & Booking</button>
-    <button class="subview-tab" onclick="setCustomerSub('MYCAR')">My Car & Handover Protocol</button>
-    <button class="subview-tab" onclick="setCustomerSub('ASSURANCE')">Airport Trip Assurance</button>
-    <button class="subview-tab" onclick="setCustomerSub('TRUSTED')">Trusted Drivers & Recurring</button>
-    <button class="subview-tab" onclick="setCustomerSub('SAFETY')">Safety Center & Telemetry</button>
-    <button class="subview-tab" onclick="setCustomerSub('CORP')">Corporate & Family Accounts</button>
+  <div class="subview-bar" id="rider-subnav">
+    <button class="subview-tab active" onclick="setRiderSub('HUB')">🏠 Mobility Hub</button>
+    <button class="subview-tab" onclick="setRiderSub('CAB')">🚗 Cab (Mini/Sedan/SUV)</button>
+    <button class="subview-tab" onclick="setRiderSub('AUTO')">🛺 Auto (Meter Guarantee)</button>
+    <button class="subview-tab" onclick="setRiderSub('BIKE')">🏍 Bike (Rapido Fast)</button>
+    <button class="subview-tab" onclick="setRiderSub('CHAUFFEUR')">👨‍✈️ Driver (My Car)</button>
+    <button class="subview-tab" onclick="setRiderSub('RENTAL')">🚘 Rental (Hourly)</button>
+    <button class="subview-tab" onclick="setRiderSub('OUTSTATION')">🛣 Outstation (Intercity)</button>
+    <button class="subview-tab" onclick="setRiderSub('AIRPORT')">✈️ Airport Reserve</button>
+    <button class="subview-tab" onclick="setRiderSub('DELIVERY')">📦 Delivery Parcel</button>
+    <button class="subview-tab" onclick="setRiderSub('SAFETY')">🛡️ Safety Platform</button>
+    <button class="subview-tab" onclick="setRiderSub('WALLET')">💳 Wallet & Rewards</button>
   </div>
 
+  <!-- SUB-NAVIGATION FOR DRIVER / CAPTAIN OS -->
   <div class="subview-bar" id="driver-subnav" style="display: none;">
-    <button class="subview-tab active" onclick="setDriverSub('READINESS')">Readiness & Fatigue OS</button>
-    <button class="subview-tab" onclick="setDriverSub('GIGS')">Gig Marketplace</button>
-    <button class="subview-tab" onclick="setDriverSub('HANDOVER_SIGN')">Vehicle Handover Verification</button>
+    <button class="subview-tab active" onclick="setDriverSub('COCKPIT')">👨‍✈️ Captain Cockpit</button>
+    <button class="subview-tab" onclick="setDriverSub('FATIGUE')">🛡️ Fatigue & Readiness</button>
+    <button class="subview-tab" onclick="setDriverSub('GIGS')">💼 Gig Marketplace</button>
+    <button class="subview-tab" onclick="setDriverSub('EARNINGS')">💰 Earnings & Payout</button>
+    <button class="subview-tab" onclick="setDriverSub('CUSTODY')">🔑 Vehicle Custody Tool</button>
   </div>
 
+  <!-- SUB-NAVIGATION FOR BUSINESS PLATFORM -->
+  <div class="subview-bar" id="business-subnav" style="display: none;">
+    <button class="subview-tab active" onclick="setBusinessSub('OVERVIEW')">🏢 Corporate Dashboard</button>
+    <button class="subview-tab" onclick="setBusinessSub('POLICIES')">👥 Employee Ride Policies</button>
+    <button class="subview-tab" onclick="setBusinessSub('INVOICES')">📄 Monthly Billing & GST</button>
+  </div>
+
+  <!-- SUB-NAVIGATION FOR ADMIN COMMAND CENTER -->
   <div class="subview-bar" id="admin-subnav" style="display: none;">
-    <button class="subview-tab active" onclick="setAdminSub('OPERATIONS')">Live Operations & Dispatch</button>
-    <button class="subview-tab" onclick="setAdminSub('DRIVERS')">Driver Fleet & Fatigue Guard</button>
-    <button class="subview-tab" onclick="setAdminSub('KYC')">KYC Verification Desk</button>
-    <button class="subview-tab" onclick="setAdminSub('SUPPORT')">Support & Incident Tickets</button>
+    <button class="subview-tab active" onclick="setAdminSub('LIVE')">🖥️ Live Operations</button>
+    <button class="subview-tab" onclick="setAdminSub('DISPATCH')">⚡ Smart Dispatch Engine</button>
+    <button class="subview-tab" onclick="setAdminSub('SURGE')">📈 Surge & Demand Engine</button>
+    <button class="subview-tab" onclick="setAdminSub('PROMO')">🎁 Promotions Engine</button>
+    <button class="subview-tab" onclick="setAdminSub('SUPPORT')">🎫 Incident & Support Desk</button>
   </div>
 
   <!-- =========================================================
-       MAIN WORKSPACE CONTENT CONTAINER
+       MAIN WORKSPACE
        ========================================================= -->
   <main class="main-workspace" id="app-container">
-    <!-- Dynamic Content Rendered Here by JavaScript -->
+    <!-- Rendered dynamically -->
   </main>
 
-  <!-- =========================================================
-       APPLICATION LOGIC & DATA MODELS
-       ========================================================= */ -->
   <script>
-    // Platform State
-    let activePortal = 'CUSTOMER'; // CUSTOMER | DRIVER | ADMIN | MOBILE
-    let customerSub = 'OVERVIEW';   // OVERVIEW | MYCAR | ASSURANCE | TRUSTED | SAFETY | CORP
-    let driverSub = 'READINESS';    // READINESS | GIGS | HANDOVER_SIGN
-    let adminSub = 'OPERATIONS';    // OPERATIONS | DRIVERS | KYC | SUPPORT
-    let intentChoice = 'CAB';       // CAB (Book a cab) | CHAUFFEUR (Hire a driver)
+    // State
+    let activePortal = 'RIDER';
+    let riderSub = 'HUB';
+    let driverSub = 'COCKPIT';
+    let businessSub = 'OVERVIEW';
+    let adminSub = 'LIVE';
 
-    // Intermediate stops for multi-stop rides
+    let pricePreference = 'FASTEST'; // FASTEST | SAVER | COMFORT
     let hasIntermediateStop = false;
+    let isRideShareActive = false;
+    let bookingForPerson = 'ME'; // ME | MOM | DAD | SISTER
 
-    // Chauffeur booking selections
-    let chauffeurHours = '4h';
-    let chauffeurTransmission = 'AT';
-
-    // Handover state
-    let handoverPreSigned = true;
-    let handoverTripStarted = false;
-    let handoverPostCompleted = false;
-
-    // Driver OS state
+    // Driver OS State
     let isDriverOnline = true;
-    let currentDutyMinutes = 342; // 5h 42m
+    let driverModes = { cab: true, auto: true, bike: false, chauffeur: true, delivery: true };
 
-    // Mobility Tiers
-    const CAB_TIERS = [
-      { id: 'moto', icon: '🛵', name: 'Bike Taxi', meta: 'Beat peak traffic • 1 seat', fare: 49, eta: '3 min', locked: true },
-      { id: 'auto', icon: '🛺', name: 'Auto Rickshaw', meta: 'Meter guarantee • 3 seats', fare: 85, eta: '4 min', locked: true },
-      { id: 'go', icon: '🚗', name: 'Go Economy', meta: 'AC Hatchback • 4 seats', fare: 189, eta: '5 min', locked: true },
-      { id: 'sedan', icon: '🚕', name: 'Premier Sedan', meta: 'Spacious legroom • 4 seats', fare: 289, eta: '6 min', locked: true },
-      { id: 'suv', icon: '🚙', name: 'SUV XL', meta: 'Innova / Ertiga • 6 seats', fare: 420, eta: '8 min', locked: true }
-    ];
-    let selectedCabTier = CAB_TIERS[2];
-
-    // Theme Management
+    // Theme toggle
     function toggleTheme() {
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
@@ -1437,28 +874,35 @@
       localStorage.setItem('rda_theme', newTheme);
     }
 
-    // Portal Navigation
+    // Portal Switching
     function setPortal(portal) {
       activePortal = portal;
       document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
       document.getElementById(`tab-${portal.toLowerCase()}`).classList.add('active');
 
-      document.getElementById('customer-subnav').style.display = portal === 'CUSTOMER' ? 'flex' : 'none';
+      document.getElementById('rider-subnav').style.display = portal === 'RIDER' ? 'flex' : 'none';
       document.getElementById('driver-subnav').style.display = portal === 'DRIVER' ? 'flex' : 'none';
+      document.getElementById('business-subnav').style.display = portal === 'BUSINESS' ? 'flex' : 'none';
       document.getElementById('admin-subnav').style.display = portal === 'ADMIN' ? 'flex' : 'none';
 
       renderApp();
     }
 
-    function setCustomerSub(sub) {
-      customerSub = sub;
-      updateSubnavActive('customer-subnav', sub);
+    function setRiderSub(sub) {
+      riderSub = sub;
+      updateSubnavActive('rider-subnav', sub);
       renderApp();
     }
 
     function setDriverSub(sub) {
       driverSub = sub;
       updateSubnavActive('driver-subnav', sub);
+      renderApp();
+    }
+
+    function setBusinessSub(sub) {
+      businessSub = sub;
+      updateSubnavActive('business-subnav', sub);
       renderApp();
     }
 
@@ -1480,137 +924,199 @@
       });
     }
 
-    // Toggle Intent
-    function setIntent(choice) {
-      intentChoice = choice;
-      renderApp();
+    // =========================================================
+    // 1. RIDER WEB EXPERIENCE
+    // =========================================================
+    function renderRiderWeb() {
+      if (riderSub === 'CAB') return renderCabFlow();
+      if (riderSub === 'AUTO') return renderAutoFlow();
+      if (riderSub === 'BIKE') return renderBikeFlow();
+      if (riderSub === 'CHAUFFEUR') return renderChauffeurFlow();
+      if (riderSub === 'RENTAL') return renderRentalFlow();
+      if (riderSub === 'OUTSTATION') return renderOutstationFlow();
+      if (riderSub === 'AIRPORT') return renderAirportFlow();
+      if (riderSub === 'DELIVERY') return renderDeliveryFlow();
+      if (riderSub === 'SAFETY') return renderSafetyFlow();
+      if (riderSub === 'WALLET') return renderWalletFlow();
+      return renderMobilityHub();
     }
 
-    // =========================================================
-    // VIEW BUILDER FUNCTIONS
-    // =========================================================
-
-    // 1. CUSTOMER PORTAL VIEWS
-    function renderCustomerPortal() {
-      if (customerSub === 'MYCAR') return renderMyCarAndHandover();
-      if (customerSub === 'ASSURANCE') return renderAirportAssurance();
-      if (customerSub === 'TRUSTED') return renderTrustedAndRecurring();
-      if (customerSub === 'SAFETY') return renderSafetyCenter();
-      if (customerSub === 'CORP') return renderCorporateAndFamily();
-      return renderCustomerOverview();
-    }
-
-    function renderCustomerOverview() {
+    function renderMobilityHub() {
       return `
-        <!-- Central Decision: Book a Cab vs Hire a Driver -->
-        <div class="intent-hero">
-          <div class="intent-label">RideDriveAhead — What do you need today?</div>
-          <div class="intent-grid">
-            <div class="intent-card ${intentChoice === 'CAB' ? 'active' : ''}" onclick="setIntent('CAB')">
-              <span class="intent-badge">Instant & City Mobility</span>
-              <div class="intent-card-title">BOOK A CAB</div>
-              <div class="intent-card-sub">I need a ride. Upfront locked fares, verified captains, multi-stop trips, and airport transfers.</div>
-            </div>
-            <div class="intent-card ${intentChoice === 'CHAUFFEUR' ? 'active' : ''}" onclick="setIntent('CHAUFFEUR')">
-              <span class="intent-badge">Personal Vehicle Chauffeur</span>
-              <div class="intent-card-title">HIRE A DRIVER</div>
-              <div class="intent-card-sub">I have my own car. Verified AT/MT certified chauffeurs for hourly duties, events, and outstation trips.</div>
-            </div>
+        <!-- Where are you going? Destination Search -->
+        <div class="dest-search-bar">
+          <span style="font-size: 16px;">🔍</span>
+          <input class="dest-search-input" placeholder="Where are you going? Search destination, airport, or tech park..." value="Kempegowda International Airport (BLR)" />
+          <button class="btn btn-primary" onclick="setRiderSub('CAB')">Search Rides →</button>
+        </div>
+
+        <!-- 8 Core Mobility Tiles Grid -->
+        <div class="mobility-tiles-row">
+          <div class="mobility-tile-btn" onclick="setRiderSub('CAB')">
+            <div class="tile-emoji-box">🚗</div>
+            <div class="tile-name">Cab</div>
+            <div class="tile-desc">Mini • Sedan • SUV</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('AUTO')">
+            <div class="tile-emoji-box">🛺</div>
+            <div class="tile-name">Auto</div>
+            <div class="tile-desc">Meter Guarantee</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('BIKE')">
+            <div class="tile-emoji-box">🏍</div>
+            <div class="tile-name">Bike</div>
+            <div class="tile-desc">Fast • From ₹79</div>
+          </div>
+          <div class="mobility-tile-btn differentiator" onclick="setRiderSub('CHAUFFEUR')">
+            <span class="tile-badge">UNIQUE</span>
+            <div class="tile-emoji-box" style="background: rgba(199,255,61,0.2);">👨‍✈️</div>
+            <div class="tile-name" style="color: var(--primary);">Driver</div>
+            <div class="tile-desc">Have Your Own Car</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('RENTAL')">
+            <div class="tile-emoji-box">🚘</div>
+            <div class="tile-name">Rental</div>
+            <div class="tile-desc">1h to 12h Packages</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('OUTSTATION')">
+            <div class="tile-emoji-box">🛣</div>
+            <div class="tile-name">Outstation</div>
+            <div class="tile-desc">One Way & Round</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('AIRPORT')">
+            <div class="tile-emoji-box">✈️</div>
+            <div class="tile-name">Airport</div>
+            <div class="tile-desc">Flight Sync Reserve</div>
+          </div>
+          <div class="mobility-tile-btn" onclick="setRiderSub('DELIVERY')">
+            <div class="tile-emoji-box">📦</div>
+            <div class="tile-name">Delivery</div>
+            <div class="tile-desc">Instant Parcel</div>
           </div>
         </div>
 
         <div class="grid-2col">
-          <!-- Left Column: Booking Flow -->
           <div>
-            ${intentChoice === 'CAB' ? renderCabBookingFlow() : renderChauffeurBookingFlow()}
+            <!-- Connected Route Planner with + Add Stop -->
+            <div class="card" style="margin-bottom: 16px;">
+              <div class="card-header">
+                <div class="card-title"><span>📍</span> Connected Route Planner</div>
+                <div class="verified-pill">Live GPS Telemetry</div>
+              </div>
+
+              <div class="route-planner">
+                <div class="route-row">
+                  <div class="route-dot pickup"></div>
+                  <input class="route-input" value="Koramangala 6th Block, Bengaluru" placeholder="Pickup location" />
+                </div>
+                ${hasIntermediateStop ? `
+                  <div class="route-row">
+                    <div class="route-dot stop"></div>
+                    <input class="route-input" value="Indiranagar 100ft Road (Stop 1)" placeholder="Intermediate stop" />
+                    <button onclick="toggleIntermediateStop()" style="background:none; border:none; color:var(--text-tertiary); cursor:pointer;">✕</button>
+                  </div>
+                ` : ''}
+                <div class="route-row">
+                  <div class="route-dot drop"></div>
+                  <input class="route-input" value="Kempegowda International Airport (BLR)" placeholder="Destination" />
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 6px;">
+                  <button class="btn-outline" style="padding: 4px 8px; font-size: 11px;" onclick="toggleIntermediateStop()">
+                    ${hasIntermediateStop ? '✓ Intermediate Stop Active' : '+ Add Stop (Multi-Stop Ride)'}
+                  </button>
+                  <span style="font-size: 11px; color: var(--text-secondary);">${hasIntermediateStop ? '3 stops • 48 km • 64 min' : '2 stops • 38 km • 52 min'}</span>
+                </div>
+              </div>
+
+              <!-- Price Control: Speed vs Price vs Comfort -->
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">PRICE & SPEED CONTROL</div>
+              <div class="price-control-strip">
+                <div class="price-control-tab ${pricePreference === 'FASTEST' ? 'active' : ''}" onclick="setPricePref('FASTEST')">
+                  ⚡ Fastest • ₹420 (3m ETA)
+                </div>
+                <div class="price-control-tab ${pricePreference === 'SAVER' ? 'active' : ''}" onclick="setPricePref('SAVER')">
+                  💰 Saver • ₹330 (8m ETA)
+                </div>
+                <div class="price-control-tab ${pricePreference === 'COMFORT' ? 'active' : ''}" onclick="setPricePref('COMFORT')">
+                  🛋️ Premium • ₹690 (4m ETA)
+                </div>
+              </div>
+
+              <!-- Family: Who is riding? -->
+              <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface-2); border-radius: 10px; padding: 10px 14px;">
+                <span style="font-size: 11.5px; font-weight: 700; color: var(--text);">Who is riding?</span>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn ${bookingForPerson === 'ME' ? 'btn-primary' : 'btn-outline'}" style="padding: 4px 10px; font-size: 11px;" onclick="setBookingPerson('ME')">Me</button>
+                  <button class="btn ${bookingForPerson === 'MOM' ? 'btn-primary' : 'btn-outline'}" style="padding: 4px 10px; font-size: 11px;" onclick="setBookingPerson('MOM')">Mom</button>
+                  <button class="btn ${bookingForPerson === 'DAD' ? 'btn-primary' : 'btn-outline'}" style="padding: 4px 10px; font-size: 11px;" onclick="setBookingPerson('DAD')">Dad</button>
+                  <button class="btn ${bookingForPerson === 'SISTER' ? 'btn-primary' : 'btn-outline'}" style="padding: 4px 10px; font-size: 11px;" onclick="setBookingPerson('SISTER')">Sister</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- "My Car" Feature Snapshot -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><span>🚗</span> My Registered Car</div>
+                <span class="verified-pill">RC & Insurance Verified</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div>
+                  <div style="font-size: 14px; font-weight: 800; color: var(--text);">Toyota Innova Crysta (2.8Z Automatic)</div>
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary); margin-top: 2px;">KA 01 AB 1234 • 48,291 km • Fuel 72%</div>
+                </div>
+                <button class="btn btn-primary" onclick="setRiderSub('CHAUFFEUR')">Hire Chauffeur →</button>
+              </div>
+              <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5; background: var(--surface-2); padding: 10px; border-radius: 8px;">
+                🛡️ <strong>Vehicle Handover Protocol Active:</strong> Pre-trip odometer logging, fuel verification, 360 photo inspection, and dual digital sign-off before handover.
+              </div>
+            </div>
           </div>
 
-          <!-- Right Column: Live Context Map & Trust / OTP Card -->
+          <!-- Right Column: Live Radar Map & Trip Assurance -->
           <div style="display: flex; flex-direction: column; gap: 16px;">
-            <!-- Live Radar Map -->
             <div class="card" style="padding: 14px;">
               <div class="card-header" style="margin-bottom: 10px;">
-                <div class="card-title">
-                  <span>📍</span> Bengaluru Urban Telemetry
-                </div>
-                <span class="status-pill" style="font-size: 10px;">Normal Surge 1.0x</span>
+                <div class="card-title"><span>📍</span> Live Telemetry Map</div>
+                <span class="status-pill" style="font-size: 10px;">Surge 1.0x</span>
               </div>
-              <div class="map-surface">
-                <svg class="map-svg" viewBox="0 0 400 280">
-                  <path d="M 0 100 Q 150 70 400 120" stroke="var(--map-road)" stroke-width="12" fill="none" />
-                  <path d="M 80 0 Q 140 140 180 280" stroke="var(--map-road)" stroke-width="10" fill="none" />
-                  <path d="M 0 200 C 120 180 280 240 400 190" stroke="var(--map-road)" stroke-width="14" fill="none" />
-                  <!-- Route path -->
-                  <path d="M 80 140 Q 140 160 260 210" stroke="var(--map-route)" stroke-width="5" stroke-dasharray="6,4" fill="none" />
-
-                  <!-- Pickup Marker -->
-                  <circle cx="80" cy="140" r="7" fill="var(--success)" />
-                  <text x="94" y="144" fill="var(--text)" font-size="11" font-weight="700">Pickup: Koramangala</text>
-
-                  <!-- Drop Marker -->
-                  <circle cx="260" cy="210" r="7" fill="var(--danger)" />
-                  <text x="274" y="214" fill="var(--text)" font-size="11" font-weight="700">Drop: Indiranagar</text>
-
-                  <!-- Real-time nearby vehicle dot -->
+              <div style="background: var(--map-land); border-radius: 12px; height: 260px; position: relative; overflow: hidden; border: 1px solid var(--border);">
+                <svg viewBox="0 0 400 260" style="width: 100%; height: 100%;">
+                  <path d="M 0 80 Q 180 50 400 100" stroke="var(--map-road)" stroke-width="12" fill="none" />
+                  <path d="M 60 0 Q 140 140 200 260" stroke="var(--map-road)" stroke-width="10" fill="none" />
+                  <path d="M 0 190 C 130 170 270 230 400 180" stroke="var(--map-road)" stroke-width="14" fill="none" />
+                  <path d="M 60 140 Q 140 160 270 210" stroke="var(--map-route)" stroke-width="5" stroke-dasharray="6,4" fill="none" />
+                  <circle cx="60" cy="140" r="7" fill="var(--success)" />
+                  <text x="74" y="144" fill="var(--text)" font-size="11" font-weight="700">Koramangala</text>
+                  <circle cx="270" cy="210" r="7" fill="var(--danger)" />
+                  <text x="284" y="214" fill="var(--text)" font-size="11" font-weight="700">Kempegowda Airport</text>
                   <circle cx="110" cy="120" r="5" fill="var(--primary)" />
-                  <circle cx="160" cy="180" r="5" fill="var(--primary)" />
-                  <circle cx="230" cy="230" r="5" fill="var(--primary)" />
+                  <circle cx="160" cy="175" r="5" fill="var(--primary)" />
+                  <circle cx="230" cy="225" r="5" fill="var(--primary)" />
                 </svg>
               </div>
             </div>
 
-            <!-- Active Trip Verification HUD -->
+            <!-- Start Trip PIN & Safety Shield -->
             <div class="card">
               <div class="card-header">
-                <div class="card-title">
-                  <span>🛡️</span> Trip Verification & PIN
-                </div>
+                <div class="card-title"><span>🛡️</span> Trip Verification & PIN</div>
                 <div class="verified-pill">Protected</div>
               </div>
-
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="background: var(--surface-2); border-radius: 12px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <div>
-                  <div style="font-size: 10px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">START TRIP PIN</div>
-                  <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 2px;">Share only with driver upon pickup</div>
+                  <div style="font-size: 10px; font-weight: 800; color: var(--text-secondary);">START TRIP PIN</div>
+                  <div style="font-size: 10.5px; color: var(--text-tertiary);">Share upon driver arrival</div>
                 </div>
                 <div class="otp-pin-display">
                   <div class="otp-digit">4</div>
-                  <div class="otp-digit">7</div>
-                  <div class="otp-digit">9</div>
+                  <div class="otp-digit">8</div>
                   <div class="otp-digit">2</div>
+                  <div class="otp-digit">7</div>
                 </div>
               </div>
-
-              <!-- Driver Trust Outcome -->
-              <div class="trust-profile-card" style="margin-bottom: 0;">
-                <div class="trust-header">
-                  <div class="trust-driver-info">
-                    <div class="trust-avatar">RK</div>
-                    <div>
-                      <div class="trust-driver-name">Ramesh Kumar</div>
-                      <div class="trust-driver-rating">★ 4.9 • 1,284 completed trips</div>
-                    </div>
-                  </div>
-                  <span class="verified-pill">Verified Driver</span>
-                </div>
-                <div class="trust-badges-flow">
-                  <div class="trust-chip"><span>✓</span> Identity Verified</div>
-                  <div class="trust-chip"><span>✓</span> Commercial DL Verified</div>
-                  <div class="trust-chip"><span>✓</span> Automatic Certified</div>
-                  <div class="trust-chip"><span>✓</span> Manual Certified</div>
-                </div>
-                <div class="trust-bar-row">
-                  <div class="trust-bar-label">
-                    <span>Vehicle Familiarity (Innova / Sedans)</span>
-                    <span>92%</span>
-                  </div>
-                  <div class="trust-bar-track">
-                    <div class="trust-bar-fill" style="width: 92%;"></div>
-                  </div>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 6px;">
-                  🔁 <strong>38% Repeat Customers</strong> across Koramangala & Indiranagar
-                </div>
+              <div style="font-size: 11px; color: var(--text-secondary);">
+                Assigned Captain: <strong>Ramesh Kumar</strong> ★ 4.9 (1,284 trips) • Innova Crysta KA 01 AB 1234
               </div>
             </div>
           </div>
@@ -1618,1039 +1124,274 @@
       `;
     }
 
-    // Cab Booking Flow
-    function renderCabBookingFlow() {
+    // 2. CAB SECTION (Mini, Sedan, SUV, Premium, Luxury)
+    function renderCabFlow() {
+      const cabs = [
+        { id: 'mini', icon: '🚗', name: 'Go Economy', seats: '4 seats', fare: 286, eta: '4 min' },
+        { id: 'sedan', icon: '🚕', name: 'Premier Sedan', seats: '4 seats', fare: 362, eta: '3 min' },
+        { id: 'suv', icon: '🚙', name: 'SUV XL (Innova)', seats: '6 seats', fare: 498, eta: '6 min' },
+        { id: 'prem', icon: '🚘', name: 'Executive Premium', seats: '4 seats', fare: 720, eta: '5 min' },
+        { id: 'lux', icon: '✨', name: 'Luxury Chauffeur', seats: '4 seats', fare: 1250, eta: '8 min' }
+      ];
+
       return `
-        <div class="card">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
           <div class="card-header">
-            <div class="card-title">
-              <span>🚕</span> Plan Your Cab Journey
-            </div>
-            <span style="font-size: 11px; color: var(--text-secondary);">Upfront Locked Pricing</span>
+            <div class="card-title"><span>🚗</span> Cab Selection (Uber/Ola Full Stack)</div>
+            <span class="verified-pill">Upfront Locked Pricing</span>
           </div>
 
-          <!-- Multi-Stop Route Planner with + Add Stop -->
-          <div class="route-planner">
-            <div class="route-row">
-              <div class="route-dot pickup"></div>
-              <input class="route-input" value="Koramangala 6th Block, Bengaluru" placeholder="Pickup location" />
-            </div>
-
-            ${hasIntermediateStop ? `
-              <div class="route-row">
-                <div class="route-dot stop"></div>
-                <input class="route-input" value="Indiranagar 100ft Road (Stop 1)" placeholder="Add intermediate stop" />
-                <button onclick="toggleIntermediateStop()" style="background:none; border:none; color:var(--text-tertiary); cursor:pointer;">✕</button>
-              </div>
-            ` : ''}
-
-            <div class="route-row">
-              <div class="route-dot drop"></div>
-              <input class="route-input" value="Kempegowda International Airport (BLR)" placeholder="Destination" />
-            </div>
-
-            <div class="add-stop-row">
-              <button class="add-stop-btn" onclick="toggleIntermediateStop()">
-                <span>${hasIntermediateStop ? '✓ Intermediate Stop Active' : '+ Add Stop (Multi-Stop Ride)'}</span>
-              </button>
-              <span style="font-size: 10.5px; color: var(--text-tertiary);">${hasIntermediateStop ? '3 stops • 48 km • 64 min' : '2 stops • 38 km • 52 min'}</span>
-            </div>
+          <div class="price-control-strip">
+            <div class="price-control-tab ${pricePreference === 'FASTEST' ? 'active' : ''}" onclick="setPricePref('FASTEST')">Fastest (3 min)</div>
+            <div class="price-control-tab ${pricePreference === 'SAVER' ? 'active' : ''}" onclick="setPricePref('SAVER')">Cheapest (Save 20%)</div>
+            <div class="price-control-tab ${pricePreference === 'COMFORT' ? 'active' : ''}" onclick="setPricePref('COMFORT')">Most Comfortable</div>
           </div>
 
-          <!-- Vehicle Tiers -->
-          <div class="intent-label" style="margin-bottom: 8px;">Select Ride Category</div>
           <div class="tiers-list">
-            ${CAB_TIERS.map(tier => `
-              <div class="tier-row ${selectedCabTier.id === tier.id ? 'active' : ''}" onclick="selectCabTier('${tier.id}')">
+            ${cabs.map(c => `
+              <div class="tier-row" onclick="alert('Booked ' + '${c.name}' + ' for ₹' + '${c.fare}' + '!')">
                 <div class="tier-left">
-                  <div class="tier-icon-box">${tier.icon}</div>
+                  <div class="tier-icon-box">${c.icon}</div>
                   <div>
-                    <div class="tier-name">${tier.name}</div>
-                    <div class="tier-meta">${tier.meta} • ETA: ${tier.eta}</div>
+                    <div class="tier-name">${c.name}</div>
+                    <div class="tier-meta">${c.seats} • ETA: ${c.eta}</div>
                   </div>
                 </div>
-                <div class="tier-right">
-                  <div class="tier-fare">₹ ${tier.fare}</div>
+                <div style="text-align: right;">
+                  <div class="tier-fare">₹ ${c.fare}</div>
                   <div class="tier-locked-badge">UPFRONT LOCKED</div>
                 </div>
               </div>
             `).join('')}
           </div>
 
-          <!-- Fare Transparency Breakdown -->
-          <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">
-              <span>Base Fare + Distance (38 km)</span>
-              <span>₹ ${selectedCabTier.fare - 45}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">
-              <span>Airport Toll & GST (5%)</span>
-              <span>₹ 35</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 6px;">
-              <span>Safety & Roadside Telemetry</span>
-              <span>₹ 10</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: var(--text); border-top: 1px dashed var(--border); padding-top: 6px;">
-              <span>Guaranteed Locked Total</span>
-              <span style="color: var(--primary);">₹ ${selectedCabTier.fare}</span>
-            </div>
-          </div>
-
-          <button class="btn btn-primary" style="width: 100%; padding: 13px;" onclick="alert('Booking confirmed for ' + selectedCabTier.name + '! Driver Ramesh Kumar assigned.')">
-            <span>Confirm ${selectedCabTier.name} — ₹ ${selectedCabTier.fare} →</span>
+          <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="alert('Booking confirmed with Driver Ramesh Kumar!')">
+            <span>Confirm Cab Booking →</span>
           </button>
         </div>
       `;
     }
 
-    // Chauffeur "Hire a Driver" Booking Flow
-    function renderChauffeurBookingFlow() {
-      const packages = [
-        { id: '2h', label: '2 Hours', km: '20 km included', fare: 599 },
-        { id: '4h', label: '4 Hours', km: '40 km included', fare: 999 },
-        { id: '8h', label: '8 Hours', km: '80 km included', fare: 1799 },
-        { id: '1d', label: '1 Day Outstation', km: '300 km included', fare: 2899 }
+    // 3. AUTO SECTION (Auto, Auto Share, Auto Plus)
+    function renderAutoFlow() {
+      const autos = [
+        { name: 'Standard Auto', meta: 'Meter guarantee • 3 seats', fare: 142, eta: '4 min' },
+        { name: 'Auto Share', meta: 'Share with 1 co-rider • Save 35%', fare: 89, eta: '7 min' },
+        { name: 'Auto Plus', meta: 'Priority pickup • Clean & vetted', fare: 179, eta: '3 min' }
       ];
-      const selectedPkg = packages.find(p => p.id === chauffeurHours) || packages[1];
 
       return `
-        <div class="card">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
           <div class="card-header">
-            <div class="card-title">
-              <span>👨‍✈️</span> Hire a Professional Chauffeur
-            </div>
-            <span style="font-size: 11px; color: var(--text-secondary);">For Your Own Vehicle</span>
+            <div class="card-title"><span>🛺</span> Auto Rickshaw (No Bargaining • Meter Guarantee)</div>
+            <span class="verified-pill">Doorstep Pickup</span>
           </div>
+          <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 16px;">
+            Guaranteed upfront pricing. No meter tampering, no refusal, zero cancellation charges upon arrival.
+          </p>
 
-          <!-- My Car Snapshot Link -->
-          <div class="my-car-card">
-            <div class="my-car-header">
-              <div>
-                <div class="my-car-title">Assigned Car: Toyota Innova Crysta</div>
-                <div class="my-car-reg">KA 01 AB 1234</div>
-              </div>
-              <div class="verified-pill">Vehicle Verified ✓</div>
-            </div>
-            <div class="car-specs-grid">
-              <div class="car-spec-box">
-                <div class="car-spec-label">TRANSMISSION</div>
-                <div class="car-spec-val">Automatic (AT)</div>
-              </div>
-              <div class="car-spec-box">
-                <div class="car-spec-label">ODOMETER</div>
-                <div class="car-spec-val">48,291 km</div>
-              </div>
-              <div class="car-spec-box">
-                <div class="car-spec-label">FUEL TANK</div>
-                <div class="car-spec-val">72% Full</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Duration Package Selector -->
-          <div class="intent-label" style="margin-bottom: 8px;">Select Chauffeur Package</div>
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">
-            ${packages.map(pkg => `
-              <div style="background: var(--surface-2); border: 1.5px solid ${chauffeurHours === pkg.id ? 'var(--primary)' : 'var(--border)'}; border-radius: 10px; padding: 10px; cursor: pointer; text-align: center;" onclick="setChauffeurHours('${pkg.id}')">
-                <div style="font-size: 12px; font-weight: 800; color: var(--text);">${pkg.label}</div>
-                <div style="font-size: 10px; color: var(--text-secondary); margin-top: 2px;">${pkg.km}</div>
-                <div style="font-size: 13px; font-weight: 800; color: var(--primary); margin-top: 4px;">₹ ${pkg.fare}</div>
-              </div>
-            `).join('')}
-          </div>
-
-          <!-- Transmission Requirement Toggle -->
-          <div class="intent-label" style="margin-bottom: 8px;">Transmission Requirement</div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
-            <div style="background: var(--surface-2); border: 1.5px solid ${chauffeurTransmission === 'AT' ? 'var(--primary)' : 'var(--border)'}; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="setChauffeurTransmission('AT')">
-              <span style="font-size: 16px;">🕹️</span>
-              <div>
-                <div style="font-size: 12px; font-weight: 800; color: var(--text);">Automatic (AT) Certified</div>
-                <div style="font-size: 10px; color: var(--text-secondary);">Matches Innova, DSG, CVT, EV</div>
-              </div>
-            </div>
-            <div style="background: var(--surface-2); border: 1.5px solid ${chauffeurTransmission === 'MT' ? 'var(--primary)' : 'var(--border)'}; border-radius: 10px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;" onclick="setChauffeurTransmission('MT')">
-              <span style="font-size: 16px;">⚙️</span>
-              <div>
-                <div style="font-size: 12px; font-weight: 800; color: var(--text);">Manual (MT) Certified</div>
-                <div style="font-size: 10px; color: var(--text-secondary);">Clutch control & hill-assist verified</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Smart Driver Dispatch Matcher -->
-          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-size: 11px; font-weight: 800; color: var(--text); text-transform: uppercase;">Smart Matching Engine</span>
-              <span class="status-pill" style="font-size: 9.5px;">3 Suitable Drivers Nearby</span>
-            </div>
-            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
-              Filtering drivers: Automatic ✓ • Rating 4.8+ ✓ • Fatigue Status: Safe (5h 42m duty) ✓ • Experience: 500+ trips ✓
-            </div>
-            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-size: 12px; font-weight: 800; color: var(--text);">Best Match: Ramesh Kumar ★ 4.9</div>
-                <div style="font-size: 10.5px; color: var(--text-secondary);">1.2 km away • Arrives in 8 min</div>
-              </div>
-              <div style="font-size: 14px; font-weight: 800; color: var(--primary);">₹ ${selectedPkg.fare} Locked</div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 10px;">
-            <button class="btn btn-secondary" style="flex: 1;" onclick="setCustomerSub('MYCAR')">
-              <span>View Handover Protocol ➔</span>
-            </button>
-            <button class="btn btn-primary" style="flex: 1;" onclick="alert('Chauffeur Ramesh Kumar dispatched! Proceeding to Vehicle Handover.')">
-              <span>Hire Ramesh for ${selectedPkg.label} →</span>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    // 2. MY CAR & VEHICLE HANDOVER PROTOCOL VIEW
-    function renderMyCarAndHandover() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">My Car & Vehicle Handover Protocol</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">End-to-end trust protocol before handing over your personal car to a professional chauffeur.</p>
-        </div>
-
-        <div class="grid-2col">
-          <div>
-            <!-- Vehicle Profile Card -->
-            <div class="card" style="margin-bottom: 16px;">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>🚗</span> Registered Personal Vehicle
-                </div>
-                <span class="verified-pill">RC & Insurance Verified</span>
-              </div>
-
-              <div class="my-car-card" style="margin-bottom: 12px;">
-                <div class="my-car-header">
+          <div class="tiers-list">
+            ${autos.map(a => `
+              <div class="tier-row" onclick="alert('Auto booked: ' + '${a.name}')">
+                <div class="tier-left">
+                  <div class="tier-icon-box">🛺</div>
                   <div>
-                    <div class="my-car-title" style="font-size: 16px;">Toyota Innova Crysta (2.8Z)</div>
-                    <div class="my-car-reg">KA 01 AB 1234</div>
-                  </div>
-                  <div style="text-align: right;">
-                    <div style="font-size: 11px; color: var(--text-secondary);">Owner</div>
-                    <div style="font-weight: 700; color: var(--text);">Alex Carter</div>
+                    <div class="tier-name">${a.name}</div>
+                    <div class="tier-meta">${a.meta} • ETA: ${a.eta}</div>
                   </div>
                 </div>
-
-                <div class="car-specs-grid">
-                  <div class="car-spec-box">
-                    <div class="car-spec-label">TRANSMISSION</div>
-                    <div class="car-spec-val">Automatic (6-Speed AT)</div>
-                  </div>
-                  <div class="car-spec-box">
-                    <div class="car-spec-label">CURRENT ODOMETER</div>
-                    <div class="car-spec-val">48,291 km</div>
-                  </div>
-                  <div class="car-spec-box">
-                    <div class="car-spec-label">FUEL SENSOR</div>
-                    <div class="car-spec-val">72% (Diesel)</div>
-                  </div>
-                </div>
-
-                <div class="driver-req-box">
-                  <div class="driver-req-title">Strict Driver Handover Requirements</div>
-                  <div class="driver-req-list">
-                    <div class="req-item"><span class="req-check">✓</span> Automatic AT Certified</div>
-                    <div class="req-item"><span class="req-check">✓</span> Minimum 4.8+ Customer Rating</div>
-                    <div class="req-item"><span class="req-check">✓</span> Commercial DL & Police Verified</div>
-                    <div class="req-item"><span class="req-check">✓</span> 500+ Completed Trips</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Vehicle Handover Protocol Engine -->
-            <div class="handover-protocol-card">
-              <div class="handover-step-indicator">
-                <div>
-                  <div class="handover-step-title">PRE-TRIP VEHICLE INSPECTION PROTOCOL</div>
-                  <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Completed by Customer Alex Carter & Driver Ramesh Kumar</div>
-                </div>
-                <span class="handover-status-badge">Step 1 of 2 Verified</span>
-              </div>
-
-              <div class="handover-metrics">
-                <div class="handover-metric-box">
-                  <div class="handover-metric-label">Logged Fuel Level</div>
-                  <div class="handover-metric-value">72% Full</div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 4px;">Dashboard sensor & photo confirmed</div>
-                </div>
-                <div class="handover-metric-box">
-                  <div class="handover-metric-label">Logged Odometer</div>
-                  <div class="handover-metric-value">48,291 km</div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 4px;">GPS cluster sync timestamped</div>
-                </div>
-              </div>
-
-              <!-- 360 Condition Checklist -->
-              <div class="intent-label" style="margin-bottom: 8px;">360° Exterior & Interior Condition (8 Photos Logged)</div>
-              <div class="checklist-grid">
-                <div class="checklist-item">
-                  <div class="checklist-side">Front Bumper</div>
-                  <div class="checklist-status">✓ Pristine (2 photos)</div>
-                </div>
-                <div class="checklist-item">
-                  <div class="checklist-side">Left Flank</div>
-                  <div class="checklist-status">✓ Clean (2 photos)</div>
-                </div>
-                <div class="checklist-item">
-                  <div class="checklist-side">Right Flank</div>
-                  <div class="checklist-status">✓ Clean (2 photos)</div>
-                </div>
-                <div class="checklist-item">
-                  <div class="checklist-side">Rear & Boot</div>
-                  <div class="checklist-status">✓ Pristine (2 photos)</div>
-                </div>
-              </div>
-
-              <!-- Dual Digital Signatures -->
-              <div class="signatures-row">
-                <div class="sign-box">
-                  <div class="sign-check">✓</div>
-                  <div class="sign-info">
-                    <strong>Customer Sign-Off</strong>
-                    Alex Carter • Authorized Key Handover
-                  </div>
-                </div>
-                <div class="sign-box">
-                  <div class="sign-check">✓</div>
-                  <div class="sign-info">
-                    <strong>Chauffeur Sign-Off</strong>
-                    Ramesh Kumar • Custody Accepted
-                  </div>
-                </div>
-              </div>
-
-              <div style="display: flex; gap: 10px;">
-                <button class="btn btn-primary" style="flex: 1;" onclick="alert('Pre-trip Handover verified! Chauffeur trip started.')">
-                  <span>Start Chauffeur Duty (Keys Handed Over) →</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column: Post-Trip Return Handover & Report -->
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>📋</span> Post-Trip Return Inspection
-                </div>
-                <span class="verified-pill">Safe Return Protocol</span>
-              </div>
-
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
-                <div style="font-size: 11px; font-weight: 800; color: var(--text); margin-bottom: 8px;">RETURN AUDIT LOG (TRIP COMPLETED)</div>
-                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 4px;">
-                  <span>Return Fuel Level:</span>
-                  <span style="font-weight: 700; color: var(--text);">68% (-4% fuel used)</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 4px;">
-                  <span>Return Odometer:</span>
-                  <span style="font-weight: 700; color: var(--text);">48,344 km (+53 km traveled)</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-secondary); margin-bottom: 6px;">
-                  <span>Post-Trip Scratch Audit:</span>
-                  <span style="font-weight: 700; color: var(--success);">Passed ✓ Zero New Scratches</span>
-                </div>
-                <div style="border-top: 1px dashed var(--border); padding-top: 6px; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary);">
-                  <span>Custody Return Sign-Off:</span>
-                  <span style="color: var(--success); font-weight: 700;">Completed by both parties ✓</span>
-                </div>
-              </div>
-
-              <!-- Post-Trip Feedback & Support -->
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px;">
-                <div style="font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 4px;">Rate Ramesh Kumar's Driving</div>
-                <div style="font-size: 16px; margin-bottom: 10px; cursor: pointer;">★★★★★</div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Did you notice any issues?</div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
-                  <span style="background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">No Issues ✓</span>
-                  <span style="background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Punctual & Courteous</span>
-                  <span style="background: var(--surface); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Smooth AT Gear Shifts</span>
-                </div>
-                <button class="btn btn-outline" style="width: 100%; font-size: 11px;" onclick="alert('Feedback submitted. Ramesh Kumar added to your Trusted Drivers list!')">
-                  <span>Submit Review & Add to Trusted Drivers</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Trusted Driver Direct Rebook -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>🔁</span> Book Ramesh Again
-                </div>
-                <span style="font-size: 10.5px; color: var(--text-secondary);">Relationship Marketplace</span>
-              </div>
-              <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 12px;">
-                You've completed 12 chauffeur duties with Ramesh Kumar. Rebook him directly for upcoming city or outstation journeys.
-              </p>
-              <button class="btn btn-secondary" style="width: 100%;" onclick="alert('Priority dispatch sent to Ramesh Kumar!')">
-                <span>Book Ramesh Kumar Directly →</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 3. AIRPORT TRIP ASSURANCE VIEW
-    function renderAirportAssurance() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Airport Trip Assurance Engine</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Enterprise-grade flight sync and guaranteed driver dispatch lifecycle.</p>
-        </div>
-
-        <div class="grid-2col">
-          <div>
-            <div class="assurance-card">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <div style="font-size: 11px; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">SCHEDULED AIRPORT TRANSFER</div>
-                  <div style="font-size: 16px; font-weight: 800; color: var(--text); margin-top: 2px;">Tomorrow • 06:30 AM Pickup</div>
-                </div>
-                <div class="verified-pill">Driver Confirmed</div>
-              </div>
-
-              <!-- Visual Lifecycle Timeline -->
-              <div class="assurance-step-row">
-                <div class="assurance-step">
-                  <div class="assurance-dot done">✓</div>
-                  <div class="assurance-step-text">Booking Confirmed</div>
-                </div>
-                <div class="assurance-step">
-                  <div class="assurance-dot done">✓</div>
-                  <div class="assurance-step-text">Fare Locked ₹1,248</div>
-                </div>
-                <div class="assurance-step">
-                  <div class="assurance-dot done">✓</div>
-                  <div class="assurance-step-text">Driver Assigned</div>
-                </div>
-                <div class="assurance-step">
-                  <div class="assurance-dot done">✓</div>
-                  <div class="assurance-step-text">T-12h Confirmed</div>
-                </div>
-                <div class="assurance-step">
-                  <div class="assurance-dot current">●</div>
-                  <div class="assurance-step-text" style="color: var(--primary);">T-2h Pre-flight</div>
-                </div>
-                <div class="assurance-step">
-                  <div class="assurance-dot">⏱</div>
-                  <div class="assurance-step-text">En Route (06:05 AM)</div>
-                </div>
-              </div>
-
-              <div style="background: var(--surface); border-radius: 12px; padding: 14px; margin-bottom: 14px; border: 1px solid var(--border-subtle);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 11px; font-weight: 700; color: var(--text);">Assigned Chauffeur: Ramesh Kumar</span>
-                  <span style="font-size: 11px; color: var(--primary); font-weight: 700;">★ 4.9 (1,284 trips)</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary);">
-                  Vehicle: Toyota Innova Crysta • KA 01 AB 1234
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
-                  Pickup: Koramangala 6th Block ➔ Drop: BLR Terminal 2
-                </div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px dashed var(--border);">
-                <div>
-                  <div style="font-size: 10px; color: var(--text-tertiary); text-transform: uppercase;">UPFRONT LOCKED FARE</div>
-                  <div style="font-size: 18px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace;">₹ 1,248</div>
-                </div>
-                <button class="btn btn-secondary" onclick="alert('Flight telemetry synchronized with flight AI 504. Pickup buffer adjusted to 06:15 AM.')">
-                  <span>Manage Airport Booking</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Flight Telemetry Radar -->
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>✈️</span> Flight Sync Telemetry
-                </div>
-                <span class="verified-pill">Live Flight Radar</span>
-              </div>
-
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 4px;">
-                  <span>Air India AI 504 (BLR → DEL)</span>
-                  <span style="color: var(--success);">On Time</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary);">
-                  Scheduled Departure: 09:15 AM • Boarding Gate: 22B
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
-                  Recommended Departure from Home: <strong>06:30 AM</strong> (Allows 45 min traffic buffer)
-                </div>
-              </div>
-
-              <p style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
-                RideDriveAhead monitors your flight status in real time. If your flight is delayed or rescheduled, your driver's pickup time updates automatically without cancellation fees.
-              </p>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 4. TRUSTED DRIVERS & RECURRING RIDES
-    function renderTrustedAndRecurring() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Trusted Drivers & Recurring Commutes</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Turn one-off trips into long-term mobility relationships with preferred professional chauffeurs.</p>
-        </div>
-
-        <div class="grid-2col">
-          <!-- Trusted Drivers List -->
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>⭐</span> Your Trusted Driver Pool
-                </div>
-                <span style="font-size: 11px; color: var(--text-secondary);">3 Chauffeurs Saved</span>
-              </div>
-
-              <!-- Driver 1 -->
-              <div class="trust-profile-card">
-                <div class="trust-header">
-                  <div class="trust-driver-info">
-                    <div class="trust-avatar">RK</div>
-                    <div>
-                      <div class="trust-driver-name">Ramesh Kumar</div>
-                      <div class="trust-driver-rating">★ 4.9 • 12 trips together</div>
-                    </div>
-                  </div>
-                  <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="alert('Priority booking sent to Ramesh Kumar!')">
-                    <span>Book Again</span>
-                  </button>
-                </div>
-                <div class="trust-badges-flow">
-                  <div class="trust-chip"><span>✓</span> AT Certified</div>
-                  <div class="trust-chip"><span>✓</span> Familiar with Innova Crysta</div>
-                  <div class="trust-chip"><span>✓</span> Outstation Specialist</div>
-                </div>
-              </div>
-
-              <!-- Driver 2 -->
-              <div class="trust-profile-card" style="margin-bottom: 0;">
-                <div class="trust-header">
-                  <div class="trust-driver-info">
-                    <div class="trust-avatar">SS</div>
-                    <div>
-                      <div class="trust-driver-name">Suresh Sharma</div>
-                      <div class="trust-driver-rating">★ 4.8 • 7 trips together</div>
-                    </div>
-                  </div>
-                  <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px;" onclick="alert('Booking sent to Suresh Sharma!')">
-                    <span>Book Again</span>
-                  </button>
-                </div>
-                <div class="trust-badges-flow">
-                  <div class="trust-chip"><span>✓</span> MT & AT Certified</div>
-                  <div class="trust-chip"><span>✓</span> Corporate Chauffeur</div>
-                  <div class="trust-chip"><span>✓</span> English & Kannada</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Recurring Commutes Builder -->
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>🔁</span> Recurring Commute Schedules
-                </div>
-                <span class="verified-pill">Active Subscriptions</span>
-              </div>
-
-              <!-- Recurring Schedule 1 -->
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                  <span style="font-size: 12px; font-weight: 800; color: var(--text);">Weekday Office Commute</span>
-                  <span style="font-size: 10px; font-weight: 700; color: var(--success);">ACTIVE (Mon–Fri)</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary);">
-                  Every Mon–Fri at 08:30 AM • Koramangala ➔ Manyata Tech Park
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
-                  Preferred Vehicle: Premier Sedan • Guaranteed On-Time Dispatch
-                </div>
-              </div>
-
-              <!-- Recurring Chauffeur 2 -->
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                  <span style="font-size: 12px; font-weight: 800; color: var(--text);">Personal Chauffeur (Full Week)</span>
-                  <span style="font-size: 10px; font-weight: 700; color: var(--primary);">SCHEDULED</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary);">
-                  Mon–Fri 08:00 AM – 06:00 PM • Dedicated to Toyota Innova (KA 01 AB 1234)
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
-                  Chauffeur: Ramesh Kumar assigned • Flat monthly settlement
-                </div>
-              </div>
-
-              <button class="btn btn-secondary" style="width: 100%;" onclick="alert('Recurring commute builder opened!')">
-                <span>+ Create New Recurring Schedule</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 5. SAFETY CENTER VIEW (STRICT ZERO SOS - CALM PROTECTED TELEMETRY)
-    function renderSafetyCenter() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Safety Center & Trip Guardian</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Continuous real-time telemetry, trip verification, and 24/7 roadside assistance.</p>
-        </div>
-
-        <div class="grid-2col">
-          <div>
-            <!-- Calm Protected Status Banner -->
-            <div class="safety-shield-box">
-              <div class="shield-left">
-                <div class="shield-icon">🛡️</div>
-                <div>
-                  <div class="shield-title">Trip Guardian Status: Protected</div>
-                  <div class="shield-sub">Live route deviation monitoring and 24/7 telemetry active.</div>
-                </div>
-              </div>
-              <span class="status-pill">Active</span>
-            </div>
-
-            <!-- Safety Protections Checklist -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>🔒</span> Core Safety Protocols
-                </div>
-                <span style="font-size: 11px; color: var(--text-secondary);">Enterprise Telemetry</span>
-              </div>
-
-              <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
-                <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text);">Live Trip Sharing</div>
-                    <div style="font-size: 10.5px; color: var(--text-secondary);">Automatically shares live GPS with 2 trusted contacts</div>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700; color: var(--success);">ACTIVE</span>
-                </div>
-
-                <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text);">Mandatory 4-Digit Trip PIN</div>
-                    <div style="font-size: 10.5px; color: var(--text-secondary);">Trips cannot start until captain enters correct OTP code</div>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700; color: var(--success);">ENFORCED</span>
-                </div>
-
-                <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-                  <div>
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text);">Fatigue Protection Engine</div>
-                    <div style="font-size: 10.5px; color: var(--text-secondary);">Drivers exceeding 8 hours of daily duty are blocked from dispatch</div>
-                  </div>
-                  <span style="font-size: 11px; font-weight: 700; color: var(--success);">ONLINE</span>
-                </div>
-              </div>
-
-              <div style="display: flex; gap: 10px;">
-                <button class="btn btn-primary" style="flex: 1;" onclick="alert('Trip link copied to clipboard and sent to emergency contacts!')">
-                  <span>Share Live Trip Link</span>
-                </button>
-                <button class="btn btn-secondary" style="flex: 1;" onclick="alert('Connecting to 24/7 Roadside Assistance Team...')">
-                  <span>24/7 Roadside Assistance</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Emergency Contacts & Telemetry Audit -->
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>👥</span> Configured Emergency Contacts
-                </div>
-                <span style="font-size: 10.5px; color: var(--text-secondary);">2 Contacts Synced</span>
-              </div>
-
-              <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 8px;">
-                <div style="display: flex; justify-content: space-between;">
-                  <span style="font-weight: 700; color: var(--text);">Sarah Carter (Spouse)</span>
-                  <span style="font-size: 10px; color: var(--success); font-weight: 700;">SMS & WhatsApp Synced</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">+91 98450 11223</div>
-              </div>
-
-              <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 16px;">
-                <div style="display: flex; justify-content: space-between;">
-                  <span style="font-weight: 700; color: var(--text);">Robert Carter (Father)</span>
-                  <span style="font-size: 10px; color: var(--success); font-weight: 700;">Senior Safety Active</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">+91 99120 44556</div>
-              </div>
-
-              <button class="btn btn-outline" style="width: 100%;" onclick="alert('Manage contact drawer opened.')">
-                <span>+ Add Emergency Contact</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 6. CORPORATE & FAMILY ACCOUNTS
-    function renderCorporateAndFamily() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">RideDriveAhead Business & Family</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Enterprise corporate billing and multi-member family mobility management.</p>
-        </div>
-
-        <div class="grid-2col">
-          <!-- Corporate Account -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <span>💼</span> Corporate Account: Acme Technologies
-              </div>
-              <span class="verified-pill">Enterprise Tier</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
-              <div style="background: var(--surface-2); border-radius: 10px; padding: 12px;">
-                <div style="font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">MONTHLY INVOICE</div>
-                <div style="font-size: 18px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">₹ 4,82,400</div>
-                <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 2px;">1,284 rides completed</div>
-              </div>
-              <div style="background: var(--surface-2); border-radius: 10px; padding: 12px;">
-                <div style="font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">ACTIVE EMPLOYEES</div>
-                <div style="font-size: 18px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">342 Staff</div>
-                <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 2px;">Department limits active</div>
-              </div>
-            </div>
-
-            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 16px; font-size: 11px; color: var(--text-secondary);">
-              <div>• <strong>124 Airport Transfers</strong> logged this month with flight sync</div>
-              <div style="margin-top: 4px;">• <strong>86 Chauffeur Duties</strong> for executive client visits</div>
-              <div style="margin-top: 4px;">• Direct GST invoicing & automated expense report exports</div>
-            </div>
-
-            <button class="btn btn-secondary" style="width: 100%;" onclick="alert('Corporate analytics and monthly invoice downloaded.')">
-              <span>View Corporate Analytics & Export Invoices →</span>
-            </button>
-          </div>
-
-          <!-- Family Profiles -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">
-                <span>👨‍👩‍👧</span> Family Mobility Group
-              </div>
-              <span style="font-size: 11px; color: var(--text-secondary);">3 Members Connected</span>
-            </div>
-
-            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 700; color: var(--text);">Alex Carter (Admin)</span>
-                <span style="font-size: 10px; color: var(--primary); font-weight: 700;">Account Holder</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Default corporate card payment</div>
-            </div>
-
-            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 10px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 700; color: var(--text);">Sarah Carter (Spouse)</span>
-                <span style="font-size: 10px; color: var(--success); font-weight: 700;">Book & Ride Access</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Live trip sharing enabled</div>
-            </div>
-
-            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 700; color: var(--text);">Robert Carter (Father)</span>
-                <span style="font-size: 10px; color: var(--warning); font-weight: 700;">Senior Ride Shield</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Notifications sent to Alex on trip start & finish</div>
-            </div>
-
-            <button class="btn btn-outline" style="width: 100%;" onclick="alert('Invite link generated!')">
-              <span>+ Invite Family Member</span>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    // 2. DRIVER OS PORTAL VIEWS
-    function renderDriverPortal() {
-      if (driverSub === 'GIGS') return renderDriverGigs();
-      if (driverSub === 'HANDOVER_SIGN') return renderDriverHandoverVerification();
-      return renderDriverReadinessOS();
-    }
-
-    function renderDriverReadinessOS() {
-      return `
-        <!-- Driver OS Master Header -->
-        <div class="driver-os-header">
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 18px; font-weight: 800; color: var(--text);">Good Morning, Ramesh Kumar</span>
-              <span class="status-pill" style="font-size: 10px;">${isDriverOnline ? '● Online & Ready' : 'Shift Paused'}</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
-              Professional Chauffeur ID: #DRV-8492 • Commercial DL Validated ✓
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <div style="text-align: right;">
-              <div style="font-size: 10px; color: var(--text-tertiary); text-transform: uppercase;">TODAY'S EARNINGS</div>
-              <div style="font-size: 20px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace;">₹ 3,420</div>
-            </div>
-            <button class="btn ${isDriverOnline ? 'btn-secondary' : 'btn-primary'}" onclick="toggleDriverOnline()">
-              <span>${isDriverOnline ? 'Go Offline' : 'Go Online'}</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="grid-2col">
-          <!-- Left: Driver Readiness & Fatigue Engine -->
-          <div>
-            <div class="readiness-cockpit-card">
-              <div class="readiness-status-bar">
-                <div>
-                  <div class="card-title">
-                    <span>🛡️</span> Driver Readiness & Fatigue Engine
-                  </div>
-                  <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Autonomous safety regulation according to platform rest policy</div>
-                </div>
-                <div class="readiness-status-tag ready">
-                  <span>●</span> STATUS: READY FOR DISPATCH
-                </div>
-              </div>
-
-              <!-- Metrics Grid -->
-              <div class="readiness-metrics-grid">
-                <div class="readiness-metric-box">
-                  <div class="readiness-metric-label">Driving Today</div>
-                  <div class="readiness-metric-val">05h 42m</div>
-                  <div style="font-size: 9.5px; color: var(--text-tertiary); margin-top: 2px;">Max: 08h 00m</div>
-                </div>
-                <div class="readiness-metric-box">
-                  <div class="readiness-metric-label">Next Break In</div>
-                  <div class="readiness-metric-val" style="color: var(--warning);">18 min</div>
-                  <div style="font-size: 9.5px; color: var(--text-tertiary); margin-top: 2px;">Mandatory 20m rest</div>
-                </div>
-                <div class="readiness-metric-box">
-                  <div class="readiness-metric-label">Available Driving</div>
-                  <div class="readiness-metric-val">02h 18m</div>
-                  <div style="font-size: 9.5px; color: var(--text-tertiary); margin-top: 2px;">Until hard lockout</div>
-                </div>
-                <div class="readiness-metric-box">
-                  <div class="readiness-metric-label">Completed Trips</div>
-                  <div class="readiness-metric-val">8 Trips</div>
-                  <div style="font-size: 9.5px; color: var(--text-tertiary); margin-top: 2px;">100% On-time</div>
-                </div>
-              </div>
-
-              <!-- Shift Duty Bar -->
-              <div class="readiness-progress-wrap">
-                <div class="readiness-bar-labels">
-                  <span>Daily Shift Consumption (5h 42m / 8h 00m)</span>
-                  <span>71% Shift Complete</span>
-                </div>
-                <div class="readiness-track">
-                  <div class="readiness-fill"></div>
-                </div>
-              </div>
-
-              <div class="readiness-note">
-                <span>🛡️</span>
-                <span><strong>Dispatch Safety Interlock:</strong> You cannot be assigned duties exceeding 2h 18m until your next mandatory rest break.</span>
-              </div>
-            </div>
-
-            <!-- Next Scheduled Assignment -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>📍</span> Next Confirmed Assignment
-                </div>
-                <span class="verified-pill">Confirmed by Dispatch</span>
-              </div>
-
-              <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
-                  <span style="font-size: 13px; font-weight: 800; color: var(--text);">Airport Transfer • Tomorrow 10:30 AM</span>
-                  <span style="font-size: 15px; font-weight: 800; color: var(--primary); font-family: 'JetBrains Mono', monospace;">₹ 720 Earning</span>
-                </div>
-                <div style="font-size: 11.5px; color: var(--text-secondary);">
-                  Pickup: Koramangala 6th Block ➔ Drop: BLR Airport T1 (34 km)
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
-                  Rider: Vikram Malhotra • Premier Sedan • Upfront locked booking
-                </div>
-              </div>
-
-              <button class="btn btn-primary" style="width: 100%;" onclick="alert('Navigation launched to pickup point!')">
-                <span>Start Navigation via Google Maps →</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Right: Quick Gig Marketplace Preview -->
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>💼</span> Open Gigs Nearby (3 Available)
-                </div>
-                <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;" onclick="setDriverSub('GIGS')">
-                  View All Gigs
-                </button>
-              </div>
-
-              <!-- Gig Snippet 1 -->
-              <div class="gig-card">
-                <div class="gig-top">
-                  <div>
-                    <div class="gig-category">CHAUFFEUR • 2 HOURS</div>
-                    <div class="gig-title">Corporate Client Duty (Automatic AT)</div>
-                  </div>
-                  <div class="gig-fare">₹ 750</div>
-                </div>
-                <div class="gig-route">Koramangala ➔ Indiranagar • Pickup 1.2 km away</div>
-                <div class="gig-footer">
-                  <span class="gig-dist">Fits in remaining 2h 18m shift</span>
-                  <button class="btn btn-primary" style="padding: 5px 12px; font-size: 11px;" onclick="alert('Gig accepted! Proceeding to pickup.')">
-                    Accept Gig
-                  </button>
-                </div>
-              </div>
-
-              <!-- Gig Snippet 2 -->
-              <div class="gig-card" style="margin-bottom: 0;">
-                <div class="gig-top">
-                  <div>
-                    <div class="gig-category">WEDDING EVENT • 6 HOURS</div>
-                    <div class="gig-title">Chauffeur for Mercedes E-Class (Automatic)</div>
-                  </div>
-                  <div class="gig-fare">₹ 3,500</div>
-                </div>
-                <div class="gig-route">Whitefield • Scheduled Tomorrow 02:00 PM</div>
-                <div class="gig-footer">
-                  <span class="gig-dist">Scheduled after full night rest</span>
-                  <button class="btn btn-secondary" style="padding: 5px 12px; font-size: 11px;" onclick="alert('Application logged for Wedding gig!')">
-                    Apply for Gig
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // Driver Gig Marketplace
-    function renderDriverGigs() {
-      const gigs = [
-        {
-          id: 'gig-1',
-          cat: 'CHAUFFEUR • HOURLY',
-          title: 'Corporate Executive Duty (Toyota Fortuner AT)',
-          fare: '₹ 850',
-          route: 'Koramangala ➔ Whitefield Tech Park • 2.5 Hours',
-          dist: 'Pickup 1.4 km away • Immediate Start',
-          tags: ['Automatic AT', 'Corporate Attire', 'Fuel Pre-filled']
-        },
-        {
-          id: 'gig-2',
-          cat: 'EVENT & WEDDING',
-          title: 'Wedding Family Chauffeur (Innova Crysta MT)',
-          fare: '₹ 3,500',
-          route: 'Palace Grounds ➔ Jayamahal • 6 Hours Duty',
-          dist: 'Starts Tomorrow 03:00 PM',
-          tags: ['Manual MT Certified', 'Food Provided', 'Overtime ₹250/hr']
-        },
-        {
-          id: 'gig-3',
-          cat: 'OUTSTATION ROAD TRIP',
-          title: 'Bengaluru ➔ Coorg Weekend Chauffeur (Honda City AT)',
-          fare: '₹ 4,800',
-          route: 'Bengaluru ➔ Madikeri, Coorg • 2 Days Round Trip',
-          dist: 'Starts Friday 06:00 AM',
-          tags: ['Outstation Certified', 'Driver Stay Provided', 'Hill Driving Verified']
-        }
-      ];
-
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Driver Gig Marketplace</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Browse, apply, and accept verified personal car chauffeur gigs tailored to your vehicle certifications.</p>
-        </div>
-
-        <div class="grid-2col">
-          <div>
-            ${gigs.map(g => `
-              <div class="gig-card" style="padding: 18px;">
-                <div class="gig-top">
-                  <div>
-                    <div class="gig-category">${g.cat}</div>
-                    <div class="gig-title" style="font-size: 15px;">${g.title}</div>
-                  </div>
-                  <div class="gig-fare" style="font-size: 18px; color: var(--primary);">${g.fare}</div>
-                </div>
-                <div class="gig-route" style="font-size: 12px;">${g.route}</div>
-                <div class="gig-tags">
-                  ${g.tags.map(t => `<div class="gig-tag">${t}</div>`).join('')}
-                </div>
-                <div class="gig-footer">
-                  <span class="gig-dist">${g.dist}</span>
-                  <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-outline" style="padding: 6px 12px; font-size: 11px;" onclick="alert('Gig saved to bookmarks.')">Save</button>
-                    <button class="btn btn-primary" style="padding: 6px 14px; font-size: 11px;" onclick="alert('Gig accepted! Proceeding to Vehicle Handover Protocol.')">Accept Gig</button>
-                  </div>
+                <div style="text-align: right;">
+                  <div class="tier-fare">₹ ${a.fare}</div>
+                  <div class="tier-locked-badge">METER LOCKED</div>
                 </div>
               </div>
             `).join('')}
           </div>
+        </div>
+      `;
+    }
 
-          <div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">
-                  <span>💡</span> Gig Acceptance Criteria
+    // 4. RAPIDO-STYLE BIKE FAST MOBILITY
+    function renderBikeFlow() {
+      const bikes = [
+        { name: 'Bike Taxi', meta: 'Single rider • Helmet verified', fare: 79, eta: '3 min' },
+        { name: 'Bike Priority', meta: 'Fastest dispatch • Beat rush hour', fare: 109, eta: '2 min' },
+        { name: 'Bike Share', meta: 'Shared corridor commute', fare: 59, eta: '5 min' }
+      ];
+
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>🏍</span> Rapido-Style Fast Bike Mobility</div>
+            <span class="verified-pill">Helmet Guaranteed</span>
+          </div>
+          <div style="background: var(--surface-2); border-radius: 12px; padding: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 11.5px; color: var(--text);">Safety Preferences:</div>
+            <div style="display: flex; gap: 8px;">
+              <span class="verified-pill">✓ Clean Sanitized Helmet</span>
+              <span class="verified-pill">✓ Female Captain Option</span>
+            </div>
+          </div>
+
+          <div class="tiers-list">
+            ${bikes.map(b => `
+              <div class="tier-row" onclick="alert('Bike Taxi booked: ' + '${b.name}')">
+                <div class="tier-left">
+                  <div class="tier-icon-box">🏍</div>
+                  <div>
+                    <div class="tier-name">${b.name}</div>
+                    <div class="tier-meta">${b.meta} • ETA: ${b.eta}</div>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <div class="tier-fare">₹ ${b.fare}</div>
+                  <div class="tier-locked-badge">FASTEST ETA</div>
                 </div>
               </div>
-              <p style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
-                All gigs require completing the <strong>Digital Vehicle Handover Protocol</strong> (fuel verification, odometer capture, 360 photo inspection, and dual digital sign-off) before taking the wheel.
-              </p>
-              <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; font-size: 11px; color: var(--text-secondary);">
-                <div>✓ Fuel level and scratches are customer-verified at start</div>
-                <div style="margin-top: 4px;">✓ Overtime hours pay automatically at ₹200–250/hr</div>
-                <div style="margin-top: 4px;">✓ Platform insurance covers accidental damages during duty</div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. CHAUFFEUR & VEHICLE HANDOVER
+    function renderChauffeurFlow() {
+      const pkgs = [
+        { label: '2 Hours', km: '20 km included', fare: 599 },
+        { label: '4 Hours', km: '40 km included', fare: 999 },
+        { label: '8 Hours', km: '80 km included', fare: 1799 },
+        { label: 'Full Day Outstation', km: '300 km included', fare: 2899 }
+      ];
+
+      return `
+        <div class="card" style="max-width: 860px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>👨‍✈️</span> Hire a Professional Chauffeur (For Your Own Car)</div>
+            <span class="verified-pill">Core Differentiator</span>
+          </div>
+
+          <!-- Packages -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px;">
+            ${pkgs.map(p => `
+              <div style="background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer;" onclick="alert('Selected package: ' + '${p.label}')">
+                <div style="font-size: 12.5px; font-weight: 800; color: var(--text);">${p.label}</div>
+                <div style="font-size: 10px; color: var(--text-secondary); margin-top: 2px;">${p.km}</div>
+                <div style="font-size: 14px; font-weight: 800; color: var(--primary); margin-top: 6px;">₹ ${p.fare}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Vehicle Handover Protocol Engine -->
+          <div style="background: var(--surface-2); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 8px;">VEHICLE HANDOVER PROTOCOL (DIGITAL INSPECTION)</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div class="handover-metric-box">
+                <div class="handover-metric-label">Logged Fuel Level</div>
+                <div class="handover-metric-val">72% Full</div>
+              </div>
+              <div class="handover-metric-box">
+                <div class="handover-metric-label">Cluster Odometer</div>
+                <div class="handover-metric-val">48,291 km</div>
+              </div>
+            </div>
+            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px;">
+              ✓ 360° Condition Checklist (8 photos uploaded: Front, Left, Right, Rear) • Zero scratches logged.
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <div style="flex: 1; background: var(--surface); padding: 8px; border-radius: 8px; border: 1px dashed var(--border); font-size: 10.5px;">
+                <strong>Alex Carter (Owner)</strong>: Custody Signed ✓
+              </div>
+              <div style="flex: 1; background: var(--surface); padding: 8px; border-radius: 8px; border: 1px dashed var(--border); font-size: 10.5px;">
+                <strong>Ramesh Kumar (Chauffeur)</strong>: Custody Acknowledged ✓
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%; padding: 12px;" onclick="alert('Chauffeur duty initiated! Handover protocol logged to blockchain audit.')">
+            <span>Start Chauffeur Duty (Hand Over Keys) →</span>
+          </button>
+        </div>
+      `;
+    }
+
+    // 6. RENTAL (HOURLY)
+    function renderRentalFlow() {
+      const rentals = [
+        { label: '1 Hour / 10 km', fare: 399 },
+        { label: '4 Hours / 40 km', fare: 1299 },
+        { label: '8 Hours / 80 km', fare: 2199 },
+        { label: '12 Hours / 120 km', fare: 2999 }
+      ];
+
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>🚘</span> Hourly Multi-Stop Rentals (Uber/Ola Style)</div>
+            <span class="verified-pill">Keep the Car as Long as You Need</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;">
+            ${rentals.map(r => `
+              <div style="background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; text-align: center; cursor: pointer;" onclick="alert('Rental package booked: ' + '${r.label}')">
+                <div style="font-size: 13px; font-weight: 800; color: var(--text);">${r.label}</div>
+                <div style="font-size: 16px; font-weight: 800; color: var(--primary); margin-top: 6px;">₹ ${r.fare}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="font-size: 11.5px; color: var(--text-secondary); background: var(--surface-2); padding: 12px; border-radius: 10px;">
+            Options: <strong>With Professional Driver</strong> • Self Drive (Select verified cities) • Extra km: ₹14/km • Extra hour: ₹150/hr.
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. OUTSTATION (INTERCITY)
+    function renderOutstationFlow() {
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>🛣</span> Outstation Intercity Travel (Ola Style)</div>
+            <span class="verified-pill">One Way & Round Trip</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px;">
+              <div style="font-size: 10px; color: var(--text-secondary);">FROM</div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--text);">Bengaluru, Karnataka</div>
+            </div>
+            <div style="background: var(--surface-2); border-radius: 10px; padding: 12px;">
+              <div style="font-size: 10px; color: var(--text-secondary);">TO</div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--text);">Mysuru, Karnataka (145 km)</div>
+            </div>
+          </div>
+
+          <div class="tiers-list">
+            <div class="tier-row" onclick="alert('Sedan Outstation Booked!')">
+              <div class="tier-left">
+                <div class="tier-icon-box">🚕</div>
+                <div>
+                  <div class="tier-name">Premier Sedan Outstation</div>
+                  <div class="tier-meta">4 seats • Tolls & State Tax Included</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div class="tier-fare">₹ 3,200</div>
+                <div class="tier-locked-badge">ALL-INCLUSIVE</div>
+              </div>
+            </div>
+
+            <div class="tier-row" onclick="alert('SUV Outstation Booked!')">
+              <div class="tier-left">
+                <div class="tier-icon-box">🚙</div>
+                <div>
+                  <div class="tier-name">Innova Crysta SUV Outstation</div>
+                  <div class="tier-meta">6 seats • Luggage carrier</div>
+                </div>
+              </div>
+              <div style="text-align: right;">
+                <div class="tier-fare">₹ 4,800</div>
+                <div class="tier-locked-badge">ALL-INCLUSIVE</div>
               </div>
             </div>
           </div>
@@ -2658,262 +1399,392 @@
       `;
     }
 
-    // Driver Handover Verification
-    function renderDriverHandoverVerification() {
+    // 8. AIRPORT RESERVE
+    function renderAirportFlow() {
       return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Driver Custody Verification Portal</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Digital sign-off tool for drivers accepting custody of a customer's vehicle.</p>
-        </div>
-
-        <div class="card" style="max-width: 800px;">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
           <div class="card-header">
-            <div class="card-title">
-              <span>🔑</span> Vehicle Key Handover Checklist
-            </div>
-            <span class="verified-pill">Active Verification</span>
+            <div class="card-title"><span>✈️</span> Airport Reserve (Uber Reserve Style)</div>
+            <span class="verified-pill">Guaranteed Driver Assignment</span>
           </div>
 
           <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; color: var(--text);">Vehicle: Toyota Innova Crysta (KA 01 AB 1234)</div>
-            <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Owner: Alex Carter • Pickup: Koramangala 6th Block</div>
-          </div>
-
-          <div class="handover-metrics">
-            <div class="handover-metric-box">
-              <div class="handover-metric-label">Driver Fuel Confirmation</div>
-              <div class="handover-metric-value" style="font-size: 16px;">72% Verified</div>
-              <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 2px;">Dashboard photo matched</div>
+            <div style="display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; color: var(--text); margin-bottom: 4px;">
+              <span>IndiGo Flight 6E 752 (BLR → DEL)</span>
+              <span style="color: var(--success);">Flight On Time</span>
             </div>
-            <div class="handover-metric-box">
-              <div class="handover-metric-label">Driver Odometer Confirmation</div>
-              <div class="handover-metric-value" style="font-size: 16px;">48,291 km</div>
-              <div style="font-size: 10px; color: var(--text-tertiary); margin-top: 2px;">Odometer reading confirmed</div>
-            </div>
-          </div>
-
-          <div style="background: var(--surface-2); border-radius: 10px; padding: 12px; margin-bottom: 16px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 6px;">360° Scratch Acknowledgment</div>
             <div style="font-size: 11px; color: var(--text-secondary);">
-              I have inspected the front, left flank, right flank, and rear of the vehicle. All existing conditions are documented. I accept vehicle custody for this 4-hour duty.
+              Flight Departure: 10:00 AM • Recommended Pickup: <strong>06:30 AM Tomorrow</strong>
             </div>
           </div>
 
-          <button class="btn btn-primary" style="width: 100%;" onclick="alert('Digital custody signed! You may now accept vehicle keys and begin trip.')">
-            <span>Sign & Accept Custody (Keys Received) →</span>
+          <div style="border-top: 1px dashed var(--border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 10px; color: var(--text-secondary);">UPFRONT LOCKED AIRPORT FARE</div>
+              <div style="font-size: 18px; font-weight: 800; color: var(--primary); font-family: 'JetBrains Mono', monospace;">₹ 1,248</div>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Airport transfer reserved with flight sync guarantee!')">
+              Reserve Airport Ride →
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // 9. DELIVERY (EXPRESS PARCEL)
+    function renderDeliveryFlow() {
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>📦</span> Express Delivery (Uber Connect Style)</div>
+            <span class="verified-pill">Instant Same-Day Dispatch</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;">
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">
+              <div style="font-size: 18px;">📄</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px;">Documents</div>
+            </div>
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">
+              <div style="font-size: 18px;">📦</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px;">Small Box</div>
+            </div>
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">
+              <div style="font-size: 18px;">🍱</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px;">Food Tiffin</div>
+            </div>
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">
+              <div style="font-size: 18px;">🎁</div>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text); margin-top: 4px;">Gift Item</div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" style="width: 100%;" onclick="alert('Delivery courier dispatched!')">
+            <span>Send Package via Bike (₹75) →</span>
           </button>
         </div>
       `;
     }
 
-    // 3. ADMIN COMMAND CENTER VIEWS
-    function renderAdminPortal() {
-      if (adminSub === 'DRIVERS') return renderAdminDrivers();
-      if (adminSub === 'KYC') return renderAdminKYC();
-      if (adminSub === 'SUPPORT') return renderAdminSupport();
-      return renderAdminOperations();
+    // 10. SAFETY PLATFORM LAYER
+    function renderSafetyFlow() {
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>🛡️</span> Safety Platform Layer (Enterprise Telemetry)</div>
+            <span class="verified-pill">Active Protected</span>
+          </div>
+
+          <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 6px;">BEFORE YOUR RIDE: VERIFICATION CHECKLIST</div>
+            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">
+              ✓ Captain Photo Verified • Vehicle Plate KA 01 AB 1234 • Innova Crysta • Mandatory Trip PIN [ 4 8 2 7 ]
+            </div>
+          </div>
+
+          <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 6px;">DURING YOUR RIDE: TRIP GUARDIAN TELEMETRY</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-secondary" style="font-size: 11px;" onclick="alert('Trip link shared with emergency contacts.')">Share Trip</button>
+              <button class="btn btn-secondary" style="font-size: 11px;" onclick="alert('Emergency contact alerted.')">Emergency Contacts</button>
+              <button class="btn btn-secondary" style="font-size: 11px;" onclick="alert('Encrypted audio safety recording enabled.')">Audio Recording</button>
+              <button class="btn btn-outline" style="font-size: 11px;" onclick="alert('Connected to 24/7 Roadside Assistance.')">24/7 Roadside Assistance</button>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
-    function renderAdminOperations() {
-      const trips = [
-        { id: '#TRP-9481', rider: 'Alex Carter', driver: 'Ramesh Kumar', type: 'Chauffeur (4h)', status: 'Active (Handover Done)', fare: '₹ 999', eta: 'In Progress' },
-        { id: '#TRP-9482', rider: 'Priya Sharma', driver: 'Anand Verma', type: 'Premier Sedan', status: 'En Route Pickup', fare: '₹ 289', eta: '3 min' },
-        { id: '#TRP-9483', rider: 'Rahul Mehta', driver: 'Mohammad R.', type: 'Airport Transfer', status: 'Scheduled T-2h', fare: '₹ 1,248', eta: 'Tomorrow 06:30' },
-        { id: '#TRP-9484', rider: 'Sneha Patel', driver: 'Vikram Joshi', type: 'Auto Rickshaw', status: 'In Transit', fare: '₹ 85', eta: '12 min' },
-        { id: '#TRP-9485', rider: 'David King', driver: 'Suresh Sharma', type: 'Bike Taxi', status: 'Pickup Arrived', fare: '₹ 49', eta: 'At Location' }
+    // 11. WALLET & REWARDS
+    function renderWalletFlow() {
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>💳</span> Wallet & RideAhead Rewards</div>
+            <span class="verified-pill">Gold Tier Member</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+            <div style="background: var(--surface-2); border-radius: 12px; padding: 14px;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase;">WALLET BALANCE</div>
+              <div style="font-size: 22px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">₹ 1,240</div>
+              <button class="btn btn-primary" style="margin-top: 10px; font-size: 11px; padding: 6px 12px;" onclick="alert('Add money modal opened!')">+ Add Money via UPI</button>
+            </div>
+            <div style="background: var(--surface-2); border-radius: 12px; padding: 14px;">
+              <div style="font-size: 10px; color: var(--text-secondary); text-transform: uppercase;">REWARD POINTS</div>
+              <div style="font-size: 22px; font-weight: 800; color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">1,280 Pts</div>
+              <div style="font-size: 10.5px; color: var(--text-secondary); margin-top: 4px;">Redeem for ₹100 voucher or 5% off airport transfer</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================
+    // 2. DRIVER / CAPTAIN OS EXPERIENCE
+    // =========================================================
+    function renderDriverPortal() {
+      if (driverSub === 'FATIGUE') return renderDriverFatigue();
+      if (driverSub === 'GIGS') return renderDriverGigs();
+      if (driverSub === 'EARNINGS') return renderDriverEarnings();
+      if (driverSub === 'CUSTODY') return renderDriverCustody();
+      return renderDriverCockpit();
+    }
+
+    function renderDriverCockpit() {
+      return `
+        <!-- Driver OS Header -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px; font-weight: 800; color: var(--text);">GOOD MORNING RAMESH</span>
+                <span class="status-pill">${isDriverOnline ? '● ONLINE' : 'OFFLINE'}</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">
+                ₹3,420 Today's Earnings • 8 Trips Completed • 5h 42m Driving
+              </div>
+            </div>
+            <button class="btn ${isDriverOnline ? 'btn-secondary' : 'btn-primary'}" onclick="toggleDriverOnline()">
+              ${isDriverOnline ? 'Go Offline' : 'Go Online'}
+            </button>
+          </div>
+        </div>
+
+        <!-- GO ONLINE AS (DRIVER MODES SELECTION) -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="card-header" style="margin-bottom: 10px;">
+            <div class="card-title"><span>🚘</span> Driver Mode Selection (Enable Qualified Roles)</div>
+            <span style="font-size: 11px; color: var(--text-secondary);">Multi-Category Flexibility</span>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn ${driverModes.cab ? 'btn-primary' : 'btn-outline'}" onclick="toggleDriverMode('cab')">🚗 Cab (Mini/Sedan/SUV)</button>
+            <button class="btn ${driverModes.auto ? 'btn-primary' : 'btn-outline'}" onclick="toggleDriverMode('auto')">🛺 Auto Rickshaw</button>
+            <button class="btn ${driverModes.bike ? 'btn-primary' : 'btn-outline'}" onclick="toggleDriverMode('bike')">🏍 Bike Taxi</button>
+            <button class="btn ${driverModes.chauffeur ? 'btn-primary' : 'btn-outline'}" onclick="toggleDriverMode('chauffeur')">👨‍✈️ Chauffeur (Customer Car)</button>
+            <button class="btn ${driverModes.delivery ? 'btn-primary' : 'btn-outline'}" onclick="toggleDriverMode('delivery')">📦 Delivery Courier</button>
+          </div>
+        </div>
+
+        <!-- Next Job Assignment & Fatigue -->
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span>📍</span> Next Confirmed Assignment</div>
+              <span class="verified-pill">Confirmed</span>
+            </div>
+            <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: var(--text);">
+                <span>Airport Run • 10:30 AM</span>
+                <span style="color: var(--primary);">₹ 720</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+                Koramangala ➔ Kempegowda Airport (34 km) • Rider: Vikram M.
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="alert('Navigation opened!')">Navigate via Google Maps →</button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span>🛡️</span> Driver Readiness Engine</div>
+              <span class="status-pill">Safe Zone</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 4px;">05h 42m Driving Today / Max 08h 00m</div>
+            <div style="height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin-bottom: 10px;">
+              <div style="width: 71%; height: 100%; background: var(--primary);"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--text-secondary);">
+              Next recommended break: <strong>in 18 min</strong> • Available driving time: <strong>02h 18m</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDriverFatigue() {
+      return renderDriverCockpit();
+    }
+
+    function renderDriverGigs() {
+      const gigs = [
+        { cat: 'CHAUFFEUR', title: 'Corporate Client (Automatic AT)', fare: '₹ 700–900', dist: 'Pickup 1.4 km' },
+        { cat: 'WEDDING', title: 'Wedding Chauffeur (Manual MT)', fare: '₹ 3,500+', dist: 'Tomorrow Whitefield' },
+        { cat: 'OUTSTATION', title: 'Bengaluru ➔ Coorg 2 Days', fare: '₹ 4,500+', dist: 'Friday 6 AM' }
       ];
 
       return `
-        <!-- Enterprise Operational KPIs -->
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>💼</span> Chauffeur Gig Marketplace</div>
+            <span class="verified-pill">3 Open Gigs</span>
+          </div>
+          ${gigs.map(g => `
+            <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 9.5px; font-weight: 800; color: var(--primary);">${g.cat}</div>
+                <div style="font-size: 13px; font-weight: 800; color: var(--text);">${g.title}</div>
+                <div style="font-size: 10.5px; color: var(--text-secondary); margin-top: 2px;">${g.dist}</div>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 15px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace;">${g.fare}</div>
+                <button class="btn btn-primary" style="padding: 4px 10px; font-size: 10.5px; margin-top: 4px;" onclick="alert('Gig accepted!')">Accept</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function renderDriverEarnings() {
+      return `
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>💰</span> Driver Earnings & Instant Payout</div>
+            <span class="verified-pill">UPI AutoPay Ready</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;">
+            <div class="handover-metric-box">
+              <div class="handover-metric-label">Today</div>
+              <div class="handover-metric-val">₹ 3,420</div>
+            </div>
+            <div class="handover-metric-box">
+              <div class="handover-metric-label">This Week</div>
+              <div class="handover-metric-val">₹ 18,920</div>
+            </div>
+            <div class="handover-metric-box">
+              <div class="handover-metric-label">This Month</div>
+              <div class="handover-metric-val">₹ 72,420</div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width: 100%;" onclick="alert('Withdrawal of ₹3,420 initiated to UPI ID ramesh@okaxis!')">Instant Cashout to Bank Account / UPI →</button>
+        </div>
+      `;
+    }
+
+    function renderDriverCustody() {
+      return renderChauffeurFlow();
+    }
+
+    // =========================================================
+    // 3. BUSINESS PLATFORM
+    // =========================================================
+    function renderBusinessPortal() {
+      return `
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+          <div class="card-header">
+            <div class="card-title"><span>🏢</span> RideDriveAhead Business (Corporate Mobility)</div>
+            <span class="verified-pill">Acme Technologies</span>
+          </div>
+
+          <div class="kpi-row" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+            <div class="kpi-card">
+              <div class="kpi-label">MONTHLY SPEND</div>
+              <div class="kpi-value">₹ 4,82,400</div>
+              <div class="kpi-sub">GST invoice active</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">COMPLETED RIDES</div>
+              <div class="kpi-value">1,284</div>
+              <div class="kpi-sub">Across 342 employees</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">CHAUFFEUR DUTIES</div>
+              <div class="kpi-value">86</div>
+              <div class="kpi-sub">Executive car duties</div>
+            </div>
+          </div>
+
+          <p style="font-size: 11.5px; color: var(--text-secondary); margin-bottom: 14px;">
+            Features: Corporate ride policies • Automated departmental expense reports • Monthly centralized billing • Dedicated support hotline.
+          </p>
+          <button class="btn btn-secondary" onclick="alert('Corporate monthly invoice PDF exported.')">Export Monthly Billing & Invoices →</button>
+        </div>
+      `;
+    }
+
+    // =========================================================
+    // 4. ADMIN COMMAND CENTER
+    // =========================================================
+    function renderAdminPortal() {
+      return `
+        <!-- Live KPIs -->
         <div class="kpi-row">
           <div class="kpi-card">
-            <div class="kpi-label">Active Trips</div>
-            <div class="kpi-value" style="color: var(--primary);">184</div>
-            <div class="kpi-sub">+12% vs last hour</div>
+            <div class="kpi-label">Active Rides</div>
+            <div class="kpi-value" style="color: var(--primary);">2,481</div>
+            <div class="kpi-sub">+14% surge</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Available Drivers</div>
-            <div class="kpi-value">932</div>
-            <div class="kpi-sub">82% Online Capacity</div>
+            <div class="kpi-label">Online Drivers</div>
+            <div class="kpi-value">18,420</div>
+            <div class="kpi-sub">7.9k Bikes • 5.2k Autos • 5.2k Cabs</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Scheduled Today</div>
-            <div class="kpi-value">421</div>
-            <div class="kpi-sub">100% Assurance Met</div>
+            <div class="kpi-label">Today's Revenue</div>
+            <div class="kpi-value">₹ 28.4L</div>
+            <div class="kpi-sub">Zero commission on auto</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Pending KYC</div>
-            <div class="kpi-value" style="color: var(--warning);">18</div>
-            <div class="kpi-sub">Requires Officer Audit</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Roadside Alerts</div>
-            <div class="kpi-value" style="color: var(--success);">2</div>
-            <div class="kpi-sub">Assistance En Route</div>
+            <div class="kpi-label">Safety Alerts</div>
+            <div class="kpi-value" style="color: var(--success);">3</div>
+            <div class="kpi-sub">Assistance dispatched</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-label">Fatigue Warnings</div>
-            <div class="kpi-value" style="color: var(--warning);">14</div>
-            <div class="kpi-sub">Approaching 8h Limit</div>
+            <div class="kpi-value" style="color: var(--warning);">42</div>
+            <div class="kpi-sub">Rest interlock active</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Smart Dispatch</div>
+            <div class="kpi-value">99.4%</div>
+            <div class="kpi-sub">Avg ETA 3.8 min</div>
           </div>
         </div>
 
-        <!-- Live Operations Dispatch Grid -->
+        <!-- Smart Dispatch Engine Simulation -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div class="card-header">
+            <div class="card-title"><span>⚡</span> Smart Dispatch Engine</div>
+            <span class="verified-pill">Matching Engine v2.4</span>
+          </div>
+          <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; font-size: 11px; color: var(--text-secondary); line-height: 1.6;">
+            <strong>Dispatch Factors:</strong> Distance (1.2 km) • Driver Rating (4.9★) • Vehicle Class (Automatic AT) • Driver Fatigue (Safe Zone: 5h 42m) • Acceptance Rate (98%) ➔ <strong>Best Driver Assigned: Ramesh Kumar</strong>
+          </div>
+        </div>
+
+        <!-- Surge & Demand Engine -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">
-              <span>🖥️</span> Live Trip Dispatch Console
-            </div>
-            <span style="font-size: 11px; color: var(--text-secondary);">Real-Time Fleet Telemetry</span>
+            <div class="card-title"><span>📈</span> Dynamic Surge & Demand Engine</div>
+            <span style="font-size: 11px; color: var(--text-secondary);">Real-Time Grid Heatmap</span>
           </div>
-
-          <table class="ops-table">
-            <thead>
-              <tr>
-                <th>Trip ID</th>
-                <th>Rider</th>
-                <th>Driver</th>
-                <th>Service Type</th>
-                <th>Status</th>
-                <th>Locked Fare</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${trips.map(t => `
-                <tr>
-                  <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">${t.id}</td>
-                  <td>${t.rider}</td>
-                  <td>${t.driver}</td>
-                  <td><span style="background: var(--surface-2); padding: 3px 6px; border-radius: 4px; font-size: 10.5px;">${t.type}</span></td>
-                  <td><span class="verified-pill" style="font-size: 10px;">${t.status}</span></td>
-                  <td style="font-weight: 800; font-family: 'JetBrains Mono', monospace;">${t.fare}</td>
-                  <td><button class="btn btn-outline" style="padding: 4px 8px; font-size: 10px;" onclick="alert('Trip details loaded for ' + '${t.id}')">Inspect</button></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    function renderAdminDrivers() {
-      const drivers = [
-        { name: 'Ramesh Kumar', trips: 1284, rating: 4.9, duty: '05h 42m', fatigue: 'SAFE (18m to break)', kyc: 'VERIFIED', location: 'Koramangala' },
-        { name: 'Anand Verma', trips: 890, rating: 4.8, duty: '07h 45m', fatigue: 'WARNING (15m left)', kyc: 'VERIFIED', location: 'Indiranagar' },
-        { name: 'Mohammad R.', trips: 1420, rating: 4.95, duty: '02h 10m', fatigue: 'SAFE', kyc: 'VERIFIED', location: 'Devanahalli' },
-        { name: 'Vikram Joshi', trips: 620, rating: 4.75, duty: '08h 00m', fatigue: 'LOCKED (Rest Required)', kyc: 'VERIFIED', location: 'HSR Layout' }
-      ];
-
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Driver Fleet & Fatigue Guard Console</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Monitor driver fatigue thresholds and maintain road safety compliance.</p>
-        </div>
-
-        <div class="card">
-          <table class="ops-table">
-            <thead>
-              <tr>
-                <th>Driver Name</th>
-                <th>Trips</th>
-                <th>Rating</th>
-                <th>Driving Today</th>
-                <th>Fatigue Guard</th>
-                <th>KYC Status</th>
-                <th>Current Sector</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${drivers.map(d => `
-                <tr>
-                  <td style="font-weight: 700;">${d.name}</td>
-                  <td>${d.trips}</td>
-                  <td style="color: var(--primary); font-weight: 700;">★ ${d.rating}</td>
-                  <td style="font-family: 'JetBrains Mono', monospace;">${d.duty}</td>
-                  <td><span style="font-size: 10.5px; font-weight: 700; color: ${d.fatigue.includes('SAFE') ? 'var(--success)' : d.fatigue.includes('WARNING') ? 'var(--warning)' : 'var(--danger)'};">${d.fatigue}</span></td>
-                  <td><span class="verified-pill">${d.kyc}</span></td>
-                  <td>${d.location}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    function renderAdminKYC() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">KYC Verification Desk (PII Encrypted)</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Audit driver licenses, automatic/manual certifications, and police background verifications.</p>
-        </div>
-
-        <div class="card">
-          <div style="background: var(--surface-2); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-              <div>
-                <div style="font-size: 14px; font-weight: 800; color: var(--text);">Applicant: Harish Gowda</div>
-                <div style="font-size: 11px; color: var(--text-secondary);">Application ID: #KYC-9481 • Submitted 2 hours ago</div>
-              </div>
-              <span class="verified-pill" style="background: var(--warning-dim); color: var(--warning);">Pending Approval</span>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div style="background: var(--surface-2); padding: 10px; border-radius: 8px;">
+              <div style="font-weight: 800; color: var(--text);">Koramangala Sector</div>
+              <div style="font-size: 11px; color: var(--warning); margin-top: 2px;">Demand 92% • 1.3x Surge</div>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 11px; margin-bottom: 12px;">
-              <div style="background: var(--surface); padding: 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
-                <div style="color: var(--text-tertiary);">COMMERCIAL DL</div>
-                <div style="font-weight: 700; color: var(--text);">KA-05-2018-99482 ✓</div>
-              </div>
-              <div style="background: var(--surface); padding: 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
-                <div style="color: var(--text-tertiary);">TRANSMISSION CERT</div>
-                <div style="font-weight: 700; color: var(--text);">AT & MT Dual Certified ✓</div>
-              </div>
-              <div style="background: var(--surface); padding: 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
-                <div style="color: var(--text-tertiary);">BACKGROUND CHECK</div>
-                <div style="font-weight: 700; color: var(--text);">Bengaluru Police NOC ✓</div>
-              </div>
+            <div style="background: var(--surface-2); padding: 10px; border-radius: 8px;">
+              <div style="font-weight: 800; color: var(--text);">BLR Airport Corridor</div>
+              <div style="font-size: 11px; color: var(--success); margin-top: 2px;">Demand 71% • Normal (1.0x)</div>
             </div>
-
-            <div style="display: flex; gap: 10px;">
-              <button class="btn btn-primary" onclick="alert('Harish Gowda approved for Chauffeur and Cab dispatch!')">
-                Approve & Activate Driver
-              </button>
-              <button class="btn btn-outline" onclick="alert('Document re-upload requested.')">
-                Request Re-Upload
-              </button>
+            <div style="background: var(--surface-2); padding: 10px; border-radius: 8px;">
+              <div style="font-weight: 800; color: var(--text);">Whitefield Tech Hub</div>
+              <div style="font-size: 11px; color: var(--success); margin-top: 2px;">Demand 51% • Normal (1.0x)</div>
             </div>
           </div>
         </div>
       `;
     }
 
-    function renderAdminSupport() {
-      return `
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Customer Support & Incident Desk</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Post-trip inquiry triage, roadside telemetry coordination, and refund settlements.</p>
-        </div>
-
-        <div class="card">
-          <div style="background: var(--surface-2); border-radius: 12px; padding: 14px; margin-bottom: 10px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-weight: 700; color: var(--text);">Ticket #TCK-2041 • Toll Reimbursement Inquiry</span>
-              <span class="verified-pill">Resolved</span>
-            </div>
-            <div style="font-size: 11px; color: var(--text-secondary);">
-              Rider Alex Carter • Airport Trip #TRP-9481 • Toll ₹115 refunded via UPI AutoPay.
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 4. MOBILE APP STUDIO VIEWS
+    // =========================================================
+    // 5. MOBILE APP STUDIO
+    // =========================================================
     function renderMobilePortal() {
       return `
-        <div style="margin-bottom: 16px; text-align: center;">
-          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Mobile App Emulation Suite</h2>
-          <p style="font-size: 12px; color: var(--text-secondary);">Native Expo/React Native mobile interfaces for Rider App & Driver OS.</p>
+        <div style="text-align: center; margin-bottom: 16px;">
+          <h2 style="font-size: 18px; font-weight: 800; color: var(--text);">Mobile App Studio (Rider & Captain App)</h2>
+          <p style="font-size: 12px; color: var(--text-secondary);">Clean 5-tab architectures for Rider & Driver mobile apps.</p>
         </div>
 
         <div class="mobile-duo-container">
@@ -2925,71 +1796,63 @@
               <span>100% 🔋</span>
             </div>
             <div class="phone-body">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 11px; color: var(--text-secondary);">Hello, Alex 👋</div>
-                  <div style="font-size: 14px; font-weight: 800; color: var(--text);">What do you need today?</div>
-                </div>
-                <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;">AC</div>
+              <div>
+                <div style="font-size: 11px; color: var(--text-secondary);">Hello, Alex 👋</div>
+                <div style="font-size: 14px; font-weight: 800; color: var(--text);">Where are you going?</div>
               </div>
 
-              <!-- Intent Picker Mobile -->
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                <div style="background: var(--surface-2); border: 1.5px solid var(--primary); border-radius: 12px; padding: 10px; cursor: pointer;">
-                  <div style="font-size: 11px; font-weight: 800; color: var(--text);">🚕 BOOK CAB</div>
-                  <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">I need a ride</div>
-                </div>
-                <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px; cursor: pointer;">
-                  <div style="font-size: 11px; font-weight: 800; color: var(--text);">🚗 HIRE DRIVER</div>
-                  <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">I have a car</div>
-                </div>
+              <div style="background: var(--surface-2); border-radius: 10px; padding: 8px 12px; font-size: 11px; color: var(--text-secondary); border: 1px solid var(--border);">
+                🔍 Search destination or airport...
+              </div>
+
+              <!-- 8 Tiles Mobile -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">🚗<br>Cab</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">🛺<br>Auto</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">🏍<br>Bike</div>
+                <div style="background: var(--primary-dim); border: 1px solid var(--primary-border); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 800; color: var(--primary);">👨‍✈️<br>Driver</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">🚘<br>Rental</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">🛣<br>Outstn</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">✈️<br>Airport</div>
+                <div style="background: var(--surface-2); padding: 8px; border-radius: 8px; text-align: center; font-size: 10px; font-weight: 700;">📦<br>Parcel</div>
               </div>
 
               <!-- My Car Card Mobile -->
-              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="background: var(--surface-2); border-radius: 10px; padding: 10px; border: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between;">
                   <span style="font-size: 11px; font-weight: 800; color: var(--text);">Toyota Innova Crysta</span>
                   <span class="verified-pill" style="font-size: 9px;">Verified ✓</span>
                 </div>
-                <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">KA 01 AB 1234 • Automatic (AT)</div>
+                <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">KA 01 AB 1234 • Automatic AT</div>
               </div>
 
-              <!-- Start OTP Pin -->
+              <!-- OTP PIN -->
               <div style="background: var(--surface-2); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 9.5px; font-weight: 800; color: var(--text-secondary);">START TRIP PIN</div>
-                  <div style="font-size: 9px; color: var(--text-tertiary);">Share upon pickup</div>
-                </div>
+                <span style="font-size: 9.5px; font-weight: 800; color: var(--text-secondary);">START TRIP PIN</span>
                 <div class="otp-pin-display">
-                  <div class="otp-digit" style="width: 24px; height: 30px; font-size: 13px;">4</div>
-                  <div class="otp-digit" style="width: 24px; height: 30px; font-size: 13px;">7</div>
-                  <div class="otp-digit" style="width: 24px; height: 30px; font-size: 13px;">9</div>
-                  <div class="otp-digit" style="width: 24px; height: 30px; font-size: 13px;">2</div>
+                  <div class="otp-digit" style="width: 22px; height: 28px; font-size: 12px;">4</div>
+                  <div class="otp-digit" style="width: 22px; height: 28px; font-size: 12px;">8</div>
+                  <div class="otp-digit" style="width: 22px; height: 28px; font-size: 12px;">2</div>
+                  <div class="otp-digit" style="width: 22px; height: 28px; font-size: 12px;">7</div>
                 </div>
-              </div>
-
-              <!-- Driver Trust Card Mobile -->
-              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 11px; font-weight: 800; color: var(--text);">Ramesh Kumar ★ 4.9</span>
-                  <span style="font-size: 9px; color: var(--primary);">1,284 trips</span>
-                </div>
-                <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 4px;">Commercial DL & AT Certified ✓</div>
               </div>
             </div>
+
+            <!-- 5-Tab Rider Navigation -->
             <div class="phone-bottom-nav">
-              <span class="phone-nav-icon active">🏠</span>
-              <span class="phone-nav-icon">🚗</span>
-              <span class="phone-nav-icon">📍</span>
-              <span class="phone-nav-icon">🛡️</span>
+              <div class="phone-nav-tab active"><span>🏠</span><span>HOME</span></div>
+              <div class="phone-nav-tab"><span>🚗</span><span>RIDES</span></div>
+              <div class="phone-nav-tab"><span>📋</span><span>ACTIVITY</span></div>
+              <div class="phone-nav-tab"><span>💳</span><span>WALLET</span></div>
+              <div class="phone-nav-tab"><span>👤</span><span>ACCOUNT</span></div>
             </div>
           </div>
 
-          <!-- Phone 2: Driver OS App -->
+          <!-- Phone 2: Captain OS App -->
           <div class="phone-frame">
             <div class="phone-notch">
               <span>9:41</span>
-              <span>Driver OS</span>
+              <span>Captain OS</span>
               <span>100% 🔋</span>
             </div>
             <div class="phone-body">
@@ -3001,59 +1864,59 @@
                 <span class="status-pill" style="font-size: 9px;">Online</span>
               </div>
 
-              <!-- Fatigue Meter Mobile -->
-              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px;">
+              <!-- Driver Modes Enabled -->
+              <div style="background: var(--surface-2); border-radius: 10px; padding: 8px; font-size: 9.5px; color: var(--text-secondary);">
+                Active: 🚗 Cab • 🛺 Auto • 👨‍✈️ Chauffeur • 📦 Delivery
+              </div>
+
+              <!-- Fatigue -->
+              <div style="background: var(--surface-2); border-radius: 10px; padding: 10px; border: 1px solid var(--border);">
                 <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: var(--text);">
-                  <span>Fatigue Meter</span>
+                  <span>Fatigue Engine</span>
                   <span style="color: var(--success);">SAFE ZONE</span>
                 </div>
-                <div class="readiness-track" style="margin: 6px 0;">
-                  <div class="readiness-fill"></div>
+                <div style="height: 6px; background: var(--surface-3); border-radius: 3px; overflow: hidden; margin: 6px 0;">
+                  <div style="width: 71%; height: 100%; background: var(--primary);"></div>
                 </div>
-                <div style="display: flex; justify-content: space-between; font-size: 9px; color: var(--text-secondary);">
-                  <span>Driving: 05h 42m</span>
-                  <span>Break in: 18 min</span>
-                </div>
+                <div style="font-size: 9px; color: var(--text-secondary);">Driving: 5h 42m • Break in 18 min</div>
               </div>
 
-              <!-- Gig Ping Mobile -->
+              <!-- Incoming Gig Ping -->
               <div style="background: var(--surface-2); border: 1.5px solid var(--primary); border-radius: 12px; padding: 10px;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 10px; font-weight: 800; color: var(--primary);">⚡ NEW GIG REQUEST</span>
-                  <span style="font-size: 13px; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace;">₹ 750</span>
+                  <span style="font-size: 10px; font-weight: 800; color: var(--primary);">⚡ NEW CHAUFFEUR GIG</span>
+                  <span style="font-size: 13px; font-weight: 800; color: var(--text); font-family: monospace;">₹ 750</span>
                 </div>
                 <div style="font-size: 10.5px; font-weight: 700; color: var(--text); margin-top: 4px;">2h Corporate Chauffeur (Automatic AT)</div>
-                <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">Koramangala ➔ Indiranagar</div>
                 <div style="display: flex; gap: 6px; margin-top: 8px;">
                   <button class="btn btn-outline" style="flex: 1; padding: 4px; font-size: 10px;" onclick="alert('Declined.')">Decline</button>
-                  <button class="btn btn-primary" style="flex: 1; padding: 4px; font-size: 10px;" onclick="alert('Accepted! Proceeding to Vehicle Handover.')">Accept Gig</button>
+                  <button class="btn btn-primary" style="flex: 1; padding: 4px; font-size: 10px;" onclick="alert('Accepted!')">Accept Gig</button>
                 </div>
               </div>
-
-              <!-- Handover Quick Tool Mobile -->
-              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 10px;">
-                <div style="font-size: 10.5px; font-weight: 800; color: var(--text);">Handover Checklist Tool</div>
-                <div style="font-size: 9.5px; color: var(--text-secondary); margin-top: 2px;">Fuel 72% • Odo 48,291 km • 8 Photos logged</div>
-              </div>
             </div>
+
+            <!-- 5-Tab Captain Navigation -->
             <div class="phone-bottom-nav">
-              <span class="phone-nav-icon active">💼</span>
-              <span class="phone-nav-icon">📊</span>
-              <span class="phone-nav-icon">📍</span>
-              <span class="phone-nav-icon">⚙️</span>
+              <div class="phone-nav-tab active"><span>🏠</span><span>HOME</span></div>
+              <div class="phone-nav-tab"><span>💼</span><span>JOBS</span></div>
+              <div class="phone-nav-tab"><span>💰</span><span>EARNINGS</span></div>
+              <div class="phone-nav-tab"><span>📋</span><span>ACTIVITY</span></div>
+              <div class="phone-nav-tab"><span>👤</span><span>PROFILE</span></div>
             </div>
           </div>
         </div>
       `;
     }
 
-    // Main App Renderer
+    // Main Renderer
     function renderApp() {
       const container = document.getElementById('app-container');
-      if (activePortal === 'CUSTOMER') {
-        container.innerHTML = renderCustomerPortal();
+      if (activePortal === 'RIDER') {
+        container.innerHTML = renderRiderWeb();
       } else if (activePortal === 'DRIVER') {
         container.innerHTML = renderDriverPortal();
+      } else if (activePortal === 'BUSINESS') {
+        container.innerHTML = renderBusinessPortal();
       } else if (activePortal === 'ADMIN') {
         container.innerHTML = renderAdminPortal();
       } else if (activePortal === 'MOBILE') {
@@ -3061,9 +1924,9 @@
       }
     }
 
-    // Interactivity helpers
-    function selectCabTier(tierId) {
-      selectedCabTier = CAB_TIERS.find(t => t.id === tierId) || CAB_TIERS[0];
+    // Helpers
+    function setPricePref(pref) {
+      pricePreference = pref;
       renderApp();
     }
 
@@ -3072,13 +1935,8 @@
       renderApp();
     }
 
-    function setChauffeurHours(hours) {
-      chauffeurHours = hours;
-      renderApp();
-    }
-
-    function setChauffeurTransmission(trans) {
-      chauffeurTransmission = trans;
+    function setBookingPerson(person) {
+      bookingForPerson = person;
       renderApp();
     }
 
@@ -3087,7 +1945,11 @@
       renderApp();
     }
 
-    // Initialize on page load
+    function toggleDriverMode(mode) {
+      driverModes[mode] = !driverModes[mode];
+      renderApp();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('rda_theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
