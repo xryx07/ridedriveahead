@@ -46,7 +46,7 @@ export const HomeScreen: React.FC = () => {
             }
             activeOpacity={0.8}
           >
-            <Text style={styles.locationPinIcon}>📍</Text>
+            <Text style={styles.locationPinIcon}>◉</Text>
             <Text style={styles.locationCityText}>{currentCity}</Text>
             <Text style={styles.dropdownChevron}>⌵</Text>
           </TouchableOpacity>
@@ -57,7 +57,7 @@ export const HomeScreen: React.FC = () => {
           onPress={() => alert('All systems operational. Telemetry active.')}
           activeOpacity={0.8}
         >
-          <Text style={styles.bellIcon}>🔔</Text>
+          <Text style={styles.bellIcon}>◎</Text>
           <View style={styles.notificationBadgeDot} />
         </TouchableOpacity>
       </View>
@@ -104,7 +104,7 @@ export const HomeScreen: React.FC = () => {
             onPress={() => navigate('FARE_ESTIMATE')}
             activeOpacity={0.88}
           >
-            <Text style={styles.searchGlassIcon}>🔍</Text>
+            <Text style={styles.searchGlassIcon}>⌕</Text>
             <Text style={styles.searchPlaceholderText}>Search destination, airport, or tech park...</Text>
           </TouchableOpacity>
         </View>
@@ -120,7 +120,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>🚗</Text>
+                <Text style={styles.tileCode}>CAB</Text>
               </View>
               <Text style={styles.tileName}>Cab</Text>
               <Text style={styles.tileSub}>Mini • Sedan • SUV</Text>
@@ -133,7 +133,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>🛺</Text>
+                <Text style={styles.tileCode}>AUTO</Text>
               </View>
               <Text style={styles.tileName}>Auto</Text>
               <Text style={styles.tileSub}>Meter Guarantee</Text>
@@ -146,7 +146,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>🏍</Text>
+                <Text style={styles.tileCode}>BIKE</Text>
               </View>
               <Text style={styles.tileName}>Bike</Text>
               <Text style={styles.tileSub}>Fast • ₹79</Text>
@@ -159,7 +159,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={[styles.tileIconCircle, styles.tileIconChauffeur]}>
-                <Text style={styles.tileEmoji}>👨‍✈️</Text>
+                <Text style={[styles.tileCode, { color: '#C7FF3D', fontWeight: '900' }]}>DRIVER</Text>
               </View>
               <Text style={[styles.tileName, { color: '#C7FF3D' }]}>Driver</Text>
               <Text style={styles.tileSub}>Have Your Own Car</Text>
@@ -172,10 +172,10 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>🚘</Text>
+                <Text style={styles.tileCode}>RENT</Text>
               </View>
               <Text style={styles.tileName}>Rental</Text>
-              <Text style={styles.tileSub}>1h to 12h Packages</Text>
+              <Text style={styles.tileSub}>Cars & Bikes</Text>
             </TouchableOpacity>
 
             {/* 6. Outstation */}
@@ -185,7 +185,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>🛣</Text>
+                <Text style={styles.tileCode}>CITY+</Text>
               </View>
               <Text style={styles.tileName}>Outstation</Text>
               <Text style={styles.tileSub}>One Way / Round</Text>
@@ -198,7 +198,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>✈️</Text>
+                <Text style={styles.tileCode}>AIR</Text>
               </View>
               <Text style={styles.tileName}>Airport</Text>
               <Text style={styles.tileSub}>Flight Sync Reserve</Text>
@@ -211,7 +211,7 @@ export const HomeScreen: React.FC = () => {
               activeOpacity={0.85}
             >
               <View style={styles.tileIconCircle}>
-                <Text style={styles.tileEmoji}>📦</Text>
+                <Text style={styles.tileCode}>SEND</Text>
               </View>
               <Text style={styles.tileName}>Delivery</Text>
               <Text style={styles.tileSub}>Instant Send</Text>
@@ -237,7 +237,7 @@ export const HomeScreen: React.FC = () => {
           </View>
           <View style={styles.handoverMiniInfo}>
             <Text style={styles.handoverMiniText}>
-              🛡️ Handover Protocol: Fuel 72% • Odometer 48,291 km • 360° Photo Inspection
+              ✓ Handover Protocol: Fuel 72% • Odometer 48,291 km • 360° Photo Inspection
             </Text>
           </View>
           <TouchableOpacity
@@ -274,7 +274,7 @@ export const HomeScreen: React.FC = () => {
         {/* SAFETY & TRIP GUARDIAN */}
         <View style={styles.safetyCard}>
           <View style={styles.shieldIconCircle}>
-            <Text style={styles.shieldEmoji}>🛡️</Text>
+            <Text style={styles.shieldCode}>SEC</Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.safetyHeading}>Trip Guardian Status: Protected</Text>
@@ -513,8 +513,11 @@ const styles = StyleSheet.create({
   tileIconChauffeur: {
     backgroundColor: 'rgba(199, 255, 61, 0.12)'
   },
-  tileEmoji: {
-    fontSize: 18
+  tileCode: {
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#F4F6F3',
+    letterSpacing: 0.5
   },
   tileName: {
     fontSize: 11.5,
@@ -672,8 +675,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  shieldEmoji: {
-    fontSize: 16
+  shieldCode: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#71D88A',
+    letterSpacing: 0.5
   },
   safetyHeading: {
     fontSize: 11.5,

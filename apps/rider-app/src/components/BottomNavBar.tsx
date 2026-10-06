@@ -37,7 +37,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         onPress={() => handleTabPress('home')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'home' && styles.navIconActive]}>🏠</Text>
+        <Text style={[styles.navIcon, currentTab === 'home' && styles.navIconActive]}>⌂</Text>
         <Text style={[styles.navLabel, currentTab === 'home' && styles.navLabelActive]}>Home</Text>
         {currentTab === 'home' && <View style={styles.activeDot} />}
       </TouchableOpacity>
@@ -48,7 +48,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         onPress={() => handleTabPress('rides')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'rides' && styles.navIconActive]}>🚗</Text>
+        <Text style={[styles.navIcon, currentTab === 'rides' && styles.navIconActive]}>◈</Text>
         <Text style={[styles.navLabel, currentTab === 'rides' && styles.navLabelActive]}>Rides</Text>
         {currentTab === 'rides' && <View style={styles.activeDot} />}
       </TouchableOpacity>
@@ -59,7 +59,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         onPress={() => handleTabPress('activity')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'activity' && styles.navIconActive]}>📋</Text>
+        <Text style={[styles.navIcon, currentTab === 'activity' && styles.navIconActive]}>◷</Text>
         <Text style={[styles.navLabel, currentTab === 'activity' && styles.navLabelActive]}>Activity</Text>
         {currentTab === 'activity' && <View style={styles.activeDot} />}
       </TouchableOpacity>
@@ -70,7 +70,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         onPress={() => handleTabPress('wallet')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'wallet' && styles.navIconActive]}>💳</Text>
+        <Text style={[styles.navIcon, currentTab === 'wallet' && styles.navIconActive]}>◫</Text>
         <Text style={[styles.navLabel, currentTab === 'wallet' && styles.navLabelActive]}>Wallet</Text>
         {currentTab === 'wallet' && <View style={styles.activeDot} />}
       </TouchableOpacity>
@@ -81,7 +81,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         onPress={() => handleTabPress('account')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'account' && styles.navIconActive]}>👤</Text>
+        <Text style={[styles.navIcon, currentTab === 'account' && styles.navIconActive]}>◯</Text>
         <Text style={[styles.navLabel, currentTab === 'account' && styles.navLabelActive]}>Account</Text>
         {currentTab === 'account' && <View style={styles.activeDot} />}
       </TouchableOpacity>
