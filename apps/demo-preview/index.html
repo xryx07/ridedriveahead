@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RideDriveAhead — Ola + Uber + Rapido All-in-One Mobility Platform</title>
+  <title>RideDriveAhead — The Ultimate Ola + Uber + Rapido Mobility Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -30,11 +30,12 @@
       /* Electric Lime & Accents */
       --lime: #D2FF00;
       --lime-dark: #0A1128;
-      --lime-glow: rgba(210, 255, 0, 0.3);
+      --lime-glow: rgba(210, 255, 0, 0.35);
       --emerald: #10B981;
       --emerald-subtle: rgba(16, 185, 129, 0.12);
       --emerald-text: #34D399;
       --amber: #FBBF24;
+      --amber-subtle: rgba(251, 191, 36, 0.15);
       --red: #EF4444;
       --blue: #3B82F6;
       --purple: #8B5CF6;
@@ -97,6 +98,7 @@
       --emerald-subtle: rgba(5, 150, 105, 0.12);
       --emerald-text: #047857;
       --amber: #D97706;
+      --amber-subtle: rgba(217, 119, 6, 0.15);
       --red: #DC2626;
       --blue: #2563EB;
       --purple: #7C3AED;
@@ -141,7 +143,7 @@
       padding: 0;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
-      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease;
     }
 
     body {
@@ -228,11 +230,29 @@
       box-shadow: 0 2px 10px var(--lime-glow);
     }
 
-    /* Theme Toggle Button */
-    .theme-toggle-wrap {
+    /* Master Bar Right Tools */
+    .master-bar-right {
       display: flex;
       align-items: center;
+      gap: 10px;
       flex-shrink: 0;
+    }
+    .wallet-chip-btn {
+      background: var(--pill-bg);
+      border: 1px solid var(--border-dark);
+      color: var(--text-white);
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wallet-chip-btn:hover {
+      border-color: var(--lime);
+      color: var(--lime);
     }
     .theme-toggle-btn {
       background: var(--pill-bg);
@@ -479,20 +499,49 @@
     /* ================================================= */
     .home-grid-layout {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 22px;
+      grid-template-columns: 1fr 400px;
+      gap: 24px;
     }
-    .home-main-col { display: flex; flex-direction: column; gap: 18px; }
+    .home-main-col { display: flex; flex-direction: column; gap: 16px; }
 
-    .greeting-header h1 { font-size: 22px; font-weight: 900; color: var(--text-white); }
-    .greeting-header p { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+    /* MASTER DUAL MODE SELECTOR (CAB/BIKE/AUTO vs DRIVE MY CAR) */
+    .master-mode-toggle {
+      display: flex;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 18px;
+      padding: 4px;
+      box-shadow: var(--card-shadow);
+    }
+    .master-mode-tab {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .master-mode-tab:hover { color: var(--text-white); }
+    .master-mode-tab.active {
+      background: var(--lime);
+      color: var(--lime-dark);
+      font-weight: 900;
+      box-shadow: 0 2px 10px var(--lime-glow);
+    }
 
     /* OLA/UBER/RAPIDO MULTI-MODAL CATEGORY SELECTOR STRIP */
     .multimodal-strip {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
     }
     .multimodal-strip::-webkit-scrollbar { display: none; }
     .mode-chip {
@@ -527,7 +576,7 @@
       justify-content: center;
     }
     .mode-chip-info { display: flex; flex-direction: column; }
-    .mode-chip-title { font-size: 12.5px; font-weight: 900; color: var(--text-white); }
+    .mode-chip-title { font-size: 12px; font-weight: 900; color: var(--text-white); }
     .mode-chip-sub { font-size: 10px; color: var(--lime); font-weight: 800; }
 
     /* Destination Search Box with Uber "+ Add Stop" */
@@ -549,6 +598,7 @@
       gap: 12px;
     }
     .search-dot-pickup { width: 10px; height: 10px; border-radius: 5px; background: var(--emerald); flex-shrink: 0; }
+    .search-dot-stop { width: 10px; height: 10px; border-radius: 5px; background: var(--amber); flex-shrink: 0; }
     .search-dot-drop { width: 10px; height: 10px; border-radius: 2px; background: var(--red); flex-shrink: 0; }
     .search-box-field {
       flex: 1;
@@ -574,6 +624,7 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      white-space: nowrap;
     }
     .btn-add-stop:hover { border-color: var(--lime); color: var(--lime); }
 
@@ -674,6 +725,40 @@
     .tier-fare-active { color: var(--lime); }
     .tier-lock-lbl { font-size: 9px; color: var(--text-dim); }
 
+    /* DRIVE MY CAR (CHAUFFEUR) BUILDER SECTION */
+    .chauffeur-builder-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--card-shadow);
+    }
+    .chauffeur-packages-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .chf-pkg-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-dark);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chf-pkg-card:hover { border-color: var(--lime); }
+    .chf-pkg-card.active {
+      border-color: var(--lime);
+      background: rgba(210, 255, 0, 0.1);
+    }
+    .chf-pkg-hours { font-size: 13px; font-weight: 900; color: var(--text-white); }
+    .chf-pkg-fare { font-size: 14px; font-weight: 900; color: var(--lime); margin-top: 4px; }
+    .chf-pkg-desc { font-size: 9.5px; color: var(--text-muted); margin-top: 2px; }
+
     /* Home Right Column Widgets */
     .home-widgets-col { display: flex; flex-direction: column; gap: 16px; }
 
@@ -695,7 +780,7 @@
       border-bottom: 1px solid var(--border-subtle);
     }
     .mini-map-title { font-size: 11px; font-weight: 800; color: var(--text-muted); }
-    .mini-map-svg-wrap { height: 160px; background: var(--map-bg); position: relative; }
+    .mini-map-svg-wrap { height: 180px; background: var(--map-bg); position: relative; }
     .map-chip-eta {
       position: absolute;
       top: 10px;
@@ -719,12 +804,6 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-    }
-    .checkout-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
     }
     .coupon-badge {
       display: flex;
@@ -796,7 +875,7 @@
     .driver-rating-sub { font-size: 11px; color: var(--lime); font-weight: 800; margin-top: 1px; }
     .driver-car-sub { font-size: 10.5px; color: var(--text-muted); }
 
-    /* 4-Digit OTP Banner (Ola/Uber) */
+    /* 4-Digit OTP Box (Ola/Uber) */
     .otp-pin-banner {
       background: rgba(210, 255, 0, 0.12);
       border: 1.5px solid var(--border-lime);
@@ -807,8 +886,23 @@
       align-items: center;
       margin-bottom: 14px;
     }
-    .otp-pin-label { font-size: 11px; font-weight: 800; color: var(--text-muted); }
-    .otp-pin-code { font-size: 18px; font-weight: 900; color: var(--lime); letter-spacing: 2px; }
+    .otp-pin-boxes {
+      display: flex;
+      gap: 6px;
+    }
+    .otp-digit-box {
+      width: 32px;
+      height: 36px;
+      background: var(--bg-surface);
+      border: 1.5px solid var(--lime);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--lime);
+    }
 
     .driver-actions-row {
       display: grid;
@@ -1080,7 +1174,7 @@
       <div class="brand-logo-badge">
         <span>🚗</span> RideDrive<span>Ahead</span>
       </div>
-      <span class="brand-fusion-pill">OLA + UBER + RAPIDO ALL-IN-ONE</span>
+      <span class="brand-fusion-pill">UBER • OLA • RAPIDO UNIFIED MOBILITY</span>
     </div>
 
     <!-- View Switcher Pills -->
@@ -1105,8 +1199,12 @@
       </button>
     </div>
 
-    <!-- Theme Toggle Pill: Dark / Light -->
-    <div class="theme-toggle-wrap">
+    <!-- Master Bar Right Tools -->
+    <div class="master-bar-right">
+      <div class="wallet-chip-btn" onclick="alert('Ola Money Balance: ₹450. Linked UPI: Google Pay')">
+        <span>💳</span>
+        <span>₹ 450</span>
+      </div>
       <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch Dark / Light theme">
         <span id="theme-icon">☀️</span>
         <span id="theme-label">Light Mode</span>
@@ -1152,13 +1250,14 @@
     // APPLICATION STATE (OLA + UBER + RAPIDO)
     // ==========================================
     let currentView = 'SHOWCASE';
-    let selectedCategory = 'CAB'; // 'BIKE', 'AUTO', 'CAB', 'CHAUFFEUR', 'RENTALS', 'PARCEL', 'AIRPORT'
+    let serviceCategory = 'RIDE'; // 'RIDE' (Ola/Uber/Rapido) vs 'CHAUFFEUR' (Drive My Car)
+    let selectedSubCategory = 'CAB'; // 'BIKE', 'AUTO', 'CAB', 'RENTALS', 'PARCEL', 'AIRPORT'
     let selectedTierId = 'tier-go';
-    let selectedDuration = '2 hrs';
-    let selectedTrans = 'Automatic';
-    let selectedVeh = 'Sedan';
-    let isDriverOnline = true;
-    let captainSecondsRemaining = 12;
+    let hasIntermediateStop = false;
+    let selectedChfDuration = '4h';
+    let selectedChfTransmission = 'Automatic';
+    let selectedChfCarClass = 'Sedan';
+    let captainRideAccepted = false;
 
     const MOBILITY_TIERS = [
       {
@@ -1167,9 +1266,10 @@
         icon: '🛵',
         name: 'Bike Taxi',
         badge: 'RAPIDO MOTO ⚡',
-        sub: 'Beat heavy traffic, sanitized helmet provided',
+        sub: 'Beat traffic, sanitized helmet provided',
         seats: 1,
         fare: 49,
+        originalFare: 65,
         eta: '2 min',
         dropTime: '10:14 AM'
       },
@@ -1182,6 +1282,7 @@
         sub: 'Doorstep pickup, meter guaranteed, no haggling',
         seats: 3,
         fare: 89,
+        originalFare: 110,
         eta: '3 min',
         dropTime: '10:18 AM'
       },
@@ -1194,6 +1295,7 @@
         sub: 'WagonR, Swift • AC affordable everyday commute',
         seats: 4,
         fare: 189,
+        originalFare: 220,
         eta: '4 min',
         dropTime: '10:22 AM'
       },
@@ -1206,6 +1308,7 @@
         sub: 'Dzire, Honda City • Top-rated drivers & extra legroom',
         seats: 4,
         fare: 269,
+        originalFare: 310,
         eta: '5 min',
         dropTime: '10:24 AM'
       },
@@ -1218,6 +1321,7 @@
         sub: 'Innova Crysta, Ertiga • 6-seater for luggage & family',
         seats: 6,
         fare: 399,
+        originalFare: 450,
         eta: '6 min',
         dropTime: '10:25 AM'
       },
@@ -1230,6 +1334,7 @@
         sub: 'Keep cab & driver: 2h/20km with multiple stops',
         seats: 4,
         fare: 449,
+        originalFare: 520,
         eta: 'Instant',
         dropTime: 'Multi-stop package'
       },
@@ -1242,20 +1347,9 @@
         sub: 'Fast doorstep package delivery across the city (up to 5kg)',
         seats: 1,
         fare: 59,
+        originalFare: 75,
         eta: '2 min',
         dropTime: 'Instant Dispatch'
-      },
-      {
-        id: 'tier-chauffeur',
-        cat: 'CHAUFFEUR',
-        icon: '👨‍✈️',
-        name: 'Drive My Car (Chauffeur)',
-        badge: 'RIDEDRIVEAHEAD SUPERPOWER',
-        sub: 'Hire a verified driver for your own car (AT / MT)',
-        seats: 4,
-        fare: 599,
-        eta: '15 min',
-        dropTime: '4 Hours Duty'
       }
     ];
 
@@ -1267,15 +1361,20 @@
       renderApp();
     }
 
-    function selectCategory(cat) {
-      selectedCategory = cat;
-      const matchingTier = MOBILITY_TIERS.find(t => t.cat === cat);
+    function selectSubCategory(subCat) {
+      selectedSubCategory = subCat;
+      const matchingTier = MOBILITY_TIERS.find(t => t.cat === subCat);
       if (matchingTier) selectedTierId = matchingTier.id;
       renderApp();
     }
 
     function selectTier(tierId) {
       selectedTierId = tierId;
+      renderApp();
+    }
+
+    function toggleIntermediateStop() {
+      hasIntermediateStop = !hasIntermediateStop;
       renderApp();
     }
 
@@ -1295,22 +1394,22 @@
               <li class="nav-item active" onclick="switchView('HOME')">
                 <span class="nav-icon">🏠</span><span>Rider Home</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('BIKE')">
+              <li class="nav-item" onclick="serviceCategory='RIDE'; selectSubCategory('BIKE')">
                 <span class="nav-icon">🛵</span><span>Rapido Moto</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('AUTO')">
+              <li class="nav-item" onclick="serviceCategory='RIDE'; selectSubCategory('AUTO')">
                 <span class="nav-icon">🛺</span><span>Auto Rickshaw</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('CAB')">
+              <li class="nav-item" onclick="serviceCategory='RIDE'; selectSubCategory('CAB')">
                 <span class="nav-icon">🚕</span><span>Uber / Ola Cabs</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('CHAUFFEUR')">
+              <li class="nav-item" onclick="serviceCategory='CHAUFFEUR'; renderApp()">
                 <span class="nav-icon">👨‍✈️</span><span>Drive My Car</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('RENTALS')">
+              <li class="nav-item" onclick="serviceCategory='RIDE'; selectSubCategory('RENTALS')">
                 <span class="nav-icon">⏱️</span><span>Hourly Rentals</span>
               </li>
-              <li class="nav-item" onclick="selectCategory('PARCEL')">
+              <li class="nav-item" onclick="serviceCategory='RIDE'; selectSubCategory('PARCEL')">
                 <span class="nav-icon">📦</span><span>Express Parcel</span>
               </li>
               <li class="nav-item" onclick="switchView('LIVEHUD')">
@@ -1359,106 +1458,174 @@
                   <!-- Greeting Header -->
                   <div class="greeting-header">
                     <h1>Where to, Alex? 👋</h1>
-                    <p>India's ultimate multi-modal mobility: Book Bike, Auto, Cab or Hire a Chauffeur for your car.</p>
+                    <p>Experience the ultimate fusion of Ola, Uber, Rapido & Personal Chauffeurs.</p>
                   </div>
 
-                  <!-- Multi-modal Service Selector (Ola + Uber + Rapido + RDA) -->
-                  <div class="multimodal-strip">
-                    <div class="mode-chip ${selectedCategory === 'BIKE' ? 'active' : ''}" onclick="selectCategory('BIKE')">
-                      <div class="mode-chip-icon">🛵</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Bike Taxi</span>
-                        <span class="mode-chip-sub">Rapido • ₹49</span>
-                      </div>
+                  <!-- MASTER DUAL MOBILITY MODE TOGGLE -->
+                  <div class="master-mode-toggle">
+                    <div class="master-mode-tab ${serviceCategory === 'RIDE' ? 'active' : ''}" onclick="serviceCategory='RIDE'; renderApp();">
+                      <span>🚕</span>
+                      <span>Book a Ride (Cab / Bike / Auto)</span>
                     </div>
-                    <div class="mode-chip ${selectedCategory === 'AUTO' ? 'active' : ''}" onclick="selectCategory('AUTO')">
-                      <div class="mode-chip-icon">🛺</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Auto</span>
-                        <span class="mode-chip-sub">Ola Auto • ₹89</span>
-                      </div>
-                    </div>
-                    <div class="mode-chip ${selectedCategory === 'CAB' ? 'active' : ''}" onclick="selectCategory('CAB')">
-                      <div class="mode-chip-icon">🚕</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Cabs</span>
-                        <span class="mode-chip-sub">Uber/Ola • ₹189</span>
-                      </div>
-                    </div>
-                    <div class="mode-chip ${selectedCategory === 'CHAUFFEUR' ? 'active' : ''}" onclick="selectCategory('CHAUFFEUR')">
-                      <div class="mode-chip-icon">👨‍✈️</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Drive My Car</span>
-                        <span class="mode-chip-sub">Chauffeur • ₹599</span>
-                      </div>
-                    </div>
-                    <div class="mode-chip ${selectedCategory === 'RENTALS' ? 'active' : ''}" onclick="selectCategory('RENTALS')">
-                      <div class="mode-chip-icon">⏱️</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Rentals</span>
-                        <span class="mode-chip-sub">Hourly • ₹449</span>
-                      </div>
-                    </div>
-                    <div class="mode-chip ${selectedCategory === 'PARCEL' ? 'active' : ''}" onclick="selectCategory('PARCEL')">
-                      <div class="mode-chip-icon">📦</div>
-                      <div class="mode-chip-info">
-                        <span class="mode-chip-title">Parcel</span>
-                        <span class="mode-chip-sub">Instant • ₹59</span>
-                      </div>
+                    <div class="master-mode-tab ${serviceCategory === 'CHAUFFEUR' ? 'active' : ''}" onclick="serviceCategory='CHAUFFEUR'; renderApp();">
+                      <span>🚗</span>
+                      <span>Drive My Car (Hire Chauffeur)</span>
                     </div>
                   </div>
 
-                  <!-- Uber/Ola-style Search Panel with + Add Stop -->
-                  <div class="search-panel-card">
-                    <div class="search-inputs-wrap">
-                      <div class="search-input-row">
-                        <div class="search-dot-pickup"></div>
-                        <input class="search-box-field" type="text" value="Koramangala, 6th Block, Bengaluru" placeholder="Pickup location" />
+                  ${serviceCategory === 'RIDE' ? `
+                    <!-- MULTI-MODAL CATEGORY SELECTOR STRIP (RAPIDO/OLA/UBER) -->
+                    <div class="multimodal-strip">
+                      <div class="mode-chip ${selectedSubCategory === 'BIKE' ? 'active' : ''}" onclick="selectSubCategory('BIKE')">
+                        <div class="mode-chip-icon">🛵</div>
+                        <div class="mode-chip-info">
+                          <span class="mode-chip-title">Bike Taxi</span>
+                          <span class="mode-chip-sub">Rapido • ₹49</span>
+                        </div>
                       </div>
-                      <div class="search-input-row">
-                        <div class="search-dot-drop"></div>
-                        <input class="search-box-field" type="text" value="Kempegowda International Airport (BLR)" placeholder="Destination" />
-                        <button class="btn-add-stop" onclick="alert('Stop added: Indiranagar 100ft Road (Stop 1 of 2)')">+ Add Stop</button>
+                      <div class="mode-chip ${selectedSubCategory === 'AUTO' ? 'active' : ''}" onclick="selectSubCategory('AUTO')">
+                        <div class="mode-chip-icon">🛺</div>
+                        <div class="mode-chip-info">
+                          <span class="mode-chip-title">Auto Rickshaw</span>
+                          <span class="mode-chip-sub">Ola Auto • ₹89</span>
+                        </div>
+                      </div>
+                      <div class="mode-chip ${selectedSubCategory === 'CAB' ? 'active' : ''}" onclick="selectSubCategory('CAB')">
+                        <div class="mode-chip-icon">🚕</div>
+                        <div class="mode-chip-info">
+                          <span class="mode-chip-title">Daily Cabs</span>
+                          <span class="mode-chip-sub">Uber/Ola • ₹189</span>
+                        </div>
+                      </div>
+                      <div class="mode-chip ${selectedSubCategory === 'RENTALS' ? 'active' : ''}" onclick="selectSubCategory('RENTALS')">
+                        <div class="mode-chip-icon">⏱️</div>
+                        <div class="mode-chip-info">
+                          <span class="mode-chip-title">Hourly Rentals</span>
+                          <span class="mode-chip-sub">Multi-stop • ₹449</span>
+                        </div>
+                      </div>
+                      <div class="mode-chip ${selectedSubCategory === 'PARCEL' ? 'active' : ''}" onclick="selectSubCategory('PARCEL')">
+                        <div class="mode-chip-icon">📦</div>
+                        <div class="mode-chip-info">
+                          <span class="mode-chip-title">Express Parcel</span>
+                          <span class="mode-chip-sub">Instant • ₹59</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="saved-chips-row">
-                      <div class="saved-chip-btn" onclick="alert('Route set to Home')">🏠 Home</div>
-                      <div class="saved-chip-btn" onclick="alert('Route set to Work')">💼 Work</div>
-                      <div class="saved-chip-btn" onclick="alert('Route set to Airport')">✈️ Airport</div>
-                      <div class="saved-chip-btn" onclick="alert('Route set to Gym')">🏋️ Gym</div>
-                    </div>
-                  </div>
+                    <!-- CONNECTED ROUTE PLANNER WITH + ADD STOP (UBER STYLE) -->
+                    <div class="search-panel-card">
+                      <div class="search-inputs-wrap">
+                        <div class="search-input-row">
+                          <div class="search-dot-pickup"></div>
+                          <input class="search-box-field" type="text" value="Koramangala, 6th Block, Bengaluru" placeholder="Pickup location" />
+                        </div>
+                        ${hasIntermediateStop ? `
+                          <div class="search-input-row">
+                            <div class="search-dot-stop"></div>
+                            <input class="search-box-field" type="text" value="Indiranagar, 100ft Road (Stop 1)" placeholder="Intermediate stop" />
+                            <button class="btn-add-stop" style="color: var(--red);" onclick="toggleIntermediateStop()">✕ Remove</button>
+                          </div>
+                        ` : ''}
+                        <div class="search-input-row">
+                          <div class="search-dot-drop"></div>
+                          <input class="search-box-field" type="text" value="Kempegowda International Airport (BLR)" placeholder="Destination" />
+                          ${!hasIntermediateStop ? `
+                            <button class="btn-add-stop" onclick="toggleIntermediateStop()">+ Add Stop</button>
+                          ` : ''}
+                        </div>
+                      </div>
 
-                  <!-- All Mobility Tiers (Ola / Uber / Rapido / Drive My Car) -->
-                  <div>
-                    <div class="ride-tiers-heading">
-                      <h3>Available Rides & Drivers Nearby</h3>
-                      <span style="font-size: 11px; color: var(--lime); font-weight: 800;">🔒 Upfront Locked Price</span>
+                      <div class="saved-chips-row">
+                        <div class="saved-chip-btn" onclick="alert('Route set to Home')">🏠 Home</div>
+                        <div class="saved-chip-btn" onclick="alert('Route set to Work')">💼 Work</div>
+                        <div class="saved-chip-btn" onclick="alert('Route set to Airport')">✈️ Airport</div>
+                        <div class="saved-chip-btn" onclick="alert('Route set to Gym')">🏋️ Gym</div>
+                      </div>
                     </div>
 
-                    <div class="ride-tiers-grid" style="margin-top: 10px;">
-                      ${MOBILITY_TIERS.map(tier => `
-                        <div class="ride-tier-card ${tier.id === selectedTierId ? 'active' : ''}" onclick="selectTier('${tier.id}')">
-                          <div class="tier-left">
-                            <div class="tier-icon-box">${tier.icon}</div>
-                            <div class="tier-info-col">
-                              <div class="tier-name-row">
-                                <span class="tier-title">${tier.name}</span>
-                                <span class="tier-tag">${tier.badge}</span>
+                    <!-- RIDE TIERS LIST (OLA/UBER/RAPIDO FUSION) -->
+                    <div>
+                      <div class="ride-tiers-heading">
+                        <h3>Recommended Rides</h3>
+                        <span style="font-size: 11px; color: var(--lime); font-weight: 800;">🔒 Upfront Locked Price</span>
+                      </div>
+
+                      <div class="ride-tiers-grid" style="margin-top: 10px;">
+                        ${MOBILITY_TIERS.map(tier => `
+                          <div class="ride-tier-card ${tier.id === selectedTierId ? 'active' : ''}" onclick="selectTier('${tier.id}')">
+                            <div class="tier-left">
+                              <div class="tier-icon-box">${tier.icon}</div>
+                              <div class="tier-info-col">
+                                <div class="tier-name-row">
+                                  <span class="tier-title">${tier.name}</span>
+                                  <span class="tier-tag">${tier.badge}</span>
+                                </div>
+                                <span class="tier-meta">${tier.sub} • 👤 ${tier.seats}</span>
+                                <span class="tier-eta">⚡ ${tier.eta} away (${tier.dropTime})</span>
                               </div>
-                              <span class="tier-meta">${tier.sub} • 👤 ${tier.seats}</span>
-                              <span class="tier-eta">⚡ ${tier.eta} away (${tier.dropTime})</span>
+                            </div>
+                            <div class="tier-right">
+                              <div class="tier-fare ${tier.id === selectedTierId ? 'tier-fare-active' : ''}">₹ ${tier.fare}</div>
+                              <div style="font-size: 10px; color: var(--text-dim); text-decoration: line-through;">₹ ${tier.originalFare}</div>
                             </div>
                           </div>
-                          <div class="tier-right">
-                            <div class="tier-fare ${tier.id === selectedTierId ? 'tier-fare-active' : ''}">₹ ${tier.fare}</div>
-                            <div class="tier-lock-lbl">LOCKED</div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : `
+                    <!-- DRIVE MY CAR (PERSONAL CHAUFFEUR BUILDER - RDA SUPERPOWER) -->
+                    <div class="chauffeur-builder-card">
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                          <div style="font-size: 14px; font-weight: 900; color: var(--text-white);">Select Chauffeur Package for Your Car</div>
+                          <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Professional background-verified driver assigned to drive your personal car</div>
+                        </div>
+                        <span class="brand-fusion-pill">ZERO LIABILITY</span>
+                      </div>
+
+                      <div class="chauffeur-packages-row">
+                        <div class="chf-pkg-card ${selectedChfDuration === '2h' ? 'active' : ''}" onclick="selectedChfDuration='2h'; renderApp();">
+                          <div class="chf-pkg-hours">2 Hours Local</div>
+                          <div class="chf-pkg-fare">₹ 599</div>
+                          <div class="chf-pkg-desc">Doctor, salon, quick runs</div>
+                        </div>
+                        <div class="chf-pkg-card ${selectedChfDuration === '4h' ? 'active' : ''}" onclick="selectedChfDuration='4h'; renderApp();">
+                          <div class="chf-pkg-hours">4 Hours Half-Day</div>
+                          <div class="chf-pkg-fare">₹ 999</div>
+                          <div class="chf-pkg-desc">Shopping & meetings</div>
+                        </div>
+                        <div class="chf-pkg-card ${selectedChfDuration === '8h' ? 'active' : ''}" onclick="selectedChfDuration='8h'; renderApp();">
+                          <div class="chf-pkg-hours">8 Hours Full-Day</div>
+                          <div class="chf-pkg-fare">₹ 1,799</div>
+                          <div class="chf-pkg-desc">All-day duty in city</div>
+                        </div>
+                        <div class="chf-pkg-card ${selectedChfDuration === '1day' ? 'active' : ''}" onclick="selectedChfDuration='1day'; renderApp();">
+                          <div class="chf-pkg-hours">Outstation (1 Day)</div>
+                          <div class="chf-pkg-fare">₹ 2,999</div>
+                          <div class="chf-pkg-desc">Highway certified driver</div>
+                        </div>
+                      </div>
+
+                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div>
+                          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px;">TRANSMISSION TYPE</div>
+                          <div style="display: flex; gap: 8px;">
+                            <button class="btn-lime" style="flex: 1; padding: 10px; font-size: 11px;" onclick="selectedChfTransmission='Automatic';">⚙️ Automatic AT</button>
+                            <button style="flex: 1; background: var(--bg-surface); color: var(--text-muted); border: 1.5px solid var(--border-dark); border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer;" onclick="selectedChfTransmission='Manual';">🕹️ Manual MT</button>
                           </div>
                         </div>
-                      `).join('')}
+                        <div>
+                          <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 6px;">CAR CATEGORY</div>
+                          <div style="display: flex; gap: 8px;">
+                            <div style="flex: 1; background: var(--bg-surface); border: 1.5px solid var(--border-dark); border-radius: 12px; padding: 8px; text-align: center; font-size: 11px; font-weight: 800; color: var(--text-white); cursor: pointer;">🚘 Sedan</div>
+                            <div style="flex: 1; background: var(--bg-surface); border: 1.5px solid var(--border-dark); border-radius: 12px; padding: 8px; text-align: center; font-size: 11px; font-weight: 800; color: var(--text-white); cursor: pointer;">🚙 SUV</div>
+                            <div style="flex: 1; background: var(--bg-surface); border: 1.5px solid var(--border-dark); border-radius: 12px; padding: 8px; text-align: center; font-size: 11px; font-weight: 800; color: var(--text-white); cursor: pointer;">✨ Luxury</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  `}
                 </div>
 
                 <!-- Right Column: Interactive Map, Checkout & Fare Details -->
@@ -1470,31 +1637,31 @@
                       <span style="font-size: 10.5px; color: var(--lime); font-weight: 800;">⚡ 14 active</span>
                     </div>
                     <div class="mini-map-svg-wrap">
-                      <svg viewBox="0 0 380 160" style="width: 100%; height: 100%;">
-                        <rect width="380" height="160" fill="var(--map-bg)"/>
+                      <svg viewBox="0 0 380 180" style="width: 100%; height: 100%;">
+                        <rect width="380" height="180" fill="var(--map-bg)"/>
                         <!-- Roads grid -->
-                        <line x1="0" y1="45" x2="380" y2="45" stroke="var(--map-road)" stroke-width="16"/>
-                        <line x1="0" y1="115" x2="380" y2="115" stroke="var(--map-road)" stroke-width="20"/>
-                        <line x1="110" y1="0" x2="110" y2="160" stroke="var(--map-road)" stroke-width="18"/>
-                        <line x1="270" y1="0" x2="270" y2="160" stroke="var(--map-road)" stroke-width="20"/>
+                        <line x1="0" y1="50" x2="380" y2="50" stroke="var(--map-road)" stroke-width="18"/>
+                        <line x1="0" y1="130" x2="380" y2="130" stroke="var(--map-road)" stroke-width="22"/>
+                        <line x1="110" y1="0" x2="110" y2="180" stroke="var(--map-road)" stroke-width="18"/>
+                        <line x1="270" y1="0" x2="270" y2="180" stroke="var(--map-road)" stroke-width="20"/>
                         <!-- Route Polyline -->
-                        <path d="M 70 115 C 150 115, 200 45, 310 45" fill="none" stroke="var(--lime)" stroke-width="5" stroke-linecap="round"/>
-                        <circle cx="70" cy="115" r="7" fill="var(--lime)"/>
-                        <circle cx="310" cy="45" r="7" fill="#EF4444"/>
+                        <path d="M 70 130 C 150 130, 200 50, 310 50" fill="none" stroke="var(--lime)" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="70" cy="130" r="8" fill="var(--lime)"/>
+                        <circle cx="310" cy="50" r="8" fill="#EF4444"/>
                         <!-- Moving markers: Bike, Auto, Cab -->
-                        <g transform="translate(180, 75)">
+                        <g transform="translate(180, 85)">
                           <circle cx="12" cy="12" r="16" fill="var(--lime-glow)"/>
                           <circle cx="12" cy="12" r="12" fill="var(--bg-surface)" stroke="var(--lime)" stroke-width="2"/>
                           <text x="12" y="16" font-size="13" text-anchor="middle">🚕</text>
                         </g>
                         <!-- Roaming nearby Rapido Bike -->
-                        <g transform="translate(90, 40)">
-                          <circle cx="8" cy="8" r="10" fill="rgba(210, 255, 0, 0.2)"/>
+                        <g transform="translate(90, 45)">
+                          <circle cx="8" cy="8" r="12" fill="rgba(210, 255, 0, 0.25)"/>
                           <text x="8" y="11" font-size="11" text-anchor="middle">🛵</text>
                         </g>
                         <!-- Roaming nearby Ola Auto -->
-                        <g transform="translate(250, 110)">
-                          <circle cx="8" cy="8" r="10" fill="rgba(251, 191, 36, 0.2)"/>
+                        <g transform="translate(250, 125)">
+                          <circle cx="8" cy="8" r="12" fill="rgba(251, 191, 36, 0.25)"/>
                           <text x="8" y="11" font-size="11" text-anchor="middle">🛺</text>
                         </g>
                       </svg>
@@ -1505,8 +1672,8 @@
                   <!-- Checkout & Booking Confirmation Box -->
                   <div class="checkout-box">
                     <div style="font-size: 13px; font-weight: 900; color: var(--text-white); display: flex; justify-content: space-between;">
-                      <span>Selected: ${activeTier.name}</span>
-                      <span style="color: var(--lime);">₹ ${activeTier.fare}</span>
+                      <span>Selected: ${serviceCategory === 'RIDE' ? activeTier.name : 'Chauffeur (' + selectedChfDuration + ')'}</span>
+                      <span style="color: var(--lime);">₹ ${serviceCategory === 'RIDE' ? activeTier.fare : (selectedChfDuration === '2h' ? 599 : selectedChfDuration === '4h' ? 999 : 1799)}</span>
                     </div>
 
                     <div class="coupon-badge" onclick="alert('Promo RAPIDO50 applied! ₹25 discount locked.')">
@@ -1519,11 +1686,11 @@
                         <span>💳</span>
                         <span>UPI AutoPay (Google Pay)</span>
                       </div>
-                      <span style="color: var(--lime); cursor: pointer;" onclick="alert('Payment options: UPI, Ola Money, Credit Card, Cash')">Switch</span>
+                      <span style="color: var(--lime); cursor: pointer;" onclick="alert('Payment options: UPI AutoPay, Ola Money Wallet, Credit Card, Cash')">Switch</span>
                     </div>
 
                     <button class="btn-lime" style="width: 100%; padding: 14px;" onclick="switchView('LIVEHUD')">
-                      <span>Book ${activeTier.name} Now →</span>
+                      <span>Confirm & Book Now →</span>
                     </button>
 
                     <div style="font-size: 10px; color: var(--text-muted); text-align: center;">
@@ -1578,7 +1745,12 @@
                       <div class="otp-pin-label">START TRIP PIN</div>
                       <div style="font-size: 10px; color: var(--text-muted);">Share only with driver upon pickup</div>
                     </div>
-                    <div class="otp-pin-code">4 7 9 2</div>
+                    <div class="otp-pin-boxes">
+                      <div class="otp-digit-box">4</div>
+                      <div class="otp-digit-box">7</div>
+                      <div class="otp-digit-box">9</div>
+                      <div class="otp-digit-box">2</div>
+                    </div>
                   </div>
 
                   <!-- Driver Profile Box -->
@@ -1692,10 +1864,10 @@
 
                 <!-- Category chips -->
                 <div style="display: flex; gap: 6px; overflow-x: auto;">
-                  <div style="background: var(--lime); color: var(--lime-dark); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 900;">🛵 Bike</div>
-                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800;">🛺 Auto</div>
-                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800;">🚕 Cab</div>
-                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800;">✈️ Airport</div>
+                  <div style="background: var(--lime); color: var(--lime-dark); padding: 5px 11px; border-radius: 12px; font-size: 10px; font-weight: 900;">🛵 Bike</div>
+                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 5px 11px; border-radius: 12px; font-size: 10px; font-weight: 800;">🛺 Auto</div>
+                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 5px 11px; border-radius: 12px; font-size: 10px; font-weight: 800;">🚕 Cab</div>
+                  <div style="background: var(--pill-bg); color: var(--text-white); padding: 5px 11px; border-radius: 12px; font-size: 10px; font-weight: 800;">✈️ Airport</div>
                 </div>
 
                 <div style="background: var(--bg-card); border: 1px solid var(--border-dark); border-radius: 12px; padding: 8px 10px; font-size: 10.5px;">
@@ -1830,25 +2002,38 @@
                   <span style="background: rgba(16, 185, 129, 0.15); color: var(--emerald-text); padding: 2px 6px; border-radius: 8px; font-size: 9px; font-weight: 800;">⚡ 1.3x Surge</span>
                 </div>
 
-                <!-- Incoming Ride Ping (Uber/Rapido style) -->
-                <div class="incoming-ride-card">
-                  <div class="incoming-ride-header">
-                    <span style="font-size: 11px; font-weight: 900; color: var(--text-white);">⚡ NEW RIDE REQUEST</span>
-                    <span class="incoming-ride-timer">12s left</span>
+                ${!captainRideAccepted ? `
+                  <!-- Incoming Ride Ping (Uber/Rapido style) -->
+                  <div class="incoming-ride-card">
+                    <div class="incoming-ride-header">
+                      <span style="font-size: 11px; font-weight: 900; color: var(--text-white);">⚡ NEW RIDE REQUEST</span>
+                      <span class="incoming-ride-timer">12s left</span>
+                    </div>
+                    <div>
+                      <div style="font-size: 10px; color: var(--emerald); font-weight: 700;">📍 Koramangala 6th Block (1.1 km away)</div>
+                      <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">🏁 BLR Airport Terminal 1 (32 km)</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <span style="font-size: 9.5px; color: var(--text-muted);">Estimated Earning</span>
+                      <span class="incoming-ride-fare">₹ 482</span>
+                    </div>
+                    <div class="incoming-ride-btns">
+                      <button class="btn-decline" onclick="alert('Ride declined. Waiting for next request...')">Decline</button>
+                      <button class="btn-accept" onclick="captainRideAccepted=true; renderApp();">Accept Ride</button>
+                    </div>
                   </div>
-                  <div>
-                    <div style="font-size: 10px; color: var(--emerald); font-weight: 700;">📍 Koramangala 6th Block (1.1 km away)</div>
-                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">🏁 BLR Airport Terminal 1 (32 km)</div>
+                ` : `
+                  <!-- Ride Accepted Active Duty Card -->
+                  <div style="background: rgba(16, 185, 129, 0.15); border: 2px solid var(--emerald); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <span style="font-size: 11px; font-weight: 900; color: var(--emerald-text);">✓ TRIP ACCEPTED</span>
+                      <span style="font-size: 11px; font-weight: 900; color: var(--lime);">₹ 482</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-white); font-weight: 800;">Rider: Alex Carter</div>
+                    <div style="font-size: 10px; color: var(--text-muted);">Pickup: Koramangala 6th Block (3 min away)</div>
+                    <button class="btn-lime" style="padding: 6px; font-size: 10px;" onclick="captainRideAccepted=false; renderApp();">Navigate via Google Maps ➔</button>
                   </div>
-                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                    <span style="font-size: 9.5px; color: var(--text-muted);">Estimated Earning</span>
-                    <span class="incoming-ride-fare">₹ 482</span>
-                  </div>
-                  <div class="incoming-ride-btns">
-                    <button class="btn-decline" onclick="alert('Ride passed to next driver.')">Decline</button>
-                    <button class="btn-accept" onclick="alert('Ride Accepted! Navigating to pickup...')">Accept Ride</button>
-                  </div>
-                </div>
+                `}
 
                 <!-- Daily Incentive Goal (Rapido/Uber style) -->
                 <div style="background: var(--bg-card); border: 1px solid var(--border-dark); border-radius: 12px; padding: 10px;">
