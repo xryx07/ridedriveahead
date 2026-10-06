@@ -41,8 +41,8 @@
             
             --hero-overlay-start: rgba(11, 13, 15, 0.55);
             --hero-overlay-end: #0B0D0F;
-            --map-tile-url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-            --map-subdomains: 'abcd';
+            --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+            --map-subdomains: '';
         }
 
         [data-theme="light"] {
@@ -69,8 +69,8 @@
             
             --hero-overlay-start: rgba(255, 255, 255, 0.35);
             --hero-overlay-end: #FFFFFF;
-            --map-tile-url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-            --map-subdomains: 'abcd';
+            --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+            --map-subdomains: '';
         }
 
         * {
@@ -2691,7 +2691,7 @@
 
             // Update Leaflet tile layer if map is initialized
             if (leafletMap) {
-                initOrUpdateMap();
+                initOrUpdateCustomRoute(currentPickupCoords, currentDropCoords);
             }
         });
 
@@ -2748,15 +2748,27 @@
                 }
             });
 
-            const currentTheme = htmlRoot.getAttribute('data-theme');
-            const tileUrl = currentTheme === 'dark' 
-                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-
-            L.tileLayer(tileUrl, {
-                subdomains: 'abcd',
-                maxZoom: 19
-            }).addTo(leafletMap);
+            // Free Esri Canvas Base & Reference Labels (100% Free, Zero API Key, Zero Watermark)
+            const currentTheme = htmlRoot.getAttribute('data-theme') || 'dark';
+            if (currentTheme === 'dark') {
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    attribution: '© Esri, OpenStreetMap'
+                }).addTo(leafletMap);
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    opacity: 0.85
+                }).addTo(leafletMap);
+            } else {
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    attribution: '© Esri, OpenStreetMap'
+                }).addTo(leafletMap);
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    opacity: 0.85
+                }).addTo(leafletMap);
+            }
 
             // Add Custom Pickup & Drop Markers
             if (pickupMarker) leafletMap.removeLayer(pickupMarker);
@@ -2893,12 +2905,27 @@
                 if (layer instanceof L.TileLayer) leafletMap.removeLayer(layer);
             });
 
-            const currentTheme = htmlRoot.getAttribute('data-theme');
-            const tileUrl = currentTheme === 'dark' 
-                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
-
-            L.tileLayer(tileUrl, { subdomains: 'abcd', maxZoom: 19 }).addTo(leafletMap);
+            // Free Esri Canvas Base & Reference Labels (100% Free, Zero API Key, Zero Watermark)
+            const currentTheme = htmlRoot.getAttribute('data-theme') || 'dark';
+            if (currentTheme === 'dark') {
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    attribution: '© Esri, OpenStreetMap'
+                }).addTo(leafletMap);
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    opacity: 0.85
+                }).addTo(leafletMap);
+            } else {
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    attribution: '© Esri, OpenStreetMap'
+                }).addTo(leafletMap);
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18,
+                    opacity: 0.85
+                }).addTo(leafletMap);
+            }
 
             if (pickupMarker) leafletMap.removeLayer(pickupMarker);
             if (dropMarker) leafletMap.removeLayer(dropMarker);
