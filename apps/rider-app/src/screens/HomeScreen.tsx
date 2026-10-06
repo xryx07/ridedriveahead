@@ -20,15 +20,18 @@ export const HomeScreen: React.FC = () => {
   } = useRiderStore();
 
   const [currentCity, setCurrentCity] = useState('Bengaluru, Karnataka');
+  const [selectedIntent, setSelectedIntent] = useState<'CAB' | 'CHAUFFEUR'>('CAB');
 
   // Handle selecting "Book a Cab"
   const handleSelectCab = () => {
+    setSelectedIntent('CAB');
     setServiceMode('BOOK_CAB');
     navigate('FARE_ESTIMATE');
   };
 
   // Handle selecting "Hire a Driver"
   const handleSelectChauffeur = () => {
+    setSelectedIntent('CHAUFFEUR');
     setServiceMode('HIRE_DRIVER');
     navigate('FARE_ESTIMATE');
   };
@@ -54,14 +57,14 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Top Greeting Header Bar */}
+      {/* Top Header Bar */}
       <View style={styles.topHeader}>
         <View style={styles.headerLeft}>
-          <Text style={styles.greetingText}>Good Morning,</Text>
-          <Text style={styles.userNameText}>{user?.fullName || 'Alex'} 👋</Text>
-          <Text style={styles.taglineText}>Your journey, your way</Text>
+          <Text style={styles.greetingText}>RideDriveAhead</Text>
+          <Text style={styles.userNameText}>Good Morning, {user?.fullName || 'Alex'} 👋</Text>
+          <Text style={styles.taglineText}>Your ride. Your car. Your driver.</Text>
 
-          {/* Location Selector Dropdown */}
+          {/* Location Selector */}
           <TouchableOpacity
             style={styles.locationSelector}
             onPress={() =>
@@ -77,10 +80,10 @@ export const HomeScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Notification Bell Button */}
+        {/* Telemetry Status Bell */}
         <TouchableOpacity
           style={styles.notificationBtn}
-          onPress={() => alert('All systems operational. No unread ride notifications.')}
+          onPress={() => alert('All systems operational. Telemetry: 184 active trips.')}
           activeOpacity={0.8}
         >
           <Text style={styles.bellIcon}>🔔</Text>
@@ -124,338 +127,188 @@ export const HomeScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
-        {/* OLA / UBER / RAPIDO MULTI-MODAL CATEGORY BAR */}
-        <View style={styles.categoryBarWrap}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoryBarContent}
-          >
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>🛵</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Bike Taxi</Text>
-              <Text style={styles.categorySub}>Rapido ⚡</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>🛺</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Auto</Text>
-              <Text style={styles.categorySub}>Doorstep 🛺</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>🚕</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Cabs</Text>
-              <Text style={styles.categorySub}>Uber / Ola</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('HIRE_DRIVER');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={[styles.categoryIconCircle, styles.categoryChauffeurCircle]}>
-                <Text style={styles.categoryEmoji}>👨‍✈️</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Drive My Car</Text>
-              <Text style={[styles.categorySub, { color: '#0F172A', fontWeight: '800' }]}>Chauffeur</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>⏱️</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Rentals</Text>
-              <Text style={styles.categorySub}>Hourly</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>📦</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Parcel</Text>
-              <Text style={styles.categorySub}>Instant 📦</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.categoryItem}
-              onPress={() => {
-                setServiceMode('BOOK_CAB');
-                navigate('FARE_ESTIMATE');
-              }}
-              activeOpacity={0.85}
-            >
-              <View style={styles.categoryIconCircle}>
-                <Text style={styles.categoryEmoji}>✈️</Text>
-              </View>
-              <Text style={styles.categoryTitle}>Airport</Text>
-              <Text style={styles.categorySub}>Reserve</Text>
-            </TouchableOpacity>
-          </ScrollView>
+        {/* CENTRAL INTENT DECISION: BOOK A CAB VS HIRE A DRIVER */}
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>What do you need today?</Text>
+          <Text style={styles.sectionHint}>Dual Mobility Platform</Text>
         </View>
 
-        {/* HERO DUAL SERVICES CARDS */}
-        <View style={styles.dualServicesContainer}>
-          {/* Card 1: Book a Cab (Deep Navy) */}
+        <View style={styles.intentGrid}>
+          {/* Choice 1: BOOK A CAB */}
           <TouchableOpacity
-            style={styles.cabHeroCard}
+            style={[
+              styles.intentCard,
+              selectedIntent === 'CAB' && styles.intentCardActive
+            ]}
             onPress={handleSelectCab}
             activeOpacity={0.88}
           >
-            <View style={styles.serviceIconCircleNavy}>
-              <Text style={styles.serviceIconCar}>🚗</Text>
+            <View style={styles.intentBadge}>
+              <Text style={styles.intentBadgeText}>INSTANT / SCHEDULE</Text>
             </View>
-
-            <View style={styles.heroCardContent}>
-              <Text style={styles.cabHeroTitle}>Book a Cab</Text>
-              <Text style={styles.cabHeroSub}>
-                City rides, airport rides, quick & reliable
-              </Text>
+            <View style={styles.intentIconBox}>
+              <Text style={styles.intentEmoji}>🚕</Text>
             </View>
-
-            <View style={styles.limeArrowBtn}>
-              <Text style={styles.limeArrowText}>→</Text>
+            <Text style={styles.intentTitle}>BOOK A CAB</Text>
+            <Text style={styles.intentDesc}>
+              I need a ride. Upfront locked fares, verified captains, airport trips.
+            </Text>
+            <View style={styles.intentCtaRow}>
+              <Text style={styles.intentCtaText}>Choose Vehicle →</Text>
             </View>
           </TouchableOpacity>
 
-          {/* Card 2: Hire a Driver (Clean White) */}
+          {/* Choice 2: HIRE A DRIVER */}
           <TouchableOpacity
-            style={styles.driverHeroCard}
+            style={[
+              styles.intentCard,
+              selectedIntent === 'CHAUFFEUR' && styles.intentCardActive
+            ]}
             onPress={handleSelectChauffeur}
             activeOpacity={0.88}
           >
-            <View style={styles.serviceIconCircleLight}>
-              <Text style={styles.serviceIconSteering}>☸</Text>
+            <View style={styles.intentBadge}>
+              <Text style={styles.intentBadgeText}>MY CAR CHAUFFEUR</Text>
             </View>
-
-            <View style={styles.heroCardContent}>
-              <Text style={styles.driverHeroTitle}>Hire a Driver</Text>
-              <Text style={styles.driverHeroSub}>
-                Your car. Our professional drivers.
-              </Text>
+            <View style={styles.intentIconBox}>
+              <Text style={styles.intentEmoji}>🚗</Text>
             </View>
-
-            <View style={styles.lightLimeArrowBtn}>
-              <Text style={styles.lightLimeArrowText}>→</Text>
+            <Text style={styles.intentTitle}>HIRE A DRIVER</Text>
+            <Text style={styles.intentDesc}>
+              I have my own car. Verified AT/MT chauffeurs, 2h–8h & outstation.
+            </Text>
+            <View style={styles.intentCtaRow}>
+              <Text style={styles.intentCtaText}>Select Package →</Text>
             </View>
           </TouchableOpacity>
         </View>
 
-        {/* INSTANT VS SCHEDULE TOGGLE PILL */}
-        <View style={styles.togglePillContainer}>
-          <TouchableOpacity
-            style={[
-              styles.togglePillBtn,
-              bookingType === 'INSTANT' && styles.togglePillBtnActive
-            ]}
-            onPress={() => setBookingDraft({ type: 'INSTANT' })}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.pillIcon}>⚡</Text>
-            <Text
-              style={[
-                styles.togglePillText,
-                bookingType === 'INSTANT' && styles.togglePillTextActive
-              ]}
-            >
-              Instant
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              styles.togglePillBtn,
-              bookingType === 'SCHEDULED' && styles.togglePillBtnActive
-            ]}
-            onPress={() => setBookingDraft({ type: 'SCHEDULED' })}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.pillIcon}>📅</Text>
-            <Text
-              style={[
-                styles.togglePillText,
-                bookingType === 'SCHEDULED' && styles.togglePillTextActive
-              ]}
-            >
-              Schedule
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* SAVED PLACES SHORTCUTS */}
+        {/* "MY CAR" ELEVATED PROFILE CARD */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Saved Places</Text>
-          <TouchableOpacity onPress={() => navigate('PROFILE')}>
-            <Text style={styles.sectionActionLink}>Manage</Text>
+          <Text style={styles.sectionTitle}>My Car</Text>
+          <Text style={styles.sectionActionLink}>Vehicle Verified ✓</Text>
+        </View>
+
+        <View style={styles.myCarCard}>
+          <View style={styles.myCarTopRow}>
+            <View>
+              <Text style={styles.myCarModel}>Toyota Innova Crysta (2.8Z)</Text>
+              <Text style={styles.myCarReg}>KA 01 AB 1234</Text>
+            </View>
+            <View style={styles.verifiedTag}>
+              <Text style={styles.verifiedTagText}>✓ RC & Insurance</Text>
+            </View>
+          </View>
+
+          <View style={styles.myCarSpecsGrid}>
+            <View style={styles.specBox}>
+              <Text style={styles.specLabel}>TRANSMISSION</Text>
+              <Text style={styles.specVal}>Automatic (AT)</Text>
+            </View>
+            <View style={styles.specBox}>
+              <Text style={styles.specLabel}>ODOMETER</Text>
+              <Text style={styles.specVal}>48,291 km</Text>
+            </View>
+            <View style={styles.specBox}>
+              <Text style={styles.specLabel}>FUEL LEVEL</Text>
+              <Text style={styles.specVal}>72% Full</Text>
+            </View>
+          </View>
+
+          <View style={styles.driverReqBanner}>
+            <Text style={styles.driverReqTitle}>DRIVER HANDOVER REQUIREMENTS</Text>
+            <View style={styles.reqChecksRow}>
+              <Text style={styles.reqCheckItem}>✓ AT Certified</Text>
+              <Text style={styles.reqCheckItem}>✓ 4.8+ Rating</Text>
+              <Text style={styles.reqCheckItem}>✓ DL & Police Verified</Text>
+              <Text style={styles.reqCheckItem}>✓ 500+ Trips</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={styles.hireDriverBtn}
+            onPress={handleSelectChauffeur}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.hireDriverBtnText}>Hire a Chauffeur for This Car →</Text>
           </TouchableOpacity>
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.savedPlacesScroll}
-          contentContainerStyle={styles.savedPlacesContent}
-        >
-          {/* Home */}
-          <TouchableOpacity
-            style={styles.savedPlaceCard}
-            onPress={() =>
-              handleSelectSavedPlace('Home', 'Koramangala, 6th Block, Bengaluru')
-            }
-            activeOpacity={0.85}
-          >
-            <View style={styles.savedPlaceIconBox}>
-              <Text style={styles.savedPlaceIcon}>🏠</Text>
-            </View>
-            <Text style={styles.savedPlaceName}>Home</Text>
-            <Text style={styles.savedPlaceSub} numberOfLines={1}>
-              Koramangala
-            </Text>
-          </TouchableOpacity>
+        {/* VEHICLE HANDOVER PROTOCOL PREVIEW */}
+        <View style={styles.handoverPreviewCard}>
+          <View style={styles.handoverHeader}>
+            <Text style={styles.handoverTitle}>🛡️ VEHICLE HANDOVER PROTOCOL</Text>
+            <Text style={styles.handoverStatus}>Step 1 Ready</Text>
+          </View>
+          <Text style={styles.handoverDesc}>
+            Pre-trip fuel logging (72%), odometer cluster sync (48,291 km), 360° photo checklist (8 photos), and dual customer & driver digital sign-off before trip start.
+          </Text>
+        </View>
 
-          {/* Work */}
-          <TouchableOpacity
-            style={styles.savedPlaceCard}
-            onPress={() =>
-              handleSelectSavedPlace('Work', 'Indiranagar, 100ft Road, Bengaluru')
-            }
-            activeOpacity={0.85}
-          >
-            <View style={styles.savedPlaceIconBox}>
-              <Text style={styles.savedPlaceIcon}>💼</Text>
-            </View>
-            <Text style={styles.savedPlaceName}>Work</Text>
-            <Text style={styles.savedPlaceSub} numberOfLines={1}>
-              Indiranagar
-            </Text>
-          </TouchableOpacity>
-
-          {/* Airport */}
-          <TouchableOpacity
-            style={styles.savedPlaceCard}
-            onPress={() =>
-              handleSelectSavedPlace(
-                'Airport',
-                'Kempegowda International Airport (BLR), Devanahalli'
-              )
-            }
-            activeOpacity={0.85}
-          >
-            <View style={styles.savedPlaceIconBox}>
-              <Text style={styles.savedPlaceIcon}>✈️</Text>
-            </View>
-            <Text style={styles.savedPlaceName}>Airport</Text>
-            <Text style={styles.savedPlaceSub} numberOfLines={1}>
-              BLR Airport
-            </Text>
-          </TouchableOpacity>
-
-          {/* Add Place */}
-          <TouchableOpacity
-            style={styles.savedPlaceCard}
-            onPress={() => navigate('PROFILE')}
-            activeOpacity={0.85}
-          >
-            <View style={[styles.savedPlaceIconBox, styles.addPlaceIconBox]}>
-              <Text style={styles.addPlaceIcon}>+</Text>
-            </View>
-            <Text style={styles.savedPlaceName}>Add</Text>
-            <Text style={styles.savedPlaceSub}>Add Place</Text>
-          </TouchableOpacity>
-        </ScrollView>
-
-        {/* RECENT TRIP CARD */}
+        {/* COMPACT TRUST PROFILE (CHAUFFEUR VERIFICATION) */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Recent Trip</Text>
-          <TouchableOpacity onPress={() => navigate('RIDE_HISTORY')}>
-            <Text style={styles.sectionActionLink}>View All</Text>
-          </TouchableOpacity>
+          <Text style={styles.sectionTitle}>Preferred Chauffeur</Text>
+          <Text style={styles.sectionActionLink}>Trust Layer</Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.recentTripCard}
-          onPress={handleRepeatRecentTrip}
-          activeOpacity={0.88}
-        >
-          <View style={styles.recentTripIconCircle}>
-            <Text style={styles.recentTripIconText}>🚗</Text>
+        <View style={styles.trustCard}>
+          <View style={styles.trustHeader}>
+            <View style={styles.trustAvatar}>
+              <Text style={styles.trustAvatarText}>RK</Text>
+            </View>
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={styles.trustDriverName}>Ramesh Kumar</Text>
+              <Text style={styles.trustDriverRating}>★ 4.9 • 1,284 completed duties</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.rebookBtn}
+              onPress={() => alert('Direct dispatch request sent to Ramesh Kumar!')}
+            >
+              <Text style={styles.rebookBtnText}>Book Again</Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.recentTripDetails}>
-            <Text style={styles.recentTripRoute} numberOfLines={1}>
-              Bengaluru Airport ➔ Koramangala
-            </Text>
-            <Text style={styles.recentTripMeta}>2 days ago • Sedan</Text>
+          <View style={styles.trustBadgesRow}>
+            <Text style={styles.trustBadge}>✓ Commercial DL</Text>
+            <Text style={styles.trustBadge}>✓ Automatic Certified</Text>
+            <Text style={styles.trustBadge}>✓ 92% Innova Familiarity</Text>
+            <Text style={styles.trustBadge}>✓ 38% Repeat Clients</Text>
           </View>
+        </View>
 
-          <View style={styles.recentTripPriceCol}>
-            <Text style={styles.recentTripPrice}>₹ 1,248</Text>
+        {/* AIRPORT TRIP ASSURANCE */}
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>Airport Trip Assurance</Text>
+          <Text style={styles.sectionHint}>Flight AI 504 Sync</Text>
+        </View>
+
+        <View style={styles.assuranceCard}>
+          <View style={styles.assuranceTop}>
+            <View>
+              <Text style={styles.assuranceTitle}>Airport Transfer • Tomorrow 06:30 AM</Text>
+              <Text style={styles.assuranceSub}>Koramangala ➔ Kempegowda Airport (BLR)</Text>
+            </View>
+            <Text style={styles.assuranceFare}>₹ 1,248</Text>
           </View>
-        </TouchableOpacity>
+          <View style={styles.assuranceStages}>
+            <Text style={styles.assuranceStageDone}>✓ Confirmed</Text>
+            <Text style={styles.assuranceStageDone}>✓ Fare Locked</Text>
+            <Text style={styles.assuranceStageDone}>✓ Driver Assigned</Text>
+            <Text style={styles.assuranceStageActive}>● T-2h Sync</Text>
+          </View>
+        </View>
 
-        {/* SAFETY FIRST BANNER */}
-        <TouchableOpacity
-          style={styles.safetyCard}
-          onPress={() => navigate('PROFILE')}
-          activeOpacity={0.88}
-        >
+        {/* TRIP GUARDIAN & SAFETY FIRST (STRICT ZERO SOS) */}
+        <View style={styles.safetyCard}>
           <View style={styles.safetyIconCircle}>
             <Text style={styles.safetyIconShield}>🛡️</Text>
           </View>
-
           <View style={styles.safetyContent}>
-            <Text style={styles.safetyTitle}>Safety First</Text>
+            <Text style={styles.safetyTitle}>Trip Guardian Status: Protected</Text>
             <Text style={styles.safetySub}>
-              Your ride is always tracked & secure
+              Live sharing with family • 4-digit PIN [ 4 7 9 2 ] • 24/7 Roadside Assistance
             </Text>
           </View>
-
-          <Text style={styles.safetyChevron}>›</Text>
-        </TouchableOpacity>
+        </View>
 
         <View style={{ height: 24 }} />
       </ScrollView>
@@ -469,7 +322,7 @@ export const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC'
+    backgroundColor: '#0B0D0F'
   },
   scrollArea: {
     flex: 1
@@ -480,7 +333,7 @@ const styles = StyleSheet.create({
 
   /* Top Greeting Header */
   topHeader: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#121619',
     paddingHorizontal: 18,
     paddingTop: 12,
     paddingBottom: 14,
@@ -488,41 +341,43 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: '#F1F5F9'
+    borderBottomColor: 'rgba(255, 255, 255, 0.08)'
   },
   headerLeft: {
     flex: 1,
     marginRight: 10
   },
   greetingText: {
-    fontSize: 13,
-    color: '#64748B',
-    fontWeight: '600'
+    fontSize: 11,
+    color: '#929A96',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5
   },
   userNameText: {
-    fontSize: 22,
-    fontWeight: '900',
-    color: '#0F172A',
-    letterSpacing: -0.4,
-    marginTop: 1
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#F4F6F3',
+    letterSpacing: -0.3,
+    marginTop: 2
   },
   taglineText: {
-    fontSize: 11.5,
-    color: '#94A3B8',
+    fontSize: 11,
+    color: '#929A96',
     fontWeight: '500',
     marginTop: 2
   },
   locationSelector: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F1F5F9',
+    backgroundColor: '#181D20',
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
     alignSelf: 'flex-start',
     marginTop: 8,
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: 'rgba(255, 255, 255, 0.08)',
     gap: 4
   },
   locationPinIcon: {
@@ -531,58 +386,49 @@ const styles = StyleSheet.create({
   locationCityText: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#0F172A'
+    color: '#F4F6F3'
   },
   dropdownChevron: {
     fontSize: 10,
     fontWeight: '900',
-    color: '#64748B'
+    color: '#929A96'
   },
   notificationBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#0F172A',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#181D20',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2
+    position: 'relative'
   },
   bellIcon: {
-    fontSize: 15,
-    color: '#FFFFFF'
+    fontSize: 15
   },
   notificationBadgeDot: {
     position: 'absolute',
     top: 8,
-    right: 9,
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
-    backgroundColor: '#A3E635'
+    right: 8,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#C7FF3D'
   },
 
-  /* Active Ride Banner */
+  /* Active Booking Banner */
   activeRideBanner: {
-    backgroundColor: '#0F172A',
-    borderLeftWidth: 4,
-    borderLeftColor: '#A3E635',
-    marginHorizontal: 16,
-    marginTop: 12,
+    marginHorizontal: 18,
+    marginTop: 14,
+    backgroundColor: '#181D20',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: '#C7FF3D',
     padding: 14,
-    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 3
+    justifyContent: 'space-between'
   },
   activeRideLeft: {
     flex: 1,
@@ -591,417 +437,405 @@ const styles = StyleSheet.create({
   activeBadgeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
     marginBottom: 4
   },
   pulseLiveDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
-    backgroundColor: '#A3E635'
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#C7FF3D',
+    marginRight: 6
   },
   activeBadgeText: {
-    fontSize: 8.5,
-    fontWeight: '900',
-    color: '#A3E635',
-    letterSpacing: 0.4
+    fontSize: 9.5,
+    fontWeight: '800',
+    color: '#C7FF3D',
+    letterSpacing: 0.5
   },
   activeRideTitle: {
     fontSize: 13,
     fontWeight: '800',
-    color: '#FFFFFF'
+    color: '#F4F6F3'
   },
   activeRideSub: {
-    fontSize: 10.5,
-    color: '#94A3B8',
+    fontSize: 11,
+    color: '#929A96',
     marginTop: 2
   },
   activeRideAction: {
-    backgroundColor: '#1E293B',
-    paddingHorizontal: 10,
+    backgroundColor: '#C7FF3D',
+    paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8
   },
   activeRideActionText: {
-    color: '#A3E635',
-    fontSize: 11,
-    fontWeight: '800'
-  },
-
-  /* Multi-modal Category Strip (Ola / Uber / Rapido) */
-  categoryBarWrap: {
-    marginTop: 14,
-    marginBottom: 4
-  },
-  categoryBarContent: {
-    paddingHorizontal: 16,
-    gap: 12
-  },
-  categoryItem: {
-    alignItems: 'center',
-    width: 72
-  },
-  categoryIconCircle: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
-    marginBottom: 6
-  },
-  categoryChauffeurCircle: {
-    backgroundColor: '#D2FF00',
-    borderColor: '#B4E600'
-  },
-  categoryEmoji: {
-    fontSize: 24
-  },
-  categoryTitle: {
     fontSize: 11,
     fontWeight: '800',
-    color: '#0F172A',
-    textAlign: 'center'
-  },
-  categorySub: {
-    fontSize: 9.5,
-    color: '#64748B',
-    textAlign: 'center',
-    marginTop: 1
+    color: '#0B0D0F'
   },
 
-  /* Hero Dual Services Cards */
-  dualServicesContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    paddingHorizontal: 16,
-    marginTop: 14,
-    marginBottom: 12
-  },
-  cabHeroCard: {
-    flex: 1,
-    backgroundColor: '#0A1128',
-    borderRadius: 22,
-    padding: 16,
-    minHeight: 180,
-    justifyContent: 'space-between',
-    shadowColor: '#0A1128',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 4
-  },
-  driverHeroCard: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 22,
-    padding: 16,
-    minHeight: 180,
-    justifyContent: 'space-between',
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 6,
-    elevation: 2
-  },
-  serviceIconCircleNavy: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#1E293B',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  serviceIconCircleLight: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#F1F5F9',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  serviceIconCar: {
-    fontSize: 20
-  },
-  serviceIconSteering: {
-    fontSize: 22,
-    color: '#0F172A'
-  },
-  heroCardContent: {
-    marginVertical: 10
-  },
-  cabHeroTitle: {
-    fontSize: 16,
-    fontWeight: '900',
-    color: '#FFFFFF',
-    letterSpacing: -0.2
-  },
-  cabHeroSub: {
-    fontSize: 10.5,
-    color: '#94A3B8',
-    marginTop: 4,
-    lineHeight: 14
-  },
-  driverHeroTitle: {
-    fontSize: 16,
-    fontWeight: '900',
-    color: '#0F172A',
-    letterSpacing: -0.2
-  },
-  driverHeroSub: {
-    fontSize: 10.5,
-    color: '#64748B',
-    marginTop: 4,
-    lineHeight: 14
-  },
-  limeArrowBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#A3E635',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-start'
-  },
-  limeArrowText: {
-    color: '#0F172A',
-    fontSize: 16,
-    fontWeight: '900'
-  },
-  lightLimeArrowBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#ECFCCB',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-start'
-  },
-  lightLimeArrowText: {
-    color: '#365314',
-    fontSize: 16,
-    fontWeight: '900'
-  },
-
-  /* Instant vs Schedule Toggle */
-  togglePillContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#F1F5F9',
-    borderRadius: 16,
-    marginHorizontal: 16,
-    padding: 4,
-    marginBottom: 16
-  },
-  togglePillBtn: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    borderRadius: 12,
-    gap: 6
-  },
-  togglePillBtnActive: {
-    backgroundColor: '#A3E635',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2
-  },
-  pillIcon: {
-    fontSize: 12
-  },
-  togglePillText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#64748B'
-  },
-  togglePillTextActive: {
-    color: '#0F172A',
-    fontWeight: '900'
-  },
-
-  /* Section Headers */
+  /* Section Header Row */
   sectionHeaderRow: {
     flexDirection: 'row',
+    alignItems: 'baseline',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
+    marginHorizontal: 18,
+    marginTop: 20,
     marginBottom: 10
   },
   sectionTitle: {
     fontSize: 14,
-    fontWeight: '900',
-    color: '#0F172A'
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  sectionHint: {
+    fontSize: 11,
+    color: '#929A96',
+    fontWeight: '600'
   },
   sectionActionLink: {
-    fontSize: 12,
-    fontWeight: '800',
-    color: '#2563EB'
-  },
-
-  /* Saved Places */
-  savedPlacesScroll: {
-    marginBottom: 16
-  },
-  savedPlacesContent: {
-    paddingHorizontal: 16,
-    gap: 10
-  },
-  savedPlaceCard: {
-    width: 82,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.03,
-    shadowRadius: 3,
-    elevation: 1
-  },
-  savedPlaceIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#F8FAFC',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 6
-  },
-  addPlaceIconBox: {
-    backgroundColor: '#F1F5F9'
-  },
-  savedPlaceIcon: {
-    fontSize: 16
-  },
-  addPlaceIcon: {
-    fontSize: 18,
-    fontWeight: '900',
-    color: '#0F172A'
-  },
-  savedPlaceName: {
     fontSize: 11,
-    fontWeight: '800',
-    color: '#0F172A'
-  },
-  savedPlaceSub: {
-    fontSize: 9,
-    color: '#94A3B8',
-    marginTop: 1,
-    textAlign: 'center'
+    color: '#71D88A',
+    fontWeight: '700'
   },
 
-  /* Recent Trip */
-  recentTripCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    marginHorizontal: 16,
-    padding: 14,
+  /* Dual Intent Grid */
+  intentGrid: {
     flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    marginBottom: 16,
-    shadowColor: '#0F172A',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2
+    gap: 12,
+    marginHorizontal: 18
   },
-  recentTripIconCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#F1F5F9',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10
-  },
-  recentTripIconText: {
-    fontSize: 16
-  },
-  recentTripDetails: {
+  intentCard: {
     flex: 1,
-    marginRight: 8
+    backgroundColor: '#121619',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 14
   },
-  recentTripRoute: {
-    fontSize: 13,
+  intentCardActive: {
+    borderColor: '#C7FF3D'
+  },
+  intentBadge: {
+    backgroundColor: '#181D20',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+    marginBottom: 8
+  },
+  intentBadgeText: {
+    fontSize: 8.5,
     fontWeight: '800',
-    color: '#0F172A'
+    color: '#929A96'
   },
-  recentTripMeta: {
-    fontSize: 10.5,
-    color: '#94A3B8',
-    marginTop: 2
-  },
-  recentTripPriceCol: {
-    alignItems: 'flex-end'
-  },
-  recentTripPrice: {
-    fontSize: 14,
-    fontWeight: '900',
-    color: '#0F172A'
-  },
-
-  /* Safety First Banner */
-  safetyCard: {
-    backgroundColor: '#ECFDF5',
-    borderRadius: 18,
-    marginHorizontal: 16,
-    padding: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#A7F3D0',
-    shadowColor: '#059669',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2
-  },
-  safetyIconCircle: {
+  intentIconBox: {
     width: 34,
     height: 34,
-    borderRadius: 17,
-    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    backgroundColor: '#181D20',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginBottom: 8
+  },
+  intentEmoji: {
+    fontSize: 18
+  },
+  intentTitle: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  intentDesc: {
+    fontSize: 10.5,
+    color: '#929A96',
+    lineHeight: 14,
+    marginTop: 4
+  },
+  intentCtaRow: {
+    marginTop: 10
+  },
+  intentCtaText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#C7FF3D'
+  },
+
+  /* My Car Card */
+  myCarCard: {
+    marginHorizontal: 18,
+    backgroundColor: '#121619',
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#A7F3D0'
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 14
+  },
+  myCarTopRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
+  },
+  myCarModel: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  myCarReg: {
+    fontSize: 11,
+    color: '#929A96',
+    fontFamily: 'monospace',
+    marginTop: 2
+  },
+  verifiedTag: {
+    backgroundColor: 'rgba(113, 216, 138, 0.12)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4
+  },
+  verifiedTagText: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#71D88A'
+  },
+  myCarSpecsGrid: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 12
+  },
+  specBox: {
+    flex: 1,
+    backgroundColor: '#181D20',
+    borderRadius: 8,
+    padding: 8
+  },
+  specLabel: {
+    fontSize: 8.5,
+    color: '#929A96',
+    fontWeight: '700'
+  },
+  specVal: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#F4F6F3',
+    marginTop: 2
+  },
+  driverReqBanner: {
+    backgroundColor: '#181D20',
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 10
+  },
+  driverReqTitle: {
+    fontSize: 9,
+    fontWeight: '800',
+    color: '#929A96',
+    letterSpacing: 0.4
+  },
+  reqChecksRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 6
+  },
+  reqCheckItem: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#F4F6F3'
+  },
+  hireDriverBtn: {
+    backgroundColor: '#C7FF3D',
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginTop: 12
+  },
+  hireDriverBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#0B0D0F'
+  },
+
+  /* Handover Preview Card */
+  handoverPreviewCard: {
+    marginHorizontal: 18,
+    marginTop: 12,
+    backgroundColor: '#181D20',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 12
+  },
+  handoverHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6
+  },
+  handoverTitle: {
+    fontSize: 10.5,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  handoverStatus: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#71D88A'
+  },
+  handoverDesc: {
+    fontSize: 10.5,
+    color: '#929A96',
+    lineHeight: 14
+  },
+
+  /* Trust Card */
+  trustCard: {
+    marginHorizontal: 18,
+    backgroundColor: '#121619',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 14
+  },
+  trustHeader: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  trustAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#181D20',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)'
+  },
+  trustAvatarText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  trustDriverName: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  trustDriverRating: {
+    fontSize: 11,
+    color: '#929A96',
+    marginTop: 1
+  },
+  rebookBtn: {
+    backgroundColor: '#181D20',
+    borderWidth: 1,
+    borderColor: '#C7FF3D',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8
+  },
+  rebookBtnText: {
+    fontSize: 10.5,
+    fontWeight: '700',
+    color: '#C7FF3D'
+  },
+  trustBadgesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 10
+  },
+  trustBadge: {
+    fontSize: 9.5,
+    fontWeight: '600',
+    color: '#929A96',
+    backgroundColor: '#181D20',
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4
+  },
+
+  /* Assurance Card */
+  assuranceCard: {
+    marginHorizontal: 18,
+    backgroundColor: '#121619',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    padding: 14
+  },
+  assuranceTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
+  },
+  assuranceTitle: {
+    fontSize: 12.5,
+    fontWeight: '800',
+    color: '#F4F6F3'
+  },
+  assuranceSub: {
+    fontSize: 10.5,
+    color: '#929A96',
+    marginTop: 2
+  },
+  assuranceFare: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#C7FF3D',
+    fontFamily: 'monospace'
+  },
+  assuranceStages: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 10
+  },
+  assuranceStageDone: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#71D88A'
+  },
+  assuranceStageActive: {
+    fontSize: 9.5,
+    fontWeight: '700',
+    color: '#C7FF3D'
+  },
+
+  /* Safety Card */
+  safetyCard: {
+    marginHorizontal: 18,
+    marginTop: 16,
+    backgroundColor: '#121619',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(113, 216, 138, 0.2)',
+    padding: 14,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  safetyIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: 'rgba(113, 216, 138, 0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12
   },
   safetyIconShield: {
-    fontSize: 16
+    fontSize: 18
   },
   safetyContent: {
     flex: 1
   },
   safetyTitle: {
-    fontSize: 13,
-    fontWeight: '900',
-    color: '#047857'
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#F4F6F3'
   },
   safetySub: {
     fontSize: 10.5,
-    color: '#065F46',
-    marginTop: 1
-  },
-  safetyChevron: {
-    fontSize: 18,
-    fontWeight: '900',
-    color: '#047857'
+    color: '#929A96',
+    marginTop: 2,
+    lineHeight: 14
   }
 });
