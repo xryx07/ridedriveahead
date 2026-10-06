@@ -574,31 +574,103 @@
             color: #10B981;
         }
 
-        /* Platform Switcher Pill */
-        .platform-switcher-pill {
+        /* Portals & Account Dropdowns (Compact, High-End) */
+        .portals-dropdown-wrap, .account-dropdown-wrap {
+            position: relative;
+        }
+        .portal-selector-btn {
             display: flex;
             align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
             background: var(--surface-2);
             border: 1px solid var(--border);
             border-radius: 100px;
-            padding: 3px;
-            gap: 2px;
-        }
-        .switch-btn {
-            padding: 6px 14px;
             font-size: 12px;
             font-weight: 700;
-            border-radius: 100px;
             color: var(--text-secondary);
             transition: all 0.15s ease;
+            cursor: pointer;
         }
-        .switch-btn:hover {
+        .portal-selector-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            background: var(--surface);
+        }
+        .portal-menu-dropdown, .account-menu-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 14px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+            min-width: 220px;
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            z-index: 1050;
+            backdrop-filter: blur(16px);
+            animation: fadeInModal 0.15s ease;
+        }
+        .portal-menu-dropdown.show, .account-menu-dropdown.show {
+            display: flex;
+        }
+        .portal-menu-item, .account-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        .portal-menu-item:hover, .account-menu-item:hover {
+            background: var(--surface-2);
             color: var(--text-primary);
         }
-        .switch-btn.active {
-            background: var(--accent);
-            color: var(--accent-contrast);
-            box-shadow: 0 2px 8px var(--accent-glow);
+        .portal-menu-item.active {
+            color: var(--accent);
+            background: rgba(199, 255, 61, 0.08);
+        }
+        .account-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 4px 10px 4px 4px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .account-btn:hover {
+            border-color: var(--border-hover);
+            background: var(--surface);
+        }
+        .user-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--surface-elevated);
+            border: 1.5px solid var(--accent);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .account-menu-header {
+            padding: 10px 12px 8px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4px;
         }
 
         /* Modals & Elevated Bottom Sheets */
@@ -2385,22 +2457,6 @@
          SITE HEADER
          ========================================================= -->
     
-    <!-- ECOSYSTEM MULTI-EXPERIENCE SWITCHER BAR -->
-    <div style="height:36px; background:rgba(0,0,0,0.5); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 24px; font-size:11px; font-weight:700;">
-        <div style="display:flex; align-items:center; gap:8px;">
-            <span style="color:var(--text-muted);">RideDriveAhead Unified Ecosystem</span>
-            <span style="color:var(--border);">|</span>
-            <span style="color:var(--accent);">ridedriveahead.com · Customer Web Experience</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-            <a href="/" style="color:var(--accent); text-decoration:none; font-weight:800;">🌐 Customer Web</a>
-            <span style="color:var(--border);">•</span>
-            <a href="/driver" target="_blank" style="color:var(--text-secondary); text-decoration:none;">🚖 Captain Portal (driver.ridedriveahead.com)</a>
-            <span style="color:var(--border);">•</span>
-            <a href="/admin" target="_blank" style="color:var(--text-secondary); text-decoration:none;">🛡️ Admin Command Center (admin.ridedriveahead.com)</a>
-        </div>
-    </div>
-
     <header class="site-header">
         <div class="container header-inner">
             <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
@@ -2417,6 +2473,7 @@
                 </div>
             </div>
 
+            <!-- ONLY RELEVANT CORE MOBILITY SERVICES -->
             <nav class="nav-menu">
                 <a href="#ride" class="nav-item active" onclick="selectService('cab')">Ride</a>
                 <a href="#rent" class="nav-item" onclick="selectService('rent-car')">Rent</a>
@@ -2424,29 +2481,92 @@
                 <a href="#outstation" class="nav-item" onclick="selectService('outstation')">Outstation</a>
                 <a href="#airport" class="nav-item" onclick="selectService('airport')">Airport</a>
                 <a href="#delivery" class="nav-item" onclick="selectService('delivery')">Delivery</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerTripsModal')">My Trips</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerRentalsModal')">My Rentals</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerWalletModal')">Wallet</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerRewardsModal')">Rewards</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerSafetyModal')">Safety</a>
-                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerSupportModal')">Support</a>
             </nav>
 
+            <!-- CLEAN, BALANCED RIGHT CONTROLS -->
             <div class="header-actions">
-                <!-- App Studio & Platform Mode Switcher -->
-                <div class="platform-switcher-pill">
-                    <button class="switch-btn active" id="btnModeWeb" onclick="setPlatformMode('web')">🌐 Customer Web</button>
-                    <a class="switch-btn" id="btnModeDriver" href="/driver" target="_blank" title="Open Captain Portal (driver.ridedriveahead.com)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--text-secondary);">🚖 Captain Portal</a>
-                    <a class="switch-btn" id="btnModeAdmin" href="/admin" target="_blank" title="Open Enterprise Command Center (admin.ridedriveahead.com)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--accent);">🛡️ Admin Center</a>
+                <!-- Ecosystem Portals Dropdown -->
+                <div class="portals-dropdown-wrap">
+                    <button class="portal-selector-btn" onclick="togglePortalMenu()" id="portalMenuBtn" title="Switch between Customer, Captain, and Admin">
+                        <span style="font-size:12px;">🌐</span>
+                        <span>Portals</span>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="portal-menu-dropdown" id="portalMenuDropdown">
+                        <a href="/" class="portal-menu-item active">
+                            <span style="font-size:14px;">🌐</span>
+                            <div>
+                                <div style="font-weight:700; font-size:12px;">Customer Web</div>
+                                <div style="font-size:10px; color:var(--text-muted);">ridedriveahead.com</div>
+                            </div>
+                        </a>
+                        <a href="/driver" target="_blank" class="portal-menu-item">
+                            <span style="font-size:14px;">🚖</span>
+                            <div>
+                                <div style="font-weight:700; font-size:12px;">Captain Portal</div>
+                                <div style="font-size:10px; color:var(--text-muted);">driver.ridedriveahead.com</div>
+                            </div>
+                        </a>
+                        <a href="/admin" target="_blank" class="portal-menu-item">
+                            <span style="font-size:14px;">🛡️</span>
+                            <div>
+                                <div style="font-weight:700; font-size:12px;">Admin Command Center</div>
+                                <div style="font-size:10px; color:var(--text-muted);">admin.ridedriveahead.com</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
+                <!-- Help / Support -->
+                <a href="javascript:void(0)" class="nav-item" style="padding:6px 12px; font-size:13px;" onclick="openCustomerModal('customerSupportModal')">Help</a>
+
+                <!-- Theme Toggle -->
                 <button class="action-icon-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode">
-                    <!-- Sun / Moon SVG dynamically rendered -->
                     <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                     </svg>
                 </button>
-                <a href="#login" class="login-btn" id="navLoginBtn" onclick="openLoginModal()">Login</a>
+
+                <!-- User Account Menu (My Trips, Rentals, Wallet, Rewards, Safety) -->
+                <div class="account-dropdown-wrap">
+                    <button class="account-btn" onclick="toggleAccountMenu()" id="accountMenuBtn" title="My Account, Trips & Wallet">
+                        <div class="user-avatar-small">AV</div>
+                        <span style="font-size:13px; font-weight:700;">Arjun</span>
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="account-menu-dropdown" id="accountMenuDropdown">
+                        <div class="account-menu-header">
+                            <div style="font-weight:800; font-size:13px;">Arjun Verma</div>
+                            <div style="font-size:11px; color:var(--text-muted);">+91 98765 43210 · Gold Rider</div>
+                        </div>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerTripsModal'); toggleAccountMenu()">
+                            <span>🚕</span>
+                            <span>My Trips</span>
+                        </a>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerRentalsModal'); toggleAccountMenu()">
+                            <span>🚗</span>
+                            <span>My Rentals</span>
+                        </a>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerWalletModal'); toggleAccountMenu()">
+                            <span>💳</span>
+                            <span style="display:flex; justify-content:space-between; width:100%;">Wallet <strong style="color:var(--accent); font-family:var(--font-mono); font-size:11px;">₹1,450</strong></span>
+                        </a>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerRewardsModal'); toggleAccountMenu()">
+                            <span>🎁</span>
+                            <span>Rewards & RidePass</span>
+                        </a>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerSafetyModal'); toggleAccountMenu()">
+                            <span>🛡️</span>
+                            <span>Safety Guardian</span>
+                        </a>
+                        <a href="javascript:void(0)" class="account-menu-item" onclick="openCustomerModal('customerProfileModal'); toggleAccountMenu()">
+                            <span>👤</span>
+                            <span>Profile & Saved Places</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Book Now CTA Button -->
                 <button class="cta-btn-primary" onclick="focusBookingSearch()">
                     Book Now
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -3614,6 +3734,32 @@
             }
             showToast('Welcome back, Vikram! Gold Member Telemetry active', '✓');
         }
+
+        /* PORTAL & ACCOUNT DROPDOWN CONTROLLERS */
+        function togglePortalMenu() {
+            const m = document.getElementById('portalMenuDropdown');
+            if (m) m.classList.toggle('show');
+            const a = document.getElementById('accountMenuDropdown');
+            if (a) a.classList.remove('show');
+        }
+
+        function toggleAccountMenu() {
+            const a = document.getElementById('accountMenuDropdown');
+            if (a) a.classList.toggle('show');
+            const m = document.getElementById('portalMenuDropdown');
+            if (m) m.classList.remove('show');
+        }
+
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.portals-dropdown-wrap')) {
+                const m = document.getElementById('portalMenuDropdown');
+                if (m) m.classList.remove('show');
+            }
+            if (!e.target.closest('.account-dropdown-wrap')) {
+                const a = document.getElementById('accountMenuDropdown');
+                if (a) a.classList.remove('show');
+            }
+        });
 
         /* 4. IN-APP CHAT WORKFLOW */
         function openChatModal() {
