@@ -4,13 +4,16 @@ export type KycStatus = 'NOT_SUBMITTED' | 'PENDING' | 'APPROVED' | 'REJECTED';
 export type DriverRole = 'CHAUFFEUR_ONLY' | 'CAB_DRIVER' | 'ALL_ROUNDER';
 export type TransmissionSkill = 'MANUAL' | 'AUTOMATIC' | 'LUXURY';
 
+export type DriverMode = 'CAB' | 'AUTO' | 'BIKE' | 'CHAUFFEUR' | 'DELIVERY' | 'RENTAL_DELIVERY';
+
 export type GigDutyType =
   | 'HOURLY_CHAUFFEUR'
   | 'EVENT_CHAUFFEUR'
   | 'OUTSTATION_1DAY'
   | 'OUTSTATION_2DAY'
   | 'AIRPORT_CAB'
-  | 'CITY_CAB';
+  | 'CITY_CAB'
+  | 'RENTAL_DELIVERY';
 
 export interface KycDocItem {
   type: KycDocType;

@@ -491,6 +491,126 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaymentReceiptDto'
 
+  # -------------------------------------------------------------
+  # RENTAL MARKETPLACE & PARTNER SERVICE
+  # -------------------------------------------------------------
+  /rentals/listings:
+    get:
+      tags: [Rentals]
+      summary: Search and browse rental vehicles (Cars and Bikes)
+      parameters:
+        - name: vehicleType
+          in: query
+          schema:
+            type: string
+            enum: [CAR, BIKE]
+        - name: rentalMode
+          in: query
+          schema:
+            type: string
+            enum: [SELF_DRIVE, WITH_DRIVER]
+        - name: pickupType
+          in: query
+          schema:
+            type: string
+            enum: [CUSTOMER_PICKUP, DOORSTEP_DELIVERY]
+        - name: city
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of available verified rental listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RentalListingDto'
+
+    post:
+      tags: [Rentals]
+      summary: Register vehicle for rental (Rental Partner / Owner)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRentalListingRequest'
+      responses:
+        '201':
+          description: Vehicle registered and pending verification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalListingDto'
+
+  /rentals/listings/{listingId}:
+    get:
+      tags: [Rentals]
+      summary: Retrieve rental listing specifications and pricing
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rental listing details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalListingDto'
+
+  /rentals/book:
+    post:
+      tags: [Rentals]
+      summary: Reserve a rental car or bike
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRentalBookingRequest'
+      responses:
+        '201':
+          description: Rental reservation confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalBookingDto'
+
+  /rentals/{bookingId}/handover:
+    post:
+      tags: [Rentals]
+      summary: Submit digital handover and damage inspection record
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalHandoverRequest'
+      responses:
+        '200':
+          description: Handover inspection recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentalHandoverDto'
+
 components:
   securitySchemes:
     BearerAuth:
@@ -952,4 +1072,197 @@ components:
           example: 549.0
         isClaimed:
           type: boolean
+
+    RentalListingDto:
+      type: object
+      properties:
+        id:
+          type: string
+        ownerId:
+          type: string
+        title:
+          type: string
+        vehicleType:
+          type: string
+          enum: [CAR, BIKE]
+        brand:
+          type: string
+        model:
+          type: string
+        transmission:
+          type: string
+          enum: [AUTOMATIC, MANUAL]
+        fuelType:
+          type: string
+          enum: [PETROL, DIESEL, ELECTRIC, HYBRID]
+        seater:
+          type: integer
+        registrationNumber:
+          type: string
+        dailyRateSelfDrive:
+          type: number
+        dailyRateWithDriver:
+          type: number
+        hourlyRate:
+          type: number
+        securityDeposit:
+          type: number
+        pickupType:
+          type: string
+          enum: [CUSTOMER_PICKUP, DOORSTEP_DELIVERY]
+        deliveryFee:
+          type: number
+        doorstepRadiusKm:
+          type: number
+        freeKmPerDay:
+          type: integer
+        extraKmRate:
+          type: number
+        partnerName:
+          type: string
+        partnerRating:
+          type: number
+        partnerLocation:
+          type: string
+        verified:
+          type: boolean
+        insuranceValidUntil:
+          type: string
+        pucValidUntil:
+          type: string
+
+    CreateRentalListingRequest:
+      type: object
+      required: [title, vehicleType, brand, model, registrationNumber, dailyRateSelfDrive, securityDeposit]
+      properties:
+        title:
+          type: string
+        vehicleType:
+          type: string
+          enum: [CAR, BIKE]
+        brand:
+          type: string
+        model:
+          type: string
+        transmission:
+          type: string
+          enum: [AUTOMATIC, MANUAL]
+        fuelType:
+          type: string
+        seater:
+          type: integer
+        registrationNumber:
+          type: string
+        dailyRateSelfDrive:
+          type: number
+        dailyRateWithDriver:
+          type: number
+        hourlyRate:
+          type: number
+        securityDeposit:
+          type: number
+        doorstepDeliveryAvailable:
+          type: boolean
+        doorstepRadiusKm:
+          type: number
+        partnerLocation:
+          type: string
+
+    CreateRentalBookingRequest:
+      type: object
+      required: [listingId, rentalMode, pickupType, startDate, endDate]
+      properties:
+        listingId:
+          type: string
+        rentalMode:
+          type: string
+          enum: [SELF_DRIVE, WITH_DRIVER]
+        pickupType:
+          type: string
+          enum: [CUSTOMER_PICKUP, DOORSTEP_DELIVERY]
+        deliveryAddress:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        paymentMethod:
+          type: string
+
+    RentalBookingDto:
+      type: object
+      properties:
+        id:
+          type: string
+        listingId:
+          type: string
+        userId:
+          type: string
+        rentalMode:
+          type: string
+          enum: [SELF_DRIVE, WITH_DRIVER]
+        pickupType:
+          type: string
+          enum: [CUSTOMER_PICKUP, DOORSTEP_DELIVERY]
+        status:
+          type: string
+          enum: [BOOKED, VEHICLE_DISPATCHED, HANDOVER_INSPECTION_PENDING, ACTIVE_RENTAL, RETURN_INSPECTION_PENDING, COMPLETED, CANCELLED]
+        startDate:
+          type: string
+        endDate:
+          type: string
+        totalAmount:
+          type: number
+        securityDeposit:
+          type: number
+        handoverOtp:
+          type: string
+        returnOtp:
+          type: string
+
+    RentalHandoverRequest:
+      type: object
+      required: [stage, odometerReading, fuelOrBatteryPercent]
+      properties:
+        stage:
+          type: string
+          enum: [PICKUP_HANDOVER, RETURN_HANDOVER]
+        odometerReading:
+          type: integer
+        fuelOrBatteryPercent:
+          type: integer
+        damageNotes:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        customerAcknowledged:
+          type: boolean
+
+    RentalHandoverDto:
+      type: object
+      properties:
+        id:
+          type: string
+        bookingId:
+          type: string
+        stage:
+          type: string
+        odometerReading:
+          type: integer
+        fuelOrBatteryPercent:
+          type: integer
+        damagesNoted:
+          type: array
+          items:
+            type: string
+        completedAt:
+          type: string
+          format: date-time
+        verifiedByBothParties:
+          type: boolean
+
 

@@ -4,6 +4,8 @@ export type ServiceMode =
   | 'BIKE_TAXI'
   | 'AUTO'
   | 'RENTALS'
+  | 'RENT_BIKE'
+  | 'RENT_CAR'
   | 'OUTSTATION'
   | 'AIRPORT'
   | 'PARCEL';
@@ -118,4 +120,50 @@ export interface Booking {
   riderNotes?: string;
   cancellationReason?: string;
   createdAt: string;
+}
+
+export type RentalMode = 'SELF_DRIVE' | 'WITH_DRIVER';
+export type RentalPickupType = 'CUSTOMER_PICKUP' | 'DOORSTEP_DELIVERY';
+
+export interface RentalListing {
+  id: string;
+  type: 'CAR' | 'BIKE';
+  title: string;
+  brand: string;
+  model: string;
+  year: number;
+  transmission: 'AUTOMATIC' | 'MANUAL';
+  fuel: 'PETROL' | 'DIESEL' | 'ELECTRIC';
+  seats: number;
+  rating: number;
+  trips: number;
+  dailyRateSelfDrive: number;
+  dailyRateWithDriver?: number | null;
+  securityDeposit: number;
+  pickupType: 'CUSTOMER_PICKUP' | 'DOORSTEP_DELIVERY' | 'BOTH';
+  ownerName: string;
+  location: string;
+  doorstepFee?: number;
+  batteryRangeKm?: number;
+  rules: string[];
+  available: boolean;
+}
+
+export interface RentalBooking {
+  id: string;
+  listingId: string;
+  vehicleTitle: string;
+  rentalMode: RentalMode;
+  deliveryOption: RentalPickupType;
+  pickupLocation: string;
+  deliveryAddress?: string;
+  startDate: string;
+  endDate: string;
+  totalDays: number;
+  dailyRate: number;
+  doorstepFee: number;
+  securityDeposit: number;
+  totalAmount: number;
+  status: 'CONFIRMED' | 'HANDOVER_IN_PROGRESS' | 'ACTIVE' | 'RETURNED' | 'COMPLETED' | 'CANCELLED';
+  assignedDriver?: string;
 }
