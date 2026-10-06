@@ -72,11 +72,11 @@
       "vehicleType": "SEDAN",
       "isOnline": true,
       "rating": 4.92,
-      "totalTrips": 583,
+      "totalTrips": 587,
       "kycStatus": "APPROVED",
       "drivingHoursToday": 3.5,
       "maxDrivingHours": 8,
-      "todayEarnings": 3799
+      "todayEarnings": 5995
     },
     {
       "id": "d-202",
@@ -295,6 +295,90 @@
   ],
   "bookings": [
     {
+      "id": "CHF-3775",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "DLF CyberCity Gate 2",
+      "drop": "Raheja Mindspace IT Park",
+      "distanceKm": 25,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "8637",
+      "status": "COMPLETED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-10-06T19:20:55.202Z"
+    },
+    {
+      "id": "CHF-9395",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "DLF CyberCity Gate 2",
+      "drop": "Raheja Mindspace IT Park",
+      "distanceKm": 25,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "8742",
+      "status": "COMPLETED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-10-06T19:18:24.581Z"
+    },
+    {
+      "id": "CHF-6238",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "DLF CyberCity Gate 2",
+      "drop": "Raheja Mindspace IT Park",
+      "distanceKm": 25,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "7355",
+      "status": "COMPLETED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-10-06T19:17:24.648Z"
+    },
+    {
+      "id": "CHF-1105",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "DLF CyberCity Gate 2",
+      "drop": "Raheja Mindspace IT Park",
+      "distanceKm": 25,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "7480",
+      "status": "COMPLETED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-10-06T18:45:42.811Z"
+    },
+    {
       "id": "CHF-2553",
       "serviceMode": "HIRE_DRIVER",
       "pkgName": "4 Hours Half-Day Chauffeur",
@@ -355,147 +439,243 @@
   ],
   "apiLogs": [
     {
-      "time": "12:14:41 am",
+      "time": "12:51:01 am",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/surge/update",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/driver/verify",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/driver/suspend",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/action",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/bookings/complete",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/bookings/verify-otp",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/bookings",
       "status": 201
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/auth/otp/verify",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "POST",
       "endpoint": "/api/v1/auth/otp/request",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/bookings/active",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/drivers/gigs",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/chauffeur/packages",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/cab/tiers",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/db/inspect",
       "status": 200
     },
     {
-      "time": "12:14:41 am",
+      "time": "12:50:55 am",
       "method": "GET",
       "endpoint": "/api/v1/health",
       "status": 200
     },
     {
-      "time": "12:09:57 am",
+      "time": "12:48:24 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/surge/update",
       "status": 200
     },
     {
-      "time": "8:29:34 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/admin/surge/update",
-      "status": 200
-    },
-    {
-      "time": "8:29:34 pm",
+      "time": "12:48:24 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/driver/verify",
       "status": 200
     },
     {
-      "time": "8:29:34 pm",
+      "time": "12:48:24 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/driver/suspend",
       "status": 200
     },
     {
-      "time": "8:26:54 pm",
+      "time": "12:48:24 am",
       "method": "POST",
       "endpoint": "/api/v1/admin/action",
       "status": 200
     },
     {
-      "time": "11:22:27 pm",
-      "method": "GET",
-      "endpoint": "/api/v1/db/inspect",
+      "time": "12:48:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/complete",
       "status": 200
     },
     {
-      "time": "11:22:14 pm",
+      "time": "12:48:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/verify-otp",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings",
+      "status": 201
+    },
+    {
+      "time": "12:48:24 am",
       "method": "POST",
       "endpoint": "/api/v1/auth/otp/verify",
       "status": 200
     },
     {
-      "time": "11:21:58 pm",
+      "time": "12:48:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/request",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
+      "method": "GET",
+      "endpoint": "/api/v1/bookings/active",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
+      "method": "GET",
+      "endpoint": "/api/v1/drivers/gigs",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
+      "method": "GET",
+      "endpoint": "/api/v1/chauffeur/packages",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
+      "method": "GET",
+      "endpoint": "/api/v1/cab/tiers",
+      "status": 200
+    },
+    {
+      "time": "12:48:24 am",
       "method": "GET",
       "endpoint": "/api/v1/db/inspect",
       "status": 200
     },
     {
-      "time": "11:21:34 pm",
+      "time": "12:48:24 am",
       "method": "GET",
       "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/surge/update",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/verify",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/suspend",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/action",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/complete",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/verify-otp",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings",
+      "status": 201
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/verify",
+      "status": 200
+    },
+    {
+      "time": "12:47:24 am",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/request",
       "status": 200
     }
   ],
@@ -1036,6 +1216,178 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "AUD-55699",
+      "timestamp": "2026-10-06T19:20:55.283Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-93829",
+      "timestamp": "2026-10-06T19:20:55.267Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "Routine compliance audit"
+      }
+    },
+    {
+      "id": "AUD-36971",
+      "timestamp": "2026-10-06T19:20:55.255Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "SYSTEM_AUDIT_CHECK",
+      "targetResource": "SYSTEM",
+      "targetId": "N/A",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {}
+    },
+    {
+      "id": "AUD-35679",
+      "timestamp": "2026-10-06T19:18:24.722Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-54265",
+      "timestamp": "2026-10-06T19:18:24.705Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "Routine compliance audit"
+      }
+    },
+    {
+      "id": "AUD-80568",
+      "timestamp": "2026-10-06T19:18:24.674Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "SYSTEM_AUDIT_CHECK",
+      "targetResource": "SYSTEM",
+      "targetId": "N/A",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {}
+    },
+    {
+      "id": "AUD-46742",
+      "timestamp": "2026-10-06T19:17:24.720Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-17991",
+      "timestamp": "2026-10-06T19:17:24.702Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "Routine compliance audit"
+      }
+    },
+    {
+      "id": "AUD-18377",
+      "timestamp": "2026-10-06T19:17:24.689Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "SYSTEM_AUDIT_CHECK",
+      "targetResource": "SYSTEM",
+      "targetId": "N/A",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {}
+    },
+    {
+      "id": "AUD-25840",
+      "timestamp": "2026-10-06T18:45:42.892Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-60854",
+      "timestamp": "2026-10-06T18:45:42.879Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "Routine compliance audit"
+      }
+    },
+    {
+      "id": "AUD-57486",
+      "timestamp": "2026-10-06T18:45:42.862Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "SYSTEM_AUDIT_CHECK",
+      "targetResource": "SYSTEM",
+      "targetId": "N/A",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {}
+    },
     {
       "id": "AUD-61608",
       "timestamp": "2026-10-06T18:44:41.543Z",

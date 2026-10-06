@@ -22,27 +22,27 @@
            UI/UX Pro Max · 60% Ground | 30% Surface | 10% Lime Accent
            ========================================================= */
         :root, [data-theme="dark"] {
-            --bg: #080A0C;
-            --surface: #0E1216;
-            --surface-2: #14191F;
-            --surface-3: #1D242C;
+            --bg: #000000;
+            --surface: #0E0E10;
+            --surface-2: #16161A;
+            --surface-3: #222228;
             --border: rgba(255, 255, 255, 0.08);
             --border-hover: rgba(255, 255, 255, 0.18);
-            --border-active: #C7FF3D;
+            --border-active: #FFFFFF;
             
             --text-primary: #F8FAFC;
             --text-secondary: #94A3B8;
             --text-muted: #64748B;
             
-            --accent: #C7FF3D;
-            --accent-glow: rgba(199, 255, 61, 0.16);
-            --accent-contrast: #080A0C;
+            --accent: #FFFFFF;
+            --accent-glow: rgba(255, 255, 255, 0.16);
+            --accent-contrast: #000000;
             
             --danger: #FF4D4D;
             --danger-bg: rgba(255, 77, 77, 0.12);
             --danger-border: rgba(255, 77, 77, 0.35);
             
-            --success: #17D68A;
+            --success: #E4E4E7;
             --success-bg: rgba(23, 214, 138, 0.12);
             --success-border: rgba(23, 214, 138, 0.35);
             
@@ -72,9 +72,9 @@
             --text-secondary: #475569;
             --text-muted: #94A3B8;
             
-            --accent: #C7FF3D;
-            --accent-glow: rgba(199, 255, 61, 0.35);
-            --accent-contrast: #080A0C;
+            --accent: #FFFFFF;
+            --accent-glow: rgba(0, 0, 0, 0.20);
+            --accent-contrast: #000000;
             
             --danger: #EF4444;
             --danger-bg: rgba(239, 68, 68, 0.1);
@@ -166,9 +166,9 @@
             text-transform: uppercase;
             padding: 2px 6px;
             border-radius: 4px;
-            background: rgba(199, 255, 61, 0.12);
+            background: rgba(255, 255, 255, 0.12);
             color: var(--accent);
-            border: 1px solid rgba(199, 255, 61, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .telemetry-ticker {
@@ -187,8 +187,8 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: #17D68A;
-            box-shadow: 0 0 8px #17D68A;
+            background: #FFFFFF;
+            box-shadow: 0 0 8px rgba(255,255,255,0.7);
             animation: pulseAnim 1.6s infinite ease-in-out;
         }
         @keyframes pulseAnim {
@@ -725,7 +725,7 @@
     <header class="admin-topbar">
         <div class="brand-section">
             <div style="display:flex; align-items:center; gap:8px;">
-                <svg viewBox="0 0 28 28" width="24" height="24" fill="none"><rect width="28" height="28" rx="7" fill="#C7FF3D"/><path d="M9 20V8h5.2a3.8 3.8 0 0 1 3.8 3.8c0 1.6-.9 3-2.3 3.6L19 20h-3.2l-2.8-4.2H11.8V20H9zm2.8-6.6h2.4a1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6h-2.4v3.2z" fill="#0B0D0F"/></svg>
+                <svg viewBox="0 0 28 28" width="24" height="24" fill="none"><rect width="28" height="28" rx="7" fill="#FFFFFF"/><path d="M9 20V8h5.2a3.8 3.8 0 0 1 3.8 3.8c0 1.6-.9 3-2.3 3.6L19 20h-3.2l-2.8-4.2H11.8V20H9zm2.8-6.6h2.4a1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6h-2.4v3.2z" fill="#0B0D0F"/></svg>
                 <div>
                     <div style="font-size:15px; font-weight:900; color:var(--text-primary); line-height:1.1;">RideDriveAhead</div>
                     <div style="font-size:10px; font-weight:700; color:var(--text-muted);">Command Center</div>
@@ -793,7 +793,7 @@
             
             <div class="sidebar-item-btn active" data-view="overview" onclick="navToView('overview')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8v4h8v-4h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 3H6v7a6 6 0 0 0 12 0V3z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8v4h8v-4h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 3H6v7a6 6 0 0 0 12 0V3z"/></svg></span>
                     <span>Overview</span>
                 </div>
             </div>
@@ -842,7 +842,7 @@
 
             <div class="sidebar-item-btn" data-view="safety" onclick="navToView('safety')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     <span>Safety Center</span>
                 </div>
                 <span class="sidebar-item-badge badge-danger">1 SOS</span>
@@ -867,7 +867,7 @@
 
             <div class="sidebar-item-btn" data-view="pricing" onclick="navToView('pricing')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#17D68A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
                     <span>Pricing & Surge</span>
                 </div>
             </div>
@@ -890,7 +890,7 @@
 
             <div class="sidebar-item-btn" data-view="rbac" onclick="navToView('rbac')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     <span>Admin Users & RBAC</span>
                 </div>
             </div>
@@ -2134,7 +2134,7 @@
                                     <span class="font-mono">₹ 57,882</span>
                                 </div>
                                 <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
-                                    <div style="width:12%; height:100%; background:#17D68A;"></div>
+                                    <div style="width:12%; height:100%; background:var(--accent);"></div>
                                 </div>
                             </div>
                         </div>
@@ -2661,9 +2661,9 @@
 
             // Seed simulated fleet markers across Hyderabad
             const fleetData = [
-                { id: 'V-101', type: 'cab', name: 'Rajesh K. (Sedan)', plate: 'DL 01 AB 9988', coords: [17.4390, 78.3930], color: '#C7FF3D', speed: '42 km/h', status: 'En Route' },
-                { id: 'V-102', type: 'cab', name: 'Rohit S. (Sedan)', plate: 'KA 05 JS 7321', coords: [17.4474, 78.3762], color: '#C7FF3D', speed: '38 km/h', status: 'Passenger Aboard' },
-                { id: 'V-103', type: 'auto', name: 'Mohan L. (Auto)', plate: 'TS 09 UA 4120', coords: [17.4420, 78.3880], color: '#17D68A', speed: '28 km/h', status: 'Available' },
+                { id: 'V-101', type: 'cab', name: 'Rajesh K. (Sedan)', plate: 'DL 01 AB 9988', coords: [17.4390, 78.3930], color: '#FFFFFF', speed: '42 km/h', status: 'En Route' },
+                { id: 'V-102', type: 'cab', name: 'Rohit S. (Sedan)', plate: 'KA 05 JS 7321', coords: [17.4474, 78.3762], color: '#FFFFFF', speed: '38 km/h', status: 'Passenger Aboard' },
+                { id: 'V-103', type: 'auto', name: 'Mohan L. (Auto)', plate: 'TS 09 UA 4120', coords: [17.4420, 78.3880], color: '#E4E4E7', speed: '28 km/h', status: 'Available' },
                 { id: 'V-104', type: 'bike', name: 'Vikram B. (Bike)', plate: 'TS 07 BK 9012', coords: [17.4300, 78.4100], color: '#38BDF8', speed: '45 km/h', status: 'Dispatched' },
                 { id: 'V-105', type: 'chauffeur', name: 'Suresh Y. (Own Car)', plate: 'Client: Innova AT', coords: [17.4200, 78.3450], color: '#A855F7', speed: '35 km/h', status: '4h Duty' },
                 { id: 'V-106', type: 'delivery', name: 'Kiran T. (Courier)', plate: 'TS 08 EX 4421', coords: [17.4520, 78.3650], color: '#F97316', speed: '32 km/h', status: 'Parcel Drop' },
@@ -2853,7 +2853,7 @@
             if (!toast) {
                 toast = document.createElement('div');
                 toast.id = 'adminToastPill';
-                toast.style.cssText = 'position:fixed; bottom:24px; right:24px; background:#0E1216; border:1px solid #C7FF3D; color:#F8FAFC; padding:12px 18px; border-radius:10px; font-size:12px; font-weight:800; z-index:9999; box-shadow:0 12px 30px rgba(0,0,0,0.7); display:flex; align-items:center; gap:8px; animation:modalPop 0.2s ease;';
+                toast.style.cssText = 'position:fixed; bottom:24px; right:24px; background:#0E1216; border:1px solid #FFFFFF; color:#F8FAFC; padding:12px 18px; border-radius:10px; font-size:12px; font-weight:800; z-index:9999; box-shadow:0 12px 30px rgba(0,0,0,0.7); display:flex; align-items:center; gap:8px; animation:modalPop 0.2s ease;';
                 document.body.appendChild(toast);
             }
             toast.innerHTML = (icon ? '<span>' + icon + '</span> ' : '<span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span> ') + msg;
