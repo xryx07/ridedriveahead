@@ -1,0 +1,2890 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideDriveAhead Command Center — Enterprise Operations & RBAC</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet.js Free Esri Canvas Maps (Zero Watermark, Zero API Key) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <style>
+
+        /* =========================================================
+           RIDEDRIVEAHEAD ENTERPRISE COMMAND CENTER DESIGN SYSTEM
+           UI/UX Pro Max · 60% Ground | 30% Surface | 10% Lime Accent
+           ========================================================= */
+        :root, [data-theme="dark"] {
+            --bg: #080A0C;
+            --surface: #0E1216;
+            --surface-2: #14191F;
+            --surface-3: #1D242C;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --border-active: #C7FF3D;
+            
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            
+            --accent: #C7FF3D;
+            --accent-glow: rgba(199, 255, 61, 0.16);
+            --accent-contrast: #080A0C;
+            
+            --danger: #FF4D4D;
+            --danger-bg: rgba(255, 77, 77, 0.12);
+            --danger-border: rgba(255, 77, 77, 0.35);
+            
+            --success: #17D68A;
+            --success-bg: rgba(23, 214, 138, 0.12);
+            --success-border: rgba(23, 214, 138, 0.35);
+            
+            --warning: #F59E0B;
+            --warning-bg: rgba(245, 158, 11, 0.12);
+            --warning-border: rgba(245, 158, 11, 0.35);
+            
+            --info: #38BDF8;
+            --info-bg: rgba(56, 189, 248, 0.12);
+            --info-border: rgba(56, 189, 248, 0.35);
+            
+            --card-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+            --modal-backdrop: rgba(3, 5, 7, 0.82);
+            --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+        }
+
+        [data-theme="light"] {
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-2: #F1F5F9;
+            --surface-3: #E2E8F0;
+            --border: rgba(15, 23, 42, 0.08);
+            --border-hover: rgba(15, 23, 42, 0.18);
+            --border-active: #0F172A;
+            
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            
+            --accent: #C7FF3D;
+            --accent-glow: rgba(199, 255, 61, 0.35);
+            --accent-contrast: #080A0C;
+            
+            --danger: #EF4444;
+            --danger-bg: rgba(239, 68, 68, 0.1);
+            --danger-border: rgba(239, 68, 68, 0.25);
+            
+            --success: #10B981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --success-border: rgba(16, 185, 129, 0.25);
+            
+            --warning: #F59E0B;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            
+            --info: #0284C7;
+            --info-bg: rgba(2, 132, 199, 0.1);
+            --info-border: rgba(2, 132, 199, 0.25);
+            
+            --card-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.06);
+            --modal-backdrop: rgba(15, 23, 42, 0.45);
+            --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Mono typography for telemetry & numbers */
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-feature-settings: 'tnum' on, 'zero' on;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button, input, select, textarea {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            background: none;
+            color: inherit;
+        }
+        button { cursor: pointer; }
+        button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* =========================================================
+           TOP APP BAR
+           ========================================================= */
+        header.admin-topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            backdrop-filter: blur(12px);
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-tag {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(199, 255, 61, 0.12);
+            color: var(--accent);
+            border: 1px solid rgba(199, 255, 61, 0.25);
+        }
+
+        .telemetry-ticker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            background: var(--surface-2);
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+        .pulse-green {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #17D68A;
+            box-shadow: 0 0 8px #17D68A;
+            animation: pulseAnim 1.6s infinite ease-in-out;
+        }
+        @keyframes pulseAnim {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Omnisearch Bar */
+        .admin-omnisearch {
+            position: relative;
+            width: 420px;
+        }
+        .admin-omnisearch input {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 12px 8px 36px;
+            font-size: 12px;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        .admin-omnisearch input:focus {
+            border-color: var(--accent);
+            background: var(--surface-3);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .omnisearch-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            display: flex;
+        }
+        .omnisearch-kbd {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* Topbar Controls */
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rbac-role-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+        .rbac-role-pill:hover {
+            border-color: var(--accent);
+        }
+        .rbac-role-pill select {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-primary);
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .emergency-broadcast-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            color: var(--danger);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+        .emergency-broadcast-btn:hover {
+            background: var(--danger);
+            color: #FFFFFF;
+        }
+
+        /* =========================================================
+           LAYOUT: SIDEBAR + MAIN CONTENT AREA
+           ========================================================= */
+        .admin-layout {
+            display: flex;
+            margin-top: 64px;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* Sidebar Navigation */
+        aside.admin-sidebar {
+            width: 256px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            top: 64px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 900;
+        }
+
+        .sidebar-category-header {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 12px 10px 4px;
+        }
+
+        .sidebar-item-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+            border: 1px solid transparent;
+        }
+        .sidebar-item-btn:hover {
+            color: var(--text-primary);
+            background: var(--surface-2);
+        }
+        .sidebar-item-btn.active {
+            color: #080A0C !important;
+            background: var(--accent);
+            font-weight: 800;
+        }
+        .sidebar-item-btn.locked {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+        .sidebar-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar-item-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 100px;
+        }
+        .badge-danger { background: var(--danger); color: #FFF; }
+        .badge-warning { background: var(--warning); color: #000; }
+        .badge-info { background: var(--info); color: #000; }
+
+        /* Main Workspace Content Area */
+        main.admin-main-viewport {
+            margin-left: 256px;
+            flex: 1;
+            padding: 24px 32px 60px;
+            background: var(--bg);
+            min-height: calc(100vh - 64px);
+            overflow-x: hidden;
+        }
+
+        /* View Panels */
+        .admin-view-panel {
+            display: none;
+            animation: viewFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .admin-view-panel.active {
+            display: block;
+        }
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header in Views */
+        .view-header-strip {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .view-title-block h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        .view-title-block p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Cards & KPI Metrics */
+        .kpi-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .kpi-metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-metric-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+        .kpi-metric-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .kpi-metric-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .kpi-metric-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        .kpi-metric-sub {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .sub-up { color: var(--success); }
+        .sub-down { color: var(--danger); }
+        .sub-muted { color: var(--text-muted); }
+
+        /* Tables & Enterprise Data Grids */
+        .data-table-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 24px;
+        }
+        .table-toolbar-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-2);
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .table-search-input {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: var(--text-primary);
+            width: 260px;
+        }
+        .table-filter-chips {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+        }
+        .filter-chip {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .filter-chip.active {
+            background: var(--accent);
+            color: #080A0C !important;
+            border-color: var(--accent);
+            font-weight: 800;
+        }
+
+        table.admin-data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+        table.admin-data-table th {
+            padding: 12px 18px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        table.admin-data-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            vertical-align: middle;
+        }
+        table.admin-data-table tr:hover td {
+            background: var(--surface-2);
+        }
+
+        /* Status Badges */
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .badge-status-active { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+        .badge-status-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+        .badge-status-critical { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
+        .badge-status-neutral { background: var(--surface-3); color: var(--text-muted); border: 1px solid var(--border); }
+        .badge-status-info { background: var(--info-bg); color: var(--info); border: 1px solid var(--info-border); }
+
+        /* Action Buttons */
+        .btn-action-sm {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-action-primary {
+            background: var(--accent);
+            color: #080A0C;
+            border: 1px solid var(--accent);
+        }
+        .btn-action-primary:hover {
+            filter: brightness(1.1);
+        }
+        .btn-action-danger {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
+        }
+        .btn-action-danger:hover {
+            background: var(--danger);
+            color: #FFFFFF;
+        }
+        .btn-action-neutral {
+            background: var(--surface-2);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-action-neutral:hover {
+            border-color: var(--border-hover);
+        }
+
+        /* RBAC Lock Shield Screen */
+        .rbac-restricted-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+            background: var(--surface);
+            border: 1px dashed var(--danger-border);
+            border-radius: 20px;
+            padding: 48px 32px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+        .rbac-lock-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--danger-bg);
+            border: 2px solid var(--danger-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--danger);
+            margin-bottom: 20px;
+        }
+
+        /* Map Canvas */
+        #liveOpsMapContainer {
+            width: 100%;
+            height: 540px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: var(--surface-2);
+            position: relative;
+        }
+
+        /* Modal Dialog Backdrops */
+        .admin-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--modal-backdrop);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .admin-modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 580px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+            overflow: hidden;
+            animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .admin-modal-header {
+            padding: 18px 24px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .admin-modal-body {
+            padding: 24px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+        .admin-modal-footer {
+            padding: 16px 24px;
+            background: var(--surface-2);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* Form Inputs */
+        .form-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .form-control {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            transition: border-color 0.15s ease;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 1100px) {
+            aside.admin-sidebar { width: 72px; padding: 12px 6px; }
+            .sidebar-category-header { display: none; }
+            .sidebar-item-btn span:not(.sidebar-icon) { display: none; }
+            main.admin-main-viewport { margin-left: 72px; padding: 20px 16px; }
+            .admin-omnisearch { width: 260px; }
+        }
+  
+</style>
+</head>
+<body>
+
+    <!-- =========================================================
+         TOP APP BAR & GLOBAL NAVIGATION
+         ========================================================= -->
+    <header class="admin-topbar">
+        <div class="brand-section">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <svg viewBox="0 0 28 28" width="24" height="24" fill="none"><rect width="28" height="28" rx="7" fill="#C7FF3D"/><path d="M9 20V8h5.2a3.8 3.8 0 0 1 3.8 3.8c0 1.6-.9 3-2.3 3.6L19 20h-3.2l-2.8-4.2H11.8V20H9zm2.8-6.6h2.4a1.6 1.6 0 0 0 1.6-1.6 1.6 1.6 0 0 0-1.6-1.6h-2.4v3.2z" fill="#0B0D0F"/></svg>
+                <div>
+                    <div style="font-size:15px; font-weight:900; color:var(--text-primary); line-height:1.1;">RideDriveAhead</div>
+                    <div style="font-size:10px; font-weight:700; color:var(--text-muted);">Command Center</div>
+                </div>
+            </div>
+            <span class="brand-tag">v2.4 Enterprise</span>
+            <div class="telemetry-ticker">
+                <span class="pulse-green"></span>
+                <span>DISPATCH ENGINE: ONLINE · 24ms · AWS HYD-1</span>
+            </div>
+        </div>
+
+        <!-- Omnisearch Bar -->
+        <div class="admin-omnisearch">
+            <span class="omnisearch-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10l4-2-1-2-7 3-4-4-2 1 2 4-4 2v2l5-1 3 5 2-1-1-5 6-2z"/></svg></span>
+            <input type="text" id="globalSearchInput" placeholder="Search riders, drivers, bookings, vehicles, tickets (Ctrl+K)..." onkeyup="handleGlobalSearch(event)" />
+            <span class="omnisearch-kbd">⌘K</span>
+        </div>
+
+        <!-- Topbar Actions & RBAC Switcher -->
+        <div class="topbar-actions">
+            <!-- Active Role Switcher -->
+            <div class="rbac-role-pill" title="Switch simulated admin role to test RBAC security access">
+                <span style="font-size:14px;">🛡️</span>
+                <select id="activeRoleSelect" onchange="changeAdminRole(this.value)">
+                    <option value="SUPER_ADMIN" selected>👑 Super Admin (All Access)</option>
+                    <option value="OPERATIONS_ADMIN">🚦 Operations (Rides + Drivers + Live Ops)</option>
+                    <option value="FINANCE_ADMIN">💳 Finance (Payments + Payouts + Invoices)</option>
+                    <option value="SAFETY_ADMIN">🛡️ Safety (SOS + Incidents + Verification)</option>
+                    <option value="SUPPORT_ADMIN">🎧 Support (Riders + Drivers + Tickets)</option>
+                    <option value="RENTAL_ADMIN">🔑 Rental (Vehicles + Owners + Bookings)</option>
+                </select>
+            </div>
+
+            <!-- Emergency Broadcast CTA -->
+            <button class="emergency-broadcast-btn" onclick="openEmergencyBroadcastModal()">
+                🚨 Lockdown / SOS Alert
+            </button>
+
+            <!-- Theme Toggle -->
+            <button class="btn-action-neutral" style="padding:6px 10px; border-radius:8px;" id="adminThemeToggle" onclick="toggleAdminTheme()" title="Toggle Dark/Light Mode">
+                🌙
+            </button>
+
+            <!-- Admin Profile Menu -->
+            <div style="display:flex; align-items:center; gap:8px; border-left:1px solid var(--border); padding-left:12px;">
+                <div style="width:34px; height:34px; border-radius:50%; background:var(--surface-2); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:var(--accent);">
+                    VM
+                </div>
+                <div>
+                    <div style="font-size:12px; font-weight:800; color:var(--text-primary);" id="adminProfileName">Vikram M.</div>
+                    <div style="font-size:10px; color:var(--text-muted);" id="adminProfileRole">Super Admin</div>
+                </div>
+                <a href="/" style="font-size:11px; font-weight:700; color:var(--accent); margin-left:6px;" title="Return to Passenger Portal">Exit →</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================
+         LAYOUT: SIDEBAR + MAIN WORKSPACE VIEWPORT
+         ========================================================= -->
+    <div class="admin-layout">
+        
+        <!-- SIDEBAR NAVIGATION (ALL 15 MODULES) -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-category-header">Operations Core</div>
+            
+            <div class="sidebar-item-btn active" data-view="overview" onclick="navToView('overview')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8v4h8v-4h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 3H6v7a6 6 0 0 0 12 0V3z"/></svg></span>
+                    <span>Overview</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="liveops" onclick="navToView('liveops')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19L8 5h8l4 14"/><path d="M12 8v3m0 4v2"/></svg></span>
+                    <span>Live Operations</span>
+                </div>
+                <span class="sidebar-item-badge badge-info">Map</span>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="bookings" onclick="navToView('bookings')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
+                    <span>Bookings & Dispatch</span>
+                </div>
+                <span class="sidebar-item-badge badge-warning" id="activeBookingsBadge">1</span>
+            </div>
+
+            <div class="sidebar-category-header">User & Fleet Management</div>
+
+            <div class="sidebar-item-btn" data-view="riders" onclick="navToView('riders')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <span>Riders Directory</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="drivers" onclick="navToView('drivers')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
+                    <span>Drivers / Captains</span>
+                </div>
+                <span class="sidebar-item-badge badge-warning">KYC (1)</span>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="rentals" onclick="navToView('rentals')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17H3v-4l2-4h10l2 4v4h-2"/><path d="M18 6l2-2m-2 0l2 2"/></svg></span>
+                    <span>Rental Marketplace</span>
+                </div>
+            </div>
+
+            <div class="sidebar-category-header">Security & Resolution</div>
+
+            <div class="sidebar-item-btn" data-view="safety" onclick="navToView('safety')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span>Safety Center</span>
+                </div>
+                <span class="sidebar-item-badge badge-danger">1 SOS</span>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="support" onclick="navToView('support')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+                    <span>Support & Tickets</span>
+                </div>
+                <span class="sidebar-item-badge badge-warning">2 Open</span>
+            </div>
+
+            <div class="sidebar-category-header">Financials & Commercial</div>
+
+            <div class="sidebar-item-btn" data-view="finance" onclick="navToView('finance')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><circle cx="18" cy="16" r="2"/></svg></span>
+                    <span>Payments & Finance</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="pricing" onclick="navToView('pricing')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#17D68A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    <span>Pricing & Surge</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="corporate" onclick="navToView('corporate')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                    <span>Corporate Accounts</span>
+                </div>
+            </div>
+
+            <div class="sidebar-category-header">Intelligence & Governance</div>
+
+            <div class="sidebar-item-btn" data-view="analytics" onclick="navToView('analytics')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+                    <span>Analytics & BI</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="rbac" onclick="navToView('rbac')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C7FF3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span>Admin Users & RBAC</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="audit" onclick="navToView('audit')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+                    <span>Audit Logs</span>
+                </div>
+            </div>
+
+            <div class="sidebar-item-btn" data-view="settings" onclick="navToView('settings')">
+                <div class="sidebar-item-left">
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 18a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-4.95-3.05a7 7 0 0 1 9.9 0l-1.41 1.41a5 5 0 0 0-7.08 0l-1.41-1.41zm-2.83-2.83a11 11 0 0 1 15.56 0l-1.42 1.42a9 9 0 0 0-12.72 0l-1.42-1.42zm-2.83-2.83a15 15 0 0 1 21.22 0l-1.42 1.42a13 13 0 0 0-18.38 0l-1.42-1.42z"/></svg></span>
+                    <span>Platform Settings</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT CONTAINER -->
+        <main class="admin-main-viewport">
+            
+            <!-- RBAC ACCESS RESTRICTED SCREEN (Shown dynamically when role lacks scope) -->
+            <div id="rbacRestrictedContainer" style="display:none;">
+                <div class="rbac-restricted-box">
+                    <div class="rbac-lock-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div style="font-size:12px; font-weight:800; color:var(--danger); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px;">Security Policy Enforcement (RBAC)</div>
+                    <h2 style="font-size:24px; font-weight:900; margin-bottom:10px;">Access Scope Restricted</h2>
+                    <p style="font-size:14px; color:var(--text-secondary); max-width:520px; margin-bottom:20px;" id="rbacRestrictedMessage">
+                        Your active role does not possess the requisite security credentials to inspect or manage this operational console.
+                    </p>
+                    <div style="background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px 20px; font-size:12px; color:var(--text-muted); margin-bottom:24px;">
+                        Required Authorization Scope: <span class="font-mono" style="color:var(--accent); font-weight:700;" id="rbacRequiredScopeName">ops:telemetry:write</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <button class="btn-action-primary" style="padding:10px 18px;" onclick="changeAdminRole('SUPER_ADMIN')">
+                            👑 Switch to Super Admin (Bypass)
+                        </button>
+                        <button class="btn-action-neutral" style="padding:10px 18px;" onclick="navToView('overview')">
+                            Return to Executive Overview
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 1: EXECUTIVE OVERVIEW -->
+            <div class="admin-view-panel active" id="view-overview">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Command Center Executive Overview</h1>
+                        <p>Real-time platform telemetry across all 7 mobility tiers, rental hubs, and incident response.</p>
+                    </div>
+                    <button class="btn-action-neutral" onclick="refreshPlatformMetrics()">
+                        ⟳ Refresh Live Telemetry
+                    </button>
+                </div>
+
+                <!-- Live Critical Incidents Alert Banner -->
+                <div style="background:rgba(255,77,77,0.12); border:1.5px solid rgba(255,77,77,0.4); border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; align-items:center; gap:14px;">
+                        <span style="width:10px; height:10px; border-radius:50%; background:#FF4D4D;" class="pulse-green"></span>
+                        <div>
+                            <div style="font-size:14px; font-weight:900; color:var(--danger);">CRITICAL ALERT: 1 ACTIVE SOS INCIDENT IN PROGRESS</div>
+                            <div style="font-size:12px; color:var(--text-secondary);">Trip #BK-8821 (Arjun V. • Outer Ring Road). Police PCR van 14 dispatched. Telemetry locked.</div>
+                        </div>
+                    </div>
+                    <button class="btn-action-danger" onclick="navToView('safety')">
+                        Investigate SOS Desk →
+                    </button>
+                </div>
+
+                <!-- 7 KPI Metrics Cards -->
+                <div class="kpi-metrics-grid">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Live Rides & Trips</span>
+                            <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">142</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>▲ +14%</span>
+                            <span class="sub-muted">vs 1 hour ago</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Active Drivers Online</span>
+                            <span style="color:var(--success);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">418</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>86%</span>
+                            <span class="sub-muted">utilization rate</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Active Rentals</span>
+                            <span style="color:var(--info);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17H3v-4l2-4h10l2 4v4h-2"/><path d="M18 6l2-2m-2 0l2 2"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">48</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>₹ 1,850/day avg rate</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Express Deliveries</span>
+                            <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4L7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55l8.95-5.16a1.78 1.78 0 0 0 0-3.16z"/><polyline points="3.29 7 12 12 20.71 7"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">89</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>98.4%</span>
+                            <span class="sub-muted">on-time SLA</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Today Gross Revenue</span>
+                            <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><circle cx="18" cy="16" r="2"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 4,82,350</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>▲ +18.2%</span>
+                            <span class="sub-muted">vs yesterday</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Cancellation Rate</span>
+                            <span style="color:var(--text-muted);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">2.1%</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>▼ -0.8%</span>
+                            <span class="sub-muted">within healthy threshold</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Live Operations Feed -->
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Real-Time Platform Activity Stream</span>
+                        <span class="font-mono" style="font-size:11px; color:var(--accent);">Live Telemetry Polling (1s)</span>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Category</th>
+                                <th>Entity / ID</th>
+                                <th>Details</th>
+                                <th>Zone / Telemetry</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overviewLiveFeedBody">
+                            <tr>
+                                <td class="font-mono">19:54:12</td>
+                                <td><span class="badge-status badge-status-info">RIDE_MATCH</span></td>
+                                <td class="font-mono">BK-8842</td>
+                                <td>Cab Sedan matched to Rohit Sharma</td>
+                                <td>Jubilee Hills ➔ Hitech City</td>
+                                <td><span class="badge-status badge-status-active">EN ROUTE</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-mono">19:52:05</td>
+                                <td><span class="badge-status badge-status-critical">SOS_ALERT</span></td>
+                                <td class="font-mono">INC-9012</td>
+                                <td>Highway shoulder delay > 8 min (Arjun V.)</td>
+                                <td>Outer Ring Road Km 24</td>
+                                <td><span class="badge-status badge-status-critical">DISPATCHED</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-mono">19:48:30</td>
+                                <td><span class="badge-status badge-status-active">RENTAL_RETURN</span></td>
+                                <td class="font-mono">RNT-101</td>
+                                <td>Honda City ZX 360° Inspection Verified</td>
+                                <td>Hyderabad Cyber Hub Point</td>
+                                <td><span class="badge-status badge-status-active">DEPOSIT RETURNED</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-mono">19:44:18</td>
+                                <td><span class="badge-status badge-status-warning">SURGE_TRIGGER</span></td>
+                                <td class="font-mono">ZONE-01</td>
+                                <td>Multiplier elevated to 1.6x (Tech Departure)</td>
+                                <td>Hitech City / Cyber Towers</td>
+                                <td><span class="badge-status badge-status-pending">SURGE ACTIVE</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 2: LIVE OPERATIONS (MAP) -->
+            <div class="admin-view-panel" id="view-liveops">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Live Operations & Fleet Radar</h1>
+                        <p>Real-time geospatial tracking of all active vehicles, drivers, rentals, delivery couriers and incidents.</p>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="filter-chip active" onclick="filterLiveMapFleet('all')">All Fleet (697)</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('cab')">Cabs (280)</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('auto')">Autos (140)</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('bike')">Bikes (120)</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('chauffeur')">Chauffeurs (85)</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('delivery')">Delivery (72)</button>
+                    </div>
+                </div>
+
+                <!-- Live Map Canvas -->
+                <div id="liveOpsMapContainer"></div>
+
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:20px;">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Hitech City Zone</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--danger); margin-top:4px;">88% Congestion</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.6x · 42 Active Captains</div>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Gachibowli Financial District</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--warning); margin-top:4px;">74% Congestion</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.4x · 38 Active Captains</div>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">RGIA Airport Expressway</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--accent); margin-top:4px;">52% Congestion</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.3x · 29 Active Captains</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: RIDERS DIRECTORY -->
+            <div class="admin-view-panel" id="view-riders">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Rider Accounts & Telemetry</h1>
+                        <p>Manage passenger accounts, wallet balances, registered personal cars, complaints and security status.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <input type="text" class="table-search-input" placeholder="Search riders by name, phone or email..." onkeyup="filterRidersTable(this.value)" />
+                        <div class="table-filter-chips">
+                            <span class="filter-chip active">All Riders (3)</span>
+                            <span class="filter-chip">Active</span>
+                            <span class="filter-chip">KYC Verified</span>
+                            <span class="filter-chip">Disputed</span>
+                        </div>
+                    </div>
+                    <table class="admin-data-table" id="ridersTable">
+                        <thead>
+                            <tr>
+                                <th>Rider Name</th>
+                                <th>Phone / Email</th>
+                                <th>City</th>
+                                <th>Rating</th>
+                                <th>Registered Cars</th>
+                                <th>Wallet Balance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Arjun Verma</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-101</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-mono">+919810123456</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">arjun.verma@example.com</div>
+                                    </td>
+                                    <td>Gurugram / Delhi NCR</td>
+                                    <td>
+                                        <span style="color:#FACC15; font-weight:800;">★ 4.95</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">2 Verified Cars</span>
+                                    </td>
+                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
+                                    <td>
+                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-101')">Inspect</button>
+                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-101', 'Arjun Verma')">+ Credit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Priya Sharma</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-102</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-mono">+919876543210</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">priya.sharma@example.com</div>
+                                    </td>
+                                    <td>Delhi NCR / Gurugram</td>
+                                    <td>
+                                        <span style="color:#FACC15; font-weight:800;">★ 5</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-neutral">0 Personal Cars</span>
+                                    </td>
+                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
+                                    <td>
+                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-102')">Inspect</button>
+                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-102', 'Priya Sharma')">+ Credit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Amit Sharma</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-9054</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-mono">+919988776655</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">No email registered</div>
+                                    </td>
+                                    <td>Noida</td>
+                                    <td>
+                                        <span style="color:#FACC15; font-weight:800;">★ 5</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">1 Verified Cars</span>
+                                    </td>
+                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
+                                    <td>
+                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-9054')">Inspect</button>
+                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-9054', 'Amit Sharma')">+ Credit</button>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 4: DRIVERS / CAPTAINS FLEET -->
+            <div class="admin-view-panel" id="view-drivers">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Driver / Captain Operations Roster</h1>
+                        <p>Verify KYC documentation, inspect license credentials, monitor shift fatigue, and manage suspension.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <input type="text" class="table-search-input" placeholder="Search drivers by name, plate, license..." onkeyup="filterDriversTable(this.value)" />
+                        <div class="table-filter-chips">
+                            <span class="filter-chip active">All Captains (2)</span>
+                            <span class="filter-chip">Online Now</span>
+                            <span class="filter-chip">KYC Pending</span>
+                            <span class="filter-chip">Suspended</span>
+                        </div>
+                    </div>
+                    <table class="admin-data-table" id="driversTable">
+                        <thead>
+                            <tr>
+                                <th>Captain Name</th>
+                                <th>Role Scope</th>
+                                <th>Vehicle & Plate</th>
+                                <th>License Number</th>
+                                <th>Driving Hours</th>
+                                <th>Rating & Trips</th>
+                                <th>KYC Status</th>
+                                <th>Controls</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Rajesh Kumar</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">+919811156789</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-info">ALL_ROUNDER</span>
+                                    </td>
+                                    <td>
+                                        <div>Honda City / Maruti Dzire Tour</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">DL 01 AB 9988</div>
+                                    </td>
+                                    <td class="font-mono" style="font-size:11px;">DL-0420210088992</td>
+                                    <td class="font-mono">3.5h / 8h</td>
+                                    <td>
+                                        <div style="color:#FACC15; font-weight:800;">★ 4.92</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">582 trips</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">APPROVED</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-danger" onclick="openDriverSuspensionModal('d-201', 'Rajesh Kumar')">Suspend</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Suresh Rawat</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">+919871234567</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-info">CHAUFFEUR_ONLY</span>
+                                    </td>
+                                    <td>
+                                        <div>Drive Customer Cars</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">N/A</div>
+                                    </td>
+                                    <td class="font-mono" style="font-size:11px;">DL-0420220099112</td>
+                                    <td class="font-mono">0h / 8h</td>
+                                    <td>
+                                        <div style="color:#FACC15; font-weight:800;">★ 5</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">0 trips</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-pending">PENDING KYC</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="approveDriverKYC('d-202', 'Suresh Rawat')">Approve KYC</button>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 5: RENTAL MANAGEMENT -->
+            <div class="admin-view-panel" id="view-rentals">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Rental Marketplace & Fleet Hub</h1>
+                        <p>Vehicle inventory, owner compliance, handover 360° inspection audits and security deposit settlements.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Rental Listings & Security Deposits</span>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Vehicle Name</th>
+                                <th>Type & Fuel</th>
+                                <th>Daily Rate</th>
+                                <th>Owner / Host</th>
+                                <th>Inspection Status</th>
+                                <th>Security Deposit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Honda City ZX (Automatic AT)</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>AUTOMATIC · undefined · 5 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-101', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Mahindra Thar 4x4 (Hard Top)</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>AUTOMATIC · undefined · 4 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-102', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Tata Nexon EV Max</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>AUTOMATIC · undefined · 5 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-103', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Royal Enfield Classic 350</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>MANUAL · undefined · 2 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-104', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Ather 450X Gen 3 (EV Scooter)</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>AUTOMATIC · undefined · 2 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-105', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Toyota Innova Crysta (2.8Z 7-Seater)</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
+                                    </td>
+                                    <td>AUTOMATIC · undefined · 7 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>Verified Rental Partner</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                    </td>
+                                    <td>
+                                        <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
+                                        <span class="badge-status badge-status-pending">HELD IN ESCROW</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="releaseRentalDeposit('RENT-106', 5000)">Release Deposit</button>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 6: BOOKINGS & DISPATCH -->
+            <div class="admin-view-panel" id="view-bookings">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Bookings & Dispatch Across All 7 Mobility Modes</h1>
+                        <p>Comprehensive ledger for Cab, Auto, Bike Taxi, Hire Driver (Chauffeur), Airport, Outstation & Delivery.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <input type="text" class="table-search-input" placeholder="Search by booking ID, rider, or address..." onkeyup="filterBookingsTable(this.value)" />
+                        <div class="table-filter-chips">
+                            <span class="filter-chip active">All (1)</span>
+                            <span class="filter-chip">Cab</span>
+                            <span class="filter-chip">Chauffeur</span>
+                            <span class="filter-chip">Auto</span>
+                            <span class="filter-chip">Bike</span>
+                            <span class="filter-chip">Airport</span>
+                        </div>
+                    </div>
+                    <table class="admin-data-table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Service Mode</th>
+                                <th>Pickup ➔ Drop</th>
+                                <th>Rider</th>
+                                <th>Captain</th>
+                                <th>Fare</th>
+                                <th>OTP PIN</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:800; color:var(--text-primary);">CHF-9241</td>
+                                    <td><span class="badge-status badge-status-info">HIRE_DRIVER</span></td>
+                                    <td>
+                                        <div style="font-size:11px; font-weight:700;">undefined</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">➔ undefined</div>
+                                    </td>
+                                    <td>Arjun Verma</td>
+                                    <td>Rajesh Kumar</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 549</td>
+                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">undefined</td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">IN PROGRESS</span>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 7: PAYMENTS & FINANCE -->
+            <div class="admin-view-panel" id="view-finance">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Payments, Settlement & Tax Compliance</h1>
+                        <p>Gross booking revenue, instant IMPS driver batch payouts, GST 5% tax reports, and refund management.</p>
+                    </div>
+                    <button class="btn-action-primary" onclick="executeBatchPayout()">
+                        ⚡ Execute Batch IMPS Payout (₹ 3,95,000)
+                    </button>
+                </div>
+
+                <div class="kpi-metrics-grid">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Gross Bookings Value</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--text-primary);">₹ 4,82,350</div>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Platform Take Rate (15%)</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 72,352</div>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Captain Net Disbursements</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--success);">₹ 3,95,000</div>
+                    </div>
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">GST 5% Tax Collection</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--info);">₹ 24,118</div>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Settlement Transactions & Refunds Desk</span>
+                        <button class="btn-action-neutral" onclick="openRefundModal()">+ Issue Customer Refund</button>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Txn Ref</th>
+                                <th>Timestamp</th>
+                                <th>Trip / Booking</th>
+                                <th>Beneficiary</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>GST Breakdown</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financeTxnBody">
+                            <tr>
+                                <td class="font-mono">TXN-9901</td>
+                                <td class="font-mono">19:30:12</td>
+                                <td class="font-mono">BK-8821</td>
+                                <td>Rajesh Kumar (Captain)</td>
+                                <td>IMPS Instant</td>
+                                <td class="font-mono" style="font-weight:700;">₹ 389.00</td>
+                                <td class="font-mono">₹ 18.52 GST</td>
+                                <td><span class="badge-status badge-status-active">SETTLED</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-mono">TXN-9902</td>
+                                <td class="font-mono">19:15:40</td>
+                                <td class="font-mono">RNT-101</td>
+                                <td>Vikram Malhotra (Rider)</td>
+                                <td>Deposit IMPS</td>
+                                <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 5,000.00</td>
+                                <td class="font-mono">Zero Tax Escrow</td>
+                                <td><span class="badge-status badge-status-active">RELEASED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 8: SAFETY CENTER -->
+            <div class="admin-view-panel" id="view-safety">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Platform Safety Center & Emergency Vigilance</h1>
+                        <p>Real-time SOS telemetry, law enforcement bridge (Police 112), route deviation alerts and incident cases.</p>
+                    </div>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    
+                        <div style="background:var(--surface); border:1.5px solid rgba(255,77,77,0.4); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-size:20px;">🚨</span>
+                                    <div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9012 · SOS_EMERGENCY</span>
+                                            <span class="badge-status badge-status-critical">CRITICAL</span>
+                                            <span class="badge-status badge-status-active">UNDER_INVESTIGATION</span>
+                                        </div>
+                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                                            Location: <span style="color:var(--text-primary); font-weight:600;">Outer Ring Road, near Gachibowli Junction, Hyderabad</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T19:42:10.000Z</div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Arjun Verma</div>
+                                    <div class="font-mono">+91 98101 23456</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Rajesh Kumar</div>
+                                    <div class="font-mono">DL 01 AB 9988</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
+                                    <div style="font-weight:800; color:var(--accent);">Capt. Digvijay Singh</div>
+                                </div>
+                            </div>
+
+                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
+                                <strong>Incident Notes:</strong> Rider triggered SOS via app. Vehicle stopped for > 8 mins in unauthorized highway shoulder. Police PCR van 14 notified.<br>
+                                <strong>Telemetry Status:</strong> Direct voice link active; Driver reports flat tire on right rear. PCR unit on site verifying safety.
+                            </div>
+
+                            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98101 23456')">📞 Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
+                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9012')">✓ Mark Case Resolved</button>
+                            </div>
+                        </div>
+                    
+                        <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-size:20px;">🚨</span>
+                                    <div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9013 · ROUTE_DEVIATION</span>
+                                            <span class="badge-status badge-status-warning">MEDIUM</span>
+                                            <span class="badge-status badge-status-active">RESOLVED</span>
+                                        </div>
+                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                                            Location: <span style="color:var(--text-primary); font-weight:600;">NH 44 Expressway Bypass</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T18:15:00.000Z</div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Priya Sharma</div>
+                                    <div class="font-mono">+91 98765 43210</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Suresh Rawat</div>
+                                    <div class="font-mono">KA 01 AB 1234</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
+                                    <div style="font-weight:800; color:var(--accent);">Safety Response Team</div>
+                                </div>
+                            </div>
+
+                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
+                                <strong>Incident Notes:</strong> Telemetry detected 4.2 km deviation from designated corridor.<br>
+                                <strong>Telemetry Status:</strong> Driver contacted; road closure due to flyover construction. Rider confirmed alternate route consent.
+                            </div>
+
+                            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98765 43210')">📞 Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
+                                <span class="badge-status badge-status-active">Case Closed</span>
+                            </div>
+                        </div>
+                    
+                        <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-size:20px;">🚨</span>
+                                    <div>
+                                        <div style="display:flex; align-items:center; gap:8px;">
+                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9014 · SUSPICIOUS_METER_JUMP</span>
+                                            <span class="badge-status badge-status-warning">LOW</span>
+                                            <span class="badge-status badge-status-active">PENDING_REVIEW</span>
+                                        </div>
+                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                                            Location: <span style="color:var(--text-primary); font-weight:600;">Madhapur Metro Pillar 122</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T17:30:00.000Z</div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Amit Sharma</div>
+                                    <div class="font-mono">+91 99887 76655</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
+                                    <div style="font-weight:800; color:var(--text-primary);">Mohan Lal</div>
+                                    <div class="font-mono">TS 09 UA 4120</div>
+                                </div>
+                                <div>
+                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
+                                    <div style="font-weight:800; color:var(--accent);">Support Queue</div>
+                                </div>
+                            </div>
+
+                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
+                                <strong>Incident Notes:</strong> Automated GPS telemetry vs manual auto fare discrepancy reported.<br>
+                                <strong>Telemetry Status:</strong> Fare hold applied; reviewing odometer telemetry.
+                            </div>
+
+                            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 99887 76655')">📞 Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
+                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9014')">✓ Mark Case Resolved</button>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+
+            <!-- VIEW 9: SUPPORT & TICKETS -->
+            <div class="admin-view-panel" id="view-support">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Customer & Captain Support Escalations</h1>
+                        <p>Omnichannel ticketing, live agent resolution, dispute tracking, and compensation desk.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Open Escalation Queue (3)</span>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Subject & Category</th>
+                                <th>User Type</th>
+                                <th>Customer Name</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:800;">TCK-4401</td>
+                                    <td>
+                                        <div style="font-weight:700;">Driver arrived with different car model than booked</div>
+                                        <span class="badge-status badge-status-neutral">VEHICLE_MISMATCH</span>
+                                    </td>
+                                    <td><span class="badge-status badge-status-info">RIDER</span></td>
+                                    <td>Aditya Sharma</td>
+                                    <td>
+                                        <span class="badge-status badge-status-critical">HIGH</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-pending">OPEN</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4401')">Resolve Ticket</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:800;">TCK-4402</td>
+                                    <td>
+                                        <div style="font-weight:700;">Fastag toll deduction dispute on Airport Expressway</div>
+                                        <span class="badge-status badge-status-neutral">PAYMENT_DISPUTE</span>
+                                    </td>
+                                    <td><span class="badge-status badge-status-info">DRIVER</span></td>
+                                    <td>Rohit Sharma</td>
+                                    <td>
+                                        <span class="badge-status badge-status-warning">MEDIUM</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-pending">IN_PROGRESS</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4402')">Resolve Ticket</button>
+                                    </td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:800;">TCK-4403</td>
+                                    <td>
+                                        <div style="font-weight:700;">Deposit refund for Honda City self-drive rental</div>
+                                        <span class="badge-status badge-status-neutral">RENTAL_DEPOSIT</span>
+                                    </td>
+                                    <td><span class="badge-status badge-status-info">RIDER</span></td>
+                                    <td>Vikram Malhotra</td>
+                                    <td>
+                                        <span class="badge-status badge-status-warning">MEDIUM</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-status badge-status-active">RESOLVED</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4403')">Resolve Ticket</button>
+                                    </td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 10: PRICING & SURGE ENGINE -->
+            <div class="admin-view-panel" id="view-pricing">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Dynamic Pricing & Geofence Surge Control</h1>
+                        <p>Calibrate demand/supply pricing multipliers, peak hour schedule algorithms, and coupon codes.</p>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;">
+                    
+                        <div class="kpi-metric-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <div>
+                                    <div style="font-size:15px; font-weight:800; color:var(--text-primary);">Hitech City & Cyber Towers</div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Hyderabad · 4.5 km radius</div>
+                                </div>
+                                <span class="badge-status badge-status-critical font-mono">SURGE_ACTIVE</span>
+                            </div>
+
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0;">
+                                <div>
+                                    <div style="font-size:10px; color:var(--text-muted); font-weight:700;">ACTIVE MULTIPLIER</div>
+                                    <div class="font-mono" style="font-size:32px; font-weight:900; color:var(--accent);" id="multiplierVal-ZONE-HYD-01">1.6x</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div style="font-size:11px; color:var(--text-muted);">Active Captains: <strong style="color:var(--text-primary);">42</strong></div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Pending Requests: <strong style="color:var(--danger);">68</strong></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:12px;">
+                                <label class="form-label">Adjust Zone Multiplier (1.0x – 3.0x)</label>
+                                <input type="range" min="1.0" max="3.0" step="0.1" value="1.6" style="width:100%; accent-color:var(--accent);" oninput="updateSurgeSlider('ZONE-HYD-01', this.value)" />
+                            </div>
+
+                            <button class="btn-action-primary" style="width:100%; justify-content:center; padding:10px;" onclick="applySurgeChange('ZONE-HYD-01')">
+                                Apply Multiplier to Geofence
+                            </button>
+                        </div>
+                    
+                        <div class="kpi-metric-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <div>
+                                    <div style="font-size:15px; font-weight:800; color:var(--text-primary);">Gachibowli Financial District</div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Hyderabad · 5 km radius</div>
+                                </div>
+                                <span class="badge-status badge-status-critical font-mono">SURGE_ACTIVE</span>
+                            </div>
+
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0;">
+                                <div>
+                                    <div style="font-size:10px; color:var(--text-muted); font-weight:700;">ACTIVE MULTIPLIER</div>
+                                    <div class="font-mono" style="font-size:32px; font-weight:900; color:var(--accent);" id="multiplierVal-ZONE-HYD-02">1.4x</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div style="font-size:11px; color:var(--text-muted);">Active Captains: <strong style="color:var(--text-primary);">38</strong></div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Pending Requests: <strong style="color:var(--danger);">47</strong></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:12px;">
+                                <label class="form-label">Adjust Zone Multiplier (1.0x – 3.0x)</label>
+                                <input type="range" min="1.0" max="3.0" step="0.1" value="1.4" style="width:100%; accent-color:var(--accent);" oninput="updateSurgeSlider('ZONE-HYD-02', this.value)" />
+                            </div>
+
+                            <button class="btn-action-primary" style="width:100%; justify-content:center; padding:10px;" onclick="applySurgeChange('ZONE-HYD-02')">
+                                Apply Multiplier to Geofence
+                            </button>
+                        </div>
+                    
+                        <div class="kpi-metric-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <div>
+                                    <div style="font-size:15px; font-weight:800; color:var(--text-primary);">Banjara Hills / Jubilee Hills</div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Hyderabad · 3.5 km radius</div>
+                                </div>
+                                <span class="badge-status badge-status-active font-mono">NORMAL</span>
+                            </div>
+
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0;">
+                                <div>
+                                    <div style="font-size:10px; color:var(--text-muted); font-weight:700;">ACTIVE MULTIPLIER</div>
+                                    <div class="font-mono" style="font-size:32px; font-weight:900; color:var(--accent);" id="multiplierVal-ZONE-HYD-03">1.2x</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div style="font-size:11px; color:var(--text-muted);">Active Captains: <strong style="color:var(--text-primary);">55</strong></div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Pending Requests: <strong style="color:var(--danger);">32</strong></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:12px;">
+                                <label class="form-label">Adjust Zone Multiplier (1.0x – 3.0x)</label>
+                                <input type="range" min="1.0" max="3.0" step="0.1" value="1.2" style="width:100%; accent-color:var(--accent);" oninput="updateSurgeSlider('ZONE-HYD-03', this.value)" />
+                            </div>
+
+                            <button class="btn-action-primary" style="width:100%; justify-content:center; padding:10px;" onclick="applySurgeChange('ZONE-HYD-03')">
+                                Apply Multiplier to Geofence
+                            </button>
+                        </div>
+                    
+                        <div class="kpi-metric-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <div>
+                                    <div style="font-size:15px; font-weight:800; color:var(--text-primary);">RGIA Airport Expressway Corridor</div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Hyderabad · 8 km radius</div>
+                                </div>
+                                <span class="badge-status badge-status-critical font-mono">SURGE_ACTIVE</span>
+                            </div>
+
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0;">
+                                <div>
+                                    <div style="font-size:10px; color:var(--text-muted); font-weight:700;">ACTIVE MULTIPLIER</div>
+                                    <div class="font-mono" style="font-size:32px; font-weight:900; color:var(--accent);" id="multiplierVal-ZONE-HYD-04">1.3x</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div style="font-size:11px; color:var(--text-muted);">Active Captains: <strong style="color:var(--text-primary);">29</strong></div>
+                                    <div style="font-size:11px; color:var(--text-muted);">Pending Requests: <strong style="color:var(--danger);">36</strong></div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:12px;">
+                                <label class="form-label">Adjust Zone Multiplier (1.0x – 3.0x)</label>
+                                <input type="range" min="1.0" max="3.0" step="0.1" value="1.3" style="width:100%; accent-color:var(--accent);" oninput="updateSurgeSlider('ZONE-HYD-04', this.value)" />
+                            </div>
+
+                            <button class="btn-action-primary" style="width:100%; justify-content:center; padding:10px;" onclick="applySurgeChange('ZONE-HYD-04')">
+                                Apply Multiplier to Geofence
+                            </button>
+                        </div>
+                    
+                </div>
+            </div>
+
+            <!-- VIEW 11: CORPORATE ACCOUNTS -->
+            <div class="admin-view-panel" id="view-corporate">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Corporate Mobility & Enterprise Billing</h1>
+                        <p>Enterprise client portfolios, monthly credit ceilings, employee travel policies and GST invoices.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Active Enterprise Clients (3)</span>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>GST Number</th>
+                                <th>Plan Tier</th>
+                                <th>Employees</th>
+                                <th>Monthly Credit Limit</th>
+                                <th>Current Spend</th>
+                                <th>Billing Cycle</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Infosys Technologies Ltd</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">Hyderabad & Bengaluru</div>
+                                    </td>
+                                    <td class="font-mono">36AAACI1234F1Z5</td>
+                                    <td><span class="badge-status badge-status-info">ENTERPRISE_PREMIUM</span></td>
+                                    <td class="font-mono">342 staff</td>
+                                    <td class="font-mono">₹ 15,00,000</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 8,42,150</td>
+                                    <td>NET_30</td>
+                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Deloitte US-India Offices</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">Hyderabad</div>
+                                    </td>
+                                    <td class="font-mono">36AAACD9876E1Z9</td>
+                                    <td><span class="badge-status badge-status-info">ENTERPRISE_ELITE</span></td>
+                                    <td class="font-mono">512 staff</td>
+                                    <td class="font-mono">₹ 25,00,000</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 16,40,900</td>
+                                    <td>NET_15</td>
+                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
+                                </tr>
+                            
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:800; color:var(--text-primary);">Tata Consultancy Services</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">Delhi NCR / Hyderabad</div>
+                                    </td>
+                                    <td class="font-mono">07AAACT4321C1Z2</td>
+                                    <td><span class="badge-status badge-status-info">ENTERPRISE_STANDARD</span></td>
+                                    <td class="font-mono">218 staff</td>
+                                    <td class="font-mono">₹ 10,00,000</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 4,12,300</td>
+                                    <td>NET_30</td>
+                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 12: ANALYTICS & BI -->
+            <div class="admin-view-panel" id="view-analytics">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Business Intelligence & Fleet Efficiency</h1>
+                        <p>Ride volume patterns, driver utilization metrics, retention cohorts and demand heatmap distribution.</p>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;">
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">24-Hour Trip Volume Distribution</div>
+                        <div style="height:220px; display:flex; align-items:flex-end; gap:10px; padding-top:20px;">
+                            <div style="flex:1; background:var(--surface-3); height:25%; border-radius:4px;" title="00:00 - 32 trips"></div>
+                            <div style="flex:1; background:var(--surface-3); height:15%; border-radius:4px;" title="03:00 - 18 trips"></div>
+                            <div style="flex:1; background:var(--surface-3); height:40%; border-radius:4px;" title="06:00 - 64 trips"></div>
+                            <div style="flex:1; background:var(--accent); height:95%; border-radius:4px;" title="09:00 (Peak Morning) - 182 trips"></div>
+                            <div style="flex:1; background:var(--surface-3); height:60%; border-radius:4px;" title="12:00 - 95 trips"></div>
+                            <div style="flex:1; background:var(--surface-3); height:75%; border-radius:4px;" title="15:00 - 120 trips"></div>
+                            <div style="flex:1; background:var(--accent); height:100%; border-radius:4px;" title="18:00 (Peak Evening) - 198 trips"></div>
+                            <div style="flex:1; background:var(--surface-3); height:55%; border-radius:4px;" title="21:00 - 88 trips"></div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:8px;">
+                            <span>00:00</span>
+                            <span>06:00</span>
+                            <span>12:00</span>
+                            <span>18:00</span>
+                            <span>23:59</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-label">Mobility Service Breakdown by GMV</div>
+                        <div style="padding-top:16px; display:flex; flex-direction:column; gap:10px;">
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                                    <span>Cab Sedan & Mini (48%)</span>
+                                    <span class="font-mono">₹ 2,31,528</span>
+                                </div>
+                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
+                                    <div style="width:48%; height:100%; background:var(--accent);"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                                    <span>Hire Driver Chauffeur (22%)</span>
+                                    <span class="font-mono">₹ 1,06,117</span>
+                                </div>
+                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
+                                    <div style="width:22%; height:100%; background:#38BDF8;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                                    <span>Rental Cars & Bikes (18%)</span>
+                                    <span class="font-mono">₹ 86,823</span>
+                                </div>
+                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
+                                    <div style="width:18%; height:100%; background:#FACC15;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                                    <span>Auto & Bike Taxi (12%)</span>
+                                    <span class="font-mono">₹ 57,882</span>
+                                </div>
+                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
+                                    <div style="width:12%; height:100%; background:#17D68A;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 13: ADMIN USERS & RBAC MATRIX -->
+            <div class="admin-view-panel" id="view-rbac">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Role-Based Access Control (RBAC) & Governance</h1>
+                        <p>Access control permissions matrix and administrative user assignments.</p>
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Configured Platform Roles & Scope Matrix</span>
+                    </div>
+                    <table class="admin-data-table">
+                        <thead>
+                            <tr>
+                                <th>Role Identifier</th>
+                                <th>Authorized Scope Domains</th>
+                                <th>Restricted Domains</th>
+                                <th>Assigned Staff</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge-status badge-status-active">SUPER_ADMIN</span></td>
+                                <td>All 15 System Modules (Full Read/Write/Execute)</td>
+                                <td>None (Root Clearance)</td>
+                                <td>Vikram Malhotra (COO)</td>
+                                <td class="font-mono">Tier 0 (Root)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-status badge-status-info">OPERATIONS_ADMIN</span></td>
+                                <td>Live Operations, Rides, Drivers, Bookings, Telemetry</td>
+                                <td>Finance, Pricing Rules, RBAC, System Settings</td>
+                                <td>Rohan Mehta</td>
+                                <td class="font-mono">Tier 1</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-status badge-status-warning">FINANCE_ADMIN</span></td>
+                                <td>Payments, Payouts, Commissions, Invoices, GST, Refunds</td>
+                                <td>SOS Dispatch, Driver Controls, Live Map</td>
+                                <td>Neha Kapoor</td>
+                                <td class="font-mono">Tier 1</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-status badge-status-critical">SAFETY_ADMIN</span></td>
+                                <td>Safety Center, SOS Alerts, Incidents, Driver KYC, Police Bridge</td>
+                                <td>Finance, Invoices, Pricing Multipliers</td>
+                                <td>Capt. Digvijay Singh</td>
+                                <td class="font-mono">Tier 1</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-status badge-status-neutral">SUPPORT_ADMIN</span></td>
+                                <td>Riders, Drivers, Tickets, Live Customer Support Chats</td>
+                                <td>Financial Payouts, Incident Lockdown, RBAC</td>
+                                <td>Ananya Roy</td>
+                                <td class="font-mono">Tier 2</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-status badge-status-info">RENTAL_ADMIN</span></td>
+                                <td>Rental Fleet, Vehicle Owners, 360° Inspections, Deposits</td>
+                                <td>Cabs, Autos, Bike Dispatch, Safety SOS</td>
+                                <td>Karthik Sundaram</td>
+                                <td class="font-mono">Tier 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 14: AUDIT LOGS -->
+            <div class="admin-view-panel" id="view-audit">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>Platform Audit Vault & Security Logs</h1>
+                        <p>Immutable cryptographically sequenced trail of all administrative actions, overrides and escalations.</p>
+                    </div>
+                    <button class="btn-action-neutral" onclick="exportAuditVault()">
+                        Export Audit Vault (CSV)
+                    </button>
+                </div>
+
+                <div class="data-table-container">
+                    <div class="table-toolbar-bar">
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Audit Events Record (5)</span>
+                    </div>
+                    <table class="admin-data-table" id="auditLogsTable">
+                        <thead>
+                            <tr>
+                                <th>Log ID</th>
+                                <th>Timestamp</th>
+                                <th>Admin User</th>
+                                <th>Role Scope</th>
+                                <th>Action Performed</th>
+                                <th>Target Resource</th>
+                                <th>IP Address</th>
+                                <th>Audit Justification</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditTableBody">
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-8801</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T19:45:12.000Z</td>
+                                    <td style="font-weight:700;">Capt. Digvijay Singh</td>
+                                    <td><span class="badge-status badge-status-neutral">SAFETY_ADMIN</span></td>
+                                    <td><span class="badge-status badge-status-info">SOS_INCIDENT_ESCALATION</span></td>
+                                    <td class="font-mono">INC-9012 (Outer Ring Road SOS)</td>
+                                    <td class="font-mono">103.212.45.18</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Dispatched police patrol PCR unit 14 and notified rider emergency contact</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-8802</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T19:30:20.000Z</td>
+                                    <td style="font-weight:700;">Rohan Mehta</td>
+                                    <td><span class="badge-status badge-status-neutral">OPERATIONS_ADMIN</span></td>
+                                    <td><span class="badge-status badge-status-info">SURGE_MULTIPLIER_UPDATE</span></td>
+                                    <td class="font-mono">ZONE-HYD-01 (Hitech City)</td>
+                                    <td class="font-mono">103.212.45.22</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Adjusted surge multiplier from 1.4x to 1.6x due to tech park departure wave</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-8803</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T18:55:04.000Z</td>
+                                    <td style="font-weight:700;">Neha Kapoor</td>
+                                    <td><span class="badge-status badge-status-neutral">FINANCE_ADMIN</span></td>
+                                    <td><span class="badge-status badge-status-info">DRIVER_BATCH_PAYOUT</span></td>
+                                    <td class="font-mono">PAYOUT-BATCH-20261006</td>
+                                    <td class="font-mono">103.212.45.31</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Executed IMPS instant settlement of ₹4,82,350 to 142 online captains</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-8804</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T18:15:40.000Z</td>
+                                    <td style="font-weight:700;">Karthik Sundaram</td>
+                                    <td><span class="badge-status badge-status-neutral">RENTAL_ADMIN</span></td>
+                                    <td><span class="badge-status badge-status-info">RENTAL_DEPOSIT_RELEASE</span></td>
+                                    <td class="font-mono">RNT-101 (Honda City ZX)</td>
+                                    <td class="font-mono">103.212.45.19</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Released security deposit ₹5,000 after zero-damage inspection review</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-8805</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T17:40:15.000Z</td>
+                                    <td style="font-weight:700;">Vikram Malhotra</td>
+                                    <td><span class="badge-status badge-status-neutral">SUPER_ADMIN</span></td>
+                                    <td><span class="badge-status badge-status-info">DRIVER_SUSPENSION</span></td>
+                                    <td class="font-mono">d-209 (M. Irfan)</td>
+                                    <td class="font-mono">103.212.45.10</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Temporary 24h suspension due to high cancellation rate (38%)</td>
+                                </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 15: PLATFORM SETTINGS -->
+            <div class="admin-view-panel" id="view-settings">
+                <div class="view-header-strip">
+                    <div class="view-title-block">
+                        <h1>System Architecture & Operational Toggles</h1>
+                        <p>Service kill-switches, geofence boundaries, SMS gateway fallbacks, and emergency protocols.</p>
+                    </div>
+                </div>
+
+                <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:var(--card-shadow); max-width:820px;">
+                    <div style="font-size:14px; font-weight:800; margin-bottom:16px;">Core Mobility Dispatch Switches</div>
+                    
+                    <div style="display:flex; flex-direction:column; gap:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <div>
+                                <div style="font-weight:800; color:var(--text-primary);">Cab Sedan & Economy Dispatch</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Main taxi matching engine across city geofences</div>
+                            </div>
+                            <input type="checkbox" checked style="accent-color:var(--accent); width:20px; height:20px;" onchange="logSettingChange('CAB_DISPATCH', this.checked)" />
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <div>
+                                <div style="font-weight:800; color:var(--text-primary);">Hire Driver (Personal Car Chauffeur)</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Enable 2h-8h professional driver hiring on user cars</div>
+                            </div>
+                            <input type="checkbox" checked style="accent-color:var(--accent); width:20px; height:20px;" onchange="logSettingChange('HIRE_DRIVER', this.checked)" />
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <div>
+                                <div style="font-weight:800; color:var(--text-primary);">Self-Drive Rental Marketplace</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Car & bike peer rental listings with 360° inspection audit</div>
+                            </div>
+                            <input type="checkbox" checked style="accent-color:var(--accent); width:20px; height:20px;" onchange="logSettingChange('RENTAL_MARKETPLACE', this.checked)" />
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <div>
+                                <div style="font-weight:800; color:var(--text-primary);">Dynamic Geofence Surge Engine</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Automated multiplier adjustment based on queue density</div>
+                            </div>
+                            <input type="checkbox" checked style="accent-color:var(--accent); width:20px; height:20px;" onchange="logSettingChange('DYNAMIC_SURGE', this.checked)" />
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-weight:800; color:var(--text-primary);">Instant IMPS Captain Payout Automation</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Daily scheduled disbursement of completed trip earnings</div>
+                            </div>
+                            <input type="checkbox" checked style="accent-color:var(--accent); width:20px; height:20px;" onchange="logSettingChange('INSTANT_PAYOUTS', this.checked)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- =========================================================
+         ACTION MODALS & DIALOGS
+         ========================================================= -->
+    <!-- 1. Driver Suspension Modal -->
+    <div class="admin-modal-backdrop" id="driverSuspensionModal">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <span style="font-size:14px; font-weight:800; color:var(--danger);">⚠️ Suspend Captain Duty Authorization</span>
+                <span style="cursor:pointer;" onclick="closeAdminModal('driverSuspensionModal')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+            </div>
+            <div class="admin-modal-body">
+                <input type="hidden" id="suspendDriverId" />
+                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">
+                    Suspending <strong id="suspendDriverName" style="color:var(--text-primary);"></strong> will immediately revoke their dispatch queue, cancel pending matches, and freeze automatic wallet settlements.
+                </p>
+                <label class="form-label">Suspension Duration</label>
+                <select class="form-control" id="suspendDuration">
+                    <option value="24_HOURS">24 Hours (Warning Review)</option>
+                    <option value="7_DAYS">7 Days (Document / Policy Infraction)</option>
+                    <option value="PERMANENT">Permanent Deactivation (Zero Tolerance)</option>
+                </select>
+                <label class="form-label">Mandatory Audit Justification</label>
+                <textarea class="form-control" id="suspendReason" rows="3" placeholder="Enter specific grounds (e.g., rider safety report, vehicle condition violation)..."></textarea>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-action-neutral" onclick="closeAdminModal('driverSuspensionModal')">Cancel</button>
+                <button class="btn-action-danger" onclick="confirmDriverSuspension()">Confirm Suspension & Log</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Customer Refund Modal -->
+    <div class="admin-modal-backdrop" id="refundModal">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Process Passenger Fare Refund</span>
+                <span style="cursor:pointer;" onclick="closeAdminModal('refundModal')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+            </div>
+            <div class="admin-modal-body">
+                <label class="form-label">Booking Reference ID</label>
+                <input type="text" class="form-control" id="refundBookingId" placeholder="e.g. BK-8821" value="BK-8821" />
+                <label class="form-label">Refund Amount (₹)</label>
+                <input type="number" class="form-control" id="refundAmount" placeholder="389" value="389" />
+                <label class="form-label">Refund Channel</label>
+                <select class="form-control" id="refundChannel">
+                    <option value="RDA_WALLET">Instant Credit to RDA Wallet (Zero Fee)</option>
+                    <option value="ORIGINAL_PAYMENT">Original Payment Method (UPI / Card 3-5 days)</option>
+                </select>
+                <label class="form-label">Audit Notes</label>
+                <input type="text" class="form-control" id="refundNotes" placeholder="Reason for fare reimbursement..." value="Route mismatch compensation approved" />
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-action-neutral" onclick="closeAdminModal('refundModal')">Cancel</button>
+                <button class="btn-action-primary" onclick="confirmRefund()">Disburse Refund</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Emergency Lockdown Broadcast Modal -->
+    <div class="admin-modal-backdrop" id="emergencyBroadcastModal">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <span style="font-size:14px; font-weight:800; color:var(--danger);">🚨 Emergency Fleet Broadcast</span>
+                <span style="cursor:pointer;" onclick="closeAdminModal('emergencyBroadcastModal')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+            </div>
+            <div class="admin-modal-body">
+                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+                    Transmit high-priority alert banner to all 418 active online captains and active passenger sessions.
+                </p>
+                <label class="form-label">Target Geofence / Zone</label>
+                <select class="form-control">
+                    <option>All Hyderabad Geofences (Entire Metro)</option>
+                    <option>Outer Ring Road Expressway Only</option>
+                    <option>Hitech City / Cyberabad Area</option>
+                </select>
+                <label class="form-label">Alert Message</label>
+                <textarea class="form-control" rows="3" placeholder="Enter emergency alert text...">FLASH WEATHER WARNING: Severe rainfall in Hitech City. Drive with caution. Speed limit capped at 40 km/h.</textarea>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-action-neutral" onclick="closeAdminModal('emergencyBroadcastModal')">Cancel</button>
+                <button class="btn-action-danger" onclick="confirmEmergencyBroadcast()">Broadcast to 418 Active Devices</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        /* =========================================================
+           RIDEDRIVEAHEAD COMMAND CENTER INTERACTIVE LOGIC
+           ========================================================= */
+        let currentRole = 'SUPER_ADMIN';
+        let currentActiveView = 'overview';
+        let adminTheme = 'dark';
+        let liveOpsMap = null;
+        let fleetMarkers = [];
+
+        // 1. RBAC PERMISSIONS SCOPE MATRIX
+        const RBAC_SCOPES = {
+            'SUPER_ADMIN': {
+                name: 'Vikram Malhotra',
+                title: 'Super Admin (All Access)',
+                allowedViews: ['*'],
+                requiredScopeForView: {}
+            },
+            'OPERATIONS_ADMIN': {
+                name: 'Rohan Mehta',
+                title: 'Operations Admin',
+                allowedViews: ['overview', 'liveops', 'bookings', 'riders', 'drivers', 'pricing', 'analytics', 'audit'],
+                requiredScopeForView: {
+                    'finance': 'fin:payments:read',
+                    'safety': 'safety:sos:dispatch',
+                    'rentals': 'rental:vehicles:manage',
+                    'corporate': 'fin:corporate:billing',
+                    'rbac': 'super:admin',
+                    'settings': 'super:admin'
+                }
+            },
+            'FINANCE_ADMIN': {
+                name: 'Neha Kapoor',
+                title: 'Finance Admin',
+                allowedViews: ['overview', 'bookings', 'finance', 'corporate', 'analytics', 'audit'],
+                requiredScopeForView: {
+                    'liveops': 'ops:live:telemetry',
+                    'drivers': 'ops:drivers:manage',
+                    'safety': 'safety:sos:dispatch',
+                    'support': 'support:tickets:read',
+                    'rentals': 'rental:vehicles:manage',
+                    'rbac': 'super:admin',
+                    'settings': 'super:admin'
+                }
+            },
+            'SAFETY_ADMIN': {
+                name: 'Capt. Digvijay Singh',
+                title: 'Safety & Vigilance Admin',
+                allowedViews: ['overview', 'liveops', 'drivers', 'safety', 'audit'],
+                requiredScopeForView: {
+                    'finance': 'fin:payments:read',
+                    'bookings': 'ops:rides:read',
+                    'rentals': 'rental:vehicles:manage',
+                    'pricing': 'ops:rides:write',
+                    'corporate': 'fin:corporate:billing',
+                    'rbac': 'super:admin',
+                    'settings': 'super:admin'
+                }
+            },
+            'SUPPORT_ADMIN': {
+                name: 'Ananya Roy',
+                title: 'Support Desk Admin',
+                allowedViews: ['overview', 'riders', 'drivers', 'bookings', 'support'],
+                requiredScopeForView: {
+                    'liveops': 'ops:live:telemetry',
+                    'finance': 'fin:payments:read',
+                    'safety': 'safety:sos:dispatch',
+                    'rentals': 'rental:vehicles:manage',
+                    'pricing': 'ops:rides:write',
+                    'corporate': 'fin:corporate:billing',
+                    'analytics': 'fin:payments:read',
+                    'rbac': 'super:admin',
+                    'settings': 'super:admin'
+                }
+            },
+            'RENTAL_ADMIN': {
+                name: 'Karthik Sundaram',
+                title: 'Rental Marketplace Admin',
+                allowedViews: ['overview', 'rentals', 'bookings', 'audit'],
+                requiredScopeForView: {
+                    'liveops': 'ops:live:telemetry',
+                    'drivers': 'ops:drivers:manage',
+                    'safety': 'safety:sos:dispatch',
+                    'finance': 'fin:payments:read',
+                    'pricing': 'ops:rides:write',
+                    'corporate': 'fin:corporate:billing',
+                    'analytics': 'fin:payments:read',
+                    'rbac': 'super:admin',
+                    'settings': 'super:admin'
+                }
+            }
+        };
+
+        // 2. Change Simulated Admin Role (RBAC Switcher)
+        function changeAdminRole(roleKey) {
+            currentRole = roleKey;
+            const profile = RBAC_SCOPES[roleKey] || RBAC_SCOPES['SUPER_ADMIN'];
+
+            const profName = document.getElementById('adminProfileName');
+            const profRole = document.getElementById('adminProfileRole');
+            if (profName) profName.innerText = profile.name.split(' ')[0] + ' ' + profile.name.split(' ')[1].charAt(0) + '.';
+            if (profRole) profRole.innerText = profile.title;
+
+            // Update sidebar visual states (locked vs unlocked)
+            document.querySelectorAll('.sidebar-item-btn').forEach(btn => {
+                const view = btn.getAttribute('data-view');
+                const isAllowed = profile.allowedViews.includes('*') || profile.allowedViews.includes(view);
+                if (isAllowed) {
+                    btn.classList.remove('locked');
+                } else {
+                    btn.classList.add('locked');
+                }
+            });
+
+            // Re-validate current view
+            navToView(currentActiveView);
+            showAdminToast('Switched to simulated role: ' + profile.title, '🛡️');
+        }
+
+        // 3. Navigation View Controller with RBAC Scope Check
+        function navToView(viewId) {
+            currentActiveView = viewId;
+            const profile = RBAC_SCOPES[currentRole] || RBAC_SCOPES['SUPER_ADMIN'];
+            const isAllowed = profile.allowedViews.includes('*') || profile.allowedViews.includes(viewId);
+
+            const restrictedBox = document.getElementById('rbacRestrictedContainer');
+            const panels = document.querySelectorAll('.admin-view-panel');
+
+            // Update sidebar active buttons
+            document.querySelectorAll('.sidebar-item-btn').forEach(b => {
+                b.classList.remove('active');
+                if (b.getAttribute('data-view') === viewId) b.classList.add('active');
+            });
+
+            if (!isAllowed) {
+                // HIDE all panels, SHOW restricted screen
+                panels.forEach(p => p.classList.remove('active'));
+                if (restrictedBox) {
+                    restrictedBox.style.display = 'block';
+                    const requiredScope = profile.requiredScopeForView[viewId] || 'super:admin';
+                    document.getElementById('rbacRequiredScopeName').innerText = requiredScope;
+                    document.getElementById('rbacRestrictedMessage').innerText = 
+                        'Your active role (' + profile.title + ') does not hold the requisite scope [' + requiredScope + '] to inspect or modify this operational view.';
+                }
+                return;
+            }
+
+            // ALLOWED
+            if (restrictedBox) restrictedBox.style.display = 'none';
+            panels.forEach(p => p.classList.remove('active'));
+
+            const targetPanel = document.getElementById('view-' + viewId);
+            if (targetPanel) targetPanel.classList.add('active');
+
+            // If navigating to liveops, initialize or invalidate Leaflet map
+            if (viewId === 'liveops') {
+                setTimeout(initLiveOpsMap, 150);
+            }
+        }
+
+        // 4. Live Operations Map (Leaflet with Watermark-Free Esri Canvas)
+        function initLiveOpsMap() {
+            const container = document.getElementById('liveOpsMapContainer');
+            if (!container) return;
+
+            if (liveOpsMap) {
+                liveOpsMap.invalidateSize();
+                return;
+            }
+
+            const tileUrl = adminTheme === 'dark' 
+                ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+                : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+            liveOpsMap = L.map('liveOpsMapContainer', { zoomControl: true }).setView([17.4325, 78.4073], 12);
+            L.tileLayer(tileUrl, { maxZoom: 18, attribution: '© Esri, OpenStreetMap' }).addTo(liveOpsMap);
+
+            // Seed simulated fleet markers across Hyderabad
+            const fleetData = [
+                { id: 'V-101', type: 'cab', name: 'Rajesh K. (Sedan)', plate: 'DL 01 AB 9988', coords: [17.4390, 78.3930], color: '#C7FF3D', speed: '42 km/h', status: 'En Route' },
+                { id: 'V-102', type: 'cab', name: 'Rohit S. (Sedan)', plate: 'KA 05 JS 7321', coords: [17.4474, 78.3762], color: '#C7FF3D', speed: '38 km/h', status: 'Passenger Aboard' },
+                { id: 'V-103', type: 'auto', name: 'Mohan L. (Auto)', plate: 'TS 09 UA 4120', coords: [17.4420, 78.3880], color: '#17D68A', speed: '28 km/h', status: 'Available' },
+                { id: 'V-104', type: 'bike', name: 'Vikram B. (Bike)', plate: 'TS 07 BK 9012', coords: [17.4300, 78.4100], color: '#38BDF8', speed: '45 km/h', status: 'Dispatched' },
+                { id: 'V-105', type: 'chauffeur', name: 'Suresh Y. (Own Car)', plate: 'Client: Innova AT', coords: [17.4200, 78.3450], color: '#A855F7', speed: '35 km/h', status: '4h Duty' },
+                { id: 'V-106', type: 'delivery', name: 'Kiran T. (Courier)', plate: 'TS 08 EX 4421', coords: [17.4520, 78.3650], color: '#F97316', speed: '32 km/h', status: 'Parcel Drop' },
+                // ACTIVE SOS INCIDENT MARKER
+                { id: 'INC-9012', type: 'sos', name: '🚨 SOS INCIDENT (BK-8821)', plate: 'Outer Ring Road Km 24', coords: [17.4390, 78.3480], color: '#FF4D4D', speed: '0 km/h (Stopped)', status: 'POLICE DISPATCHED' }
+            ];
+
+            fleetMarkers = [];
+            fleetData.forEach(item => {
+                const isSos = item.type === 'sos';
+                const marker = L.circleMarker(item.coords, {
+                    radius: isSos ? 12 : 7,
+                    fillColor: item.color,
+                    color: isSos ? '#FFFFFF' : '#0B0D0F',
+                    weight: isSos ? 3 : 2,
+                    fillOpacity: 1
+                }).addTo(liveOpsMap);
+
+                marker.bindPopup(`
+                    <div style="font-family:'Plus Jakarta Sans',sans-serif; padding:4px;">
+                        <div style="font-size:12px; font-weight:800; color:${isSos ? '#FF4D4D' : '#0B0D0F'};">${item.name}</div>
+                        <div style="font-size:10px; color:#64748B; margin-top:2px;">Plate/ID: ${item.plate}</div>
+                        <div style="font-size:10px; color:#0B0D0F; margin-top:2px;">Speed: <strong>${item.speed}</strong> · ${item.status}</div>
+                    </div>
+                `);
+                marker._fleetType = item.type;
+                fleetMarkers.push(marker);
+            });
+        }
+
+        function filterLiveMapFleet(type) {
+            document.querySelectorAll('#view-liveops .filter-chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (!liveOpsMap || !fleetMarkers) return;
+            fleetMarkers.forEach(m => {
+                if (type === 'all' || m._fleetType === type || m._fleetType === 'sos') {
+                    m.addTo(liveOpsMap);
+                } else {
+                    liveOpsMap.removeLayer(m);
+                }
+            });
+            showAdminToast('Fleet map filtered to: ' + type.toUpperCase());
+        }
+
+        // 5. Theme Toggle (Dark / Light)
+        function toggleAdminTheme() {
+            adminTheme = adminTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', adminTheme);
+            const btn = document.getElementById('adminThemeToggle');
+            if (btn) btn.innerText = adminTheme === 'dark' ? '🌙' : '☀️';
+
+            if (liveOpsMap) {
+                const tileUrl = adminTheme === 'dark' 
+                    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+                    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+                liveOpsMap.eachLayer(l => {
+                    if (l instanceof L.TileLayer) liveOpsMap.removeLayer(l);
+                });
+                L.tileLayer(tileUrl, { maxZoom: 18 }).addTo(liveOpsMap);
+            }
+        }
+
+        // 6. Action: Approve Driver KYC
+        function approveDriverKYC(driverId, driverName) {
+            recordAuditEvent('DRIVER_KYC_APPROVAL', driverId + ' (' + driverName + ')', 'Approved all commercial RC & identity credentials after background clearance');
+            showAdminToast('✓ KYC Approved for ' + driverName, '✓');
+            setTimeout(() => location.reload(), 1200);
+        }
+
+        // 7. Action: Driver Suspension
+        function openDriverSuspensionModal(driverId, driverName) {
+            document.getElementById('suspendDriverId').value = driverId;
+            document.getElementById('suspendDriverName').innerText = driverName;
+            document.getElementById('driverSuspensionModal').style.display = 'flex';
+        }
+        function confirmDriverSuspension() {
+            const driverId = document.getElementById('suspendDriverId').value;
+            const driverName = document.getElementById('suspendDriverName').innerText;
+            const duration = document.getElementById('suspendDuration').value;
+            const reason = document.getElementById('suspendReason').value || 'Policy breach review';
+
+            closeAdminModal('driverSuspensionModal');
+            recordAuditEvent('DRIVER_SUSPENSION', driverId + ' (' + driverName + ')', 'Duration: ' + duration + ' | Reason: ' + reason);
+            showAdminToast('⚠️ Captain ' + driverName + ' has been suspended (' + duration + ')');
+        }
+
+        // 8. Action: Release Rental Deposit
+        function releaseRentalDeposit(rentalId, amount) {
+            recordAuditEvent('RENTAL_DEPOSIT_RELEASE', rentalId, 'Released security deposit ₹' + amount + ' after 360° inspection validation');
+            showAdminToast('✓ Security deposit ₹' + amount + ' successfully refunded to user!');
+        }
+
+        // 9. Action: Resolve SOS Incident
+        function resolveSOSIncident(incidentId) {
+            recordAuditEvent('SOS_INCIDENT_RESOLVED', incidentId, 'Police PCR report confirmed all clear. Flat tire assisted. Rider verified safe.');
+            showAdminToast('✓ SOS Incident ' + incidentId + ' closed & resolved', '✓');
+            setTimeout(() => location.reload(), 1200);
+        }
+
+        // 10. Action: Dynamic Surge Multiplier Slider
+        function updateSurgeSlider(zoneId, val) {
+            const el = document.getElementById('multiplierVal-' + zoneId);
+            if (el) el.innerText = parseFloat(val).toFixed(1) + 'x';
+        }
+        function applySurgeChange(zoneId) {
+            const el = document.getElementById('multiplierVal-' + zoneId);
+            const val = el ? el.innerText : '1.5x';
+            recordAuditEvent('SURGE_UPDATE', zoneId, 'Adjusted live multiplier to ' + val);
+            showAdminToast('✓ Dynamic surge updated for ' + zoneId + ' to ' + val);
+        }
+
+        // 11. Action: Execute Instant Driver Payout
+        function executeBatchPayout() {
+            recordAuditEvent('BATCH_IMPS_PAYOUT', 'PAYOUT-BATCH-' + Date.now(), 'Executed automated IMPS payout of ₹3,95,000 to 142 online captains');
+            showAdminToast('✓ Batch IMPS Payout of ₹3,95,000 disbursed via bank gateway!', '💰');
+        }
+
+        // 12. Action: Refund Modal
+        function openRefundModal() {
+            document.getElementById('refundModal').style.display = 'flex';
+        }
+        function confirmRefund() {
+            const bookingId = document.getElementById('refundBookingId').value;
+            const amount = document.getElementById('refundAmount').value;
+            const notes = document.getElementById('refundNotes').value;
+            closeAdminModal('refundModal');
+
+            recordAuditEvent('PASSENGER_REFUND', bookingId, 'Disbursed ₹' + amount + ' | Notes: ' + notes);
+            showAdminToast('✓ Refund of ₹' + amount + ' processed for ' + bookingId);
+        }
+
+        // 13. Action: Resolve Support Ticket
+        function resolveSupportTicket(ticketId) {
+            recordAuditEvent('SUPPORT_TICKET_RESOLVE', ticketId, 'Agent resolution verified and ticket closed');
+            showAdminToast('✓ Support ticket ' + ticketId + ' resolved.');
+            setTimeout(() => location.reload(), 1000);
+        }
+
+        // 14. Action: Platform Settings Toggles
+        function logSettingChange(settingKey, isEnabled) {
+            recordAuditEvent('PLATFORM_CONFIG_CHANGE', settingKey, 'State changed to: ' + (isEnabled ? 'ENABLED' : 'DISABLED'));
+            showAdminToast('Setting ' + settingKey + ' set to ' + (isEnabled ? 'ACTIVE' : 'INACTIVE'));
+        }
+
+        // 15. Emergency Broadcast
+        function openEmergencyBroadcastModal() {
+            document.getElementById('emergencyBroadcastModal').style.display = 'flex';
+        }
+        function confirmEmergencyBroadcast() {
+            closeAdminModal('emergencyBroadcastModal');
+            recordAuditEvent('EMERGENCY_FLEET_BROADCAST', 'ALL_HYD_GEOFENCES', 'Broadcasted weather & road safety emergency bulletin to 418 active devices');
+            showAdminToast('🚨 Emergency alert broadcasted to 418 devices!', '🚨');
+        }
+
+        // Modal Helpers
+        function closeAdminModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.style.display = 'none';
+        }
+
+        // Record Audit Event locally and log
+        function recordAuditEvent(action, resource, details) {
+            const auditBody = document.getElementById('auditTableBody');
+            if (auditBody) {
+                const tr = document.createElement('tr');
+                const timeStr = new Date().toLocaleTimeString();
+                const logId = 'AUD-' + Math.floor(1000 + Math.random() * 9000);
+                const profile = RBAC_SCOPES[currentRole] || RBAC_SCOPES['SUPER_ADMIN'];
+                tr.innerHTML = `
+                    <td class="font-mono" style="font-weight:700;">${logId}</td>
+                    <td class="font-mono" style="font-size:11px;">${timeStr}</td>
+                    <td style="font-weight:700;">${profile.name}</td>
+                    <td><span class="badge-status badge-status-neutral">${currentRole}</span></td>
+                    <td><span class="badge-status badge-status-info">${action}</span></td>
+                    <td class="font-mono">${resource}</td>
+                    <td class="font-mono">103.212.45.10</td>
+                    <td style="font-size:11px; color:var(--text-secondary);">${details}</td>
+                `;
+                auditBody.insertBefore(tr, auditBody.firstChild);
+            }
+        }
+
+        // Toast Helper
+        function showAdminToast(msg, icon) {
+            let toast = document.getElementById('adminToastPill');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'adminToastPill';
+                toast.style.cssText = 'position:fixed; bottom:24px; right:24px; background:#0E1216; border:1px solid #C7FF3D; color:#F8FAFC; padding:12px 18px; border-radius:10px; font-size:12px; font-weight:800; z-index:9999; box-shadow:0 12px 30px rgba(0,0,0,0.7); display:flex; align-items:center; gap:8px; animation:modalPop 0.2s ease;';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = (icon ? '<span>' + icon + '</span> ' : '<span>✓</span> ') + msg;
+            toast.style.display = 'flex';
+            setTimeout(() => { toast.style.display = 'none'; }, 3500);
+        }
+
+        function refreshPlatformMetrics() {
+            showAdminToast('Telemetry synched: 142 live rides · 418 online captains · 1 SOS');
+        }
+
+        function callRiderDirect(phone) {
+            alert('Connecting direct VoIP line to rider ' + phone + '...');
+        }
+
+        function callPoliceDispatch() {
+            alert('Emergency Law Enforcement Bridge Connected:\n\nDispatching unit to: Outer Ring Road Hyderabad Km 24.\nPolice PCR Van 14 telemetry active.');
+        }
+
+        function adjustRiderWallet(riderId, name) {
+            const amount = prompt('Enter wallet adjustment amount for ' + name + ' (e.g., 500):', '500');
+            if (amount) {
+                recordAuditEvent('RIDER_WALLET_CREDIT', riderId + ' (' + name + ')', 'Credited ₹' + amount + ' by ' + currentRole);
+                showAdminToast('✓ ₹' + amount + ' credited to ' + name + ' RDA wallet!');
+            }
+        }
+
+        function viewRiderDetails(riderId) {
+            showAdminToast('Loading verified vehicle papers & profile for ' + riderId);
+        }
+
+        function exportAuditVault() {
+            showAdminToast('Exporting cryptographic audit vault (CSV formatted)...');
+        }
+
+        function handleGlobalSearch(e) {
+            const q = e.target.value.toLowerCase().trim();
+            if (!q) return;
+            if (e.key === 'Enter') {
+                showAdminToast('Filtered platform records matching: "' + q + '"');
+            }
+        }
+
+        // Listen for keyboard shortcuts (Ctrl+K or Cmd+K)
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                document.getElementById('globalSearchInput')?.focus();
+            }
+        });
+
+        // Initialize view based on URL hash if present
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById('view-' + hash)) {
+                navToView(hash);
+            } else {
+                navToView('overview');
+            }
+        });
+  
+</script>
+</body>
+</html>
+  

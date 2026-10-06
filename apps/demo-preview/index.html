@@ -2416,6 +2416,7 @@
                     <button class="switch-btn active" id="btnModeWeb" onclick="setPlatformMode('web')">Web Platform</button>
                     <button class="switch-btn" id="btnModeRider" onclick="setPlatformMode('rider')">Rider App</button>
                     <button class="switch-btn" id="btnModeDriver" onclick="setPlatformMode('driver')">Captain OS</button>
+                    <a class="switch-btn" id="btnModeAdmin" href="/admin" target="_blank" title="Open Enterprise Command Center (RBAC)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--accent);">🛡️ Admin Center</a>
                 </div>
 
                 <button class="action-icon-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode">
@@ -4041,6 +4042,8 @@
                 }
                 switchAppMode('driver');
                 showToast('Driver App Studio Loaded');
+            } else if (mode === 'admin') {
+                window.location.href = '/admin';
             }
         }
 

@@ -334,6 +334,30 @@
   ],
   "apiLogs": [
     {
+      "time": "8:29:34 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/surge/update",
+      "status": 200
+    },
+    {
+      "time": "8:29:34 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/verify",
+      "status": 200
+    },
+    {
+      "time": "8:29:34 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/suspend",
+      "status": 200
+    },
+    {
+      "time": "8:26:54 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/action",
+      "status": 200
+    },
+    {
       "time": "11:22:27 pm",
       "method": "GET",
       "endpoint": "/api/v1/db/inspect",
@@ -379,7 +403,11 @@
       "ownerRating": 4.9,
       "location": "Koramangala 4th Block, Bengaluru",
       "doorstepFee": 199,
-      "rules": ["Min Age 21", "Original DL Required", "Zero Smoking"],
+      "rules": [
+        "Min Age 21",
+        "Original DL Required",
+        "Zero Smoking"
+      ],
       "available": true
     },
     {
@@ -402,7 +430,10 @@
       "ownerRating": 4.92,
       "location": "Indiranagar, Bengaluru",
       "doorstepFee": 250,
-      "rules": ["Original DL Required", "Speed Limit 100 km/h"],
+      "rules": [
+        "Original DL Required",
+        "Speed Limit 100 km/h"
+      ],
       "available": true
     },
     {
@@ -426,7 +457,10 @@
       "ownerRating": 4.88,
       "location": "HSR Layout, Bengaluru",
       "doorstepFee": 199,
-      "rules": ["Fast charger cable included", "Min 20% return charge"],
+      "rules": [
+        "Fast charger cable included",
+        "Min 20% return charge"
+      ],
       "available": true
     },
     {
@@ -449,7 +483,10 @@
       "ownerRating": 4.9,
       "location": "Koramangala 6th Block, Bengaluru",
       "doorstepFee": 99,
-      "rules": ["Sanitized helmet included", "Valid 2-wheeler DL"],
+      "rules": [
+        "Sanitized helmet included",
+        "Valid 2-wheeler DL"
+      ],
       "available": true
     },
     {
@@ -473,7 +510,10 @@
       "ownerRating": 4.95,
       "location": "Indiranagar, Bengaluru",
       "doorstepFee": 79,
-      "rules": ["Dot home charger included", "Free helmet"],
+      "rules": [
+        "Dot home charger included",
+        "Free helmet"
+      ],
       "available": true
     },
     {
@@ -496,7 +536,10 @@
       "ownerRating": 4.9,
       "location": "Whitefield, Bengaluru",
       "doorstepFee": 299,
-      "rules": ["Ideal for family road trips", "AC climate control"],
+      "rules": [
+        "Ideal for family road trips",
+        "AC climate control"
+      ],
       "available": true
     }
   ],
@@ -527,6 +570,455 @@
         "customerSigned": true,
         "partnerSigned": true
       }
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-9012",
+      "type": "SOS_EMERGENCY",
+      "severity": "CRITICAL",
+      "status": "UNDER_INVESTIGATION",
+      "tripId": "BK-8821",
+      "serviceMode": "CAB_SEDAN",
+      "rider": {
+        "id": "u-101",
+        "name": "Arjun Verma",
+        "phone": "+91 98101 23456"
+      },
+      "driver": {
+        "id": "d-201",
+        "name": "Rajesh Kumar",
+        "phone": "+91 98111 56789",
+        "vehiclePlate": "DL 01 AB 9988"
+      },
+      "location": "Outer Ring Road, near Gachibowli Junction, Hyderabad",
+      "coordinates": [
+        17.439,
+        78.348
+      ],
+      "triggerTime": "2026-10-06T19:42:10.000Z",
+      "notes": "Rider triggered SOS via app. Vehicle stopped for > 8 mins in unauthorized highway shoulder. Police PCR van 14 notified.",
+      "assignedOfficer": "Capt. Digvijay Singh",
+      "actionTaken": "Direct voice link active; Driver reports flat tire on right rear. PCR unit on site verifying safety."
+    },
+    {
+      "id": "INC-9013",
+      "type": "ROUTE_DEVIATION",
+      "severity": "MEDIUM",
+      "status": "RESOLVED",
+      "tripId": "BK-8824",
+      "serviceMode": "HIRE_DRIVER",
+      "rider": {
+        "id": "u-102",
+        "name": "Priya Sharma",
+        "phone": "+91 98765 43210"
+      },
+      "driver": {
+        "id": "d-202",
+        "name": "Suresh Rawat",
+        "phone": "+91 98712 34567",
+        "vehiclePlate": "KA 01 AB 1234"
+      },
+      "location": "NH 44 Expressway Bypass",
+      "coordinates": [
+        17.385,
+        78.4867
+      ],
+      "triggerTime": "2026-10-06T18:15:00.000Z",
+      "notes": "Telemetry detected 4.2 km deviation from designated corridor.",
+      "assignedOfficer": "Safety Response Team",
+      "actionTaken": "Driver contacted; road closure due to flyover construction. Rider confirmed alternate route consent."
+    },
+    {
+      "id": "INC-9014",
+      "type": "SUSPICIOUS_METER_JUMP",
+      "severity": "LOW",
+      "status": "PENDING_REVIEW",
+      "tripId": "BK-8829",
+      "serviceMode": "AUTO",
+      "rider": {
+        "id": "u-9054",
+        "name": "Amit Sharma",
+        "phone": "+91 99887 76655"
+      },
+      "driver": {
+        "id": "d-203",
+        "name": "Mohan Lal",
+        "phone": "+91 98220 11223",
+        "vehiclePlate": "TS 09 UA 4120"
+      },
+      "location": "Madhapur Metro Pillar 122",
+      "coordinates": [
+        17.448,
+        78.382
+      ],
+      "triggerTime": "2026-10-06T17:30:00.000Z",
+      "notes": "Automated GPS telemetry vs manual auto fare discrepancy reported.",
+      "assignedOfficer": "Support Queue",
+      "actionTaken": "Fare hold applied; reviewing odometer telemetry."
+    }
+  ],
+  "supportTickets": [
+    {
+      "id": "TCK-4401",
+      "subject": "Driver arrived with different car model than booked",
+      "category": "VEHICLE_MISMATCH",
+      "priority": "HIGH",
+      "status": "OPEN",
+      "userType": "RIDER",
+      "userName": "Aditya Sharma",
+      "userPhone": "+91 98765 43210",
+      "bookingId": "BK-8840",
+      "createdAt": "2026-10-06T18:45:00.000Z",
+      "messages": [
+        {
+          "sender": "Aditya Sharma",
+          "time": "18:45",
+          "text": "I booked a Honda City Sedan, but driver arrived in a smaller hatchback."
+        }
+      ]
+    },
+    {
+      "id": "TCK-4402",
+      "subject": "Fastag toll deduction dispute on Airport Expressway",
+      "category": "PAYMENT_DISPUTE",
+      "priority": "MEDIUM",
+      "status": "IN_PROGRESS",
+      "userType": "DRIVER",
+      "userName": "Rohit Sharma",
+      "userPhone": "+91 98111 22334",
+      "bookingId": "BK-8835",
+      "createdAt": "2026-10-06T17:10:00.000Z",
+      "messages": [
+        {
+          "sender": "Rohit Sharma",
+          "time": "17:10",
+          "text": "Airport toll ₹105 was deducted twice from my fastag wallet during trip."
+        }
+      ]
+    },
+    {
+      "id": "TCK-4403",
+      "subject": "Deposit refund for Honda City self-drive rental",
+      "category": "RENTAL_DEPOSIT",
+      "priority": "MEDIUM",
+      "status": "RESOLVED",
+      "userType": "RIDER",
+      "userName": "Vikram Malhotra",
+      "userPhone": "+91 99887 76655",
+      "bookingId": "RNT-101",
+      "createdAt": "2026-10-06T14:20:00.000Z",
+      "messages": [
+        {
+          "sender": "Vikram Malhotra",
+          "time": "14:20",
+          "text": "Vehicle returned with 100% clean inspection. Awaiting security deposit release."
+        },
+        {
+          "sender": "Rental Desk",
+          "time": "14:45",
+          "text": "Inspection verified. ₹5,000 security deposit refunded via IMPS transaction #RNT-REF-9921."
+        }
+      ]
+    }
+  ],
+  "surgeZones": [
+    {
+      "id": "ZONE-HYD-01",
+      "name": "Hitech City & Cyber Towers",
+      "city": "Hyderabad",
+      "centerCoords": [
+        17.4474,
+        78.3762
+      ],
+      "radiusKm": 4.5,
+      "activeMultiplier": 1.6,
+      "demandLevel": "EXTREME_HIGH",
+      "activeDrivers": 42,
+      "pendingRequests": 68,
+      "status": "SURGE_ACTIVE",
+      "reason": "Evening IT tech park departure peak"
+    },
+    {
+      "id": "ZONE-HYD-02",
+      "name": "Gachibowli Financial District",
+      "city": "Hyderabad",
+      "centerCoords": [
+        17.42,
+        78.345
+      ],
+      "radiusKm": 5,
+      "activeMultiplier": 1.4,
+      "demandLevel": "HIGH",
+      "activeDrivers": 38,
+      "pendingRequests": 47,
+      "status": "SURGE_ACTIVE",
+      "reason": "High corporate demand"
+    },
+    {
+      "id": "ZONE-HYD-03",
+      "name": "Banjara Hills / Jubilee Hills",
+      "city": "Hyderabad",
+      "centerCoords": [
+        17.4325,
+        78.4073
+      ],
+      "radiusKm": 3.5,
+      "activeMultiplier": 1.2,
+      "demandLevel": "NORMAL",
+      "activeDrivers": 55,
+      "pendingRequests": 32,
+      "status": "NORMAL",
+      "reason": "Balanced supply/demand"
+    },
+    {
+      "id": "ZONE-HYD-04",
+      "name": "RGIA Airport Expressway Corridor",
+      "city": "Hyderabad",
+      "centerCoords": [
+        17.2403,
+        78.4294
+      ],
+      "radiusKm": 8,
+      "activeMultiplier": 1.3,
+      "demandLevel": "HIGH",
+      "activeDrivers": 29,
+      "pendingRequests": 36,
+      "status": "SURGE_ACTIVE",
+      "reason": "Late flight arrivals window"
+    }
+  ],
+  "corporateAccounts": [
+    {
+      "id": "CORP-101",
+      "companyName": "Infosys Technologies Ltd",
+      "city": "Hyderabad & Bengaluru",
+      "gstNumber": "36AAACI1234F1Z5",
+      "plan": "ENTERPRISE_PREMIUM",
+      "activeEmployees": 342,
+      "monthlyCreditLimit": 1500000,
+      "currentMonthSpend": 842150,
+      "paymentCycle": "NET_30",
+      "status": "ACTIVE",
+      "policy": "Sedan & Chauffeur only; Auto capped at ₹250"
+    },
+    {
+      "id": "CORP-102",
+      "companyName": "Deloitte US-India Offices",
+      "city": "Hyderabad",
+      "gstNumber": "36AAACD9876E1Z9",
+      "plan": "ENTERPRISE_ELITE",
+      "activeEmployees": 512,
+      "monthlyCreditLimit": 2500000,
+      "currentMonthSpend": 1640900,
+      "paymentCycle": "NET_15",
+      "status": "ACTIVE",
+      "policy": "24/7 Airport transfer + Outstation client visits permitted"
+    },
+    {
+      "id": "CORP-103",
+      "companyName": "Tata Consultancy Services",
+      "city": "Delhi NCR / Hyderabad",
+      "gstNumber": "07AAACT4321C1Z2",
+      "plan": "ENTERPRISE_STANDARD",
+      "activeEmployees": 218,
+      "monthlyCreditLimit": 1000000,
+      "currentMonthSpend": 412300,
+      "paymentCycle": "NET_30",
+      "status": "ACTIVE",
+      "policy": "Night shift safe chauffeur protocol mandatory"
+    }
+  ],
+  "adminUsers": [
+    {
+      "id": "ADM-001",
+      "name": "Vikram Malhotra",
+      "email": "vikram.m@ridedriveahead.com",
+      "role": "SUPER_ADMIN",
+      "department": "Executive Leadership",
+      "scopes": [
+        "*"
+      ],
+      "lastLogin": "2026-10-06T19:55:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ADM-002",
+      "name": "Rohan Mehta",
+      "email": "rohan.m@ridedriveahead.com",
+      "role": "OPERATIONS_ADMIN",
+      "department": "Fleet & Dispatch Operations",
+      "scopes": [
+        "ops:rides:read",
+        "ops:rides:write",
+        "ops:drivers:manage",
+        "ops:live:telemetry"
+      ],
+      "lastLogin": "2026-10-06T19:12:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ADM-003",
+      "name": "Neha Kapoor",
+      "email": "neha.k@ridedriveahead.com",
+      "role": "FINANCE_ADMIN",
+      "department": "Finance & Accounts",
+      "scopes": [
+        "fin:payments:read",
+        "fin:payouts:execute",
+        "fin:refunds:approve",
+        "fin:gst:export"
+      ],
+      "lastLogin": "2026-10-06T18:30:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ADM-004",
+      "name": "Capt. Digvijay Singh",
+      "email": "digvijay.s@ridedriveahead.com",
+      "role": "SAFETY_ADMIN",
+      "department": "Safety & Vigilance",
+      "scopes": [
+        "safety:sos:dispatch",
+        "safety:incidents:manage",
+        "safety:kyc:verify",
+        "safety:police:bridge"
+      ],
+      "lastLogin": "2026-10-06T19:40:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ADM-005",
+      "name": "Ananya Roy",
+      "email": "ananya.r@ridedriveahead.com",
+      "role": "SUPPORT_ADMIN",
+      "department": "Customer Experience",
+      "scopes": [
+        "support:tickets:read",
+        "support:tickets:reply",
+        "support:riders:view",
+        "support:drivers:view"
+      ],
+      "lastLogin": "2026-10-06T19:05:00.000Z",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "ADM-006",
+      "name": "Karthik Sundaram",
+      "email": "karthik.s@ridedriveahead.com",
+      "role": "RENTAL_ADMIN",
+      "department": "Rental Marketplace",
+      "scopes": [
+        "rental:vehicles:manage",
+        "rental:owners:verify",
+        "rental:bookings:approve",
+        "rental:deposits:release"
+      ],
+      "lastLogin": "2026-10-06T17:50:00.000Z",
+      "status": "ACTIVE"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "AUD-42262",
+      "timestamp": "2026-10-06T14:59:34.690Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "d-102",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-73118",
+      "timestamp": "2026-10-06T14:59:34.671Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "d-101",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "High cancellation spike"
+      }
+    },
+    {
+      "id": "AUD-95930",
+      "timestamp": "2026-10-06T14:56:54.742Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DISPATCH_OVERRIDE",
+      "targetResource": "BOOKING",
+      "targetId": "CHF-1049",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {
+        "priority": "URGENT",
+        "reason": "VIP Corporate Guest"
+      }
+    },
+    {
+      "id": "AUD-8801",
+      "timestamp": "2026-10-06T19:45:12.000Z",
+      "adminName": "Capt. Digvijay Singh",
+      "adminRole": "SAFETY_ADMIN",
+      "ipAddress": "103.212.45.18",
+      "action": "SOS_INCIDENT_ESCALATION",
+      "targetResource": "INC-9012 (Outer Ring Road SOS)",
+      "status": "SUCCESS",
+      "details": "Dispatched police patrol PCR unit 14 and notified rider emergency contact"
+    },
+    {
+      "id": "AUD-8802",
+      "timestamp": "2026-10-06T19:30:20.000Z",
+      "adminName": "Rohan Mehta",
+      "adminRole": "OPERATIONS_ADMIN",
+      "ipAddress": "103.212.45.22",
+      "action": "SURGE_MULTIPLIER_UPDATE",
+      "targetResource": "ZONE-HYD-01 (Hitech City)",
+      "status": "SUCCESS",
+      "details": "Adjusted surge multiplier from 1.4x to 1.6x due to tech park departure wave"
+    },
+    {
+      "id": "AUD-8803",
+      "timestamp": "2026-10-06T18:55:04.000Z",
+      "adminName": "Neha Kapoor",
+      "adminRole": "FINANCE_ADMIN",
+      "ipAddress": "103.212.45.31",
+      "action": "DRIVER_BATCH_PAYOUT",
+      "targetResource": "PAYOUT-BATCH-20261006",
+      "status": "SUCCESS",
+      "details": "Executed IMPS instant settlement of ₹4,82,350 to 142 online captains"
+    },
+    {
+      "id": "AUD-8804",
+      "timestamp": "2026-10-06T18:15:40.000Z",
+      "adminName": "Karthik Sundaram",
+      "adminRole": "RENTAL_ADMIN",
+      "ipAddress": "103.212.45.19",
+      "action": "RENTAL_DEPOSIT_RELEASE",
+      "targetResource": "RNT-101 (Honda City ZX)",
+      "status": "SUCCESS",
+      "details": "Released security deposit ₹5,000 after zero-damage inspection review"
+    },
+    {
+      "id": "AUD-8805",
+      "timestamp": "2026-10-06T17:40:15.000Z",
+      "adminName": "Vikram Malhotra",
+      "adminRole": "SUPER_ADMIN",
+      "ipAddress": "103.212.45.10",
+      "action": "DRIVER_SUSPENSION",
+      "targetResource": "d-209 (M. Irfan)",
+      "status": "SUCCESS",
+      "details": "Temporary 24h suspension due to high cancellation rate (38%)"
     }
   ]
 }

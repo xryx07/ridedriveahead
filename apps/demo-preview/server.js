@@ -289,8 +289,97 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 404, { success: false, message: 'No active booking' }, method, pathname);
   }
 
+  // 13. ADMIN COMMAND CENTER ACTION AUDIT & MUTATION
+  if (pathname === '/api/v1/admin/action' && method === 'POST') {
+    const body = await parseJsonBody(req);
+    const db = readDb();
+    if (!db.auditLogs) db.auditLogs = [];
+    const logEntry = {
+      id: 'AUD-' + Math.floor(10000 + Math.random() * 90000),
+      timestamp: new Date().toISOString(),
+      adminId: body.adminId || 'ADM-001',
+      adminName: body.adminName || 'Super Admin',
+      role: body.role || 'SUPER_ADMIN',
+      action: body.action || 'ADMIN_ACTION',
+      targetResource: body.targetResource || 'SYSTEM',
+      targetId: body.targetId || 'N/A',
+      ipAddress: req.socket.remoteAddress || '10.0.4.88',
+      status: 'SUCCESS',
+      metadata: body.metadata || {}
+    };
+    db.auditLogs.unshift(logEntry);
+    writeDb(db);
+    return sendJson(res, 200, { success: true, logEntry }, method, pathname);
+  }
+
+  // 14. ADMIN DRIVER SUSPENSION
+  if (pathname === '/api/v1/admin/driver/suspend' && method === 'POST') {
+    const body = await parseJsonBody(req);
+    const db = readDb();
+    const driver = (db.drivers || []).find(d => d.id === body.driverId);
+    if (driver) {
+      driver.isOnline = false;
+      driver.suspended = true;
+      driver.suspensionReason = body.reason || 'Safety investigation';
+    }
+    if (!db.auditLogs) db.auditLogs = [];
+    db.auditLogs.unshift({
+      id: 'AUD-' + Math.floor(10000 + Math.random() * 90000),
+      timestamp: new Date().toISOString(),
+      adminId: body.adminId || 'ADM-001',
+      adminName: body.adminName || 'Super Admin',
+      role: body.role || 'SUPER_ADMIN',
+      action: 'DRIVER_SUSPENDED',
+      targetResource: 'DRIVER',
+      targetId: body.driverId,
+      ipAddress: '10.0.4.88',
+      status: 'SUCCESS',
+      metadata: { reason: body.reason, duration: body.duration }
+    });
+    writeDb(db);
+    return sendJson(res, 200, { success: true, message: `Driver ${body.driverId} suspended` }, method, pathname);
+  }
+
+  // 15. ADMIN DRIVER VERIFY KYC
+  if (pathname === '/api/v1/admin/driver/verify' && method === 'POST') {
+    const body = await parseJsonBody(req);
+    const db = readDb();
+    const driver = (db.drivers || []).find(d => d.id === body.driverId);
+    if (driver) {
+      driver.kycStatus = 'VERIFIED';
+    }
+    if (!db.auditLogs) db.auditLogs = [];
+    db.auditLogs.unshift({
+      id: 'AUD-' + Math.floor(10000 + Math.random() * 90000),
+      timestamp: new Date().toISOString(),
+      adminId: body.adminId || 'ADM-004',
+      adminName: body.adminName || 'Safety Admin',
+      role: body.role || 'SAFETY_ADMIN',
+      action: 'KYC_APPROVED',
+      targetResource: 'DRIVER',
+      targetId: body.driverId,
+      ipAddress: '10.0.4.88',
+      status: 'SUCCESS',
+      metadata: { notes: 'Aadhaar + DL verified successfully' }
+    });
+    writeDb(db);
+    return sendJson(res, 200, { success: true, message: `Driver ${body.driverId} verified` }, method, pathname);
+  }
+
+  // 16. ADMIN SURGE UPDATE
+  if (pathname === '/api/v1/admin/surge/update' && method === 'POST') {
+    const body = await parseJsonBody(req);
+    const db = readDb();
+    const zone = (db.surgeZones || []).find(z => z.id === body.zoneId);
+    if (zone) {
+      zone.currentSurge = parseFloat(body.multiplier);
+    }
+    writeDb(db);
+    return sendJson(res, 200, { success: true, message: 'Surge multiplier updated', zone }, method, pathname);
+  }
+
   // ========================================================
-  // SERVE SIMULATOR HTML FILE
+  // SERVE SIMULATOR & ADMIN HTML FILES
   // ========================================================
   if (pathname === '/' || pathname === '/index.html') {
     const htmlPath = path.join(__dirname, 'index.html');
@@ -298,6 +387,20 @@ const server = http.createServer(async (req, res) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
         res.end('Error loading preview: ' + err.message);
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+    return;
+  }
+
+  if (pathname === '/admin' || pathname === '/admin.html') {
+    const adminPath = path.join(__dirname, 'admin.html');
+    fs.readFile(adminPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading admin preview: ' + err.message);
         return;
       }
       res.writeHead(200, { 'Content-Type': 'text/html' });
