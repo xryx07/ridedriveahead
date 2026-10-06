@@ -770,7 +770,7 @@
                 🌙
             </button>
 
-            <!-- Admin Profile Menu -->
+            <!-- Admin Profile Menu & Multi-Portal Switcher -->
             <div style="display:flex; align-items:center; gap:8px; border-left:1px solid var(--border); padding-left:12px;">
                 <div style="width:34px; height:34px; border-radius:50%; background:var(--surface-2); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:var(--accent);">
                     VM
@@ -779,7 +779,10 @@
                     <div style="font-size:12px; font-weight:800; color:var(--text-primary);" id="adminProfileName">Vikram M.</div>
                     <div style="font-size:10px; color:var(--text-muted);" id="adminProfileRole">Super Admin</div>
                 </div>
-                <a href="/" style="font-size:11px; font-weight:700; color:var(--accent); margin-left:6px;" title="Return to Passenger Portal">Exit →</a>
+                <div style="display:flex; align-items:center; gap:6px; margin-left:8px;">
+                    <a href="/" class="btn-action-neutral" style="text-decoration:none; padding:5px 9px; font-size:11px; font-weight:700;" title="Customer Booking Web">🌐 Customer Web</a>
+                    <a href="/driver" class="btn-action-neutral" style="text-decoration:none; padding:5px 9px; font-size:11px; font-weight:700;" title="Captain Driver Portal">🚖 Captain Portal</a>
+                </div>
             </div>
         </div>
     </header>
@@ -967,27 +970,28 @@
                 </div>
 
                 <!-- 7 KPI Metrics Cards -->
+                <!-- 6 KPI Metrics Cards (Exact Platform Telemetry) -->
                 <div class="kpi-metrics-grid">
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Live Rides & Trips</span>
+                            <span class="kpi-metric-label">Active Rides</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">142</div>
+                        <div class="kpi-metric-val font-mono">2,481</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>▲ +14%</span>
+                            <span>▲ +16.4%</span>
                             <span class="sub-muted">vs 1 hour ago</span>
                         </div>
                     </div>
 
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Active Drivers Online</span>
+                            <span class="kpi-metric-label">Drivers Online</span>
                             <span style="color:var(--success);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">418</div>
+                        <div class="kpi-metric-val font-mono">1,826</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>86%</span>
+                            <span>91.2%</span>
                             <span class="sub-muted">utilization rate</span>
                         </div>
                     </div>
@@ -997,45 +1001,43 @@
                             <span class="kpi-metric-label">Active Rentals</span>
                             <span style="color:var(--info);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17H3v-4l2-4h10l2 4v4h-2"/><path d="M18 6l2-2m-2 0l2 2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">48</div>
+                        <div class="kpi-metric-val font-mono">342</div>
                         <div class="kpi-metric-sub sub-muted">
-                            <span>₹ 1,850/day avg rate</span>
+                            <span>Cars & Bikes on Road</span>
                         </div>
                     </div>
 
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Express Deliveries</span>
-                            <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4L7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55l8.95-5.16a1.78 1.78 0 0 0 0-3.16z"/><polyline points="3.29 7 12 12 20.71 7"/></svg></span>
-                        </div>
-                        <div class="kpi-metric-val font-mono">89</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>98.4%</span>
-                            <span class="sub-muted">on-time SLA</span>
-                        </div>
-                    </div>
-
-                    <div class="kpi-metric-card">
-                        <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Today Gross Revenue</span>
+                            <span class="kpi-metric-label">Revenue Today</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><circle cx="18" cy="16" r="2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 4,82,350</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 8.42L</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>▲ +18.2%</span>
+                            <span>▲ +21.5%</span>
                             <span class="sub-muted">vs yesterday</span>
                         </div>
                     </div>
 
-                    <div class="kpi-metric-card">
+                    <div class="kpi-metric-card" style="border-color:rgba(239, 68, 68, 0.35);">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Cancellation Rate</span>
-                            <span style="color:var(--text-muted);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
+                            <span class="kpi-metric-label">Safety Incidents</span>
+                            <span style="color:var(--danger);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">2.1%</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>▼ -0.8%</span>
-                            <span class="sub-muted">within healthy threshold</span>
+                        <div class="kpi-metric-val font-mono" style="color:var(--danger);">3</div>
+                        <div class="kpi-metric-sub" style="color:var(--danger);">
+                            <span>1 Critical (PCR Bridged)</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card" style="border-color:rgba(245, 158, 11, 0.35);">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Payment Issues</span>
+                            <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--warning);">12</div>
+                        <div class="kpi-metric-sub" style="color:var(--warning);">
+                            <span>Pending Gateway Reconciliation</span>
                         </div>
                     </div>
                 </div>

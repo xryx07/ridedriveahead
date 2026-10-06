@@ -2384,6 +2384,23 @@
     <!-- =========================================================
          SITE HEADER
          ========================================================= -->
+    
+    <!-- ECOSYSTEM MULTI-EXPERIENCE SWITCHER BAR -->
+    <div style="height:36px; background:rgba(0,0,0,0.5); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 24px; font-size:11px; font-weight:700;">
+        <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--text-muted);">RideDriveAhead Unified Ecosystem</span>
+            <span style="color:var(--border);">|</span>
+            <span style="color:var(--accent);">ridedriveahead.com · Customer Web Experience</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <a href="/" style="color:var(--accent); text-decoration:none; font-weight:800;">🌐 Customer Web</a>
+            <span style="color:var(--border);">•</span>
+            <a href="/driver" target="_blank" style="color:var(--text-secondary); text-decoration:none;">🚖 Captain Portal (driver.ridedriveahead.com)</a>
+            <span style="color:var(--border);">•</span>
+            <a href="/admin" target="_blank" style="color:var(--text-secondary); text-decoration:none;">🛡️ Admin Command Center (admin.ridedriveahead.com)</a>
+        </div>
+    </div>
+
     <header class="site-header">
         <div class="container header-inner">
             <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
@@ -2407,16 +2424,20 @@
                 <a href="#outstation" class="nav-item" onclick="selectService('outstation')">Outstation</a>
                 <a href="#airport" class="nav-item" onclick="selectService('airport')">Airport</a>
                 <a href="#delivery" class="nav-item" onclick="selectService('delivery')">Delivery</a>
-                <a href="#business" class="nav-item">Business</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerTripsModal')">My Trips</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerRentalsModal')">My Rentals</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerWalletModal')">Wallet</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerRewardsModal')">Rewards</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerSafetyModal')">Safety</a>
+                <a href="javascript:void(0)" class="nav-item" onclick="openCustomerModal('customerSupportModal')">Support</a>
             </nav>
 
             <div class="header-actions">
                 <!-- App Studio & Platform Mode Switcher -->
                 <div class="platform-switcher-pill">
-                    <button class="switch-btn active" id="btnModeWeb" onclick="setPlatformMode('web')">Web Platform</button>
-                    <button class="switch-btn" id="btnModeRider" onclick="setPlatformMode('rider')">Rider App</button>
-                    <button class="switch-btn" id="btnModeDriver" onclick="setPlatformMode('driver')">Captain OS</button>
-                    <a class="switch-btn" id="btnModeAdmin" href="/admin" target="_blank" title="Open Enterprise Command Center (RBAC)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--accent);">🛡️ Admin Center</a>
+                    <button class="switch-btn active" id="btnModeWeb" onclick="setPlatformMode('web')">🌐 Customer Web</button>
+                    <a class="switch-btn" id="btnModeDriver" href="/driver" target="_blank" title="Open Captain Portal (driver.ridedriveahead.com)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--text-secondary);">🚖 Captain Portal</a>
+                    <a class="switch-btn" id="btnModeAdmin" href="/admin" target="_blank" title="Open Enterprise Command Center (admin.ridedriveahead.com)" style="text-decoration:none; display:inline-flex; align-items:center; gap:5px; color:var(--accent);">🛡️ Admin Center</a>
                 </div>
 
                 <button class="action-icon-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode">
@@ -3690,6 +3711,12 @@
             showToast('⚠ Emergency SOS Triggered! Real-time GPS transmitted to Police Dispatch (112) & Emergency Contacts', '⚠');
         }
 
+        
+        function openCustomerModal(modalId) {
+            const elem = document.getElementById(modalId);
+            if (elem) elem.style.display = 'flex';
+        }
+    
         function closeModal(modalId) {
             const elem = document.getElementById(modalId);
             if (elem) elem.style.display = 'none';
@@ -6149,5 +6176,307 @@
 
         </div> <!-- /container -->
     </section>
+
+    <!-- =========================================================
+         CUSTOMER PORTAL DEDICATED MODALS (ridedriveahead.com)
+         ========================================================= -->
+    
+    <!-- 1. MY TRIPS MODAL -->
+    <div class="modal-backdrop" id="customerTripsModal" style="display:none;" onclick="closeModal('customerTripsModal')">
+        <div class="modal-card-elevated" style="max-width: 620px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">🚕</span>
+                    <span style="font-size:17px; font-weight:800;">My Trips & Active Bookings</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerTripsModal')">✕</button>
+            </div>
+
+            <!-- Active Trip Live Card -->
+            <div style="background:var(--surface-3); border:1.5px solid var(--accent); border-radius:14px; padding:18px; margin-bottom:20px; box-shadow:0 0 20px rgba(199,255,61,0.12);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <span class="status-badge" style="background:rgba(16,185,129,0.15); color:#10B981; font-weight:800; font-size:11px; padding:3px 10px; border-radius:100px;">● CAPTAIN EN ROUTE (4 MINS AWAY)</span>
+                    <span style="font-size:12px; font-family:'JetBrains Mono', monospace; color:var(--text-muted);">CAB-4820</span>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                    <div style="width:44px; height:44px; border-radius:50%; background:var(--surface-2); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; color:var(--accent);">
+                        RK
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-size:15px; font-weight:800;">Rajesh Kumar · ★ 4.8</div>
+                        <div style="font-size:12px; color:var(--text-secondary);">Maruti Swift Dzire (Sedan) · <strong style="color:var(--text-primary); font-family:'JetBrains Mono', monospace;">DL 01 AB 9988</strong></div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">OTP for Captain</div>
+                        <div style="font-size:22px; font-weight:900; color:var(--accent); font-family:'JetBrains Mono', monospace; letter-spacing:2px;">1 2 3 4</div>
+                    </div>
+                </div>
+
+                <div style="font-size:12px; padding:10px 12px; background:var(--surface-2); border-radius:8px; margin-bottom:14px;">
+                    <div style="color:var(--text-muted); font-size:10px; font-weight:700;">ROUTE</div>
+                    <div style="font-weight:700; color:var(--text-primary); margin-top:2px;">DLF CyberCity Gate 2 → Raheja Mindspace IT Park</div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <button class="cta-btn-primary" style="flex:1; justify-content:center; padding:10px; font-size:12px;" onclick="openCustomerModal('chatModalBackdrop')">
+                        💬 Message Captain
+                    </button>
+                    <button class="rental-pill" style="flex:1; justify-content:center; padding:10px; font-size:12px;" onclick="openCustomerModal('callModalBackdrop')">
+                        📞 Call
+                    </button>
+                    <button class="rental-pill" style="padding:10px 14px; font-size:12px; color:#EF4444;" onclick="showToast('Cancellation request submitted')">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Past Trips History -->
+            <div style="font-size:13px; font-weight:800; color:var(--text-muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.04em;">Recent Completed Trips</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:var(--surface-2); border-radius:10px;">
+                    <div>
+                        <div style="font-weight:800; font-size:13px;">Sedan Cab · Yesterday</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Inorbit Mall → Madhapur · Paid via UPI</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-weight:900; font-size:14px; color:var(--accent);">₹ 210</div>
+                        <a href="javascript:void(0)" onclick="showToast('Tax invoice PDF sent to email')" style="font-size:10px; color:var(--text-muted); text-decoration:none;">Download Invoice ↓</a>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:var(--surface-2); border-radius:10px;">
+                    <div>
+                        <div style="font-weight:800; font-size:13px;">Hire Driver (4 Hours) · 02 Oct</div>
+                        <div style="font-weight:700; font-size:11px; color:var(--text-muted);">Personal Honda City AT · Paid via RDA Wallet</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-weight:900; font-size:14px; color:var(--accent);">₹ 549</div>
+                        <a href="javascript:void(0)" onclick="showToast('Tax invoice PDF sent to email')" style="font-size:10px; color:var(--text-muted); text-decoration:none;">Download Invoice ↓</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MY RENTALS MODAL -->
+    <div class="modal-backdrop" id="customerRentalsModal" style="display:none;" onclick="closeModal('customerRentalsModal')">
+        <div class="modal-card-elevated" style="max-width: 540px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">🚗</span>
+                    <span style="font-size:17px; font-weight:800;">My Vehicle Rentals</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerRentalsModal')">✕</button>
+            </div>
+
+            <!-- Active Rental Reservation -->
+            <div style="background:var(--surface-3); border-radius:14px; padding:18px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span class="status-badge" style="background:rgba(56,189,248,0.15); color:#38BDF8; font-weight:800; font-size:11px; padding:3px 10px; border-radius:100px;">ACTIVE RESERVATION</span>
+                    <span style="font-size:12px; font-family:'JetBrains Mono', monospace; color:var(--accent);">RDA-RENT-88412</span>
+                </div>
+                <div style="font-size:16px; font-weight:900;">Honda City ZX (Automatic)</div>
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Registration: <strong style="color:var(--text-primary);">DL 04 EF 5566</strong> · Petrol</div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                    <div style="padding:10px; background:var(--surface-2); border-radius:8px;">
+                        <div style="font-size:10px; color:var(--text-muted); font-weight:700;">HANDOVER TIME</div>
+                        <div style="font-size:12px; font-weight:800;">06 Oct, 10:00 AM</div>
+                    </div>
+                    <div style="padding:10px; background:var(--surface-2); border-radius:8px;">
+                        <div style="font-size:10px; color:var(--text-muted); font-weight:700;">RETURN DUE</div>
+                        <div style="font-size:12px; font-weight:800;">09 Oct, 10:00 AM</div>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:var(--surface-2); border-radius:8px; margin-bottom:14px;">
+                    <div>
+                        <div style="font-size:11px; font-weight:800;">Security Deposit Escrow</div>
+                        <div style="font-size:10px; color:var(--text-muted);">100% Refundable on Return</div>
+                    </div>
+                    <div style="font-weight:900; font-size:14px; color:#10B981;">₹ 5,000 (Locked in Escrow)</div>
+                </div>
+
+                <button class="cta-btn-primary" style="width:100%; justify-content:center; padding:11px; font-size:12px;" onclick="showToast('Rental extension request sent to host')">
+                    Extend Booking Duration (+24h)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. WALLET & PAYMENTS MODAL -->
+    <div class="modal-backdrop" id="customerWalletModal" style="display:none;" onclick="closeModal('customerWalletModal')">
+        <div class="modal-card-elevated" style="max-width: 500px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">💳</span>
+                    <span style="font-size:17px; font-weight:800;">RideDriveAhead Wallet</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerWalletModal')">✕</button>
+            </div>
+
+            <div style="background:linear-gradient(135deg, rgba(199,255,61,0.12), rgba(16,185,129,0.06)); border:1px solid rgba(199,255,61,0.25); border-radius:14px; padding:22px; margin-bottom:18px; text-align:center;">
+                <div style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em;">Available Balance</div>
+                <div style="font-size:36px; font-weight:900; color:var(--accent); font-family:'JetBrains Mono', monospace; margin:4px 0;">₹ 1,450.00</div>
+                <div style="font-size:11px; color:#10B981; font-weight:700;">✓ Instant 1-Click Zero-Surge Checkout</div>
+            </div>
+
+            <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Quick Top Up Balance</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:18px;">
+                <button class="rental-pill" style="justify-content:center; font-weight:800;" onclick="showToast('₹500 added to RDA Wallet!')">+ ₹500</button>
+                <button class="rental-pill active" style="justify-content:center; font-weight:800;" onclick="showToast('₹1,000 added to RDA Wallet!')">+ ₹1,000</button>
+                <button class="rental-pill" style="justify-content:center; font-weight:800;" onclick="showToast('₹2,000 added to RDA Wallet!')">+ ₹2,000</button>
+            </div>
+
+            <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Saved Payment Methods</div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--surface-2); border-radius:8px;">
+                    <div style="font-size:13px; font-weight:700;">Google Pay UPI (arjun@okaxis)</div>
+                    <span style="font-size:10px; color:#10B981; font-weight:800;">PRIMARY</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--surface-2); border-radius:8px;">
+                    <div style="font-size:13px; font-weight:700;">HDFC Regalia Credit Card (****8910)</div>
+                    <span style="font-size:10px; color:var(--text-muted);">VISA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. REWARDS & RIDEPASS MODAL -->
+    <div class="modal-backdrop" id="customerRewardsModal" style="display:none;" onclick="closeModal('customerRewardsModal')">
+        <div class="modal-card-elevated" style="max-width: 480px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">🎁</span>
+                    <span style="font-size:17px; font-weight:800;">Rewards & RidePass</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerRewardsModal')">✕</button>
+            </div>
+
+            <div style="background:var(--surface-3); border:1px solid var(--border); border-radius:14px; padding:18px; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:15px; font-weight:900; color:var(--accent);">RDA RidePass Plus</span>
+                    <span style="font-size:10px; font-weight:800; background:rgba(199,255,61,0.15); color:var(--accent); padding:2px 8px; border-radius:100px;">ACTIVE</span>
+                </div>
+                <div style="font-size:12px; color:var(--text-secondary); margin-bottom:10px;">Zero surge multiplier on all Cabs & Autos · 18 days remaining</div>
+                <div style="height:6px; background:var(--surface-2); border-radius:100px; overflow:hidden;">
+                    <div style="width:60%; height:100%; background:var(--accent);"></div>
+                </div>
+            </div>
+
+            <div style="padding:16px; background:var(--surface-2); border-radius:12px; text-align:center;">
+                <div style="font-size:12px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Your Referral Code</div>
+                <div style="font-size:24px; font-weight:900; color:var(--text-primary); font-family:'JetBrains Mono', monospace; margin:6px 0;">DRIVEAHEAD100</div>
+                <div style="font-size:11px; color:var(--text-secondary); margin-bottom:12px;">Share with friends: They get ₹100 off their first ride, and you get ₹100 in your wallet.</div>
+                <button class="cta-btn-primary" style="width:100%; justify-content:center; padding:10px; font-size:12px;" onclick="showToast('Referral link copied to clipboard!')">
+                    Copy Referral Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. SAFETY CENTER MODAL -->
+    <div class="modal-backdrop" id="customerSafetyModal" style="display:none;" onclick="closeModal('customerSafetyModal')">
+        <div class="modal-card-elevated" style="max-width: 500px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">🛡️</span>
+                    <span style="font-size:17px; font-weight:800;">RideDriveAhead Safety Guardian</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerSafetyModal')">✕</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:18px;">
+                <div style="padding:14px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.25); border-radius:10px;">
+                    <div style="font-size:13px; font-weight:800; color:#10B981;">✓ 24/7 Live Route Telemetry Monitored</div>
+                    <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">Our Operations Command Center monitors unannounced stops and route deviations in real-time.</div>
+                </div>
+
+                <div style="padding:14px; background:var(--surface-2); border-radius:10px;">
+                    <div style="font-size:13px; font-weight:800;">Emergency Trusted Contacts</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Pooja Verma (+91 98765 00001) · Auto-SMS ride link enabled</div>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+                <button class="cta-btn-primary" style="flex:1; justify-content:center; padding:12px; font-size:12px;" onclick="showToast('Live tracking link copied!')">
+                    🔗 Share Live Trip Link
+                </button>
+                <button class="sos-panic-btn" style="flex:1; justify-content:center; padding:12px; font-size:12px; background:rgba(239,68,68,0.2); color:#EF4444; border:1px solid rgba(239,68,68,0.4);" onclick="showToast('🚨 SOS ALERT SENT TO POLICE & RDA COMMAND CENTER')">
+                    🚨 SOS Emergency
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. 24/7 SUPPORT MODAL -->
+    <div class="modal-backdrop" id="customerSupportModal" style="display:none;" onclick="closeModal('customerSupportModal')">
+        <div class="modal-card-elevated" style="max-width: 480px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">🎧</span>
+                    <span style="font-size:17px; font-weight:800;">24/7 Customer Support Desk</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerSupportModal')">✕</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:16px;">
+                <button class="rental-pill" style="justify-content:flex-start; padding:12px 14px; border-radius:10px;" onclick="openCustomerModal('chatModalBackdrop')">
+                    💬 Live Chat with Mobility Support Specialist (Avg reply: 30s)
+                </button>
+                <button class="rental-pill" style="justify-content:flex-start; padding:12px 14px; border-radius:10px;" onclick="showToast('Fare dispute ticket opened for CAB-4820')">
+                    🧾 Dispute Fare or Toll Charges on Recent Trip
+                </button>
+                <button class="rental-pill" style="justify-content:flex-start; padding:12px 14px; border-radius:10px;" onclick="showToast('Lost item report filed. Support will reach out.')">
+                    💼 Report Item Left in Cab / Rental Vehicle
+                </button>
+            </div>
+
+            <div style="padding:12px; background:var(--surface-2); border-radius:10px; text-align:center; font-size:11px; color:var(--text-muted);">
+                Toll-free 24/7 Customer Care: <strong>1800-RDA-RIDE</strong> (1800-732-7433)
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. PROFILE & SAVED ADDRESSES MODAL -->
+    <div class="modal-backdrop" id="customerProfileModal" style="display:none;" onclick="closeModal('customerProfileModal')">
+        <div class="modal-card-elevated" style="max-width: 480px;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="color:var(--accent); font-size:18px;">👤</span>
+                    <span style="font-size:17px; font-weight:800;">My Account & Preferences</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerProfileModal')">✕</button>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:16px; background:var(--surface-2); border-radius:12px; margin-bottom:18px;">
+                <div style="width:48px; height:48px; border-radius:50%; background:var(--surface-3); border:2px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; color:var(--accent);">
+                    AV
+                </div>
+                <div>
+                    <div style="font-size:16px; font-weight:900;">Arjun Verma</div>
+                    <div style="font-size:12px; color:var(--text-muted);">+91 98765 43210 · arjun.verma@example.com</div>
+                    <div style="font-size:11px; color:#10B981; font-weight:700; margin-top:2px;">★ 4.98 Rider Rating</div>
+                </div>
+            </div>
+
+            <div style="font-size:12px; font-weight:800; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Saved Places</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:18px;">
+                <div style="padding:10px 14px; background:var(--surface-2); border-radius:8px;">
+                    <div style="font-size:13px; font-weight:800;">🏠 Home</div>
+                    <div style="font-size:11px; color:var(--text-muted);">Sector 43, Golf Course Road, Gurugram</div>
+                </div>
+                <div style="padding:10px 14px; background:var(--surface-2); border-radius:8px;">
+                    <div style="font-size:13px; font-weight:800;">💼 Work</div>
+                    <div style="font-size:11px; color:var(--text-muted);">DLF CyberCity Tower B, Gurugram</div>
+                </div>
+            </div>
+
+            <button class="rental-pill" style="width:100%; justify-content:center; padding:10px; font-weight:700; color:#EF4444;" onclick="showToast('Logged out successfully'); closeModal('customerProfileModal')">
+                Log Out
+            </button>
+        </div>
+    </div>
+  
 </body>/body>
 </html>

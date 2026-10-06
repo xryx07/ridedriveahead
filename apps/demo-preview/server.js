@@ -379,14 +379,20 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ========================================================
-  // SERVE SIMULATOR & ADMIN HTML FILES
+  // SERVE 3 DISTINCT WEB APPLICATIONS (BY ROUTE OR HOSTNAME)
+  // 1. Customer Web: ridedriveahead.com / /
+  // 2. Driver Web: driver.ridedriveahead.com / /driver
+  // 3. Admin Web: admin.ridedriveahead.com / /admin
   // ========================================================
-  if (pathname === '/' || pathname === '/index.html') {
-    const htmlPath = path.join(__dirname, 'index.html');
-    fs.readFile(htmlPath, 'utf8', (err, data) => {
+  const host = (req.headers.host || '').toLowerCase();
+
+  // DRIVER WEB (driver.ridedriveahead.com or /driver)
+  if (pathname === '/driver' || pathname === '/driver.html' || (host.startsWith('driver.') && (pathname === '/' || pathname === '/index.html'))) {
+    const driverPath = path.join(__dirname, 'driver.html');
+    fs.readFile(driverPath, 'utf8', (err, data) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('Error loading preview: ' + err.message);
+        res.end('Error loading driver portal: ' + err.message);
         return;
       }
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -395,12 +401,28 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  if (pathname === '/admin' || pathname === '/admin.html') {
+  // ADMIN WEB (admin.ridedriveahead.com or /admin)
+  if (pathname === '/admin' || pathname === '/admin.html' || (host.startsWith('admin.') && (pathname === '/' || pathname === '/index.html'))) {
     const adminPath = path.join(__dirname, 'admin.html');
     fs.readFile(adminPath, 'utf8', (err, data) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain' });
-        res.end('Error loading admin preview: ' + err.message);
+        res.end('Error loading admin command center: ' + err.message);
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+    });
+    return;
+  }
+
+  // CUSTOMER WEB (ridedriveahead.com or /)
+  if (pathname === '/' || pathname === '/index.html' || pathname === '/customer') {
+    const htmlPath = path.join(__dirname, 'index.html');
+    fs.readFile(htmlPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Error loading customer web: ' + err.message);
         return;
       }
       res.writeHead(200, { 'Content-Type': 'text/html' });
