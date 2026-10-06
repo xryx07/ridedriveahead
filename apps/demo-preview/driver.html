@@ -883,9 +883,7 @@
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 SOS Panic
             </button>
-            <button class="theme-round-btn" id="driverThemeToggleBtn" onclick="toggleDriverTheme()" title="Toggle Dark/Light Mode">
-                🌙
-            </button>
+            <button class="theme-round-btn" id="driverThemeToggleBtn" onclick="toggleDriverTheme()" title="Toggle Dark/Light Mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
             <div style="display:flex; align-items:center; gap:10px; border-left:1px solid var(--border); padding-left:14px;">
                 <div style="width:36px; height:36px; border-radius:50%; background:var(--surface-elevated); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; color:var(--accent);">
                     RK
@@ -1047,10 +1045,10 @@
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <button class="duty-switch-btn online" style="padding:4px 12px; font-size:11px;" onclick="centerRadarMap()">
-                                    🎯 Recenter GPS
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Recenter GPS
                                 </button>
                                 <button class="duty-switch-btn offline" style="padding:4px 12px; font-size:11px;" onclick="triggerSimulatedRideAlert()">
-                                    ⚡ Simulate Ride Request
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Simulate Ride Request
                                 </button>
                             </div>
                         </div>
@@ -1061,7 +1059,7 @@
                         <!-- Floating Hotspot Info -->
                         <div class="radar-floating-overlay">
                             <div class="radar-surge-badge">
-                                <span style="color:#FBBF24;">⚡ Surge Zone Active</span>
+                                <span style="color:#FBBF24;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Surge Zone Active</span>
                                 <span>Hitech City (1.6x Multiplier)</span>
                             </div>
                             <div class="radar-surge-badge" style="background:rgba(16, 185, 129, 0.95); color:#080A0D;">
@@ -1089,7 +1087,7 @@
                                 </div>
                                 <div style="flex:1;">
                                     <div style="font-size:13px; font-weight:800; color:var(--text-primary);">Sneha Reddy</div>
-                                    <div style="font-size:11px; color:var(--text-muted);">★ 4.9 · 124 completed rides</div>
+                                    <div style="font-size:11px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9 · 124 completed rides</div>
                                 </div>
                                 <span class="status-badge completed">UPI Prepaid</span>
                             </div>
@@ -1162,7 +1160,7 @@
                         <tbody>
                             <tr style="background:rgba(199, 255, 61, 0.04);">
                                 <td><span class="status-badge verified">Sedan Cab</span></td>
-                                <td><strong>Sneha Reddy</strong> (★ 4.9)</td>
+                                <td><strong>Sneha Reddy</strong> (<svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9)</td>
                                 <td>DLF CyberCity Gate 2</td>
                                 <td>Raheja Mindspace IT Park</td>
                                 <td>1.2 km away · 6.4 km trip</td>
@@ -1171,7 +1169,7 @@
                             </tr>
                             <tr>
                                 <td><span class="status-badge completed">Airport Express</span></td>
-                                <td><strong>Vikram Sharma</strong> (★ 4.8)</td>
+                                <td><strong>Vikram Sharma</strong> (<svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.8)</td>
                                 <td>Sheraton Hotel, Gachibowli</td>
                                 <td>RGIA Airport Terminal 1</td>
                                 <td>2.8 km away · 31 km trip</td>
@@ -1180,7 +1178,7 @@
                             </tr>
                             <tr>
                                 <td><span class="status-badge pending">Hire Driver (Own Car)</span></td>
-                                <td><strong>Dr. Ananya Roy</strong> (★ 5.0)</td>
+                                <td><strong>Dr. Ananya Roy</strong> (<svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5.0)</td>
                                 <td>Jubilee Hills Checkpost</td>
                                 <td>Drive BMW 3-Series (Automatic) · 4h</td>
                                 <td>3.4 km away · 4 Hours</td>
@@ -1220,10 +1218,10 @@
                             </div>
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <button class="duty-switch-btn online" style="padding:8px 16px; font-size:12px;" onclick="openGoogleMapsExternal()">
-                                    🧭 Open in Google Maps
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg> Open in Google Maps
                                 </button>
                                 <button class="sos-panic-btn" onclick="openDriverSOSModal()">
-                                    🚨 SOS
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> SOS
                                 </button>
                             </div>
                         </div>
@@ -1239,10 +1237,10 @@
                                 </div>
                                 <div style="display:flex; gap:8px;">
                                     <button class="duty-switch-btn online" style="padding:8px 12px; font-size:12px;" onclick="callRiderDemo()">
-                                        📞 Call
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call
                                     </button>
                                     <button class="duty-switch-btn offline" style="padding:8px 12px; font-size:12px;" onclick="chatRiderDemo()">
-                                        💬 Chat
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Chat
                                     </button>
                                 </div>
                             </div>
@@ -1277,7 +1275,7 @@
                                     <div style="font-size:11px; color:var(--text-muted);">Prepaid via UPI · Direct Settlement to Wallet</div>
                                 </div>
                                 <button class="btn-captain-accept" style="background:#10B981; color:#080A0D;" onclick="completeActiveDuty()">
-                                    🏁 SLIDE TO COMPLETE DUTY
+                                    SLIDE TO COMPLETE DUTY
                                 </button>
                             </div>
                         </div>
@@ -1371,7 +1369,7 @@
                         <div style="padding:14px; background:var(--surface-2); border-radius:var(--radius-sm); margin-bottom:20px;">
                             <div style="font-size:11px; font-weight:800; color:var(--text-muted);">LINKED BANK ACCOUNT</div>
                             <div style="font-size:14px; font-weight:800; color:var(--text-primary); margin-top:2px;">HDFC Bank (A/C ****4102)</div>
-                            <div style="font-size:11px; color:var(--online-green); font-weight:700; margin-top:2px;">✓ Verified for Instant IMPS</div>
+                            <div style="font-size:11px; color:var(--online-green); font-weight:700; margin-top:2px;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Verified for Instant IMPS</div>
                         </div>
 
                         <button class="btn-captain-accept" onclick="executeDriverBankPayout()">
@@ -1678,7 +1676,7 @@
                 <div class="captain-stats-grid">
                     <div class="captain-stat-card">
                         <div class="stat-card-title">Overall Star Rating</div>
-                        <div class="stat-card-val" style="color:#FBBF24;">★ 4.8 / 5.0</div>
+                        <div class="stat-card-val" style="color:#FBBF24;"><span style="display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.8 / 5.0</span></div>
                         <div class="stat-card-sub">Based on 842 passenger reviews</div>
                     </div>
                     <div class="captain-stat-card">
@@ -1702,22 +1700,22 @@
                     <div style="font-size:16px; font-weight:900; margin-bottom:14px;">Passenger Compliment Badges</div>
                     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
                         <div style="padding:14px; background:var(--surface-2); border-radius:var(--radius-sm); text-align:center;">
-                            <div style="font-size:24px;">🌟</div>
+                            <div style="font-size:24px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
                             <div style="font-weight:800; font-size:13px; margin-top:6px;">Smooth Driving</div>
                             <div style="font-size:11px; color:var(--text-muted);">312 badges</div>
                         </div>
                         <div style="padding:14px; background:var(--surface-2); border-radius:var(--radius-sm); text-align:center;">
-                            <div style="font-size:24px;">⏱️</div>
+                            <div style="font-size:24px;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
                             <div style="font-weight:800; font-size:13px; margin-top:6px;">On-Time Pickup</div>
                             <div style="font-size:11px; color:var(--text-muted);">284 badges</div>
                         </div>
                         <div style="padding:14px; background:var(--surface-2); border-radius:var(--radius-sm); text-align:center;">
-                            <div style="font-size:24px;">🧼</div>
+                            <div style="font-size:24px;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                             <div style="font-weight:800; font-size:13px; margin-top:6px;">Spotless Car</div>
                             <div style="font-size:11px; color:var(--text-muted);">198 badges</div>
                         </div>
                         <div style="padding:14px; background:var(--surface-2); border-radius:var(--radius-sm); text-align:center;">
-                            <div style="font-size:24px;">🧭</div>
+                            <div style="font-size:24px;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
                             <div style="font-weight:800; font-size:13px; margin-top:6px;">Route Master</div>
                             <div style="font-size:11px; color:var(--text-muted);">142 badges</div>
                         </div>
@@ -1736,13 +1734,13 @@
 
                         <div style="display:flex; flex-direction:column; gap:12px;">
                             <button class="btn-captain-accept" style="background:var(--surface-2); color:var(--text-primary); border:1px solid var(--border-strong);" onclick="callDispatcherHelp()">
-                                📞 Call Captain Helpline (1800-RDA-CAPTAIN)
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call Captain Helpline (1800-RDA-CAPTAIN)
                             </button>
                             <button class="btn-captain-accept" style="background:var(--surface-2); color:var(--text-primary); border:1px solid var(--border-strong);" onclick="claimTollReimbursement()">
-                                🧾 Submit Fastag Toll Reimbursement Claim
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Submit Fastag Toll Reimbursement Claim
                             </button>
                             <button class="btn-captain-accept" style="background:var(--surface-2); color:var(--text-primary); border:1px solid var(--border-strong);" onclick="reportLostItemFound()">
-                                💼 Report Passenger Left Belongings
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Report Passenger Left Belongings
                             </button>
                         </div>
                     </div>
@@ -1752,7 +1750,7 @@
                         <div style="font-size:12px; color:var(--text-muted); margin-bottom:20px;">Use only in emergency situations, medical distress, or security threats.</div>
 
                         <button class="sos-panic-btn" style="width:100%; padding:18px; font-size:15px; justify-content:center;" onclick="openDriverSOSModal()">
-                            🚨 BROADCAST EMERGENCY SOS
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> BROADCAST EMERGENCY SOS
                         </button>
                     </div>
                 </div>
@@ -1813,7 +1811,7 @@
     <div class="driver-modal-overlay" id="driverSOSModal">
         <div class="driver-modal-box" style="border-color:var(--danger);">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                <span style="font-size:26px;">🚨</span>
+                <span style="display:inline-block; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                 <div>
                     <div style="font-size:18px; font-weight:900; color:var(--danger);">Captain Emergency SOS</div>
                     <div style="font-size:11px; color:var(--text-muted);">Broadcasting priority telemetry to Operations Command Center</div>
@@ -1871,12 +1869,12 @@
                 btn.className = 'duty-switch-btn online';
                 beacon.className = 'pulse-beacon';
                 text.innerText = 'ONLINE';
-                showDriverToast('You are now ONLINE and visible to riders!', '🟢');
+                showDriverToast('You are now ONLINE and visible to riders!', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>');
             } else {
                 btn.className = 'duty-switch-btn offline';
                 beacon.className = 'pulse-beacon offline';
                 text.innerText = 'OFFLINE';
-                showDriverToast('You are now OFFLINE. No new rides will be dispatched.', '⚪');
+                showDriverToast('You are now OFFLINE. No new rides will be dispatched.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>');
             }
         }
 
@@ -1955,7 +1953,7 @@
             if (driverRadarMap && driverMarker) {
                 driverRadarMap.setView([17.4390, 78.3930], 14);
                 driverMarker.openPopup();
-                showDriverToast('GPS Recentered on current vehicle position', '🎯');
+                showDriverToast('GPS Recentered on current vehicle position', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>');
             }
         }
 
@@ -1994,25 +1992,25 @@
         // 5. Ride Request Actions
         function acceptIncomingTrip() {
             navDriverView('activetrip');
-            showDriverToast('Trip Accepted! Navigating to Sneha Reddy (1.2 km)', '🚕');
+            showDriverToast('Trip Accepted! Navigating to Sneha Reddy (1.2 km)', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>');
         }
 
         function declineIncomingTrip() {
             const card = document.getElementById('incomingRideCard');
             if (card) card.style.display = 'none';
-            showDriverToast('Trip declined. Looking for next request...', 'ℹ️');
+            showDriverToast('Trip declined. Looking for next request...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>');
         }
 
         function triggerSimulatedRideAlert() {
             const card = document.getElementById('incomingRideCard');
             if (card) {
                 card.style.display = 'block';
-                showDriverToast('⚡ New Ride Dispatched: Sneha Reddy (₹348)', '🔔');
+                showDriverToast('New Ride Dispatched: Sneha Reddy (₹348)', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
             }
         }
 
         function acceptSpecializedTrip(title, fare) {
-            showDriverToast('Claimed ' + title + ' for ₹' + fare + '! Added to your duty agenda.', '✅');
+            showDriverToast('Claimed ' + title + ' for ₹' + fare + '! Added to your duty agenda.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>');
             navDriverView('activetrip');
         }
 
@@ -2030,14 +2028,14 @@
                 document.getElementById('activeTripStatusBadge').innerText = 'STAGE 2: TRIP IN PROGRESS';
                 document.getElementById('activeNavInstruction').innerText = 'Proceed straight towards Raheja Mindspace IT Park Gate 3 (4.8 km)';
                 document.getElementById('activeNavETA').innerText = 'ETA 12m · 4.8 km';
-                showDriverToast('OTP Verified! Duty in Progress. Meter running.', '🚀');
+                showDriverToast('OTP Verified! Duty in Progress. Meter running.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
             } else {
-                showDriverToast('Invalid OTP. Please check with passenger (Hint: 1234)', '⚠️');
+                showDriverToast('Invalid OTP. Please check with passenger (Hint: 1234)', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>');
             }
         }
 
         function completeActiveDuty() {
-            showDriverToast('Trip Settled! ₹348.00 received via UPI & credited to wallet.', '🎉');
+            showDriverToast('Trip Settled! ₹348.00 received via UPI & credited to wallet.', '<svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');
             document.getElementById('topMetricEarnings').innerText = '₹2,828';
             document.getElementById('topMetricTrips').innerText = '15';
             navDriverView('earnings');
@@ -2046,7 +2044,7 @@
         // 7. Instant Bank Payout
         function executeDriverBankPayout() {
             openDriverModal('driverPayoutModal');
-            showDriverToast('IMPS Transfer initiated to HDFC Bank A/C ****4102', '💳');
+            showDriverToast('IMPS Transfer initiated to HDFC Bank A/C ****4102', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>');
         }
 
         // 8. Theme Toggle
@@ -2054,7 +2052,7 @@
             driverTheme = driverTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-driver-theme', driverTheme);
             const btn = document.getElementById('driverThemeToggleBtn');
-            if (btn) btn.innerText = driverTheme === 'dark' ? '🌙' : '☀️';
+            if (btn) btn.innerHTML = driverTheme === 'dark' ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
 
             if (driverRadarMap) {
                 driverRadarMap.remove();
@@ -2085,7 +2083,7 @@
 
         function confirmDriverSOS() {
             closeDriverModal('driverSOSModal');
-            showDriverToast('🚨 DISTRESS ALERT SENT! Telangana PCR Van Dispatched to Outer Ring Road.', '🚨');
+            showDriverToast('DISTRESS ALERT SENT! Telangana PCR Van Dispatched to Outer Ring Road.', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>');
             
             // Post audit action to backend API
             try {
@@ -2120,7 +2118,7 @@
                     badge.className = 'status-badge pending';
                 }
             }
-            showDriverToast('Readiness updated: ' + score + '%', '📋');
+            showDriverToast('Readiness updated: ' + score + '%', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>');
         }
 
         // 11. External Tools Demo
@@ -2129,23 +2127,23 @@
         }
 
         function callRiderDemo() {
-            showDriverToast('Dialing passenger Sneha Reddy (+91 98765 43210)...', '📞');
+            showDriverToast('Dialing passenger Sneha Reddy (+91 98765 43210)...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>');
         }
 
         function chatRiderDemo() {
-            showDriverToast('Opening masked in-app chat with Sneha...', '💬');
+            showDriverToast('Opening masked in-app chat with Sneha...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>');
         }
 
         function callDispatcherHelp() {
-            showDriverToast('Connecting to 24/7 Operations Desk (1800-RDA-CAPTAIN)...', '🎧');
+            showDriverToast('Connecting to 24/7 Operations Desk (1800-RDA-CAPTAIN)...', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>');
         }
 
         function claimTollReimbursement() {
-            showDriverToast('Fastag receipt submitted for review. ₹80 will be refunded within 1h.', '🧾');
+            showDriverToast('Fastag receipt submitted for review. ₹80 will be refunded within 1h.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>');
         }
 
         function reportLostItemFound() {
-            showDriverToast('Ticket opened for item found in cab. Support will contact passenger.', '💼');
+            showDriverToast('Ticket opened for item found in cab. Support will contact passenger.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>');
         }
 
         // 12. Toast System
@@ -2154,7 +2152,7 @@
             if (!container) return;
             const toast = document.createElement('div');
             toast.className = 'driver-toast';
-            toast.innerHTML = '<span>' + (icon || 'ℹ️') + '</span><span>' + msg + '</span>';
+            toast.innerHTML = '<span>' + (icon || '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>') + '</span><span>' + msg + '</span>';
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';

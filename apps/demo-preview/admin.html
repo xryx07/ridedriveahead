@@ -749,28 +749,26 @@
         <div class="topbar-actions">
             <!-- Active Role Switcher -->
             <div class="rbac-role-pill" title="Switch simulated admin role to test RBAC security access">
-                <span style="font-size:14px;">🛡️</span>
+                <span style="display:flex; align-items:center;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                 <select id="activeRoleSelect" onchange="changeAdminRole(this.value)">
-                    <option value="SUPER_ADMIN" selected>👑 Super Admin (All Access)</option>
-                    <option value="OPERATIONS_ADMIN">🚦 Operations (Rides + Drivers + Live Ops)</option>
-                    <option value="FINANCE_ADMIN">💳 Finance (Payments + Payouts + Invoices)</option>
-                    <option value="SAFETY_ADMIN">🛡️ Safety (SOS + Incidents + Verification)</option>
-                    <option value="SUPPORT_ADMIN">🎧 Support (Riders + Drivers + Tickets)</option>
-                    <option value="RENTAL_ADMIN">🔑 Rental (Vehicles + Owners + Bookings)</option>
+                    <option value="SUPER_ADMIN" selected>Super Admin (All Access)</option>
+                    <option value="OPERATIONS_ADMIN">Operations (Rides + Drivers + Live Ops)</option>
+                    <option value="FINANCE_ADMIN">Finance (Payments + Payouts + Invoices)</option>
+                    <option value="SAFETY_ADMIN">Safety (SOS + Incidents + Verification)</option>
+                    <option value="SUPPORT_ADMIN">Support (Riders + Drivers + Tickets)</option>
+                    <option value="RENTAL_ADMIN">Rental (Vehicles + Owners + Bookings)</option>
                 </select>
             </div>
 
             <!-- Emergency Broadcast CTA -->
             <button class="emergency-broadcast-btn" onclick="openEmergencyBroadcastModal()">
-                🚨 Lockdown / SOS Alert
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Lockdown / SOS Alert
             </button>
 
             <!-- Theme Toggle -->
-            <button class="btn-action-neutral" style="padding:6px 10px; border-radius:8px;" id="adminThemeToggle" onclick="toggleAdminTheme()" title="Toggle Dark/Light Mode">
-                🌙
-            </button>
+            <button class="btn-action-neutral" style="padding:6px 10px; border-radius:8px;" id="adminThemeToggle" onclick="toggleAdminTheme()" title="Toggle Dark/Light Mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
 
-            <!-- Admin Profile Menu & Multi-Portal Switcher -->
+            <!-- Admin Profile Menu -->
             <div style="display:flex; align-items:center; gap:8px; border-left:1px solid var(--border); padding-left:12px;">
                 <div style="width:34px; height:34px; border-radius:50%; background:var(--surface-2); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:var(--accent);">
                     VM
@@ -779,10 +777,7 @@
                     <div style="font-size:12px; font-weight:800; color:var(--text-primary);" id="adminProfileName">Vikram M.</div>
                     <div style="font-size:10px; color:var(--text-muted);" id="adminProfileRole">Super Admin</div>
                 </div>
-                <div style="display:flex; align-items:center; gap:6px; margin-left:8px;">
-                    <a href="/" class="btn-action-neutral" style="text-decoration:none; padding:5px 9px; font-size:11px; font-weight:700;" title="Customer Booking Web">🌐 Customer Web</a>
-                    <a href="/driver" class="btn-action-neutral" style="text-decoration:none; padding:5px 9px; font-size:11px; font-weight:700;" title="Captain Driver Portal">🚖 Captain Portal</a>
-                </div>
+                <a href="/" style="font-size:11px; font-weight:700; color:var(--accent); margin-left:6px;" title="Return to Passenger Portal">Exit <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
         </div>
     </header>
@@ -934,7 +929,7 @@
                     </div>
                     <div style="display:flex; gap:12px;">
                         <button class="btn-action-primary" style="padding:10px 18px;" onclick="changeAdminRole('SUPER_ADMIN')">
-                            👑 Switch to Super Admin (Bypass)
+                            Switch to Super Admin (Bypass)
                         </button>
                         <button class="btn-action-neutral" style="padding:10px 18px;" onclick="navToView('overview')">
                             Return to Executive Overview
@@ -965,33 +960,32 @@
                         </div>
                     </div>
                     <button class="btn-action-danger" onclick="navToView('safety')">
-                        Investigate SOS Desk →
+                        Investigate SOS Desk <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
 
                 <!-- 7 KPI Metrics Cards -->
-                <!-- 6 KPI Metrics Cards (Exact Platform Telemetry) -->
                 <div class="kpi-metrics-grid">
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Active Rides</span>
+                            <span class="kpi-metric-label">Live Rides & Trips</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">2,481</div>
+                        <div class="kpi-metric-val font-mono">142</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>▲ +16.4%</span>
+                            <span>▲ +14%</span>
                             <span class="sub-muted">vs 1 hour ago</span>
                         </div>
                     </div>
 
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Drivers Online</span>
+                            <span class="kpi-metric-label">Active Drivers Online</span>
                             <span style="color:var(--success);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">1,826</div>
+                        <div class="kpi-metric-val font-mono">418</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>91.2%</span>
+                            <span>86%</span>
                             <span class="sub-muted">utilization rate</span>
                         </div>
                     </div>
@@ -1001,43 +995,45 @@
                             <span class="kpi-metric-label">Active Rentals</span>
                             <span style="color:var(--info);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17H3v-4l2-4h10l2 4v4h-2"/><path d="M18 6l2-2m-2 0l2 2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">342</div>
+                        <div class="kpi-metric-val font-mono">48</div>
                         <div class="kpi-metric-sub sub-muted">
-                            <span>Cars & Bikes on Road</span>
+                            <span>₹ 1,850/day avg rate</span>
                         </div>
                     </div>
 
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Revenue Today</span>
+                            <span class="kpi-metric-label">Express Deliveries</span>
+                            <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4L7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55l8.95-5.16a1.78 1.78 0 0 0 0-3.16z"/><polyline points="3.29 7 12 12 20.71 7"/></svg></span>
+                        </div>
+                        <div class="kpi-metric-val font-mono">89</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>98.4%</span>
+                            <span class="sub-muted">on-time SLA</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-metric-card">
+                        <div class="kpi-metric-top">
+                            <span class="kpi-metric-label">Today Gross Revenue</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><circle cx="18" cy="16" r="2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 8.42L</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 4,82,350</div>
                         <div class="kpi-metric-sub sub-up">
-                            <span>▲ +21.5%</span>
+                            <span>▲ +18.2%</span>
                             <span class="sub-muted">vs yesterday</span>
                         </div>
                     </div>
 
-                    <div class="kpi-metric-card" style="border-color:rgba(239, 68, 68, 0.35);">
+                    <div class="kpi-metric-card">
                         <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Safety Incidents</span>
-                            <span style="color:var(--danger);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                            <span class="kpi-metric-label">Cancellation Rate</span>
+                            <span style="color:var(--text-muted);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--danger);">3</div>
-                        <div class="kpi-metric-sub" style="color:var(--danger);">
-                            <span>1 Critical (PCR Bridged)</span>
-                        </div>
-                    </div>
-
-                    <div class="kpi-metric-card" style="border-color:rgba(245, 158, 11, 0.35);">
-                        <div class="kpi-metric-top">
-                            <span class="kpi-metric-label">Payment Issues</span>
-                            <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-                        </div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--warning);">12</div>
-                        <div class="kpi-metric-sub" style="color:var(--warning);">
-                            <span>Pending Gateway Reconciliation</span>
+                        <div class="kpi-metric-val font-mono">2.1%</div>
+                        <div class="kpi-metric-sub sub-up">
+                            <span>▼ -0.8%</span>
+                            <span class="sub-muted">within healthy threshold</span>
                         </div>
                     </div>
                 </div>
@@ -1065,7 +1061,7 @@
                                 <td><span class="badge-status badge-status-info">RIDE_MATCH</span></td>
                                 <td class="font-mono">BK-8842</td>
                                 <td>Cab Sedan matched to Rohit Sharma</td>
-                                <td>Jubilee Hills ➔ Hitech City</td>
+                                <td>Jubilee Hills <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Hitech City</td>
                                 <td><span class="badge-status badge-status-active">EN ROUTE</span></td>
                             </tr>
                             <tr>
@@ -1180,7 +1176,7 @@
                                     </td>
                                     <td>Gurugram / Delhi NCR</td>
                                     <td>
-                                        <span style="color:#FACC15; font-weight:800;">★ 4.95</span>
+                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.95</span>
                                     </td>
                                     <td>
                                         <span class="badge-status badge-status-active">2 Verified Cars</span>
@@ -1203,7 +1199,7 @@
                                     </td>
                                     <td>Delhi NCR / Gurugram</td>
                                     <td>
-                                        <span style="color:#FACC15; font-weight:800;">★ 5</span>
+                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</span>
                                     </td>
                                     <td>
                                         <span class="badge-status badge-status-neutral">0 Personal Cars</span>
@@ -1226,7 +1222,7 @@
                                     </td>
                                     <td>Noida</td>
                                     <td>
-                                        <span style="color:#FACC15; font-weight:800;">★ 5</span>
+                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</span>
                                     </td>
                                     <td>
                                         <span class="badge-status badge-status-active">1 Verified Cars</span>
@@ -1292,7 +1288,7 @@
                                     <td class="font-mono" style="font-size:11px;">DL-0420210088992</td>
                                     <td class="font-mono">3.5h / 8h</td>
                                     <td>
-                                        <div style="color:#FACC15; font-weight:800;">★ 4.92</div>
+                                        <div style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.92</div>
                                         <div style="font-size:10px; color:var(--text-muted);">582 trips</div>
                                     </td>
                                     <td>
@@ -1318,7 +1314,7 @@
                                     <td class="font-mono" style="font-size:11px;">DL-0420220099112</td>
                                     <td class="font-mono">0h / 8h</td>
                                     <td>
-                                        <div style="color:#FACC15; font-weight:800;">★ 5</div>
+                                        <div style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</div>
                                         <div style="font-size:10px; color:var(--text-muted);">0 trips</div>
                                     </td>
                                     <td>
@@ -1370,7 +1366,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1390,7 +1386,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1410,7 +1406,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1430,7 +1426,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1450,7 +1446,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1470,7 +1466,7 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
-                                        <span class="badge-status badge-status-active">✓ 360° VIDEO LOGGED</span>
+                                        <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
                                     </td>
                                     <td>
                                         <span class="font-mono" style="font-weight:700;">₹ 5,000</span>
@@ -1512,7 +1508,7 @@
                             <tr>
                                 <th>Booking ID</th>
                                 <th>Service Mode</th>
-                                <th>Pickup ➔ Drop</th>
+                                <th>Pickup <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Drop</th>
                                 <th>Rider</th>
                                 <th>Captain</th>
                                 <th>Fare</th>
@@ -1527,7 +1523,7 @@
                                     <td><span class="badge-status badge-status-info">HIRE_DRIVER</span></td>
                                     <td>
                                         <div style="font-size:11px; font-weight:700;">undefined</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">➔ undefined</div>
+                                        <div style="font-size:10px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Airport</div>
                                     </td>
                                     <td>Arjun Verma</td>
                                     <td>Rajesh Kumar</td>
@@ -1551,7 +1547,7 @@
                         <p>Gross booking revenue, instant IMPS driver batch payouts, GST 5% tax reports, and refund management.</p>
                     </div>
                     <button class="btn-action-primary" onclick="executeBatchPayout()">
-                        ⚡ Execute Batch IMPS Payout (₹ 3,95,000)
+                        Execute Batch IMPS Payout (₹ 3,95,000)
                     </button>
                 </div>
 
@@ -1632,7 +1628,7 @@
                         <div style="background:var(--surface); border:1.5px solid rgba(255,77,77,0.4); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                                 <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="font-size:20px;">🚨</span>
+                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                                     <div>
                                         <div style="display:flex; align-items:center; gap:8px;">
                                             <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9012 · SOS_EMERGENCY</span>
@@ -1670,16 +1666,16 @@
                             </div>
 
                             <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98101 23456')">📞 Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
-                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9012')">✓ Mark Case Resolved</button>
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98101 23456')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
+                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9012')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Mark Case Resolved</button>
                             </div>
                         </div>
                     
                         <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                                 <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="font-size:20px;">🚨</span>
+                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                                     <div>
                                         <div style="display:flex; align-items:center; gap:8px;">
                                             <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9013 · ROUTE_DEVIATION</span>
@@ -1717,8 +1713,8 @@
                             </div>
 
                             <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98765 43210')">📞 Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98765 43210')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
                                 <span class="badge-status badge-status-active">Case Closed</span>
                             </div>
                         </div>
@@ -1726,7 +1722,7 @@
                         <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                                 <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="font-size:20px;">🚨</span>
+                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                                     <div>
                                         <div style="display:flex; align-items:center; gap:8px;">
                                             <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9014 · SUSPICIOUS_METER_JUMP</span>
@@ -1764,9 +1760,9 @@
                             </div>
 
                             <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 99887 76655')">📞 Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()">🚓 Police PCR Unit 14 Connected</button>
-                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9014')">✓ Mark Case Resolved</button>
+                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 99887 76655')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
+                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
+                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9014')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Mark Case Resolved</button>
                             </div>
                         </div>
                     
@@ -2231,7 +2227,7 @@
 
                 <div class="data-table-container">
                     <div class="table-toolbar-bar">
-                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Audit Events Record (5)</span>
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Audit Events Record (8)</span>
                     </div>
                     <table class="admin-data-table" id="auditLogsTable">
                         <thead>
@@ -2247,6 +2243,39 @@
                             </tr>
                         </thead>
                         <tbody id="auditTableBody">
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-42262</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T14:59:34.690Z</td>
+                                    <td style="font-weight:700;">Safety Admin</td>
+                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-info">KYC_APPROVED</span></td>
+                                    <td class="font-mono">DRIVER</td>
+                                    <td class="font-mono">10.0.4.88</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-73118</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T14:59:34.671Z</td>
+                                    <td style="font-weight:700;">Super Admin</td>
+                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-info">DRIVER_SUSPENDED</span></td>
+                                    <td class="font-mono">DRIVER</td>
+                                    <td class="font-mono">10.0.4.88</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                </tr>
+                            
+                                <tr>
+                                    <td class="font-mono" style="font-weight:700;">AUD-95930</td>
+                                    <td class="font-mono" style="font-size:11px;">2026-10-06T14:56:54.742Z</td>
+                                    <td style="font-weight:700;">Super Admin</td>
+                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-info">DISPATCH_OVERRIDE</span></td>
+                                    <td class="font-mono">BOOKING</td>
+                                    <td class="font-mono">::1</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                </tr>
                             
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8801</td>
@@ -2374,7 +2403,7 @@
     <div class="admin-modal-backdrop" id="driverSuspensionModal">
         <div class="admin-modal-card">
             <div class="admin-modal-header">
-                <span style="font-size:14px; font-weight:800; color:var(--danger);">⚠️ Suspend Captain Duty Authorization</span>
+                <span style="font-size:14px; font-weight:800; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Suspend Captain Duty Authorization</span>
                 <span style="cursor:pointer;" onclick="closeAdminModal('driverSuspensionModal')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
             </div>
             <div class="admin-modal-body">
@@ -2429,7 +2458,7 @@
     <div class="admin-modal-backdrop" id="emergencyBroadcastModal">
         <div class="admin-modal-card">
             <div class="admin-modal-header">
-                <span style="font-size:14px; font-weight:800; color:var(--danger);">🚨 Emergency Fleet Broadcast</span>
+                <span style="font-size:14px; font-weight:800; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Emergency Fleet Broadcast</span>
                 <span style="cursor:pointer;" onclick="closeAdminModal('emergencyBroadcastModal')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
             </div>
             <div class="admin-modal-body">
@@ -2569,7 +2598,7 @@
 
             // Re-validate current view
             navToView(currentActiveView);
-            showAdminToast('Switched to simulated role: ' + profile.title, '🛡️');
+            showAdminToast('Switched to simulated role: ' + profile.title, '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>');
         }
 
         // 3. Navigation View Controller with RBAC Scope Check
@@ -2639,7 +2668,7 @@
                 { id: 'V-105', type: 'chauffeur', name: 'Suresh Y. (Own Car)', plate: 'Client: Innova AT', coords: [17.4200, 78.3450], color: '#A855F7', speed: '35 km/h', status: '4h Duty' },
                 { id: 'V-106', type: 'delivery', name: 'Kiran T. (Courier)', plate: 'TS 08 EX 4421', coords: [17.4520, 78.3650], color: '#F97316', speed: '32 km/h', status: 'Parcel Drop' },
                 // ACTIVE SOS INCIDENT MARKER
-                { id: 'INC-9012', type: 'sos', name: '🚨 SOS INCIDENT (BK-8821)', plate: 'Outer Ring Road Km 24', coords: [17.4390, 78.3480], color: '#FF4D4D', speed: '0 km/h (Stopped)', status: 'POLICE DISPATCHED' }
+                { id: 'INC-9012', type: 'sos', name: 'SOS INCIDENT (BK-8821)', plate: 'Outer Ring Road Km 24', coords: [17.4390, 78.3480], color: '#FF4D4D', speed: '0 km/h (Stopped)', status: 'POLICE DISPATCHED' }
             ];
 
             fleetMarkers = [];
@@ -2685,7 +2714,7 @@
             adminTheme = adminTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', adminTheme);
             const btn = document.getElementById('adminThemeToggle');
-            if (btn) btn.innerText = adminTheme === 'dark' ? '🌙' : '☀️';
+            if (btn) btn.innerHTML = adminTheme === 'dark' ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
 
             if (liveOpsMap) {
                 const tileUrl = adminTheme === 'dark' 
@@ -2701,7 +2730,7 @@
         // 6. Action: Approve Driver KYC
         function approveDriverKYC(driverId, driverName) {
             recordAuditEvent('DRIVER_KYC_APPROVAL', driverId + ' (' + driverName + ')', 'Approved all commercial RC & identity credentials after background clearance');
-            showAdminToast('✓ KYC Approved for ' + driverName, '✓');
+            showAdminToast('KYC Approved for ' + driverName, '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>');
             setTimeout(() => location.reload(), 1200);
         }
 
@@ -2719,19 +2748,19 @@
 
             closeAdminModal('driverSuspensionModal');
             recordAuditEvent('DRIVER_SUSPENSION', driverId + ' (' + driverName + ')', 'Duration: ' + duration + ' | Reason: ' + reason);
-            showAdminToast('⚠️ Captain ' + driverName + ' has been suspended (' + duration + ')');
+            showAdminToast('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Captain ' + driverName + ' has been suspended (' + duration + ')');
         }
 
         // 8. Action: Release Rental Deposit
         function releaseRentalDeposit(rentalId, amount) {
             recordAuditEvent('RENTAL_DEPOSIT_RELEASE', rentalId, 'Released security deposit ₹' + amount + ' after 360° inspection validation');
-            showAdminToast('✓ Security deposit ₹' + amount + ' successfully refunded to user!');
+            showAdminToast('Security deposit ₹' + amount + ' successfully refunded to user!');
         }
 
         // 9. Action: Resolve SOS Incident
         function resolveSOSIncident(incidentId) {
             recordAuditEvent('SOS_INCIDENT_RESOLVED', incidentId, 'Police PCR report confirmed all clear. Flat tire assisted. Rider verified safe.');
-            showAdminToast('✓ SOS Incident ' + incidentId + ' closed & resolved', '✓');
+            showAdminToast('SOS Incident ' + incidentId + ' closed & resolved', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>');
             setTimeout(() => location.reload(), 1200);
         }
 
@@ -2744,13 +2773,13 @@
             const el = document.getElementById('multiplierVal-' + zoneId);
             const val = el ? el.innerText : '1.5x';
             recordAuditEvent('SURGE_UPDATE', zoneId, 'Adjusted live multiplier to ' + val);
-            showAdminToast('✓ Dynamic surge updated for ' + zoneId + ' to ' + val);
+            showAdminToast('Dynamic surge updated for ' + zoneId + ' to ' + val);
         }
 
         // 11. Action: Execute Instant Driver Payout
         function executeBatchPayout() {
             recordAuditEvent('BATCH_IMPS_PAYOUT', 'PAYOUT-BATCH-' + Date.now(), 'Executed automated IMPS payout of ₹3,95,000 to 142 online captains');
-            showAdminToast('✓ Batch IMPS Payout of ₹3,95,000 disbursed via bank gateway!', '💰');
+            showAdminToast('Batch IMPS Payout of ₹3,95,000 disbursed via bank gateway!', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>');
         }
 
         // 12. Action: Refund Modal
@@ -2764,13 +2793,13 @@
             closeAdminModal('refundModal');
 
             recordAuditEvent('PASSENGER_REFUND', bookingId, 'Disbursed ₹' + amount + ' | Notes: ' + notes);
-            showAdminToast('✓ Refund of ₹' + amount + ' processed for ' + bookingId);
+            showAdminToast('Refund of ₹' + amount + ' processed for ' + bookingId);
         }
 
         // 13. Action: Resolve Support Ticket
         function resolveSupportTicket(ticketId) {
             recordAuditEvent('SUPPORT_TICKET_RESOLVE', ticketId, 'Agent resolution verified and ticket closed');
-            showAdminToast('✓ Support ticket ' + ticketId + ' resolved.');
+            showAdminToast('Support ticket ' + ticketId + ' resolved.');
             setTimeout(() => location.reload(), 1000);
         }
 
@@ -2787,7 +2816,7 @@
         function confirmEmergencyBroadcast() {
             closeAdminModal('emergencyBroadcastModal');
             recordAuditEvent('EMERGENCY_FLEET_BROADCAST', 'ALL_HYD_GEOFENCES', 'Broadcasted weather & road safety emergency bulletin to 418 active devices');
-            showAdminToast('🚨 Emergency alert broadcasted to 418 devices!', '🚨');
+            showAdminToast('Emergency alert broadcasted to 418 devices!', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>');
         }
 
         // Modal Helpers
@@ -2827,7 +2856,7 @@
                 toast.style.cssText = 'position:fixed; bottom:24px; right:24px; background:#0E1216; border:1px solid #C7FF3D; color:#F8FAFC; padding:12px 18px; border-radius:10px; font-size:12px; font-weight:800; z-index:9999; box-shadow:0 12px 30px rgba(0,0,0,0.7); display:flex; align-items:center; gap:8px; animation:modalPop 0.2s ease;';
                 document.body.appendChild(toast);
             }
-            toast.innerHTML = (icon ? '<span>' + icon + '</span> ' : '<span>✓</span> ') + msg;
+            toast.innerHTML = (icon ? '<span>' + icon + '</span> ' : '<span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span> ') + msg;
             toast.style.display = 'flex';
             setTimeout(() => { toast.style.display = 'none'; }, 3500);
         }
@@ -2848,7 +2877,7 @@
             const amount = prompt('Enter wallet adjustment amount for ' + name + ' (e.g., 500):', '500');
             if (amount) {
                 recordAuditEvent('RIDER_WALLET_CREDIT', riderId + ' (' + name + ')', 'Credited ₹' + amount + ' by ' + currentRole);
-                showAdminToast('✓ ₹' + amount + ' credited to ' + name + ' RDA wallet!');
+                showAdminToast('₹' + amount + ' credited to ' + name + ' RDA wallet!');
             }
         }
 
