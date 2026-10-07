@@ -646,7 +646,8 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .table-header-bar {
@@ -800,8 +801,73 @@
             from { transform: translateX(40px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-  
-</style>
+
+        /* MOBILE & TABLET LAYOUT REFLOW (NO OVERLAPPING) */
+        @media (max-width: 768px) {
+            .ecosystem-bar {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 0 12px;
+            }
+            .ecosystem-pills {
+                white-space: nowrap;
+                gap: 4px;
+            }
+            .driver-header {
+                padding: 10px 14px;
+                height: auto;
+                min-height: 60px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .captain-tag {
+                display: none;
+            }
+            .driver-layout {
+                flex-direction: column;
+            }
+            .driver-sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 8px 10px;
+                gap: 6px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .driver-sidebar .sidebar-section-title {
+                display: none;
+            }
+            .driver-nav-item {
+                padding: 8px 12px;
+                border-left: none;
+                border-bottom: 2px solid transparent;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .driver-nav-item.active {
+                border-bottom-color: var(--accent);
+                border-left-color: transparent;
+            }
+            .driver-nav-item span {
+                display: inline-block !important;
+            }
+            .cockpit-viewport {
+                padding: 14px 12px;
+            }
+            .sos-panic-btn span {
+                display: none;
+            }
+            .sos-panic-btn {
+                padding: 8px;
+            }
+            .radar-floating-overlay {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
 

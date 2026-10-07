@@ -263,6 +263,7 @@
         }
 
         .portal-preview-frame {
+            min-width: 0;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
@@ -310,11 +311,14 @@
             align-items: center;
             border-bottom: 1px solid var(--frame-border);
             background: var(--frame-bg);
+            gap: 12px;
+            flex-wrap: wrap;
         }
         .p-brand-logo {
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
         }
         .p-monogram-box {
             width: 20px;
@@ -342,13 +346,19 @@
         }
         .p-nav-links {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             font-size: 10px;
             font-weight: 700;
             color: var(--frame-subtext);
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            max-width: 100%;
         }
+        .p-nav-links::-webkit-scrollbar { display: none; }
         .p-nav-links span {
             cursor: pointer;
+            flex-shrink: 0;
         }
         .p-nav-links span:hover, .p-nav-links span.active {
             color: var(--frame-text);
@@ -357,6 +367,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
         }
         .p-login-link {
             font-size: 10.5px;
@@ -440,30 +451,33 @@
             background: var(--frame-card);
             border: 1px solid var(--frame-border);
             border-radius: 10px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             display: grid;
-            grid-template-columns: 1.2fr 1.2fr 1fr auto;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 10px;
             align-items: center;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
         .p-slot {
+            min-width: 0;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             font-size: 9.5px;
             color: var(--frame-text);
             font-weight: 600;
         }
         .p-slot svg {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             stroke: var(--frame-subtext);
             flex-shrink: 0;
         }
         .p-slot-meta {
+            min-width: 0;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .p-slot-meta .lbl {
             font-size: 7.5px;
@@ -471,26 +485,32 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 700;
+            white-space: nowrap;
         }
         .p-slot-meta .val {
             font-size: 9.5px;
             font-weight: 700;
             color: var(--frame-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .p-search-action-btn {
             background: var(--frame-cta);
             color: var(--frame-cta-text);
             border: none;
-            padding: 8px 14px;
+            padding: 9px 14px;
             border-radius: 8px;
             font-weight: 800;
             font-size: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
             white-space: nowrap;
             transition: all 0.2s;
+            width: 100%;
         }
         .p-search-action-btn:hover {
             opacity: 0.9;
@@ -499,14 +519,21 @@
 
         /* 9 Services Strip */
         .p-services-strip {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 6px;
+            display: flex;
+            gap: 8px;
             padding: 12px 18px;
             background: var(--frame-bg);
             border-bottom: 1px solid var(--frame-border);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .p-services-strip::-webkit-scrollbar {
+            display: none;
         }
         .p-service-box {
+            flex: 1 0 70px;
+            min-width: 70px;
             background: var(--frame-card);
             border: 1px solid var(--frame-border);
             border-radius: 8px;
@@ -629,13 +656,14 @@
         /* Trust Badges Strip */
         .p-trust-strip {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 8px;
             padding: 10px 18px;
             background: var(--frame-card);
             border-bottom: 1px solid var(--frame-border);
         }
         .p-trust-box {
+            min-width: 0;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -653,10 +681,16 @@
             font-size: 8px;
             font-weight: 800;
             color: var(--frame-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .p-trust-box .t-sub {
             font-size: 7px;
             color: var(--frame-subtext);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Panoramic Coastal Highway Banner */
@@ -705,7 +739,7 @@
            ========================================================= */
         .ecosystem-3col-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
         }
 
@@ -718,6 +752,7 @@
             flex-direction: column;
             gap: 16px;
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+            min-width: 0;
         }
         .eco-col-header {
             display: flex;
@@ -725,6 +760,8 @@
             justify-content: space-between;
             padding-bottom: 10px;
             border-bottom: 1px solid #222;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         .eco-col-badge {
             display: flex;
@@ -743,6 +780,7 @@
             color: var(--color-champagne);
             font-weight: 900;
             font-size: 12px;
+            flex-shrink: 0;
         }
         .eco-col-name {
             font-size: 14px;
@@ -764,17 +802,20 @@
             justify-content: space-between;
             align-items: center;
             gap: 20px;
+            flex-wrap: wrap;
         }
         .footer-pillars-grid {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 24px;
             flex: 1;
+            flex-wrap: wrap;
         }
         .pillar-item {
             display: flex;
             align-items: center;
             gap: 8px;
+            min-width: 0;
         }
         .pillar-icon-box {
             width: 28px;
@@ -797,30 +838,68 @@
             font-size: 11px;
             font-weight: 800;
             color: var(--color-ivory);
+            white-space: nowrap;
         }
         .pillar-sub {
             font-size: 9.5px;
             color: var(--color-warm-gray);
+            white-space: nowrap;
         }
         .footer-brand-lockup {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-shrink: 0;
         }
 
-        @media (max-width: 1100px) {
-            .comparison-split-grid {
-                grid-template-columns: 1fr;
-            }
-            .ecosystem-3col-grid {
-                grid-template-columns: 1fr;
-            }
+        /* RESPONSIVE MEDIA QUERIES (NO OVERLAPPING AT ANY SCREEN WIDTH) */
+        @media (max-width: 1250px) {
             .master-header {
                 grid-template-columns: 1fr;
-                gap: 12px;
+                gap: 14px;
                 text-align: center;
             }
             .header-left, .header-right {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 1180px) {
+            .comparison-split-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-action-bar {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 16px;
+                text-align: center;
+            }
+            .perspective-switch-tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .top-links-group {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .showcase-viewport {
+                padding: 16px;
+            }
+            .p-hero {
+                grid-template-columns: 1fr;
+            }
+            .p-chauffeur-block {
+                grid-template-columns: 1fr;
+            }
+            .master-footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-pillars-grid {
                 justify-content: center;
             }
         }

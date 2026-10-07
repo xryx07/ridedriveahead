@@ -467,7 +467,8 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 14px;
-            overflow: hidden;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             box-shadow: var(--card-shadow);
             margin-bottom: 24px;
         }
@@ -711,15 +712,58 @@
             border-color: var(--accent);
         }
 
+        @media (max-width: 1400px) {
+            .telemetry-ticker { display: none; }
+            .admin-omnisearch { width: 280px; }
+        }
+
         @media (max-width: 1100px) {
             aside.admin-sidebar { width: 72px; padding: 12px 6px; }
             .sidebar-category-header { display: none; }
             .sidebar-item-btn span:not(.sidebar-icon) { display: none; }
             main.admin-main-viewport { margin-left: 72px; padding: 20px 16px; }
-            .admin-omnisearch { width: 260px; }
+            .admin-omnisearch { width: 200px; }
+            .emergency-broadcast-btn span { display: none; }
         }
-  
-</style>
+
+        @media (max-width: 860px) {
+            header.admin-topbar { padding: 0 12px; }
+            .admin-omnisearch { display: none; }
+            .brand-tag { display: none; }
+            .rbac-role-pill select { max-width: 140px; }
+        }
+
+        @media (max-width: 640px) {
+            .admin-layout { flex-direction: column; margin-top: 64px; }
+            aside.admin-sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 6px;
+                z-index: 10;
+            }
+            .sidebar-item-btn {
+                padding: 6px 10px;
+                flex-shrink: 0;
+            }
+            main.admin-main-viewport {
+                margin-left: 0;
+                padding: 14px 10px;
+            }
+            .view-header-strip {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            .kpi-metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 

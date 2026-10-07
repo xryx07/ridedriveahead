@@ -417,6 +417,7 @@
             align-items: center;
             justify-content: center;
             min-width: 86px;
+            flex-shrink: 0;
             height: 84px;
             padding: 10px 14px;
             border-radius: 18px;
@@ -876,7 +877,8 @@
             position: absolute;
             top: calc(100% + 10px);
             left: 0;
-            right: 0;
+            min-width: 340px;
+            max-width: min(440px, 92vw);
             background: var(--surface);
             border: 1px solid var(--border-hover);
             border-radius: 16px;
@@ -2410,6 +2412,12 @@
             }
         }
 
+        @media (max-width: 1120px) {
+            .nav-menu {
+                display: none;
+            }
+        }
+
         @media (max-width: 900px) {
             .nav-menu {
                 display: none;
@@ -2420,6 +2428,9 @@
             .booking-widget-bar {
                 flex-direction: column;
                 gap: 10px;
+            }
+            .widget-input-slot {
+                width: 100%;
             }
             .widget-input-slot:not(:last-of-type)::after {
                 display: none;
@@ -2443,8 +2454,27 @@
         }
 
         @media (max-width: 600px) {
+            .hero-section {
+                padding-top: 100px;
+            }
+            .header-inner {
+                height: 64px;
+            }
+            .brand-subtitle {
+                display: none;
+            }
+            .header-actions {
+                gap: 6px;
+            }
+            .portal-selector-btn span {
+                display: none;
+            }
+            .cta-btn-primary {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
             .hero-title {
-                font-size: 38px;
+                font-size: 36px;
             }
             .services-cards-grid {
                 grid-template-columns: 1fr;
@@ -2457,6 +2487,12 @@
             }
             .footer-grid-cols {
                 grid-template-columns: 1fr;
+            }
+            .autocomplete-dropdown {
+                min-width: 100%;
+                max-width: 100%;
+                left: 0;
+                right: 0;
             }
         }
     
