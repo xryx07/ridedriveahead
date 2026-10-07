@@ -24,6 +24,7 @@
            UI/UX Pro Max · 60% Ground | 30% Surface | 10% Lime Accent
            ========================================================= */
         :root, [data-theme="dark"] {
+            color-scheme: dark;
             /*  GRAPHITE + NEUTRAL GRAY + RESTRAINED CHAMPAGNE (OPERATIONS COMMAND) */
             --bg: #0B0B0B;                  /* Obsidian Base */
             --surface: #171717;             /* Carbon Console */
@@ -63,6 +64,7 @@
         }
 
         [data-theme="light"] {
+            color-scheme: light;
             /*  WARM IVORY COMMAND CONSOLE (DAYTIME OPERATIONS) */
             --bg: #F7F3EA;                  /* Warm Ivory Ground */
             --surface: #FFFFFF;             /* Pure White Surface */
@@ -138,6 +140,16 @@
             outline-offset: 2px;
         }
 
+        select option {
+            background-color: #171717;
+            color: #F7F3EA;
+            padding: 8px 12px;
+        }
+        [data-theme="light"] select option {
+            background-color: #FFFFFF;
+            color: #171717;
+        }
+
         /* =========================================================
            TOP APP BAR
            ========================================================= */
@@ -203,16 +215,18 @@
         /* Omnisearch Bar */
         .admin-omnisearch {
             position: relative;
-            width: 420px;
+            flex: 0 1 380px;
+            max-width: 420px;
         }
         .admin-omnisearch input {
             width: 100%;
             background: var(--surface-2);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 8px 12px 8px 36px;
+            padding: 8px 46px 8px 36px;
             font-size: 12px;
             color: var(--text-primary);
+            text-overflow: ellipsis;
             transition: all 0.2s ease;
         }
         .admin-omnisearch input:focus {
@@ -240,6 +254,7 @@
             border: 1px solid var(--border);
             padding: 2px 5px;
             border-radius: 4px;
+            pointer-events: none;
         }
 
         /* Topbar Controls */
@@ -247,6 +262,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-shrink: 0;
         }
 
         .rbac-role-pill {
@@ -260,19 +276,34 @@
             cursor: pointer;
             transition: all 0.18s ease;
         }
-        .rbac-role-pill:hover {
+        .rbac-role-pill:hover,
+        .rbac-role-pill:focus-within {
             border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-glow);
         }
         .rbac-role-pill select {
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
             cursor: pointer;
             background: transparent;
+            border: none;
+            outline: none;
+            padding-right: 4px;
+        }
+        .rbac-role-pill select option {
+            background-color: #171717 !important;
+            color: #F7F3EA !important;
+            padding: 10px 14px;
+            font-weight: 600;
+        }
+        [data-theme="light"] .rbac-role-pill select option {
+            background-color: #FFFFFF !important;
+            color: #171717 !important;
         }
 
         .emergency-broadcast-btn {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
             background: var(--danger-bg);
@@ -280,7 +311,7 @@
             color: var(--danger);
             font-size: 11px;
             font-weight: 800;
-            padding: 7px 12px;
+            padding: 7px 14px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.18s ease;
@@ -788,16 +819,16 @@
 
         <!-- Omnisearch Bar -->
         <div class="admin-omnisearch">
-            <span class="omnisearch-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10l4-2-1-2-7 3-4-4-2 1 2 4-4 2v2l5-1 3 5 2-1-1-5 6-2z"/></svg></span>
-            <input type="text" id="globalSearchInput" placeholder="Search riders, drivers, bookings, vehicles, tickets (Ctrl+K)..." onkeyup="handleGlobalSearch(event)" />
+            <span class="omnisearch-icon"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <input type="text" id="globalSearchInput" placeholder="Search riders, drivers, bookings, fleet..." onkeyup="handleGlobalSearch(event)" />
             <span class="omnisearch-kbd">⌘K</span>
         </div>
 
         <!-- Topbar Actions & RBAC Switcher -->
         <div class="topbar-actions">
             <!-- Active Role Switcher -->
-            <div class="rbac-role-pill" title="Switch simulated admin role to test RBAC security access">
-                <span style="display:flex; align-items:center;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <div class="rbac-role-pill">
+                <span style="display:flex; align-items:center; color:var(--accent);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                 <select id="activeRoleSelect" onchange="changeAdminRole(this.value)">
                     <option value="SUPER_ADMIN" selected>Super Admin (All Access)</option>
                     <option value="OPERATIONS_ADMIN">Operations (Rides + Drivers + Live Ops)</option>
@@ -807,11 +838,6 @@
                     <option value="RENTAL_ADMIN">Rental (Vehicles + Owners + Bookings)</option>
                 </select>
             </div>
-
-            <!-- Emergency Broadcast CTA -->
-            <button class="emergency-broadcast-btn" onclick="openEmergencyBroadcastModal()">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Lockdown / SOS Alert
-            </button>
 
             <!-- Theme Toggle -->
             <button class="btn-action-neutral" style="padding:6px 10px; border-radius:8px;" id="adminThemeToggle" onclick="toggleAdminTheme()" title="Toggle Dark/Light Mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
@@ -1664,10 +1690,15 @@
 
             <!-- VIEW 8: SAFETY CENTER -->
             <div class="admin-view-panel" id="view-safety">
-                <div class="view-header-strip">
+                <div class="view-header-strip" style="align-items:center; flex-wrap:wrap; gap:16px;">
                     <div class="view-title-block">
                         <h1>Platform Safety Center & Emergency Vigilance</h1>
                         <p>Real-time SOS telemetry, law enforcement bridge (Police 112), route deviation alerts and incident cases.</p>
+                    </div>
+                    <div>
+                        <button class="emergency-broadcast-btn" onclick="openEmergencyBroadcastModal()">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Lockdown / SOS Broadcast
+                        </button>
                     </div>
                 </div>
 
@@ -2632,6 +2663,9 @@
             const profRole = document.getElementById('adminProfileRole');
             if (profName) profName.innerText = profile.name.split(' ')[0] + ' ' + profile.name.split(' ')[1].charAt(0) + '.';
             if (profRole) profRole.innerText = profile.title;
+
+            const roleSelect = document.getElementById('activeRoleSelect');
+            if (roleSelect && roleSelect.value !== roleKey) roleSelect.value = roleKey;
 
             // Update sidebar visual states (locked vs unlocked)
             document.querySelectorAll('.sidebar-item-btn').forEach(btn => {

@@ -23,6 +23,7 @@
            High-Contrast Cockpit Design System (60-30-10 Rule)
            ========================================================= */
         :root {
+            color-scheme: dark;
             /*  CHARCOAL + IVORY + RESTRAINED CHAMPAGNE (CAPTAIN COCKPIT) */
             --bg-cockpit: #0B0B0B;          /* Obsidian Ground */
             --surface: #171717;             /* Carbon Surface */
@@ -52,6 +53,7 @@
         }
 
         [data-driver-theme="light"] {
+            color-scheme: light;
             --bg-cockpit: #F1F4F8;
             --surface: #FFFFFF;
             --surface-2: #F8FAFC;
@@ -108,6 +110,16 @@
         button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
+        }
+
+        select option {
+            background-color: #171717;
+            color: #F7F3EA;
+            padding: 8px 12px;
+        }
+        [data-driver-theme="light"] select option {
+            background-color: #FFFFFF;
+            color: #0F172A;
         }
 
         /* Ecosystem Platform Switcher Bar */

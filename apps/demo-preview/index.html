@@ -20,6 +20,7 @@
            60% Neutral Ground | 30% Elevated Surface | 10% Electric Lime
            ========================================================= */
         :root, [data-theme="dark"] {
+            color-scheme: dark;
             /*  LUXURY NOIR DESIGN SYSTEM (Obsidian + Champagne + Ivory) */
             --bg: #0B0B0B;                 /* Obsidian Ground */
             --surface: #171717;            /* Carbon Cards */
@@ -50,6 +51,7 @@
         }
 
         [data-theme="light"] {
+            color-scheme: light;
             /*  LUXURY NOIR SILK (Warm Ivory + White + Deep Champagne) */
             --bg: #F7F3EA;                 /* Warm Ivory Ground */
             --surface: #FFFFFF;            /* Pure White Cards */
@@ -116,6 +118,16 @@
         button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
             outline: 2px solid var(--accent);
             outline-offset: 2px;
+        }
+
+        select option {
+            background-color: #171717;
+            color: #F7F3EA;
+            padding: 8px 12px;
+        }
+        [data-theme="light"] select option {
+            background-color: #FFFFFF;
+            color: #171717;
         }
 
         .container {
