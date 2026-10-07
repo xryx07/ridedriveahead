@@ -9,7 +9,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
     <!-- Leaflet.js Free Esri Canvas Maps (Zero Watermark, Zero API Key) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -22,29 +24,30 @@
            UI/UX Pro Max · 60% Ground | 30% Surface | 10% Lime Accent
            ========================================================= */
         :root, [data-theme="dark"] {
-            --bg: #000000;
-            --surface: #0E0E10;
-            --surface-2: #16161A;
-            --surface-3: #222228;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.18);
-            --border-active: #FFFFFF;
+            /*  GRAPHITE + NEUTRAL GRAY + RESTRAINED CHAMPAGNE (OPERATIONS COMMAND) */
+            --bg: #0B0B0B;                  /* Obsidian Base */
+            --surface: #171717;             /* Carbon Console */
+            --surface-2: #242424;           /* Graphite Elevated */
+            --surface-3: #2B2B2B;           /* Dense Row / Hover */
+            --border: #2B2B2B;              /* Dark Border */
+            --border-hover: #3E3E3E;
+            --border-active: #C8A96A;       /* Champagne for KPI / Active Scope */
             
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
+            --text-primary: #F7F3EA;        /* Ivory Headings */
+            --text-secondary: #9A9489;      /* Warm Gray Operations Data */
+            --text-muted: #756F64;
             
-            --accent: #FFFFFF;
-            --accent-glow: rgba(255, 255, 255, 0.16);
-            --accent-contrast: #000000;
+            --accent: #C8A96A;              /* Champagne Gold for Critical KPIs Only */
+            --accent-glow: rgba(200, 169, 106, 0.20);
+            --accent-contrast: #0B0B0B;
             
             --danger: #FF4D4D;
             --danger-bg: rgba(255, 77, 77, 0.12);
             --danger-border: rgba(255, 77, 77, 0.35);
             
-            --success: #E4E4E7;
-            --success-bg: rgba(23, 214, 138, 0.12);
-            --success-border: rgba(23, 214, 138, 0.35);
+            --success: #10B981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --success-border: rgba(16, 185, 129, 0.35);
             
             --warning: #F59E0B;
             --warning-bg: rgba(245, 158, 11, 0.12);
@@ -54,46 +57,47 @@
             --info-bg: rgba(56, 189, 248, 0.12);
             --info-border: rgba(56, 189, 248, 0.35);
             
-            --card-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
-            --modal-backdrop: rgba(3, 5, 7, 0.82);
+            --card-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.7);
+            --modal-backdrop: rgba(11, 11, 11, 0.88);
             --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
         }
 
         [data-theme="light"] {
-            --bg: #F8FAFC;
-            --surface: #FFFFFF;
-            --surface-2: #F1F5F9;
-            --surface-3: #E2E8F0;
-            --border: rgba(15, 23, 42, 0.08);
-            --border-hover: rgba(15, 23, 42, 0.18);
-            --border-active: #0F172A;
+            /*  WARM IVORY COMMAND CONSOLE (DAYTIME OPERATIONS) */
+            --bg: #F7F3EA;                  /* Warm Ivory Ground */
+            --surface: #FFFFFF;             /* Pure White Surface */
+            --surface-2: #EDE7DC;           /* Warm Elevated Panel */
+            --surface-3: #E2DBD0;           /* Table Border / Header */
+            --border: #DED8CC;              /* Warm Border */
+            --border-hover: #C5BDAE;
+            --border-active: #9D7B3F;
             
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-muted: #94A3B8;
+            --text-primary: #171717;        /* Carbon Text */
+            --text-secondary: #716B62;      /* Operations Gray */
+            --text-muted: #958D81;
             
-            --accent: #FFFFFF;
-            --accent-glow: rgba(0, 0, 0, 0.20);
-            --accent-contrast: #000000;
+            --accent: #9D7B3F;              /* Deep Champagne KPI Accent */
+            --accent-glow: rgba(157, 123, 63, 0.18);
+            --accent-contrast: #FFFFFF;
             
-            --danger: #EF4444;
-            --danger-bg: rgba(239, 68, 68, 0.1);
-            --danger-border: rgba(239, 68, 68, 0.25);
+            --danger: #DC2626;
+            --danger-bg: rgba(220, 38, 38, 0.08);
+            --danger-border: rgba(220, 38, 38, 0.30);
             
-            --success: #10B981;
-            --success-bg: rgba(16, 185, 129, 0.1);
-            --success-border: rgba(16, 185, 129, 0.25);
+            --success: #059669;
+            --success-bg: rgba(5, 150, 105, 0.08);
+            --success-border: rgba(5, 150, 105, 0.30);
             
-            --warning: #F59E0B;
-            --warning-bg: rgba(245, 158, 11, 0.1);
-            --warning-border: rgba(245, 158, 11, 0.25);
+            --warning: #D97706;
+            --warning-bg: rgba(217, 119, 6, 0.08);
+            --warning-border: rgba(217, 119, 6, 0.30);
             
             --info: #0284C7;
-            --info-bg: rgba(2, 132, 199, 0.1);
-            --info-border: rgba(2, 132, 199, 0.25);
+            --info-bg: rgba(2, 132, 199, 0.08);
+            --info-border: rgba(2, 132, 199, 0.30);
             
-            --card-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.06);
-            --modal-backdrop: rgba(15, 23, 42, 0.45);
+            --card-shadow: 0 12px 32px -8px rgba(23, 23, 23, 0.08);
+            --modal-backdrop: rgba(23, 23, 23, 0.55);
             --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
         }
 

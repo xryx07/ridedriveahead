@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideDriveAhead — Luxury Noir (Obsidian + Champagne + Ivory)</title>
+    <!-- Google Fonts: Playfair Display + Plus Jakarta Sans + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS for live map rendering -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        :root {
+            /*  LUXURY NOIR DESIGN PALETTE (AUTOMOTIVE EXECUTIVE) */
+            --color-obsidian: #0B0B0B;
+            --color-carbon: #171717;
+            --color-graphite: #242424;
+            --color-border-dark: #2B2B2B;
+            --color-champagne: #C8A96A;
+            --color-champagne-soft: #E2D0A3;
+            --color-champagne-glow: rgba(200, 169, 106, 0.22);
+            --color-ivory: #F7F3EA;
+            --color-warm-gray: #9A9489;
+            --color-white: #FFFFFF;
+            
+            --color-bg-light: #F7F3EA;
+            --color-card-light: #FFFFFF;
+            --color-text-light: #171717;
+            --color-primary-light: #9D7B3F;
+            --color-border-light: #DED8CC;
+            --color-subtext-light: #716B62;
+            
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #050608;
+            color: var(--color-ivory);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Notification Toast */
+        #masterToast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #171717;
+            color: #F7F3EA;
+            border: 1px solid var(--color-champagne);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px var(--color-champagne-glow);
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 99999;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        #masterToast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Top Bar: Executive Navigation & Perspective Switcher */
+        .top-action-bar {
+            background: #0B0B0B;
+            border-bottom: 1px solid #222;
+            padding: 10px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            z-index: 100;
+        }
+        .top-badge-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--color-warm-gray);
+        }
+        .top-badge-label .gold-diamond {
+            width: 8px;
+            height: 8px;
+            background: var(--color-champagne);
+            transform: rotate(45deg);
+            box-shadow: 0 0 8px var(--color-champagne);
+        }
+        .perspective-switch-tabs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .perspective-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-ivory);
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .perspective-tab-btn:hover {
+            border-color: var(--color-champagne);
+            color: var(--color-champagne);
+        }
+        .perspective-tab-btn.active {
+            background: var(--color-champagne);
+            color: #0B0B0B;
+            border-color: var(--color-champagne);
+        }
+        .top-links-group {
+            display: flex;
+            gap: 10px;
+        }
+        .portal-jump-link {
+            text-decoration: none;
+            color: var(--color-ivory);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        .portal-jump-link:hover {
+            background: var(--color-champagne);
+            color: #0B0B0B;
+            border-color: var(--color-champagne);
+        }
+
+        /* MASTER HEADER */
+        .master-header {
+            padding: 24px 36px 18px 36px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            border-bottom: 1px solid #1C1C1C;
+            background: #07080A;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .brand-r-monogram {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1C1C1C 0%, #111111 100%);
+            border: 1px solid var(--color-champagne);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px var(--color-champagne-glow);
+            flex-shrink: 0;
+        }
+        .brand-r-monogram svg {
+            width: 24px;
+            height: 24px;
+        }
+        .brand-text-block .brand-name {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.3px;
+            color: var(--color-ivory);
+        }
+        .brand-text-block .brand-tagline {
+            font-size: 10.5px;
+            color: var(--color-champagne);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .header-center {
+            text-align: center;
+        }
+        .master-headline {
+            font-size: 28px;
+            font-family: var(--font-serif);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--color-ivory);
+        }
+        .master-headline .champagne-span {
+            color: var(--color-champagne);
+            font-style: italic;
+        }
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--color-warm-gray);
+        }
+        .header-nav a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .header-nav a:hover {
+            color: var(--color-champagne);
+        }
+        .header-nav .slash {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* VIEW CONTAINER */
+        .showcase-viewport {
+            flex: 1;
+            padding: 24px 32px 36px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* =========================================================
+           VIEW 1: LUXURY NOIR COMPARISON (DARK vs LIGHT SIDE-BY-SIDE)
+           EXACT REPLICA OF USER UPLOADED MEDIA
+           ========================================================= */
+        .comparison-split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .portal-preview-frame {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--frame-border);
+            background: var(--frame-bg);
+            color: var(--frame-text);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+        .portal-preview-frame:hover {
+            border-color: var(--color-champagne);
+        }
+
+        /* Dark Frame Tokens */
+        .frame-dark {
+            --frame-bg: #0B0B0B;
+            --frame-card: #171717;
+            --frame-elevated: #242424;
+            --frame-border: #2B2B2B;
+            --frame-text: #F7F3EA;
+            --frame-subtext: #9A9489;
+            --frame-cta: #C8A96A;
+            --frame-cta-text: #0B0B0B;
+        }
+
+        /* Light Frame Tokens */
+        .frame-light {
+            --frame-bg: #F7F3EA;
+            --frame-card: #FFFFFF;
+            --frame-elevated: #EDE7DC;
+            --frame-border: #DED8CC;
+            --frame-text: #171717;
+            --frame-subtext: #716B62;
+            --frame-cta: #9D7B3F;
+            --frame-cta-text: #FFFFFF;
+        }
+
+        /* Internal Portal Navbar */
+        .p-nav {
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--frame-border);
+            background: var(--frame-bg);
+        }
+        .p-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .p-monogram-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--color-champagne);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--color-champagne);
+        }
+        .p-brand-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--frame-text);
+        }
+        .p-brand-sub {
+            font-size: 8px;
+            color: var(--frame-subtext);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .p-nav-links {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--frame-subtext);
+        }
+        .p-nav-links span {
+            cursor: pointer;
+        }
+        .p-nav-links span:hover, .p-nav-links span.active {
+            color: var(--frame-text);
+        }
+        .p-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .p-login-link {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--frame-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .p-book-btn {
+            background: var(--frame-cta);
+            color: var(--frame-cta-text);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .p-book-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Split with Mercedes S-Class Photography */
+        .p-hero {
+            padding: 22px 20px 16px 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 18px;
+            align-items: center;
+            background: var(--frame-bg);
+            border-bottom: 1px solid var(--frame-border);
+        }
+        .p-eyebrow {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--color-champagne);
+            margin-bottom: 6px;
+        }
+        .p-hero-title {
+            font-family: var(--font-serif);
+            font-size: 26px;
+            line-height: 1.15;
+            font-weight: 700;
+            color: var(--frame-text);
+            margin-bottom: 8px;
+        }
+        .p-hero-title .champagne {
+            color: var(--frame-cta);
+            font-style: italic;
+        }
+        .p-hero-desc {
+            font-size: 10.5px;
+            color: var(--frame-subtext);
+            line-height: 1.45;
+            margin-bottom: 14px;
+        }
+        .p-hero-media {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--frame-border);
+            aspect-ratio: 16/10;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .p-hero-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Floating Booking Bar */
+        .p-booking-bar {
+            grid-column: 1 / -1;
+            background: var(--frame-card);
+            border: 1px solid var(--frame-border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: grid;
+            grid-template-columns: 1.2fr 1.2fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .p-slot {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9.5px;
+            color: var(--frame-text);
+            font-weight: 600;
+        }
+        .p-slot svg {
+            width: 13px;
+            height: 13px;
+            stroke: var(--frame-subtext);
+            flex-shrink: 0;
+        }
+        .p-slot-meta {
+            display: flex;
+            flex-direction: column;
+        }
+        .p-slot-meta .lbl {
+            font-size: 7.5px;
+            color: var(--frame-subtext);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        .p-slot-meta .val {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--frame-text);
+        }
+        .p-search-action-btn {
+            background: var(--frame-cta);
+            color: var(--frame-cta-text);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .p-search-action-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* 9 Services Strip */
+        .p-services-strip {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 6px;
+            padding: 12px 18px;
+            background: var(--frame-bg);
+            border-bottom: 1px solid var(--frame-border);
+        }
+        .p-service-box {
+            background: var(--frame-card);
+            border: 1px solid var(--frame-border);
+            border-radius: 8px;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .p-service-box:hover, .p-service-box.active {
+            border-color: var(--color-champagne);
+            background: var(--frame-elevated);
+        }
+        .p-service-box svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--color-champagne);
+        }
+        .frame-light .p-service-box svg {
+            stroke: var(--color-primary-light);
+        }
+        .p-service-box span {
+            font-size: 8px;
+            font-weight: 800;
+            color: var(--frame-text);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* Chauffeur Section ("Your car. Your driver.") */
+        .p-chauffeur-block {
+            padding: 18px 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 16px;
+            align-items: center;
+            background: var(--frame-bg);
+            border-bottom: 1px solid var(--frame-border);
+        }
+        .p-chauffeur-title {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: var(--frame-text);
+            margin-bottom: 6px;
+        }
+        .p-chauffeur-sub {
+            font-size: 10px;
+            color: var(--frame-subtext);
+            margin-bottom: 12px;
+        }
+        .p-bullet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .p-bullet-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9.5px;
+            color: var(--frame-text);
+            font-weight: 600;
+        }
+        .p-bullet-item .chk {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid var(--color-champagne);
+            background: rgba(200, 169, 106, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: var(--color-champagne);
+            flex-shrink: 0;
+        }
+        .frame-light .p-bullet-item .chk {
+            border-color: var(--color-primary-light);
+            background: rgba(157, 123, 63, 0.15);
+            color: var(--color-primary-light);
+        }
+        .p-chauffeur-photo {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--frame-border);
+            aspect-ratio: 4/3;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+        .p-chauffeur-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .p-hire-btn {
+            background: transparent;
+            color: var(--frame-text);
+            border: 1px solid var(--frame-border);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 9.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .p-hire-btn:hover {
+            border-color: var(--color-champagne);
+            color: var(--color-champagne);
+        }
+
+        /* Trust Badges Strip */
+        .p-trust-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            padding: 10px 18px;
+            background: var(--frame-card);
+            border-bottom: 1px solid var(--frame-border);
+        }
+        .p-trust-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .p-trust-box svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--color-champagne);
+            flex-shrink: 0;
+        }
+        .frame-light .p-trust-box svg {
+            stroke: var(--color-primary-light);
+        }
+        .p-trust-box .t-title {
+            font-size: 8px;
+            font-weight: 800;
+            color: var(--frame-text);
+        }
+        .p-trust-box .t-sub {
+            font-size: 7px;
+            color: var(--frame-subtext);
+        }
+
+        /* Panoramic Coastal Highway Banner */
+        .p-panoramic-strip {
+            position: relative;
+            padding: 24px 20px;
+            text-align: center;
+            background: #000;
+            overflow: hidden;
+        }
+        .frame-light .p-panoramic-strip {
+            background: #E8E2D5;
+        }
+        .p-panoramic-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.38;
+        }
+        .frame-light .p-panoramic-bg {
+            opacity: 0.25;
+        }
+        .p-panoramic-content {
+            position: relative;
+            z-index: 2;
+        }
+        .p-panoramic-title {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--frame-text);
+            margin-bottom: 4px;
+        }
+        .p-panoramic-sub {
+            font-size: 9px;
+            color: var(--frame-subtext);
+        }
+
+        /* =========================================================
+           VIEW 2: TRIPLE PLATFORM ECOSYSTEM
+           ========================================================= */
+        .ecosystem-3col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .eco-col {
+            background: #0B0B0B;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        }
+        .eco-col-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #222;
+        }
+        .eco-col-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .eco-avatar-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.5px solid var(--color-champagne);
+            background: rgba(200, 169, 106, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-champagne);
+            font-weight: 900;
+            font-size: 12px;
+        }
+        .eco-col-name {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--color-champagne);
+            letter-spacing: 0.8px;
+        }
+        .eco-col-desc {
+            font-size: 10.5px;
+            color: var(--color-warm-gray);
+        }
+
+        /* MASTER FOOTER */
+        .master-footer {
+            padding: 18px 36px 22px 36px;
+            background: #07080A;
+            border-top: 1px solid #1C1C1C;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-pillars-grid {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex: 1;
+        }
+        .pillar-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pillar-icon-box {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #141414;
+            border: 1px solid #2B2B2B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-champagne);
+            flex-shrink: 0;
+        }
+        .pillar-icon-box svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--color-champagne);
+        }
+        .pillar-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--color-ivory);
+        }
+        .pillar-sub {
+            font-size: 9.5px;
+            color: var(--color-warm-gray);
+        }
+        .footer-brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 1100px) {
+            .comparison-split-grid {
+                grid-template-columns: 1fr;
+            }
+            .ecosystem-3col-grid {
+                grid-template-columns: 1fr;
+            }
+            .master-header {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                text-align: center;
+            }
+            .header-left, .header-right {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Notification Toast -->
+    <div id="masterToast">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--color-champagne)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Action executed successfully</span>
+    </div>
+
+    <!-- Top Action Bar -->
+    <div class="top-action-bar">
+        <div class="top-badge-label">
+            <span class="gold-diamond"></span>
+            <span>RideDriveAhead · Luxury Noir Automotive Direction (Obsidian + Champagne + Ivory)</span>
+        </div>
+
+        <div class="perspective-switch-tabs">
+            <button class="perspective-tab-btn active" id="tabCompare" onclick="switchShowcaseView('compare')">
+                <span> Luxury Noir: Dark vs Light</span>
+            </button>
+            <button class="perspective-tab-btn" id="tabEcosystem" onclick="switchShowcaseView('ecosystem')">
+                <span> Triple Platform Ecosystem</span>
+            </button>
+        </div>
+
+        <div class="top-links-group">
+            <a href="/customer" class="portal-jump-link">
+                Customer Web ↗
+            </a>
+            <a href="/driver" class="portal-jump-link">
+                Driver Cockpit ↗
+            </a>
+            <a href="/admin" class="portal-jump-link">
+                Admin Console ↗
+            </a>
+        </div>
+    </div>
+
+    <!-- MASTER HEADER -->
+    <header class="master-header">
+        <div class="header-left">
+            <div class="brand-r-monogram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-champagne)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 21V4h7a4.5 4.5 0 0 1 0 9H7"/>
+                    <path d="m13 13 6 8"/>
+                </svg>
+            </div>
+            <div class="brand-text-block">
+                <div class="brand-name">RideDriveAhead</div>
+                <div class="brand-tagline">Premium Mobility. Always.</div>
+            </div>
+        </div>
+
+        <div class="header-center">
+            <h1 class="master-headline">Your journey. <span class="champagne-span">Your way.</span></h1>
+        </div>
+
+        <div class="header-right">
+            <nav class="header-nav">
+                <a href="/customer">RIDES</a>
+                <span class="slash">/</span>
+                <a href="/customer#rent">RENTALS</a>
+                <span class="slash">/</span>
+                <a href="/customer#hire-driver">CHAUFFEURS</a>
+                <span class="slash">/</span>
+                <a href="/driver">DRIVERS</a>
+                <span class="slash">/</span>
+                <a href="/admin">OPERATIONS</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN SHOWCASE VIEWPORT -->
+    <main class="showcase-viewport">
+
+        <!-- =========================================================
+             SECTION 1: DARK VS LIGHT MODE EXACT COMPARISON
+             ========================================================= -->
+        <section id="compareSection" class="comparison-split-grid">
+
+            <!-- LEFT: DARK MODE (OBSIDIAN NOIR) -->
+            <div class="portal-preview-frame frame-dark" id="darkPreviewFrame">
+                <!-- Nav -->
+                <div class="p-nav">
+                    <div class="p-brand-logo">
+                        <div class="p-monogram-box">R</div>
+                        <div>
+                            <div class="p-brand-title">RideDriveAhead</div>
+                            <div class="p-brand-sub">Premium Mobility. Always.</div>
+                        </div>
+                    </div>
+                    <div class="p-nav-links">
+                        <span class="active" onclick="showToast('Customer: Ride Selected')">Ride</span>
+                        <span onclick="showToast('Customer: Rental Marketplace')">Rent</span>
+                        <span onclick="showToast('Customer: Chauffeur Marketplace')">Hire Driver</span>
+                        <span onclick="showToast('Customer: Outstation Intercity')">Outstation</span>
+                        <span onclick="showToast('Customer: Airport Express')">Airport</span>
+                        <span onclick="showToast('Customer: Business Fleet')">Business</span>
+                        <span onclick="showToast('Customer: Help Center')">Help</span>
+                    </div>
+                    <div class="p-nav-actions">
+                        <div class="p-login-link" onclick="showToast('Opening Login Modal')">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>Login</span>
+                        </div>
+                        <button class="p-book-btn" onclick="showToast('Booking Portal Launched')">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Hero Section: Split Grid with Mercedes S-Class -->
+                <div class="p-hero">
+                    <div>
+                        <div class="p-eyebrow">PREMIUM MOBILITY SOLUTIONS</div>
+                        <h2 class="p-hero-title">
+                            Your journey.<br>
+                            <span class="champagne">Your way.</span>
+                        </h2>
+                        <p class="p-hero-desc">
+                            Cars, bikes, rides and professional drivers — all in one place.
+                        </p>
+                    </div>
+
+                    <!-- Cinematic Photograph of Black Mercedes S-Class at Night -->
+                    <div class="p-hero-media">
+                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1000&auto=format&fit=crop" alt="Mercedes S-Class Sedan Night" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop';" />
+                    </div>
+
+                    <!-- Floating Booking Bar -->
+                    <div class="p-booking-bar">
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Pickup Location</span>
+                                <span class="val">Enter pickup location</span>
+                            </div>
+                        </div>
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Destination</span>
+                                <span class="val">Enter destination</span>
+                            </div>
+                        </div>
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Date & Time</span>
+                                <span class="val">Today, 10:00 AM</span>
+                            </div>
+                        </div>
+                        <button class="p-search-action-btn" onclick="showToast('Dark Mode: Finding Nearest Chauffeurs & Sedans...')">
+                            Book Now →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 9 Mobility Services Strip -->
+                <div class="p-services-strip">
+                    <div class="p-service-box active" onclick="showToast('Active: Executive Sedan Cab')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7" cy="16" r="1.5"/><circle cx="17" cy="16" r="1.5"/></svg>
+                        <span>Cab</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: City Auto Rickshaw')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17h14v-4H9l-3-4H3v6h2"/></svg>
+                        <span>Auto</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Rapid Motorbike')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h-3l-4 6h7l2-4"/></svg>
+                        <span>Bike</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Luxury Car Rental')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        <span>Rent Car</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Motorbike Rental')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17l3-7 4 4"/></svg>
+                        <span>Rent Bike</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Chauffeur Hire Service')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><path d="M9 3h6"/></svg>
+                        <span>Hire Driver</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Airport Express Transfer')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                        <span>Airport</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Outstation Highway Trips')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 19L8 5h8l4 14"/><line x1="12" y1="8" x2="12" y2="15"/></svg>
+                        <span>Outstation</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Express Courier Delivery')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Delivery</span>
+                    </div>
+                </div>
+
+                <!-- Chauffeur Section: "Your car. Your driver." -->
+                <div class="p-chauffeur-block">
+                    <div>
+                        <div class="p-eyebrow">CHAUFFEUR SERVICES</div>
+                        <h3 class="p-chauffeur-title">
+                            Your car.<br>
+                            Your driver.
+                        </h3>
+                        <p class="p-chauffeur-sub">
+                            Professional chauffeurs for the car you already own.
+                        </p>
+
+                        <div class="p-bullet-list">
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Background verified drivers</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Flexible booking options</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Real-time tracking</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Premium experience</span>
+                            </div>
+                        </div>
+
+                        <button class="p-hire-btn" onclick="showToast('Chauffeur Service Initialized')">
+                            Hire a Driver →
+                        </button>
+                    </div>
+
+                    <div class="p-chauffeur-photo">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=700&auto=format&fit=crop" alt="Chauffeur Opening Car Door" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=700&auto=format&fit=crop';" />
+                    </div>
+                </div>
+
+                <!-- Trust Badges Strip -->
+                <div class="p-trust-strip">
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <div>
+                            <div class="t-title">Verified Drivers</div>
+                            <div class="t-sub">All drivers background checked</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="18" x2="12" y2="20"/><line x1="12" y1="4" x2="12" y2="6"/></svg>
+                        <div>
+                            <div class="t-title">Transparent Pricing</div>
+                            <div class="t-sub">No hidden charges</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <div>
+                            <div class="t-title">24/7 Mobility</div>
+                            <div class="t-sub">Always available</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <div>
+                            <div class="t-title">Safe & Reliable</div>
+                            <div class="t-sub">Your safety is our priority</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panoramic Banner -->
+                <div class="p-panoramic-strip">
+                    <img class="p-panoramic-bg" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop" alt="Scenic Coastal Sunset Drive" />
+                    <div class="p-panoramic-content">
+                        <div class="p-eyebrow" style="margin-bottom:3px;">MORE THAN JUST A RIDE</div>
+                        <h4 class="p-panoramic-title">A complete mobility ecosystem</h4>
+                        <div class="p-panoramic-sub">Rides. Rentals. Chauffeurs. Everything you need, in one place.</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- RIGHT: LIGHT MODE (IVORY SILK) -->
+            <div class="portal-preview-frame frame-light" id="lightPreviewFrame">
+                <!-- Nav -->
+                <div class="p-nav">
+                    <div class="p-brand-logo">
+                        <div class="p-monogram-box">R</div>
+                        <div>
+                            <div class="p-brand-title">RideDriveAhead</div>
+                            <div class="p-brand-sub">Premium Mobility. Always.</div>
+                        </div>
+                    </div>
+                    <div class="p-nav-links">
+                        <span class="active" onclick="showToast('Customer: Ride Selected')">Ride</span>
+                        <span onclick="showToast('Customer: Rental Marketplace')">Rent</span>
+                        <span onclick="showToast('Customer: Chauffeur Marketplace')">Hire Driver</span>
+                        <span onclick="showToast('Customer: Outstation Intercity')">Outstation</span>
+                        <span onclick="showToast('Customer: Airport Express')">Airport</span>
+                        <span onclick="showToast('Customer: Business Fleet')">Business</span>
+                        <span onclick="showToast('Customer: Help Center')">Help</span>
+                    </div>
+                    <div class="p-nav-actions">
+                        <div class="p-login-link" onclick="showToast('Opening Login Modal')">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>Login</span>
+                        </div>
+                        <button class="p-book-btn" onclick="showToast('Booking Portal Launched')">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Hero Section: Split Grid with Mercedes S-Class -->
+                <div class="p-hero">
+                    <div>
+                        <div class="p-eyebrow" style="color:var(--color-primary-light);">PREMIUM MOBILITY SOLUTIONS</div>
+                        <h2 class="p-hero-title">
+                            Your journey.<br>
+                            <span class="champagne">Your way.</span>
+                        </h2>
+                        <p class="p-hero-desc">
+                            Cars, bikes, rides and professional drivers — all in one place.
+                        </p>
+                    </div>
+
+                    <!-- Cinematic Photograph of Black Mercedes S-Class at Night -->
+                    <div class="p-hero-media">
+                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1000&auto=format&fit=crop" alt="Mercedes S-Class Sedan Night" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop';" />
+                    </div>
+
+                    <!-- Floating Booking Bar -->
+                    <div class="p-booking-bar">
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Pickup Location</span>
+                                <span class="val">Enter pickup location</span>
+                            </div>
+                        </div>
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Destination</span>
+                                <span class="val">Enter destination</span>
+                            </div>
+                        </div>
+                        <div class="p-slot">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            <div class="p-slot-meta">
+                                <span class="lbl">Date & Time</span>
+                                <span class="val">Today, 10:00 AM</span>
+                            </div>
+                        </div>
+                        <button class="p-search-action-btn" onclick="showToast('Light Mode: Finding Nearest Chauffeurs & Sedans...')">
+                            Book Now →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 9 Mobility Services Strip -->
+                <div class="p-services-strip">
+                    <div class="p-service-box active" onclick="showToast('Active: Executive Sedan Cab')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7" cy="16" r="1.5"/><circle cx="17" cy="16" r="1.5"/></svg>
+                        <span>Cab</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: City Auto Rickshaw')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17h14v-4H9l-3-4H3v6h2"/></svg>
+                        <span>Auto</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Rapid Motorbike')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h-3l-4 6h7l2-4"/></svg>
+                        <span>Bike</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Luxury Car Rental')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9C2.1 11.2 2 11.6 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        <span>Rent Car</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Motorbike Rental')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17l3-7 4 4"/></svg>
+                        <span>Rent Bike</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Chauffeur Hire Service')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><path d="M9 3h6"/></svg>
+                        <span>Hire Driver</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Airport Express Transfer')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                        <span>Airport</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Outstation Highway Trips')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 19L8 5h8l4 14"/><line x1="12" y1="8" x2="12" y2="15"/></svg>
+                        <span>Outstation</span>
+                    </div>
+                    <div class="p-service-box" onclick="showToast('Active: Express Courier Delivery')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Delivery</span>
+                    </div>
+                </div>
+
+                <!-- Chauffeur Section: "Your car. Your driver." -->
+                <div class="p-chauffeur-block">
+                    <div>
+                        <div class="p-eyebrow" style="color:var(--color-primary-light);">CHAUFFEUR SERVICES</div>
+                        <h3 class="p-chauffeur-title">
+                            Your car.<br>
+                            Your driver.
+                        </h3>
+                        <p class="p-chauffeur-sub">
+                            Professional chauffeurs for the car you already own.
+                        </p>
+
+                        <div class="p-bullet-list">
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Background verified drivers</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Flexible booking options</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Real-time tracking</span>
+                            </div>
+                            <div class="p-bullet-item">
+                                <span class="chk"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                <span>Premium experience</span>
+                            </div>
+                        </div>
+
+                        <button class="p-hire-btn" onclick="showToast('Chauffeur Service Initialized')">
+                            Hire a Driver →
+                        </button>
+                    </div>
+
+                    <div class="p-chauffeur-photo">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=700&auto=format&fit=crop" alt="Chauffeur Opening Car Door" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=700&auto=format&fit=crop';" />
+                    </div>
+                </div>
+
+                <!-- Trust Badges Strip -->
+                <div class="p-trust-strip">
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <div>
+                            <div class="t-title">Verified Drivers</div>
+                            <div class="t-sub">All drivers background checked</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="18" x2="12" y2="20"/><line x1="12" y1="4" x2="12" y2="6"/></svg>
+                        <div>
+                            <div class="t-title">Transparent Pricing</div>
+                            <div class="t-sub">No hidden charges</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <div>
+                            <div class="t-title">24/7 Mobility</div>
+                            <div class="t-sub">Always available</div>
+                        </div>
+                    </div>
+                    <div class="p-trust-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <div>
+                            <div class="t-title">Safe & Reliable</div>
+                            <div class="t-sub">Your safety is our priority</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panoramic Banner -->
+                <div class="p-panoramic-strip">
+                    <img class="p-panoramic-bg" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1000&auto=format&fit=crop" alt="Scenic Coastal Sunset Drive" />
+                    <div class="p-panoramic-content">
+                        <div class="p-eyebrow" style="margin-bottom:3px; color:var(--color-primary-light);">MORE THAN JUST A RIDE</div>
+                        <h4 class="p-panoramic-title">A complete mobility ecosystem</h4>
+                        <div class="p-panoramic-sub">Rides. Rentals. Chauffeurs. Everything you need, in one place.</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             SECTION 2: TRIPLE PLATFORM ECOSYSTEM (CUSTOMER / DRIVER / ADMIN)
+             ========================================================= -->
+        <section id="ecosystemSection" class="ecosystem-3col-grid" style="display:none;">
+
+            <!-- 1. CUSTOMER PORTAL -->
+            <div class="eco-col">
+                <div class="eco-col-header">
+                    <div class="eco-col-badge">
+                        <div class="eco-avatar-circle">C</div>
+                        <div>
+                            <div class="eco-col-name">CUSTOMER</div>
+                            <div class="eco-col-desc">Obsidian + Ivory + Champagne</div>
+                        </div>
+                    </div>
+                    <a href="/customer" class="portal-jump-link">Open Full ↗</a>
+                </div>
+                <div style="font-size:12px; color:var(--color-warm-gray); line-height:1.6;">
+                    Spacious editorial typography, cinematic automotive photography, and minimal champagne metallic details for booking rides, luxury rentals, and personal chauffeurs.
+                </div>
+                <div style="background:#171717; border:1px solid #2B2B2B; border-radius:12px; padding:16px;">
+                    <div style="font-size:11px; font-weight:800; color:var(--color-champagne); margin-bottom:6px;">LIVE ACTIVE RIDE</div>
+                    <div style="font-size:14px; font-weight:700; color:#F7F3EA;">Whitefield → MG Road</div>
+                    <div style="font-size:11px; color:var(--color-warm-gray); margin-top:2px;">Mercedes E-Class · DL 01 AB 9988 · Chauffeur Rajesh K.</div>
+                    <button class="p-book-btn" style="margin-top:12px; width:100%;" onclick="showToast('Customer: Live GPS Telemetry Connected')">View Ride Status</button>
+                </div>
+            </div>
+
+            <!-- 2. DRIVER PORTAL -->
+            <div class="eco-col">
+                <div class="eco-col-header">
+                    <div class="eco-col-badge">
+                        <div class="eco-avatar-circle">D</div>
+                        <div>
+                            <div class="eco-col-name">DRIVER</div>
+                            <div class="eco-col-desc">Charcoal + Ivory + Functional Gold</div>
+                        </div>
+                    </div>
+                    <a href="/driver" class="portal-jump-link">Open Full ↗</a>
+                </div>
+                <div style="font-size:12px; color:var(--color-warm-gray); line-height:1.6;">
+                    High-contrast night-vision cockpit with Champagne highlights reserved strictly for earnings, duty status, and instant gig dispatch.
+                </div>
+                <div style="background:#171717; border:1px solid #2B2B2B; border-radius:12px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:11px; color:var(--color-warm-gray);">TODAY'S EARNINGS</span>
+                        <span style="font-size:9px; color:#10B981; font-weight:800;">+12% vs yesterday</span>
+                    </div>
+                    <div style="font-size:22px; font-weight:900; color:var(--color-champagne); margin:4px 0;">₹2,480</div>
+                    <div style="font-size:11px; color:#F7F3EA;">14 trips completed · 6h 24m online</div>
+                    <button class="p-book-btn" style="margin-top:12px; width:100%;" onclick="showToast('Driver: Payout Request Initialized')">Instant Payout →</button>
+                </div>
+            </div>
+
+            <!-- 3. ADMIN PORTAL -->
+            <div class="eco-col">
+                <div class="eco-col-header">
+                    <div class="eco-col-badge">
+                        <div class="eco-avatar-circle">A</div>
+                        <div>
+                            <div class="eco-col-name">ADMIN</div>
+                            <div class="eco-col-desc">Graphite + Neutral Gray + KPI Champagne</div>
+                        </div>
+                    </div>
+                    <a href="/admin" class="portal-jump-link">Open Full ↗</a>
+                </div>
+                <div style="font-size:12px; color:var(--color-warm-gray); line-height:1.6;">
+                    Dense, data-rich operational command center with real-time fleet radar, RBAC scopes, safety dispatch, and tamper-evident audit logging.
+                </div>
+                <div style="background:#171717; border:1px solid #2B2B2B; border-radius:12px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:11px; color:var(--color-warm-gray);">PLATFORM REVENUE</span>
+                        <span style="font-size:9px; color:var(--color-champagne); font-weight:800;">2,481 Active Rides</span>
+                    </div>
+                    <div style="font-size:22px; font-weight:900; color:var(--color-champagne); margin:4px 0;">₹8.42 Lakh</div>
+                    <div style="font-size:11px; color:#F7F3EA;">1,826 Drivers Online · 342 Rentals</div>
+                    <button class="p-book-btn" style="margin-top:12px; width:100%;" onclick="showToast('Admin: Operations Console Synchronized')">Live Command Map →</button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- MASTER FOOTER -->
+    <footer class="master-footer">
+        <div class="footer-pillars-grid">
+            <div class="pillar-item">
+                <div class="pillar-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <div>
+                    <div class="pillar-title">Unified Platform</div>
+                    <div class="pillar-sub">One ecosystem. Multiple experiences.</div>
+                </div>
+            </div>
+
+            <div class="pillar-item">
+                <div class="pillar-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                </div>
+                <div>
+                    <div class="pillar-title">Secure & Scalable</div>
+                    <div class="pillar-sub">Built for millions of users.</div>
+                </div>
+            </div>
+
+            <div class="pillar-item">
+                <div class="pillar-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div>
+                    <div class="pillar-title">Real-Time Operations</div>
+                    <div class="pillar-sub">Live data. Smarter decisions.</div>
+                </div>
+            </div>
+
+            <div class="pillar-item">
+                <div class="pillar-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <div>
+                    <div class="pillar-title">Luxury Noir</div>
+                    <div class="pillar-sub">Obsidian · Champagne · Ivory</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-brand-lockup">
+            <div class="brand-r-monogram" style="width:34px; height:34px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-champagne)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 21V4h7a4.5 4.5 0 0 1 0 9H7"/>
+                    <path d="m13 13 6 8"/>
+                </svg>
+            </div>
+            <div>
+                <div style="font-size:15px; font-weight:800; color:var(--color-ivory);">RideDriveAhead</div>
+                <div style="font-size:9.5px; color:var(--color-champagne); letter-spacing:1px; text-transform:uppercase;">Premium Mobility. Always.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTION SCRIPT -->
+    <script>
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('masterToast');
+            const toastMsg = document.getElementById('toastMsg');
+            if (!toast || !toastMsg) return;
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function switchShowcaseView(view) {
+            const compareSec = document.getElementById('compareSection');
+            const ecoSec = document.getElementById('ecosystemSection');
+            const tabCompare = document.getElementById('tabCompare');
+            const tabEco = document.getElementById('tabEcosystem');
+
+            if (view === 'compare') {
+                compareSec.style.display = 'grid';
+                ecoSec.style.display = 'none';
+                tabCompare.classList.add('active');
+                tabEco.classList.remove('active');
+                showToast('Viewing Luxury Noir: Dark (Obsidian) vs Light (Ivory)');
+            } else {
+                compareSec.style.display = 'none';
+                ecoSec.style.display = 'grid';
+                tabCompare.classList.remove('active');
+                tabEco.classList.add('active');
+                showToast('Viewing Triple-Platform Ecosystem (Customer / Driver / Admin)');
+            }
+        }
+    </script>
+</body>
+</html>

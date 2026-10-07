@@ -6,7 +6,9 @@
     <title>RideDriveAhead — One App. Every Way to Move.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
     <!-- Leaflet.js Free OpenStreetMap & CartoDB Maps (Zero API Key Needed) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -18,57 +20,61 @@
            60% Neutral Ground | 30% Elevated Surface | 10% Electric Lime
            ========================================================= */
         :root, [data-theme="dark"] {
-            --bg: #000000;
-            --surface: #0E0E10;
-            --surface-2: #16161A;
-            --surface-3: #222228;
-            --border: rgba(255, 255, 255, 0.12);
-            --border-hover: rgba(255, 255, 255, 0.28);
-            --border-active: #FFFFFF;
+            /*  LUXURY NOIR DESIGN SYSTEM (Obsidian + Champagne + Ivory) */
+            --bg: #0B0B0B;                 /* Obsidian Ground */
+            --surface: #171717;            /* Carbon Cards */
+            --surface-2: #242424;          /* Graphite Elevated */
+            --surface-3: #2E2E2E;          /* Muted Surface */
+            --border: #2B2B2B;             /* Charcoal Border */
+            --border-hover: #3E3E3E;       /* Subtle Hover */
+            --border-active: #C8A96A;      /* Champagne Active */
             
-            --text-primary: #FFFFFF;
-            --text-secondary: #A1A1AA;
-            --text-muted: #71717A;
+            --text-primary: #F7F3EA;       /* Warm Ivory Headings */
+            --text-secondary: #9A9489;     /* Warm Gray Subtext */
+            --text-muted: #756F64;         /* Muted Earth Tone */
             
-            --accent: #FFFFFF;             /* Ultra-Luxury Executive White */
-            --accent-glow: rgba(255, 255, 255, 0.16);
-            --accent-hover: #E4E4E7;
-            --accent-contrast: #000000;
+            --accent: #C8A96A;             /* Champagne Gold Accent (5% detail) */
+            --accent-soft: #E2D0A3;        /* Soft Champagne */
+            --accent-glow: rgba(200, 169, 106, 0.22);
+            --accent-hover: #D4B77A;       /* Bright Metallic */
+            --accent-contrast: #0B0B0B;    /* Obsidian Text on Gold CTA */
             
-            --nav-bg: rgba(0, 0, 0, 0.90);
-            --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.85);
-            --modal-backdrop: rgba(0, 0, 0, 0.82);
+            --nav-bg: rgba(11, 11, 11, 0.94);
+            --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.9);
+            --modal-backdrop: rgba(11, 11, 11, 0.88);
             
-            --hero-overlay-start: rgba(0, 0, 0, 0.65);
-            --hero-overlay-end: #000000;
+            --hero-overlay-start: rgba(11, 11, 11, 0.45);
+            --hero-overlay-end: #0B0B0B;
             --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
             --map-subdomains: '';
         }
 
         [data-theme="light"] {
-            --bg: #FFFFFF;
-            --surface: #F8F9FA;
-            --surface-2: #F1F3F5;
-            --surface-3: #E9ECEF;
-            --border: rgba(0, 0, 0, 0.10);
-            --border-hover: rgba(0, 0, 0, 0.24);
-            --border-active: #000000;
+            /*  LUXURY NOIR SILK (Warm Ivory + White + Deep Champagne) */
+            --bg: #F7F3EA;                 /* Warm Ivory Ground */
+            --surface: #FFFFFF;            /* Pure White Cards */
+            --surface-2: #EDE7DC;          /* Soft Ivory Elevated */
+            --surface-3: #E2DBD0;          /* Warm Slate */
+            --border: #DED8CC;             /* Warm Champagne Border */
+            --border-hover: #C5BDAE;
+            --border-active: #9D7B3F;
             
-            --text-primary: #0A0A0A;
-            --text-secondary: #52525B;
-            --text-muted: #71717A;
+            --text-primary: #171717;       /* Carbon Text & Headings */
+            --text-secondary: #716B62;     /* Warm Gray Secondary */
+            --text-muted: #958D81;
             
-            --accent: #000000;             /* Ultra-Luxury Executive Black */
-            --accent-glow: rgba(0, 0, 0, 0.12);
-            --accent-hover: #27272A;
-            --accent-contrast: #FFFFFF;
+            --accent: #9D7B3F;             /* Deep Champagne CTA */
+            --accent-soft: #C8A96A;
+            --accent-glow: rgba(157, 123, 63, 0.20);
+            --accent-hover: #8A6B34;
+            --accent-contrast: #FFFFFF;    /* White Text on Deep Gold CTA */
             
-            --nav-bg: rgba(255, 255, 255, 0.92);
-            --card-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.10);
-            --modal-backdrop: rgba(0, 0, 0, 0.65);
+            --nav-bg: rgba(247, 243, 234, 0.94);
+            --card-shadow: 0 16px 40px -12px rgba(23, 23, 23, 0.08);
+            --modal-backdrop: rgba(23, 23, 23, 0.55);
             
-            --hero-overlay-start: rgba(255, 255, 255, 0.45);
-            --hero-overlay-end: #FFFFFF;
+            --hero-overlay-start: rgba(247, 243, 234, 0.35);
+            --hero-overlay-end: #F7F3EA;
             --map-tile-url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
             --map-subdomains: '';
         }
@@ -2453,6 +2459,185 @@
                 grid-template-columns: 1fr;
             }
         }
+    
+        /* Luxury Noir Editorial Typography & Aesthetic Refinements */
+        .serif-heading {
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .gold-monogram {
+            color: var(--accent);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 800;
+            font-size: 20px;
+        }
+        .champagne-text {
+            color: var(--accent);
+            font-style: italic;
+        }
+        .luxury-eyebrow {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .luxury-eyebrow::before, .luxury-eyebrow::after {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.6;
+        }
+
+        /* Hero Split Grid with Cinematic Mercedes S-Class */
+        .hero-luxury-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 36px;
+            align-items: center;
+            padding: 30px 0 20px 0;
+        }
+        .hero-luxury-media {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
+            aspect-ratio: 16/10;
+            background: #111;
+        }
+        .hero-luxury-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .hero-luxury-media:hover .hero-luxury-img {
+            transform: scale(1.03);
+        }
+        .hero-media-badge {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(11, 11, 11, 0.78);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(200, 169, 106, 0.4);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 11px;
+            color: var(--text-primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Luxury Chauffeur Section */
+        .chauffeur-luxury-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            box-shadow: var(--card-shadow);
+            margin: 40px 0;
+        }
+        .chauffeur-feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 24px 0 28px 0;
+        }
+        .chauffeur-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .chauffeur-check-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(200, 169, 106, 0.15);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+        .chauffeur-photo-wrap {
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            aspect-ratio: 4/3;
+            background: #111;
+        }
+        .chauffeur-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Panoramic Ecosystem Banner */
+        .panoramic-ecosystem-banner {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 50px 0 30px 0;
+            border: 1px solid var(--border);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            padding: 60px 24px;
+            background: #0B0B0B;
+        }
+        .panoramic-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+        }
+        [data-theme="light"] .panoramic-bg-img {
+            opacity: 0.22;
+        }
+        .panoramic-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 992px) {
+            .hero-luxury-grid {
+                grid-template-columns: 1fr;
+            }
+            .chauffeur-luxury-card {
+                grid-template-columns: 1fr;
+                padding: 24px;
+                gap: 24px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -2473,7 +2658,7 @@
                 </div>
                 <div class="brand-text-wrap">
                     <span class="brand-title">RideDriveAhead</span>
-                    <span class="brand-subtitle">One app. Every way to move.</span>
+                    <span class="brand-subtitle">Premium Mobility. Always.</span>
                 </div>
             </div>
 
@@ -2590,18 +2775,27 @@
         <div class="hero-overlay"></div>
 
         <div class="container hero-content">
-            <div class="hero-eyebrow">
-                RIDE · RENT · HIRE DRIVER · OUTSTATION · AIRPORT · DELIVERY
+            <div class="hero-luxury-grid">
+                <div>
+                    <div class="luxury-eyebrow">PREMIUM MOBILITY SOLUTIONS</div>
+                    <h1 class="hero-title serif-heading" style="font-size:clamp(38px, 4.5vw, 56px); line-height:1.12; margin-bottom:12px;">
+                        Your journey.<br>
+                        <span class="champagne-text">Your way.</span>
+                    </h1>
+                    <p class="hero-subtitle" style="font-size:16px; color:var(--text-secondary); max-width:500px; margin-bottom:24px;">
+                        Cars, bikes, rides and professional drivers — all in one place.
+                    </p>
+                </div>
+                
+                <!-- Cinematic Hero Photograph: Black Mercedes Sedan at Night -->
+                <div class="hero-luxury-media">
+                    <img class="hero-luxury-img" src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop" alt="Luxury Black Mercedes Sedan" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop';" />
+                    <div class="hero-media-badge">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Flagship Mobility · Executive Class</span>
+                    </div>
+                </div>
             </div>
-
-            <h1 class="hero-title">
-                Your journey.
-                <span class="accent-text">Our priority.</span>
-            </h1>
-
-            <p class="hero-subtitle">
-                Taxis, rentals, professional drivers and more — all in one unified mobility platform.
-            </p>
 
             <!-- 9 Service Selection Pills -->
             <div class="service-nav-strip">
@@ -3080,24 +3274,44 @@
          ========================================================= -->
     <section class="section-driver-banner" id="hire-driver">
         <div class="container">
-            <div class="driver-cta-card">
-                <div class="driver-cta-content">
-                    <div class="driver-badge-pill">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-                        Professional Chauffeur Marketplace
-                    </div>
-                    <div class="why-eyebrow" style="color: var(--text-secondary); margin-bottom: 6px;">Have your own car?</div>
-                    <h2 class="driver-cta-heading">Hire a professional driver.</h2>
-                    <p class="driver-cta-subtext">Safe. Verified. Professional. Certified for Automatic (AT) and Manual (MT) transmissions.</p>
-                    
-                    <button class="cta-btn-primary" onclick="openChauffeurModal()">
-                        Book Driver
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <div class="chauffeur-luxury-card">
+                <div>
+                    <div class="luxury-eyebrow">CHAUFFEUR SERVICES</div>
+                    <h2 class="serif-heading" style="font-size:clamp(32px, 3.5vw, 44px); line-height:1.15; margin-bottom:12px;">
+                        Your car.<br>
+                        <span class="champagne-text">Your driver.</span>
+                    </h2>
+                    <p style="font-size:15px; color:var(--text-secondary); margin-bottom:18px;">
+                        Professional chauffeurs for the car you already own.
+                    </p>
+
+                    <ul class="chauffeur-feature-list">
+                        <li class="chauffeur-feature-item">
+                            <span class="chauffeur-check-icon"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>Background verified drivers</span>
+                        </li>
+                        <li class="chauffeur-feature-item">
+                            <span class="chauffeur-check-icon"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>Flexible booking options</span>
+                        </li>
+                        <li class="chauffeur-feature-item">
+                            <span class="chauffeur-check-icon"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>Real-time tracking</span>
+                        </li>
+                        <li class="chauffeur-feature-item">
+                            <span class="chauffeur-check-icon"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>Premium experience</span>
+                        </li>
+                    </ul>
+
+                    <button class="cta-btn-primary" onclick="openChauffeurModal()" style="display:inline-flex; align-items:center; gap:8px;">
+                        Hire a Driver →
                     </button>
                 </div>
 
-                <div class="driver-cta-media">
-                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80" alt="Premium Car Chauffeur" />
+                <!-- Cinematic Chauffeur Photograph -->
+                <div class="chauffeur-photo-wrap">
+                    <img class="chauffeur-photo" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=900&auto=format&fit=crop" alt="Professional Chauffeur Service" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=900&auto=format&fit=crop';" />
                 </div>
             </div>
         </div>
@@ -3214,6 +3428,33 @@
     <!-- =========================================================
          COMMERCIAL ENTERPRISE FOOTER
          ========================================================= -->
+    
+    <!-- =========================================================
+         CINEMATIC PANORAMIC BANNER (A COMPLETE MOBILITY ECOSYSTEM)
+         ========================================================= -->
+    <section class="container">
+        <div class="panoramic-ecosystem-banner">
+            <img class="panoramic-bg-img" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop" alt="Scenic Luxury Highway" />
+            <div class="panoramic-content">
+                <div class="luxury-eyebrow" style="color:var(--accent);">MORE THAN JUST A RIDE</div>
+                <h3 class="serif-heading" style="font-size:clamp(28px, 3vw, 40px); color:var(--text-primary); margin-bottom:12px;">
+                    A complete mobility ecosystem
+                </h3>
+                <p style="font-size:15px; color:var(--text-secondary); max-width:540px; margin:0 auto 24px auto;">
+                    Rides. Rentals. Chauffeurs. Everything you need, in one place.
+                </p>
+                <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                    <button class="cta-btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                        Book a Ride Now
+                    </button>
+                    <a href="/driver" class="studio-pill-btn" style="padding:10px 20px; font-weight:700;">
+                        Drive with Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid-cols">

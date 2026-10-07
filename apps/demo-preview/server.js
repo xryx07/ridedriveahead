@@ -416,8 +416,25 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // CUSTOMER WEB (ridedriveahead.com or /)
-  if (pathname === '/' || pathname === '/index.html' || pathname === '/customer') {
+  // MASTER ECOSYSTEM SHOWCASE (EXACT POSTER VIEW: / or /showcase)
+  if (pathname === '/' || pathname === '/showcase' || pathname === '/showcase.html') {
+    const showcasePath = path.join(__dirname, 'showcase.html');
+    if (fs.existsSync(showcasePath)) {
+      fs.readFile(showcasePath, 'utf8', (err, data) => {
+        if (err) {
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          res.end('Error loading showcase: ' + err.message);
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(data);
+      });
+      return;
+    }
+  }
+
+  // CUSTOMER WEB (ridedriveahead.com or /customer or /index.html)
+  if (pathname === '/customer' || pathname === '/customer.html' || pathname === '/index.html' || (host.startsWith('customer.') && (pathname === '/' || pathname === '/index.html'))) {
     const htmlPath = path.join(__dirname, 'index.html');
     fs.readFile(htmlPath, 'utf8', (err, data) => {
       if (err) {
