@@ -169,7 +169,7 @@
         .driver-brand-group {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .driver-logo-box {
@@ -179,36 +179,42 @@
         }
 
         .captain-tag {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 800;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.12);
+            padding: 5px 10px;
+            border-radius: var(--radius-sm);
+            background: rgba(200, 169, 106, 0.1);
             color: var(--accent);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(200, 169, 106, 0.28);
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+            white-space: nowrap;
         }
 
-        /* The Big Online/Offline Switcher */
-        .online-toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .header-v-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+            margin: 0 2px;
         }
 
         .duty-switch-btn {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 20px;
+            gap: 8px;
+            padding: 7px 18px;
             border-radius: var(--radius-pill);
             font-weight: 800;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 0.04em;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             user-select: none;
             border: 1.5px solid transparent;
+            line-height: 1;
+            white-space: nowrap;
         }
 
         .duty-switch-btn.online {
@@ -249,11 +255,12 @@
         .header-metrics-ticker {
             display: flex;
             align-items: center;
-            gap: 20px;
-            padding: 6px 18px;
+            gap: 18px;
+            padding: 8px 22px;
             background: var(--surface-2);
             border: 1px solid var(--border);
             border-radius: var(--radius-pill);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
         .metric-ticker-item {
@@ -274,27 +281,7 @@
         .header-actions-group {
             display: flex;
             align-items: center;
-            gap: 12px;
-        }
-
-        .sos-panic-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            background: rgba(239, 68, 68, 0.15);
-            color: #F87171;
-            border: 1.5px solid rgba(239, 68, 68, 0.35);
-            border-radius: var(--radius-pill);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.03em;
-        }
-
-        .sos-panic-btn:hover {
-            background: rgba(239, 68, 68, 0.28);
-            border-color: var(--danger);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            gap: 14px;
         }
 
         .theme-round-btn {
@@ -820,7 +807,10 @@
                 flex-wrap: wrap;
                 gap: 10px;
             }
-            .captain-tag {
+            .captain-tag, .header-v-divider {
+                display: none;
+            }
+            .header-metrics-ticker {
                 display: none;
             }
             .driver-layout {
@@ -854,12 +844,6 @@
             }
             .cockpit-viewport {
                 padding: 14px 12px;
-            }
-            .sos-panic-btn span {
-                display: none;
-            }
-            .sos-panic-btn {
-                padding: 8px;
             }
             .radar-floating-overlay {
                 flex-direction: column;
@@ -909,10 +893,7 @@
                 </div>
             </div>
             <span class="captain-tag">Sedan Captain</span>
-        </div>
-
-        <!-- The Big Online / Offline Toggle Switch -->
-        <div class="online-toggle-container">
+            <div class="header-v-divider"></div>
             <button class="duty-switch-btn online" id="dutyStatusToggleBtn" onclick="toggleDutyStatus()">
                 <span class="pulse-beacon" id="dutyBeacon"></span>
                 <span id="dutyStatusText">ONLINE</span>
@@ -947,18 +928,14 @@
 
         <!-- Action Buttons -->
         <div class="header-actions-group">
-            <button class="sos-panic-btn" onclick="openDriverSOSModal()">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                SOS Panic
-            </button>
             <button class="theme-round-btn" id="driverThemeToggleBtn" onclick="toggleDriverTheme()" title="Toggle Dark/Light Mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
             <div style="display:flex; align-items:center; gap:10px; border-left:1px solid var(--border); padding-left:14px;">
-                <div style="width:36px; height:36px; border-radius:50%; background:var(--surface-elevated); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; color:var(--accent);">
+                <div style="width:36px; height:36px; border-radius:50%; background:rgba(200, 169, 106, 0.12); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; color:var(--accent);">
                     RK
                 </div>
                 <div>
                     <div style="font-size:13px; font-weight:800; color:var(--text-primary);">Rajesh Kumar</div>
-                    <div style="font-size:10px; font-weight:700; color:var(--online-green);">● Verified Captain</div>
+                    <div style="font-size:10.5px; font-weight:700; color:var(--online-green);">● Verified Captain</div>
                 </div>
             </div>
         </div>
