@@ -150,80 +150,12 @@
             color: #171717;
         }
 
-        /* Ecosystem Platform Switcher Bar */
-        .ecosystem-bar {
-            height: 38px;
-            background: rgba(11, 11, 11, 0.98);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            font-size: 11px;
-            font-weight: 700;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1001;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-        }
-        [data-theme="light"] .ecosystem-bar {
-            background: rgba(247, 243, 234, 0.98);
-        }
-        .ecosystem-pills {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ecosystem-pill-item {
-            padding: 4px 10px;
-            border-radius: 9999px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .ecosystem-pill-item:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .ecosystem-pill-item.active {
-            background: var(--surface-2);
-            color: var(--accent);
-            border: 1px solid var(--border-active);
-        }
-        [data-theme="light"] .ecosystem-pill-item.active {
-            background: #FFFFFF;
-            color: var(--accent);
-            border: 1px solid var(--border-active);
-        }
-        @media (max-width: 860px) {
-            .ecosystem-bar {
-                overflow-x: auto;
-                justify-content: flex-start;
-                padding: 0 12px;
-                gap: 12px;
-            }
-            .ecosystem-brand-label {
-                display: none;
-            }
-            .ecosystem-pills {
-                flex-shrink: 0;
-            }
-        }
-
         /* =========================================================
            TOP APP BAR
            ========================================================= */
         header.admin-topbar {
             position: fixed;
-            top: 38px;
+            top: 0;
             left: 0;
             right: 0;
             height: 64px;
@@ -394,8 +326,8 @@
            ========================================================= */
         .admin-layout {
             display: flex;
-            margin-top: 102px;
-            min-height: calc(100vh - 102px);
+            margin-top: 64px;
+            min-height: calc(100vh - 64px);
         }
 
         /* Sidebar Navigation */
@@ -404,7 +336,7 @@
             background: var(--surface);
             border-right: 1px solid var(--border);
             position: fixed;
-            top: 102px;
+            top: 64px;
             bottom: 0;
             left: 0;
             overflow-y: auto;
@@ -833,7 +765,7 @@
         }
 
         @media (max-width: 640px) {
-            .admin-layout { flex-direction: column; margin-top: 102px; }
+            .admin-layout { flex-direction: column; margin-top: 64px; }
             aside.admin-sidebar {
                 position: static;
                 width: 100%;
@@ -865,35 +797,6 @@
     </style>
 </head>
 <body>
-
-    <!-- =========================================================
-         ECOSYSTEM PLATFORM SWITCHER BAR
-         ========================================================= -->
-    <div class="ecosystem-bar">
-        <div class="ecosystem-brand-label" style="display:flex; align-items:center; gap:8px;">
-            <span style="color:var(--text-muted);">RideDriveAhead Unified Ecosystem</span>
-            <span style="color:var(--border);">|</span>
-            <span style="color:var(--text-secondary);">Single Backend · 3 Distinct Web Platforms</span>
-        </div>
-        <div class="ecosystem-pills">
-            <a href="/" class="ecosystem-pill-item" title="Customer Website & Booking Platform">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                Customer Platform (ridedriveahead.com)
-            </a>
-            <a href="/driver" class="ecosystem-pill-item" title="Captain Portal">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-                Driver Cockpit (driver.ridedriveahead.com)
-            </a>
-            <a href="/admin" class="ecosystem-pill-item active" title="Admin Command Center (Active)">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/></svg>
-                Admin Command Center (admin.ridedriveahead.com)
-            </a>
-            <a href="/showcase" class="ecosystem-pill-item" title="Multi-Platform Showcase Hub">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                Showcase Hub
-            </a>
-        </div>
-    </div>
 
     <!-- =========================================================
          TOP APP BAR & GLOBAL NAVIGATION
