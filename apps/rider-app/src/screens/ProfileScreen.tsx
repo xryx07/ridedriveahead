@@ -7,17 +7,14 @@ export const ProfileScreen: React.FC = () => {
   const { user, logout, setBookingDraft, navigate } = useRiderStore();
 
   const [savedAddresses] = useState([
-    { label: 'HOME', address: 'Apartment 402, DLF Phase 5, Golf Course Road, Gurugram' },
-    { label: 'OFFICE', address: 'Building 10B, Cyber City, DLF Phase 2, Gurugram' },
-    { label: 'AIRPORT', address: 'Indira Gandhi International Airport, Terminal 3, New Delhi' }
+    { label: 'HOME', address: 'Home Location' },
+    { label: 'OFFICE', address: 'Work Location' },
+    { label: 'AIRPORT', address: 'City Airport Terminal' }
   ]);
 
-  const [registeredCars] = useState([
-    { model: 'Honda City (2022)', transmission: 'Automatic (AT)', plate: 'DL 01 AB 9988', isDefault: true },
-    { model: 'Hyundai Creta (2021)', transmission: 'Manual (MT)', plate: 'HR 26 CZ 4410', isDefault: false }
-  ]);
+  const [registeredCars] = useState<Array<{ model: string; transmission: string; plate: string; isDefault: boolean }>>([]);
 
-  const [emergencyContact, setEmergencyContact] = useState('+91 98111 22233 (Brother)');
+  const [emergencyContact, setEmergencyContact] = useState('');
 
   const handleSelectAddress = (address: string) => {
     setBookingDraft({ drop: address });
@@ -36,13 +33,13 @@ export const ProfileScreen: React.FC = () => {
         {/* User Card */}
         <View style={styles.userCard}>
           <View style={styles.avatarCircle}>
-            <Text style={styles.avatarText}>{user?.fullName ? user.fullName.charAt(0) : 'A'}</Text>
+            <Text style={styles.avatarText}>{user?.fullName ? user.fullName.charAt(0) : 'R'}</Text>
           </View>
           <View style={styles.userInfo}>
-            <Text style={styles.userName}>{user?.fullName || 'Arjun Verma'}</Text>
-            <Text style={styles.userPhone}>{user?.phoneNumber || '+91 9876543210'}</Text>
+            <Text style={styles.userName}>{user?.fullName || 'Verified Rider'}</Text>
+            <Text style={styles.userPhone}>{user?.phoneNumber || '+91 98000 00000'}</Text>
             <View style={styles.ratingBadge}>
-              <Text style={styles.ratingText}>★ {user?.rating || '4.95'} Rider Rating</Text>
+              <Text style={styles.ratingText}>★ {user?.rating ? user.rating.toFixed(1) : '5.0'} Rider Rating</Text>
             </View>
           </View>
         </View>
@@ -55,21 +52,27 @@ export const ProfileScreen: React.FC = () => {
           </View>
           <Text style={styles.sectionSub}>Select personal vehicles to quickly assign certified chauffeurs</Text>
 
-          {registeredCars.map((car, idx) => (
-            <View key={idx} style={styles.carRow}>
-              <View style={{ flex: 1 }}>
-                <View style={styles.carTitleRow}>
-                  <Text style={styles.carModel}>{car.model}</Text>
-                  {car.isDefault && (
-                    <View style={styles.defaultBadge}>
-                      <Text style={styles.defaultBadgeText}>DEFAULT</Text>
-                    </View>
-                  )}
+          {registeredCars.length === 0 ? (
+            <Text style={{ fontSize: 13, color: '#94A3B8', paddingVertical: 8 }}>
+              No personal vehicles registered yet. Tap + Add Car to save your vehicle for chauffeur bookings.
+            </Text>
+          ) : (
+            registeredCars.map((car, idx) => (
+              <View key={idx} style={styles.carRow}>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.carTitleRow}>
+                    <Text style={styles.carModel}>{car.model}</Text>
+                    {car.isDefault && (
+                      <View style={styles.defaultBadge}>
+                        <Text style={styles.defaultBadgeText}>DEFAULT</Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.carTransmission}>{car.transmission} • {car.plate}</Text>
                 </View>
-                <Text style={styles.carTransmission}>{car.transmission} • {car.plate}</Text>
               </View>
-            </View>
-          ))}
+            ))
+          )}
         </View>
 
         {/* Saved Places */}

@@ -92,35 +92,37 @@ export const DriverHomeScreen: React.FC = () => {
         <View style={{ backgroundColor: '#121619', borderRadius: 16, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: 'rgba(199,255,61,0.25)', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <View>
             <Text style={{ fontSize: 11, color: '#8094A6', fontWeight: '600' }}>Today's Earnings</Text>
-            <Text style={{ fontSize: 24, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>₹ 2,480</Text>
+            <Text style={{ fontSize: 24, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>₹ {earnings.todayEarnings || 0}</Text>
           </View>
           <View style={{ backgroundColor: 'rgba(199,255,61,0.1)', paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6 }}>
-            <Text style={{ fontSize: 11, fontWeight: '800', color: '#C7FF3D' }}>+ 12%</Text>
+            <Text style={{ fontSize: 11, fontWeight: '800', color: '#C7FF3D' }}>Standard</Text>
           </View>
         </View>
 
         {/* Stats Row */}
         <View style={{ flexDirection: 'row', gap: 8, marginBottom: 12 }}>
           <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
-            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>6</Text>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>{earnings.todayCompletedTrips || 0}</Text>
             <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Completed</Text>
           </View>
           <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
-            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>2h 45m</Text>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#F4F6F3' }}>{driver.drivingHoursToday ? `${driver.drivingHoursToday}h` : '0h 0m'}</Text>
             <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Online Time</Text>
           </View>
           <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
-            <Text style={{ fontSize: 16, fontWeight: '900', color: '#C7FF3D' }}>4.8</Text>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#C7FF3D' }}>{driver.rating ? driver.rating.toFixed(1) : '5.0'}</Text>
             <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Rating</Text>
           </View>
         </View>
 
         {/* Motivational Card */}
         <View style={{ backgroundColor: 'rgba(199,255,61,0.08)', borderRadius: 12, padding: 12, marginBottom: 14, flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, borderColor: 'rgba(199,255,61,0.25)' }}>
-          <Text style={{ fontSize: 20 }}>🏆</Text>
+          <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: '#C7FF3D', alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 11, fontWeight: '900', color: '#0B0D0F' }}>OK</Text>
+          </View>
           <View>
-            <Text style={{ fontSize: 12, fontWeight: '800', color: '#F4F6F3' }}>Keep Going!</Text>
-            <Text style={{ fontSize: 10, color: '#8094A6' }}>You're doing great today.</Text>
+            <Text style={{ fontSize: 12, fontWeight: '800', color: '#F4F6F3' }}>Captain Console Ready</Text>
+            <Text style={{ fontSize: 10, color: '#8094A6' }}>Toggle Online above to begin receiving duty dispatches.</Text>
           </View>
         </View>
         
@@ -133,8 +135,7 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => toggleMode('cab')}
               activeOpacity={0.8}
             >
-              <Text style={styles.modeEmoji}>🚗</Text>
-              <Text style={[styles.modeText, activeModes.cab && styles.modeTextActive]}>Cab</Text>
+              <Text style={[styles.modeText, activeModes.cab && styles.modeTextActive]}>CAB</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -142,8 +143,7 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => toggleMode('auto')}
               activeOpacity={0.8}
             >
-              <Text style={styles.modeEmoji}>🛺</Text>
-              <Text style={[styles.modeText, activeModes.auto && styles.modeTextActive]}>Auto</Text>
+              <Text style={[styles.modeText, activeModes.auto && styles.modeTextActive]}>AUTO</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -151,8 +151,7 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => toggleMode('bike')}
               activeOpacity={0.8}
             >
-              <Text style={styles.modeEmoji}>🏍</Text>
-              <Text style={[styles.modeText, activeModes.bike && styles.modeTextActive]}>Bike</Text>
+              <Text style={[styles.modeText, activeModes.bike && styles.modeTextActive]}>BIKE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -160,8 +159,7 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => toggleMode('chauffeur')}
               activeOpacity={0.8}
             >
-              <Text style={styles.modeEmoji}>👨‍✈️</Text>
-              <Text style={[styles.modeText, activeModes.chauffeur && styles.modeTextActive]}>Chauffeur</Text>
+              <Text style={[styles.modeText, activeModes.chauffeur && styles.modeTextActive]}>CHAUFFEUR</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -169,8 +167,7 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => toggleMode('delivery')}
               activeOpacity={0.8}
             >
-              <Text style={styles.modeEmoji}>📦</Text>
-              <Text style={[styles.modeText, activeModes.delivery && styles.modeTextActive]}>Delivery</Text>
+              <Text style={[styles.modeText, activeModes.delivery && styles.modeTextActive]}>DELIVERY</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -224,11 +221,11 @@ export const DriverHomeScreen: React.FC = () => {
           <View style={styles.earningsHeaderRow}>
             <Text style={styles.earningsLabel}>TODAY'S NET EARNINGS</Text>
             <View style={styles.settlePill}>
-              <Text style={styles.settlePillText}>⚡ UPI INSTANT READY</Text>
+              <Text style={styles.settlePillText}>UPI INSTANT READY</Text>
             </View>
           </View>
           <View style={styles.earningsValueRow}>
-            <Text style={styles.earningsValue}>₹ {earnings.todayEarnings || 3420}</Text>
+            <Text style={styles.earningsValue}>₹ {earnings.todayEarnings || 0}</Text>
             <TouchableOpacity
               style={styles.payoutBtn}
               onPress={() => navigate('EARNINGS')}
@@ -239,7 +236,7 @@ export const DriverHomeScreen: React.FC = () => {
           </View>
           <View style={styles.earningsFooterRow}>
             <Text style={styles.earningsSub}>
-              {earnings.todayCompletedTrips || 5} Duties Completed • ₹0 Platform Deductions
+              {earnings.todayCompletedTrips || 0} Duties Completed • ₹0 Platform Deductions
             </Text>
           </View>
         </View>
@@ -318,49 +315,42 @@ export const DriverHomeScreen: React.FC = () => {
               onPress={() => navigate('SCHEDULED_RIDES')}
               activeOpacity={0.8}
             >
-              <Text style={styles.viewAllText}>View All (14) →</Text>
+              <Text style={styles.viewAllText}>View All ({scheduledRides.length}) →</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Sample Gig Card 1 */}
-          <TouchableOpacity
-            style={styles.gigCard}
-            onPress={() => navigate('SCHEDULED_RIDES')}
-            activeOpacity={0.85}
-          >
-            <View style={styles.gigCardTop}>
-              <View style={styles.gigBadge}>
-                <Text style={styles.gigBadgeText}>2-HOUR CHAUFFEUR</Text>
-              </View>
-              <Text style={styles.gigPayout}>₹ 750</Text>
+          {scheduledRides.length === 0 ? (
+            <View style={[styles.gigCard, { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 }]}>
+              <Text style={{ fontSize: 13, fontWeight: '700', color: '#F4F6F3' }}>Corridor Standby Active</Text>
+              <Text style={{ fontSize: 11, color: '#8094A6', marginTop: 4, textAlign: 'center' }}>
+                No active bookings in pool. Available chauffeur & cab requests will appear here in real-time.
+              </Text>
             </View>
-            <Text style={styles.gigTitle}>Customer Car: Honda City (Automatic AT)</Text>
-            <Text style={styles.gigRoute}>📍 Koramangala ➔ Indiranagar Roundtrip</Text>
-            <View style={styles.gigFooter}>
-              <Text style={styles.gigTime}>Today at 4:30 PM</Text>
-              <Text style={styles.gigClaimBtn}>Claim Gig →</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* Sample Gig Card 2 */}
-          <TouchableOpacity
-            style={styles.gigCard}
-            onPress={() => navigate('SCHEDULED_RIDES')}
-            activeOpacity={0.85}
-          >
-            <View style={styles.gigCardTop}>
-              <View style={[styles.gigBadge, { backgroundColor: 'rgba(210, 255, 0, 0.15)', borderColor: 'rgba(210, 255, 0, 0.3)' }]}>
-                <Text style={[styles.gigBadgeText, { color: '#D2FF00' }]}>WEDDING WHITE GLOVE</Text>
-              </View>
-              <Text style={[styles.gigPayout, { color: '#D2FF00' }]}>₹ 3,500</Text>
-            </View>
-            <Text style={styles.gigTitle}>Customer Car: Mercedes E-Class (Automatic AT)</Text>
-            <Text style={styles.gigRoute}>📍 Palace Grounds ➔ Whitefield</Text>
-            <View style={styles.gigFooter}>
-              <Text style={styles.gigTime}>Tomorrow • 6 Hours Duty</Text>
-              <Text style={styles.gigClaimBtn}>Claim Gig →</Text>
-            </View>
-          </TouchableOpacity>
+          ) : (
+            scheduledRides.map((gig) => (
+              <TouchableOpacity
+                key={gig.id}
+                style={styles.gigCard}
+                onPress={() => navigate('SCHEDULED_RIDES')}
+                activeOpacity={0.85}
+              >
+                <View style={styles.gigCardTop}>
+                  <View style={styles.gigBadge}>
+                    <Text style={styles.gigBadgeText}>{gig.gigType || 'DUTY'}</Text>
+                  </View>
+                  <Text style={styles.gigPayout}>₹ {gig.fareAmount}</Text>
+                </View>
+                <Text style={styles.gigTitle}>{gig.carModel || 'Customer Vehicle'}</Text>
+                <Text style={styles.gigRoute}>{gig.pickupAddress} ➔ {gig.dropAddress}</Text>
+                <View style={styles.gigFooter}>
+                  <Text style={styles.gigTime}>
+                    {new Date(gig.scheduledPickupTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </Text>
+                  <Text style={styles.gigClaimBtn}>Claim Gig →</Text>
+                </View>
+              </TouchableOpacity>
+            ))
+          )}
         </View>
 
         {/* Instant Dispatch Simulator Trigger */}

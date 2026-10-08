@@ -6,13 +6,21 @@ interface IncomingRideModalProps {
   onAccept: () => void;
   onDecline?: () => void;
   onReject?: () => void;
+  fareAmount?: number;
+  pickup?: string;
+  drop?: string;
+  riderRating?: number;
 }
 
 export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
   visible,
   onAccept,
   onDecline,
-  onReject
+  onReject,
+  fareAmount = 350,
+  pickup = 'Nearby Pickup Location',
+  drop = 'City Destination Corridor',
+  riderRating = 5.0
 }) => {
   const handleDismiss = onDecline || onReject || (() => {});
   const [countdown, setCountdown] = useState(25);
@@ -50,7 +58,7 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
 
           {/* Fare Highlight */}
           <View style={styles.fareRow}>
-            <Text style={styles.fareAmount}>₹480</Text>
+            <Text style={styles.fareAmount}>₹{fareAmount}</Text>
             <Text style={styles.fareType}>Instant Trip • Cashless UPI</Text>
           </View>
 
@@ -59,8 +67,8 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
             <View style={styles.routeItem}>
               <View style={styles.pinDot} />
               <View style={{ flex: 1, minWidth: 0 }}>
-                <Text style={styles.routeLabel}>PICKUP (1.2 km away • 4 min ETA)</Text>
-                <Text style={styles.routeAddress}>Cyber Hub, Building 8B, DLF Phase 2</Text>
+                <Text style={styles.routeLabel}>PICKUP LOCATION</Text>
+                <Text style={styles.routeAddress}>{pickup}</Text>
               </View>
             </View>
             <View style={styles.routeDivider} />
@@ -68,14 +76,14 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
               <View style={[styles.pinDot, { backgroundColor: '#059669' }]} />
               <View style={{ flex: 1, minWidth: 0 }}>
                 <Text style={styles.routeLabel}>DROP DESTINATION</Text>
-                <Text style={styles.routeAddress}>Connaught Place, Central Delhi (22 km)</Text>
+                <Text style={styles.routeAddress}>{drop}</Text>
               </View>
             </View>
           </View>
 
           {/* Rider Rating */}
           <View style={styles.riderPill}>
-            <Text style={styles.riderRatingText}>★ 4.92 Rider Rating • 84 Trips completed</Text>
+            <Text style={styles.riderRatingText}>★ {riderRating.toFixed(1)} Verified Rider</Text>
           </View>
 
           {/* Action Buttons */}
@@ -85,7 +93,7 @@ export const IncomingRideModal: React.FC<IncomingRideModalProps> = ({
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.acceptBtn} onPress={onAccept}>
-              <Text style={styles.acceptText}>ACCEPT RIDE (₹480)</Text>
+              <Text style={styles.acceptText}>ACCEPT RIDE (₹{fareAmount})</Text>
             </TouchableOpacity>
           </View>
         </View>

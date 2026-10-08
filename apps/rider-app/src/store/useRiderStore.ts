@@ -87,18 +87,18 @@ export const useRiderStore = create<RiderState>((set) => ({
   chauffeurPackage: 'HOURLY_4H',
   carTransmission: 'AUTOMATIC',
   carCategory: 'SEDAN',
-  carModelName: 'Honda City',
+  carModelName: '',
 
-  pickupAddress: 'Sector 43, Golf Course Road, Gurugram',
-  dropAddress: 'Indira Gandhi International Airport, Terminal 3, New Delhi',
-  bookingType: 'SCHEDULED',
-  scheduledPickupTime: new Date(Date.now() + 24 * 3600 * 1000), // Tomorrow same time
+  pickupAddress: '',
+  dropAddress: '',
+  bookingType: 'INSTANT',
+  scheduledPickupTime: null,
   selectedTier: null,
-  flightNumber: 'AI 102',
-  riderNotes: 'Pro chauffeur for personal car. Automatic transmission.',
+  flightNumber: '',
+  riderNotes: '',
 
-  activeBooking: sampleScheduledBooking,
-  rideHistory: [sampleScheduledBooking, sampleCompletedBooking],
+  activeBooking: null,
+  rideHistory: [],
 
   login: (user) => set({ user, isAuthenticated: true, currentScreen: 'HOME' }),
   signup: (user) => set({ user, isAuthenticated: true, currentScreen: 'HOME' }),

@@ -11,15 +11,13 @@ interface CallChatModalProps {
 export const CallChatModal: React.FC<CallChatModalProps> = ({
   visible,
   onClose,
-  driverName = 'Rajesh Kumar',
-  driverPhone = '+91 98****5678'
+  driverName = 'Verified Captain',
+  driverPhone = '+91 98000 00000'
 }) => {
   const [activeTab, setActiveTab] = useState<'CHAT' | 'CALL'>('CHAT');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Array<{ sender: 'rider' | 'driver'; text: string; time: string }>>([
-    { sender: 'driver', text: 'Hello! I am preparing for your scheduled pickup.', time: '05:15 AM' },
-    { sender: 'rider', text: 'Hi! I have 2 large suitcases. Will wait at Gate 3.', time: '05:16 AM' },
-    { sender: 'driver', text: 'Understood, plenty of boot space in my Honda City.', time: '05:17 AM' }
+    { sender: 'driver', text: 'Hello! I am on duty and ready for your ride.', time: 'Just now' }
   ]);
 
   const handleSendMessage = () => {

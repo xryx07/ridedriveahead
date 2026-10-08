@@ -3,41 +3,17 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { DriverHeader } from '../components/DriverHeader';
 
 export const TripHistoryScreen: React.FC = () => {
-  const completedTrips = [
-    {
-      id: 'TRIP-901',
-      date: 'Today, 06:45 AM',
-      type: 'SCHEDULED',
-      pickup: 'Sector 43, Golf Course Road, Gurugram',
-      drop: 'IGI Airport Terminal 3, New Delhi',
-      distanceKm: 18.5,
-      fare: 750,
-      tip: 50,
-      riderRating: 5
-    },
-    {
-      id: 'TRIP-894',
-      date: 'Yesterday, 08:30 PM',
-      type: 'INSTANT',
-      pickup: 'DLF Cyber Hub, Tower 8',
-      drop: 'Connaught Place, Inner Circle',
-      distanceKm: 22.0,
-      fare: 480,
-      tip: 0,
-      riderRating: 5
-    },
-    {
-      id: 'TRIP-882',
-      date: 'Yesterday, 02:15 PM',
-      type: 'INSTANT',
-      pickup: 'Ambience Mall, NH 8, Gurugram',
-      drop: 'Hauz Khas Village, New Delhi',
-      distanceKm: 14.5,
-      fare: 340,
-      tip: 30,
-      riderRating: 4
-    }
-  ];
+  const completedTrips: Array<{
+    id: string;
+    date: string;
+    type: string;
+    pickup: string;
+    drop: string;
+    distanceKm: number;
+    fare: number;
+    tip: number;
+    riderRating: number;
+  }> = [];
 
   return (
     <View style={styles.container}>
@@ -48,56 +24,65 @@ export const TripHistoryScreen: React.FC = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.headerTitle}>Recent Completed Trips</Text>
+        <Text style={styles.headerTitle}>Recent Completed Trips ({completedTrips.length})</Text>
 
         <View style={styles.list}>
-          {completedTrips.map((trip) => {
-            const isScheduled = trip.type === 'SCHEDULED';
-            return (
-              <View key={trip.id} style={styles.tripCard}>
-                <View style={styles.cardTop}>
-                  <View style={styles.badgeRow}>
-                    <View
-                      style={[
-                        styles.badge,
-                        isScheduled ? styles.badgeScheduled : styles.badgeInstant
-                      ]}
-                    >
-                      <Text
+          {completedTrips.length === 0 ? (
+            <View style={{ backgroundColor: '#FFFFFF', borderRadius: 16, padding: 24, alignItems: 'center', borderWidth: 1, borderColor: '#E2E8F0' }}>
+              <Text style={{ fontSize: 14, fontWeight: '700', color: '#0F172A' }}>No Completed Trips Found</Text>
+              <Text style={{ fontSize: 12, color: '#64748B', marginTop: 4, textAlign: 'center' }}>
+                Your completed rides and duty settlement receipts will appear here.
+              </Text>
+            </View>
+          ) : (
+            completedTrips.map((trip) => {
+              const isScheduled = trip.type === 'SCHEDULED';
+              return (
+                <View key={trip.id} style={styles.tripCard}>
+                  <View style={styles.cardTop}>
+                    <View style={styles.badgeRow}>
+                      <View
                         style={[
-                          styles.badgeText,
-                          isScheduled ? styles.badgeTextScheduled : styles.badgeTextInstant
+                          styles.badge,
+                          isScheduled ? styles.badgeScheduled : styles.badgeInstant
                         ]}
                       >
-                        {isScheduled ? 'ADVANCE AIRPORT DROP' : 'INSTANT RIDE'}
-                      </Text>
+                        <Text
+                          style={[
+                            styles.badgeText,
+                            isScheduled ? styles.badgeTextScheduled : styles.badgeTextInstant
+                          ]}
+                        >
+                          {isScheduled ? 'ADVANCE AIRPORT DROP' : 'INSTANT RIDE'}
+                        </Text>
+                      </View>
+                      <Text style={styles.tripDate}>{trip.date}</Text>
                     </View>
-                    <Text style={styles.tripDate}>{trip.date}</Text>
+                    <Text style={styles.fareText}>₹{trip.fare + trip.tip}</Text>
                   </View>
-                  <Text style={styles.fareText}>₹{trip.fare + trip.tip}</Text>
-                </View>
 
-                <View style={styles.routeBox}>
-                  <Text style={styles.routePoint} numberOfLines={1}>
-                    <Text style={styles.routeLabel}>PICKUP: </Text>
-                    {trip.pickup}
-                  </Text>
-                  <Text style={styles.routePoint} numberOfLines={1}>
-                    <Text style={styles.routeLabel}>DROP: </Text>
-                    {trip.drop}
-                  </Text>
-                </View>
+                  <View style={styles.routeBox}>
+                    <Text style={styles.routePoint} numberOfLines={1}>
+                      <Text style={styles.routeLabel}>PICKUP: </Text>
+                      {trip.pickup}
+                    </Text>
+                    <Text style={styles.routePoint} numberOfLines={1}>
+                      <Text style={styles.routeLabel}>DROP: </Text>
+                      {trip.drop}
+                    </Text>
+                  </View>
 
-                <View style={styles.cardBottom}>
-                  <Text style={styles.distanceText}>{trip.distanceKm} km</Text>
-                  {trip.tip > 0 && (
-                    <Text style={styles.tipText}>+₹{trip.tip} Tip included</Text>
-                  )}
-                  <Text style={styles.ratingText}>★ {trip.riderRating}.0 Rating</Text>
+                  <View style={styles.cardBottom}>
+                    <Text style={styles.distanceText}>{trip.distanceKm} km</Text>
+                    {trip.tip > 0 && (
+                      <Text style={styles.tipText}>+₹{trip.tip} Tip included</Text>
+                    )}
+                    <Text style={styles.ratingText}>★ {trip.riderRating}.0 Rating</Text>
+                  </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+          )}
         </View>
       </ScrollView>
     </View>

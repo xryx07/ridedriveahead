@@ -4,62 +4,16 @@ const BASE_URL = 'http://localhost:8080/api/v1';
 export const USE_MOCK_API = true; // Toggle for live API integration
 
 export const mockRider: UserProfile = {
-  id: 'a1000000-0000-0000-0000-000000000001',
-  phoneNumber: '+919876543210',
-  fullName: 'Arjun Verma',
-  email: 'arjun@example.com',
+  id: 'u-rider-guest',
+  phoneNumber: '+919800000000',
+  fullName: 'Verified Rider',
+  email: 'rider@ridedriveahead.com',
   role: 'RIDER',
-  rating: 4.95
+  rating: 5.0
 };
 
-export const sampleScheduledBooking: Booking = {
-  id: 'c4000000-0000-0000-0000-000000000004',
-  riderId: 'a1000000-0000-0000-0000-000000000001',
-  driverId: 'd3000000-0000-0000-0000-000000000003',
-  bookingType: 'SCHEDULED',
-  status: 'SCHEDULED_CONFIRMED',
-  scheduledPickupTime: new Date(Date.now() + 24 * 3600 * 1000).toISOString(),
-  pickupAddress: 'Sector 43, Golf Course Road, Gurugram',
-  dropAddress: 'Indira Gandhi International Airport, Terminal 3',
-  pickupLat: 28.4595,
-  pickupLng: 77.0266,
-  dropLat: 28.5562,
-  dropLng: 77.1000,
-  vehicleType: 'SEDAN',
-  fareAmount: 750,
-  otpCode: '4821',
-  driverName: 'Rajesh Kumar',
-  driverPhone: '+91 98****5678',
-  driverRating: 4.88,
-  vehicleModel: 'Honda City (White)',
-  vehiclePlate: 'DL 01 AB 9988',
-  flightNumber: 'AI 102',
-  riderNotes: 'Early morning airport pickup. 2 medium luggage.',
-  createdAt: new Date().toISOString()
-};
-
-export const sampleCompletedBooking: Booking = {
-  id: 'b1234567-0000-0000-0000-000000000001',
-  riderId: 'a1000000-0000-0000-0000-000000000001',
-  driverId: 'd3000000-0000-0000-0000-000000000003',
-  bookingType: 'INSTANT',
-  status: 'COMPLETED',
-  pickupAddress: 'Cyber Hub, DLF Cyber City, Gurugram',
-  dropAddress: 'Connaught Place, Inner Circle, New Delhi',
-  pickupLat: 28.4952,
-  pickupLng: 77.0891,
-  dropLat: 28.6304,
-  dropLng: 77.2177,
-  vehicleType: 'SEDAN',
-  fareAmount: 480,
-  otpCode: '1924',
-  driverName: 'Vikram Singh',
-  driverPhone: '+91 99****1234',
-  driverRating: 4.91,
-  vehicleModel: 'Maruti Dzire (Silver)',
-  vehiclePlate: 'HR 26 DQ 4411',
-  createdAt: new Date(Date.now() - 3 * 86400 * 1000).toISOString()
-};
+export const sampleScheduledBooking: Booking | null = null;
+export const sampleCompletedBooking: Booking | null = null;
 
 export const riderApi = {
   requestOtp: async (phoneNumber: string): Promise<{ success: boolean; message: string }> => {
@@ -209,11 +163,11 @@ export const riderApi = {
       vehicleType: params.vehicleType || 'SEDAN',
       fareAmount: params.fareAmount || 450,
       otpCode,
-      driverName: 'Rajesh Kumar',
-      driverPhone: '+91 98****5678',
-      driverRating: 4.88,
-      vehicleModel: 'Honda City (White)',
-      vehiclePlate: 'DL 01 AB 9988',
+      driverName: 'Verified Captain',
+      driverPhone: '+91 98000 00000',
+      driverRating: 5.0,
+      vehicleModel: 'Executive Sedan',
+      vehiclePlate: 'DL 01 AB 0001',
       flightNumber: params.flightNumber,
       riderNotes: params.riderNotes,
       createdAt: new Date().toISOString()

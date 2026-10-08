@@ -217,15 +217,15 @@ export const FareEstimateScreen: React.FC = () => {
           bookingType: 'INSTANT' as const,
           status: 'ASSIGNED' as const,
           scheduledPickupTime: new Date().toISOString(),
-          pickupAddress: pickupAddress || 'Koramangala, 6th Block, Bengaluru',
-          dropAddress: dropAddress || 'BLR Airport, Devanahalli',
+          pickupAddress: pickupAddress || 'Current Location',
+          dropAddress: dropAddress || 'Destination',
           pickupLat: 12.9352,
           pickupLng: 77.6245,
           dropLat: 13.1986,
           dropLng: 77.7066,
           vehicleType: 'SEDAN' as const,
           fareAmount: selectedPkg.baseFare,
-          otpCode: '4792',
+          otpCode: String(Math.floor(1000 + Math.random() * 9000)),
           createdAt: new Date().toISOString()
         };
         setActiveBooking(newBooking as any);
@@ -241,23 +241,23 @@ export const FareEstimateScreen: React.FC = () => {
           riderId: 'rider-01',
           driverId: 'driver-02',
           driverName: 'Verified Captain',
-          driverPhone: '+91 98765 43210',
-          driverRating: 4.84,
-          vehicleModel: 'White Toyota Etios',
-          vehiclePlate: 'KA 01 AB 1234',
+          driverPhone: '+91 98000 00000',
+          driverRating: 5.0,
+          vehicleModel: 'Executive Sedan',
+          vehiclePlate: 'DL 01 AB 0001',
           serviceMode: 'BOOK_CAB' as const,
           bookingType: 'INSTANT' as const,
           status: 'ASSIGNED' as const,
           scheduledPickupTime: new Date().toISOString(),
-          pickupAddress: pickupAddress || 'Koramangala, 6th Block, Bengaluru',
-          dropAddress: dropAddress || 'BLR Airport, Devanahalli',
+          pickupAddress: pickupAddress || 'Current Location',
+          dropAddress: dropAddress || 'Destination',
           pickupLat: 12.9352,
           pickupLng: 77.6245,
           dropLat: 13.1986,
           dropLng: 77.7066,
           vehicleType: currentCabTier.id as any,
           fareAmount: currentCabTier.fare,
-          otpCode: '4792',
+          otpCode: String(Math.floor(1000 + Math.random() * 9000)),
           createdAt: new Date().toISOString()
         };
         setActiveBooking(newBooking as any);
@@ -283,7 +283,9 @@ export const FareEstimateScreen: React.FC = () => {
         </TouchableOpacity>
         <View style={styles.navTitleCenter}>
           <Text style={styles.navTitle}>Trip Options</Text>
-          <Text style={styles.navSubtitle}>Koramangala ➔ BLR Airport</Text>
+          <Text style={styles.navSubtitle}>
+            {pickupAddress && dropAddress ? `${pickupAddress} ➔ ${dropAddress}` : 'Select Route & Options'}
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.helpButton}
@@ -318,18 +320,18 @@ export const FareEstimateScreen: React.FC = () => {
             </View>
             {/* Destination Pin */}
             <View style={styles.destinationMarker}>
-              <Text style={styles.destPinIcon}>📍</Text>
+              <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: '#EF4444' }} />
             </View>
             {/* Moving Cab Icon */}
             <View style={styles.movingCabMarker}>
-              <Text style={styles.cabMarkerIcon}>🚗</Text>
+              <View style={{ width: 10, height: 10, borderRadius: 2, backgroundColor: '#C7FF3D' }} />
             </View>
           </View>
 
           {/* Floating ETA & Distance Chip */}
           <View style={styles.floatingEtaBadge}>
             <View style={styles.livePulseDot} />
-            <Text style={styles.floatingEtaText}>22 km • 35 min away</Text>
+            <Text style={styles.floatingEtaText}>Estimated Route</Text>
           </View>
         </View>
 
@@ -344,14 +346,14 @@ export const FareEstimateScreen: React.FC = () => {
             <View style={styles.addressBlock}>
               <Text style={styles.addressRoleLabel}>PICKUP LOCATION</Text>
               <Text style={styles.addressText} numberOfLines={1}>
-                {pickupAddress || 'Koramangala, 6th Block, Bengaluru'}
+                {pickupAddress || 'Current Location'}
               </Text>
             </View>
             <View style={styles.addressDivider} />
             <View style={styles.addressBlock}>
               <Text style={styles.addressRoleLabel}>DESTINATION</Text>
               <Text style={styles.addressText} numberOfLines={1}>
-                {dropAddress || 'BLR Airport, Devanahalli'}
+                {dropAddress || 'Enter destination'}
               </Text>
             </View>
           </View>

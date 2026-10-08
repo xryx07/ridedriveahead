@@ -56,18 +56,18 @@ export const DriverLoginScreen: React.FC = () => {
       const partnerProfile: DriverProfile = {
         id: 'd-101',
         userId: 'u-driver-001',
-        fullName: 'Rajesh Kumar',
+        fullName: 'Verified Captain',
         phoneNumber: phoneNumber,
         role: 'ALL_ROUNDER',
         transmissionSkills: ['MANUAL', 'AUTOMATIC', 'LUXURY'],
-        vehicleModel: 'Honda City / Maruti Dzire Tour',
-        vehiclePlate: 'DL 01 AB 9988',
+        vehicleModel: 'Executive Vehicle',
+        vehiclePlate: 'DL 01 AB 0001',
         vehicleType: 'SEDAN',
         isOnline: true,
-        rating: 4.96,
-        totalTrips: 582,
+        rating: 5.0,
+        totalTrips: 0,
         kycStatus: 'APPROVED',
-        drivingHoursToday: 3.5
+        drivingHoursToday: 0
       };
       login(partnerProfile);
     }, 400);
@@ -112,11 +112,11 @@ export const DriverLoginScreen: React.FC = () => {
   };
 
   const autofillDemoDriver = () => {
-    setPhoneNumber('+919876543210');
+    setPhoneNumber('+919800000000');
     setOtpCode('123456');
-    setFullName('Suresh Rawat');
-    setSignupPhone('+919871234567');
-    setCity('Gurugram / Delhi NCR');
+    setFullName('Verified Partner');
+    setSignupPhone('+919800000000');
+    setCity('National Operations');
     setLicenseNumber('DL-0420210088992');
     setSelectedSkills(['AUTOMATIC', 'MANUAL', 'LUXURY']);
     setChauffeurOrCab('CHAUFFEUR_ONLY');
@@ -233,7 +233,7 @@ export const DriverLoginScreen: React.FC = () => {
               style={styles.simpleInput}
               value={fullName}
               onChangeText={setFullName}
-              placeholder="e.g. Suresh Rawat"
+              placeholder="Enter full legal name"
               placeholderTextColor="#94A3B8"
             />
           </View>

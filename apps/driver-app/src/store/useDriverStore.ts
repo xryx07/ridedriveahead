@@ -42,8 +42,8 @@ export const useDriverStore = create<DriverState>((set) => ({
   kycDocs: sampleKycDocs,
   scheduledRides: initialScheduledPool,
   earnings: sampleEarnings,
-  activeTrip: initialScheduledPool[0], // Demo has claimed early morning airport trip ready
-  activeTripStatus: 'EN_ROUTE_PICKUP',
+  activeTrip: null,
+  activeTripStatus: 'COMPLETED',
 
   login: (driver) => set({ driver, isAuthenticated: true, currentScreen: 'HOME' }),
   signup: (driver) => set({ driver, isAuthenticated: true, currentScreen: 'HOME' }),

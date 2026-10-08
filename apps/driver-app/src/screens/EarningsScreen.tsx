@@ -82,44 +82,29 @@ export const EarningsScreen: React.FC = () => {
               </Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.bankNote}>Linked Bank: HDFC Bank •••••• 4891 (IMPS 24x7 Zero Fee)</Text>
+          <Text style={styles.bankNote}>Linked Bank Account (IMPS 24x7 Zero Fee)</Text>
         </View>
 
         {/* Gig Breakdown details */}
         <View style={styles.breakdownCard}>
           <Text style={styles.breakdownHeader}>Duties & Gigs Completed Today</Text>
 
-          <View style={styles.breakdownRow}>
-            <View>
-              <Text style={styles.breakdownLabel}>4-Hour Chauffeur (Honda City AT)</Text>
-              <Text style={styles.breakdownSub}>Gurugram Local • Sector 43</Text>
+          {earnings.todayCompletedTrips === 0 ? (
+            <View style={{ paddingVertical: 20, alignItems: 'center' }}>
+              <Text style={{ fontSize: 13, color: '#64748B', fontWeight: '600' }}>No Settled Duties Today</Text>
+              <Text style={{ fontSize: 11, color: '#94A3B8', marginTop: 4 }}>
+                Earnings from completed trips will be itemized here in real-time.
+              </Text>
             </View>
-            <Text style={styles.breakdownVal}>₹549</Text>
-          </View>
-
-          <View style={styles.breakdownRow}>
-            <View>
-              <Text style={styles.breakdownLabel}>Party & Wedding Chauffeur (Creta MT)</Text>
-              <Text style={styles.breakdownSub}>Chhatarpur Farmhouse Duty (6h)</Text>
+          ) : (
+            <View style={styles.breakdownRow}>
+              <View>
+                <Text style={styles.breakdownLabel}>Completed Duty Settlement</Text>
+                <Text style={styles.breakdownSub}>Verified Payment</Text>
+              </View>
+              <Text style={styles.breakdownVal}>₹{earnings.todayEarnings}</Text>
             </View>
-            <Text style={styles.breakdownVal}>₹799</Text>
-          </View>
-
-          <View style={styles.breakdownRow}>
-            <View>
-              <Text style={styles.breakdownLabel}>Advance Airport Run (Commercial Sedan)</Text>
-              <Text style={styles.breakdownSub}>IGI Airport Terminal 3</Text>
-            </View>
-            <Text style={styles.breakdownVal}>₹750</Text>
-          </View>
-
-          <View style={styles.breakdownRow}>
-            <View>
-              <Text style={styles.breakdownLabel}>Punctuality & Night Bonus</Text>
-              <Text style={styles.breakdownSub}>On-time arrival incentives</Text>
-            </View>
-            <Text style={[styles.breakdownVal, { color: '#047857' }]}>+₹150</Text>
-          </View>
+          )}
         </View>
 
         <View style={{ height: 40 }} />

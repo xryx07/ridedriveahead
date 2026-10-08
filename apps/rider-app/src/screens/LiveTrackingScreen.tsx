@@ -21,7 +21,7 @@ export const LiveTrackingScreen: React.FC = () => {
 
   const [showCallChat, setShowCallChat] = useState(false);
   const [tripStage, setTripStage] = useState<TripStage>('ON_THE_WAY');
-  const [elapsedSeconds, setElapsedSeconds] = useState(142);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
   // Timer simulation
   useEffect(() => {
@@ -34,16 +34,16 @@ export const LiveTrackingScreen: React.FC = () => {
   // Safe fallback if activeBooking is not yet created
   const isChauffeur = activeBooking?.serviceMode === 'HIRE_DRIVER';
   const driverName = activeBooking?.driverName || 'Verified Captain';
-  const driverRating = activeBooking?.driverRating || 4.90;
+  const driverRating = activeBooking?.driverRating || 5.0;
   const vehicleDetails = isChauffeur
-    ? `${activeBooking?.carModel || 'Personal Car'} (${activeBooking?.carTransmission || 'Automatic AT'})`
+    ? `${activeBooking?.carModel || 'Customer Vehicle'} (${activeBooking?.carTransmission || 'Automatic AT'})`
     : activeBooking?.vehicleModel
-    ? `${activeBooking.vehicleModel} • ${activeBooking.vehiclePlate || 'KA 01 AB 1234'}`
-    : 'White Toyota Etios • KA 01 AB 1234';
-  const otpCode = activeBooking?.otpCode || '4792';
-  const fare = activeBooking?.fareAmount || (isChauffeur ? 1199 : 1248);
-  const pickup = activeBooking?.pickupAddress || 'Koramangala, 6th Block, Bengaluru';
-  const drop = activeBooking?.dropAddress || 'Kempegowda International Airport (BLR)';
+    ? `${activeBooking.vehicleModel} • ${activeBooking.vehiclePlate || 'DL 01 AB 0001'}`
+    : 'Executive Vehicle • Assigned';
+  const otpCode = activeBooking?.otpCode || '----';
+  const fare = activeBooking?.fareAmount || 0;
+  const pickup = activeBooking?.pickupAddress || 'Current Location';
+  const drop = activeBooking?.dropAddress || 'Destination';
 
   const formatElapsed = (sec: number) => {
     const m = Math.floor(sec / 60).toString().padStart(2, '0');
@@ -84,7 +84,7 @@ export const LiveTrackingScreen: React.FC = () => {
         </TouchableOpacity>
         <View style={styles.headerTitleCenter}>
           <Text style={styles.headerTitle}>
-            {isChauffeur ? 'Personal Chauffeur Duty' : 'En Route to BLR Airport'}
+            {isChauffeur ? 'Personal Chauffeur Duty' : 'Navigation & Live Trip'}
           </Text>
           <View style={styles.headerLiveRow}>
             <View style={styles.liveGreenDot} />

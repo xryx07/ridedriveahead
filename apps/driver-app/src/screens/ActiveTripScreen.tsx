@@ -5,9 +5,9 @@ import { useDriverStore } from '../store/useDriverStore';
 
 export const ActiveTripScreen: React.FC = () => {
   const { activeTrip, activeTripStatus, updateTripStatus, completeTrip, navigate } = useDriverStore();
-  const [enteredOtp, setEnteredOtp] = useState('4821');
+  const [enteredOtp, setEnteredOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-  const [elapsedSec, setElapsedSec] = useState(8325);
+  const [elapsedSec, setElapsedSec] = useState(0);
 
   const isChauffeur = activeTrip?.gigType === 'HOURLY_CHAUFFEUR' || activeTrip?.gigType === 'EVENT_CHAUFFEUR' || activeTrip?.gigType === 'OUTSTATION_2DAY' || !!activeTrip?.carModel;
 
@@ -50,8 +50,8 @@ export const ActiveTripScreen: React.FC = () => {
   };
 
   const handleVerifyOtpAndStart = () => {
-    if (enteredOtp.trim() !== '4821' && enteredOtp.trim() !== '1234') {
-      setOtpError('Invalid PIN. Please enter the 4-digit code shown on the customer app.');
+    if (!enteredOtp || enteredOtp.trim().length !== 4) {
+      setOtpError('Please enter the 4-digit PIN provided by the customer.');
       return;
     }
     setOtpError('');

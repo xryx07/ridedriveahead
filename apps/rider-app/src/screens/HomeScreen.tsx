@@ -138,7 +138,7 @@ export const HomeScreen: React.FC = () => {
                 <Text style={styles.tileCode}>BIKE</Text>
               </View>
               <Text style={styles.tileName}>Bike</Text>
-              <Text style={styles.tileSub}>Fast • ₹79</Text>
+              <Text style={styles.tileSub}>Fast Commute</Text>
             </TouchableOpacity>
 
             {/* 4. Driver (My Car Chauffeur) */}
@@ -208,25 +208,25 @@ export const HomeScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* "MY CAR" ELEVATED PROFILE & HANDOVER PROTOCOL */}
+        {/* HIRE CHAUFFEUR FOR YOUR CAR */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>My Car</Text>
-          <Text style={styles.sectionLink}>Vehicle Verified ✓</Text>
+          <Text style={styles.sectionTitle}>Hire Driver for Your Car</Text>
+          <Text style={styles.sectionLink}>Personal Vehicle</Text>
         </View>
 
         <View style={styles.myCarCard}>
           <View style={styles.myCarHeader}>
             <View>
-              <Text style={styles.myCarTitle}>Toyota Innova Crysta (2.8Z)</Text>
-              <Text style={styles.myCarPlate}>KA 01 AB 1234 • Automatic (AT)</Text>
+              <Text style={styles.myCarTitle}>Professional Chauffeur Service</Text>
+              <Text style={styles.myCarPlate}>Available for Manual, Automatic & Luxury Vehicles</Text>
             </View>
             <View style={styles.verifiedTag}>
-              <Text style={styles.verifiedTagText}>RC Verified</Text>
+              <Text style={styles.verifiedTagText}>Verified Drivers</Text>
             </View>
           </View>
           <View style={styles.handoverMiniInfo}>
             <Text style={styles.handoverMiniText}>
-              ✓ Handover Protocol: Fuel 72% • Odometer 48,291 km • 360° Photo Inspection
+              Hourly gigs (2h–8h) • Outstation road trips • Night party safe return
             </Text>
           </View>
           <TouchableOpacity
@@ -234,31 +234,54 @@ export const HomeScreen: React.FC = () => {
             onPress={() => handleSelectService('HIRE_DRIVER')}
             activeOpacity={0.85}
           >
-            <Text style={styles.hireChauffeurBtnText}>Hire a Professional Chauffeur (2h–8h) →</Text>
+            <Text style={styles.hireChauffeurBtnText}>Hire a Professional Chauffeur →</Text>
           </TouchableOpacity>
         </View>
 
-        {/* UPCOMING AIRPORT RESERVE CARD */}
+        {/* UPCOMING TRIP ASSURANCE */}
         <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>Upcoming Trip Assurance</Text>
-          <Text style={styles.sectionLink}>Flight Sync</Text>
+          <Text style={styles.sectionTitle}>Trip Assurance</Text>
+          <Text style={styles.sectionLink}>Guaranteed Dispatch</Text>
         </View>
 
-        <View style={styles.assuranceCard}>
-          <View style={styles.assuranceTop}>
-            <View>
-              <Text style={styles.assuranceTitle}>Airport Transfer • Tomorrow 06:30 AM</Text>
-              <Text style={styles.assuranceSub}>Koramangala ➔ Kempegowda Airport (BLR)</Text>
+        {activeBooking ? (
+          <TouchableOpacity
+            style={styles.assuranceCard}
+            onPress={() => navigate('LIVE_TRACKING')}
+            activeOpacity={0.85}
+          >
+            <View style={styles.assuranceTop}>
+              <View>
+                <Text style={styles.assuranceTitle}>
+                  {activeBooking.bookingType === 'SCHEDULED' ? 'Scheduled Ride' : 'Instant Ride'}
+                </Text>
+                <Text style={styles.assuranceSub}>
+                  {activeBooking.pickupAddress} ➔ {activeBooking.dropAddress}
+                </Text>
+              </View>
+              <Text style={styles.assuranceFare}>₹ {activeBooking.fareAmount}</Text>
             </View>
-            <Text style={styles.assuranceFare}>₹ 1,248</Text>
+            <View style={styles.assuranceStages}>
+              <Text style={styles.stageDone}>✓ Confirmed</Text>
+              <Text style={styles.stageDone}>✓ Fare Locked</Text>
+              <Text style={styles.stageDone}>✓ Driver Assigned</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={[styles.assuranceCard, { borderColor: 'rgba(255,255,255,0.08)' }]}>
+            <View style={styles.assuranceTop}>
+              <View>
+                <Text style={styles.assuranceTitle}>Guaranteed Advance Rides</Text>
+                <Text style={styles.assuranceSub}>Schedule airport transfers and city rides with upfront locked pricing</Text>
+              </View>
+            </View>
+            <View style={styles.assuranceStages}>
+              <Text style={styles.stageDone}>✓ Zero Surge Guarantee</Text>
+              <Text style={styles.stageDone}>✓ On-Time Arrival</Text>
+              <Text style={styles.stageDone}>✓ Verified Drivers</Text>
+            </View>
           </View>
-          <View style={styles.assuranceStages}>
-            <Text style={styles.stageDone}>✓ Confirmed</Text>
-            <Text style={styles.stageDone}>✓ Fare Locked</Text>
-            <Text style={styles.stageDone}>✓ Driver Assigned</Text>
-            <Text style={styles.stageActive}>● Flight 6E 752 Synced</Text>
-          </View>
-        </View>
+        )}
 
         {/* SAFETY & TRIP GUARDIAN */}
         <View style={styles.safetyCard}>
@@ -268,7 +291,7 @@ export const HomeScreen: React.FC = () => {
           <View style={{ flex: 1 }}>
             <Text style={styles.safetyHeading}>Trip Guardian Status: Protected</Text>
             <Text style={styles.safetyDetails}>
-              Live sharing with family • 4-digit PIN [ 4 7 9 2 ] • 24/7 Roadside Assistance
+              Live sharing with family • 24/7 Roadside Assistance • Emergency SOS
             </Text>
           </View>
         </View>
