@@ -150,12 +150,80 @@
             color: #171717;
         }
 
+        /* Ecosystem Platform Switcher Bar */
+        .ecosystem-bar {
+            height: 38px;
+            background: rgba(11, 11, 11, 0.98);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            font-size: 11px;
+            font-weight: 700;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        [data-theme="light"] .ecosystem-bar {
+            background: rgba(247, 243, 234, 0.98);
+        }
+        .ecosystem-pills {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ecosystem-pill-item {
+            padding: 4px 10px;
+            border-radius: 9999px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .ecosystem-pill-item:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .ecosystem-pill-item.active {
+            background: var(--surface-2);
+            color: var(--accent);
+            border: 1px solid var(--border-active);
+        }
+        [data-theme="light"] .ecosystem-pill-item.active {
+            background: #FFFFFF;
+            color: var(--accent);
+            border: 1px solid var(--border-active);
+        }
+        @media (max-width: 860px) {
+            .ecosystem-bar {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 0 12px;
+                gap: 12px;
+            }
+            .ecosystem-brand-label {
+                display: none;
+            }
+            .ecosystem-pills {
+                flex-shrink: 0;
+            }
+        }
+
         /* =========================================================
            TOP APP BAR
            ========================================================= */
         header.admin-topbar {
             position: fixed;
-            top: 0;
+            top: 38px;
             left: 0;
             right: 0;
             height: 64px;
@@ -326,8 +394,8 @@
            ========================================================= */
         .admin-layout {
             display: flex;
-            margin-top: 64px;
-            min-height: calc(100vh - 64px);
+            margin-top: 102px;
+            min-height: calc(100vh - 102px);
         }
 
         /* Sidebar Navigation */
@@ -336,7 +404,7 @@
             background: var(--surface);
             border-right: 1px solid var(--border);
             position: fixed;
-            top: 64px;
+            top: 102px;
             bottom: 0;
             left: 0;
             overflow-y: auto;
@@ -765,7 +833,7 @@
         }
 
         @media (max-width: 640px) {
-            .admin-layout { flex-direction: column; margin-top: 64px; }
+            .admin-layout { flex-direction: column; margin-top: 102px; }
             aside.admin-sidebar {
                 position: static;
                 width: 100%;
@@ -797,6 +865,35 @@
     </style>
 </head>
 <body>
+
+    <!-- =========================================================
+         ECOSYSTEM PLATFORM SWITCHER BAR
+         ========================================================= -->
+    <div class="ecosystem-bar">
+        <div class="ecosystem-brand-label" style="display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--text-muted);">RideDriveAhead Unified Ecosystem</span>
+            <span style="color:var(--border);">|</span>
+            <span style="color:var(--text-secondary);">Single Backend · 3 Distinct Web Platforms</span>
+        </div>
+        <div class="ecosystem-pills">
+            <a href="/" class="ecosystem-pill-item" title="Customer Website & Booking Platform">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Customer Platform (ridedriveahead.com)
+            </a>
+            <a href="/driver" class="ecosystem-pill-item" title="Captain Portal">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                Driver Cockpit (driver.ridedriveahead.com)
+            </a>
+            <a href="/admin" class="ecosystem-pill-item active" title="Admin Command Center (Active)">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 9h6"/></svg>
+                Admin Command Center (admin.ridedriveahead.com)
+            </a>
+            <a href="/showcase" class="ecosystem-pill-item" title="Multi-Platform Showcase Hub">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                Showcase Hub
+            </a>
+        </div>
+    </div>
 
     <!-- =========================================================
          TOP APP BAR & GLOBAL NAVIGATION
@@ -1436,8 +1533,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Honda City ZX (Automatic AT)</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>AUTOMATIC · undefined · 5 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>AUTOMATIC · Petrol · 5 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 2,400 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1456,8 +1553,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Mahindra Thar 4x4 (Hard Top)</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>AUTOMATIC · undefined · 4 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>AUTOMATIC · Diesel 4x4 · 4 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 3,800 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1476,8 +1573,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Tata Nexon EV Max</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>AUTOMATIC · undefined · 5 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>AUTOMATIC · Electric (EV) · 5 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 2,600 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1496,8 +1593,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Royal Enfield Classic 350</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>MANUAL · undefined · 2 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>MANUAL · Petrol · 2 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 850 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1516,8 +1613,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Ather 450X Gen 3 (EV Scooter)</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>AUTOMATIC · undefined · 2 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>AUTOMATIC · Electric (EV) · 2 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 650 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1536,8 +1633,8 @@
                                         <div style="font-weight:800; color:var(--text-primary);">Toyota Innova Crysta (2.8Z 7-Seater)</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">KA 01 AB 9988</div>
                                     </td>
-                                    <td>AUTOMATIC · undefined · 7 Seats</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ undefined / day</td>
+                                    <td>AUTOMATIC · Diesel · 7 Seats</td>
+                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 4,200 / day</td>
                                     <td>Verified Rental Partner</td>
                                     <td>
                                         <span class="badge-status badge-status-active"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 360° VIDEO LOGGED</span>
@@ -1596,13 +1693,13 @@
                                     <td class="font-mono" style="font-weight:800; color:var(--text-primary);">CHF-9241</td>
                                     <td><span class="badge-status badge-status-info">HIRE_DRIVER</span></td>
                                     <td>
-                                        <div style="font-size:11px; font-weight:700;">undefined</div>
-                                        <div style="font-size:10px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Airport</div>
+                                        <div style="font-size:11px; font-weight:700;">Cyber City, DLF Phase 2</div>
+                                        <div style="font-size:10px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> IGI Airport T3</div>
                                     </td>
                                     <td>Arjun Verma</td>
                                     <td>Rajesh Kumar</td>
                                     <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 549</td>
-                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">undefined</td>
+                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">OTP: 4821</td>
                                     <td>
                                         <span class="badge-status badge-status-active">IN PROGRESS</span>
                                     </td>
@@ -2327,33 +2424,33 @@
                                     <td class="font-mono" style="font-weight:700;">AUD-42262</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T14:59:34.690Z</td>
                                     <td style="font-weight:700;">Safety Admin</td>
-                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-neutral">SAFETY_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">KYC_APPROVED</span></td>
                                     <td class="font-mono">DRIVER</td>
                                     <td class="font-mono">10.0.4.88</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Commercial DL & Aadhaar biometric verification approved for Captain onboarding</td>
                                 </tr>
                             
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-73118</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T14:59:34.671Z</td>
                                     <td style="font-weight:700;">Super Admin</td>
-                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-neutral">SUPER_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">DRIVER_SUSPENDED</span></td>
                                     <td class="font-mono">DRIVER</td>
                                     <td class="font-mono">10.0.4.88</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Account temporarily restricted pending re-training audit after rating dip</td>
                                 </tr>
                             
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-95930</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T14:56:54.742Z</td>
                                     <td style="font-weight:700;">Super Admin</td>
-                                    <td><span class="badge-status badge-status-neutral">undefined</span></td>
+                                    <td><span class="badge-status badge-status-neutral">SUPER_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">DISPATCH_OVERRIDE</span></td>
                                     <td class="font-mono">BOOKING</td>
                                     <td class="font-mono">::1</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">undefined</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Manual route dispatch recalibration for airport express VIP lane</td>
                                 </tr>
                             
                                 <tr>

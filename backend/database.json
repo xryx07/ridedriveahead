@@ -72,11 +72,11 @@
       "vehicleType": "SEDAN",
       "isOnline": true,
       "rating": 4.92,
-      "totalTrips": 592,
+      "totalTrips": 593,
       "kycStatus": "APPROVED",
       "drivingHoursToday": 3.5,
       "maxDrivingHours": 8,
-      "todayEarnings": 8740
+      "todayEarnings": 9289
     },
     {
       "id": "d-202",
@@ -294,6 +294,27 @@
     }
   ],
   "bookings": [
+    {
+      "id": "CHF-5254",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "DLF CyberCity Gate 2",
+      "drop": "Raheja Mindspace IT Park",
+      "distanceKm": 25,
+      "fare": 549,
+      "overtimeRate": 99,
+      "otp": "8518",
+      "status": "COMPLETED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Arjun Verma",
+      "driverName": "Rajesh Kumar",
+      "createdAt": "2026-10-08T13:39:04.403Z"
+    },
     {
       "id": "CHF-9352",
       "serviceMode": "HIRE_DRIVER",
@@ -544,6 +565,114 @@
   ],
   "apiLogs": [
     {
+      "time": "7:09:12 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/surge/update",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/verify",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/driver/suspend",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/admin/action",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/complete",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings/verify-otp",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings",
+      "status": 201
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/verify",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/otp/request",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/bookings/active",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/drivers/gigs",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/chauffeur/packages",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/cab/tiers",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/db/inspect",
+      "status": 200
+    },
+    {
+      "time": "7:09:04 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
+      "time": "7:08:55 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
+      "time": "7:08:32 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
       "time": "12:15:58 am",
       "method": "GET",
       "endpoint": "/api/v1/health",
@@ -674,114 +803,6 @@
       "method": "POST",
       "endpoint": "/api/v1/admin/action",
       "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings/complete",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings/verify-otp",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings",
-      "status": 201
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "POST",
-      "endpoint": "/api/v1/auth/otp/verify",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "POST",
-      "endpoint": "/api/v1/auth/otp/request",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/bookings/active",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/drivers/gigs",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/chauffeur/packages",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/cab/tiers",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/db/inspect",
-      "status": 200
-    },
-    {
-      "time": "12:05:22 am",
-      "method": "GET",
-      "endpoint": "/api/v1/health",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/admin/surge/update",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/admin/driver/verify",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/admin/driver/suspend",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/admin/action",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings/complete",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings/verify-otp",
-      "status": 200
-    },
-    {
-      "time": "11:51:40 pm",
-      "method": "POST",
-      "endpoint": "/api/v1/bookings",
-      "status": 201
     }
   ],
   "rentalListings": [
@@ -1321,6 +1342,49 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "AUD-14942",
+      "timestamp": "2026-10-08T13:39:04.463Z",
+      "adminId": "ADM-004",
+      "adminName": "Safety Admin",
+      "role": "SAFETY_ADMIN",
+      "action": "KYC_APPROVED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "notes": "Aadhaar + DL verified successfully"
+      }
+    },
+    {
+      "id": "AUD-54932",
+      "timestamp": "2026-10-08T13:39:04.450Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "DRIVER_SUSPENDED",
+      "targetResource": "DRIVER",
+      "targetId": "drv-01",
+      "ipAddress": "10.0.4.88",
+      "status": "SUCCESS",
+      "metadata": {
+        "reason": "Routine compliance audit"
+      }
+    },
+    {
+      "id": "AUD-94496",
+      "timestamp": "2026-10-08T13:39:04.438Z",
+      "adminId": "ADM-001",
+      "adminName": "Super Admin",
+      "role": "SUPER_ADMIN",
+      "action": "SYSTEM_AUDIT_CHECK",
+      "targetResource": "SYSTEM",
+      "targetId": "N/A",
+      "ipAddress": "::1",
+      "status": "SUCCESS",
+      "metadata": {}
+    },
     {
       "id": "AUD-95043",
       "timestamp": "2026-10-07T18:45:01.741Z",

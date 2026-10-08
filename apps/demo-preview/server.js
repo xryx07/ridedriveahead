@@ -386,7 +386,7 @@ const server = http.createServer(async (req, res) => {
   // ========================================================
   const host = (req.headers.host || '').toLowerCase();
 
-  // DRIVER WEB (driver.ridedriveahead.com or /driver)
+  // 1. DRIVER WEB (driver.ridedriveahead.com or /driver)
   if (pathname === '/driver' || pathname === '/driver.html' || (host.startsWith('driver.') && (pathname === '/' || pathname === '/index.html'))) {
     const driverPath = path.join(__dirname, 'driver.html');
     fs.readFile(driverPath, 'utf8', (err, data) => {
@@ -401,7 +401,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // ADMIN WEB (admin.ridedriveahead.com or /admin)
+  // 2. ADMIN WEB (admin.ridedriveahead.com or /admin)
   if (pathname === '/admin' || pathname === '/admin.html' || (host.startsWith('admin.') && (pathname === '/' || pathname === '/index.html'))) {
     const adminPath = path.join(__dirname, 'admin.html');
     fs.readFile(adminPath, 'utf8', (err, data) => {
@@ -416,8 +416,8 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // MASTER ECOSYSTEM SHOWCASE (EXACT POSTER VIEW: / or /showcase)
-  if (pathname === '/' || pathname === '/showcase' || pathname === '/showcase.html') {
+  // 3. MASTER ECOSYSTEM SHOWCASE (EXACT POSTER VIEW: /showcase or /hub)
+  if (pathname === '/showcase' || pathname === '/showcase.html' || pathname === '/hub' || pathname === '/hub.html') {
     const showcasePath = path.join(__dirname, 'showcase.html');
     if (fs.existsSync(showcasePath)) {
       fs.readFile(showcasePath, 'utf8', (err, data) => {
@@ -433,8 +433,8 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
-  // CUSTOMER WEB (ridedriveahead.com or /customer or /index.html)
-  if (pathname === '/customer' || pathname === '/customer.html' || pathname === '/index.html' || (host.startsWith('customer.') && (pathname === '/' || pathname === '/index.html'))) {
+  // 4. CUSTOMER WEB (ridedriveahead.com or / or /customer or /index.html)
+  if (pathname === '/' || pathname === '/customer' || pathname === '/customer.html' || pathname === '/index.html' || (host.startsWith('customer.') && (pathname === '/' || pathname === '/index.html'))) {
     const htmlPath = path.join(__dirname, 'index.html');
     fs.readFile(htmlPath, 'utf8', (err, data) => {
       if (err) {
