@@ -597,30 +597,11 @@
             color: #10B981;
         }
 
-        /* Portals & Account Dropdowns (Compact, High-End) */
-        .portals-dropdown-wrap, .account-dropdown-wrap {
+        /* Account Dropdown (Compact, High-End) */
+        .account-dropdown-wrap {
             position: relative;
         }
-        .portal-selector-btn {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 12px;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            transition: all 0.15s ease;
-            cursor: pointer;
-        }
-        .portal-selector-btn:hover {
-            color: var(--text-primary);
-            border-color: var(--border-hover);
-            background: var(--surface);
-        }
-        .portal-menu-dropdown, .account-menu-dropdown {
+        .account-menu-dropdown {
             position: absolute;
             top: calc(100% + 8px);
             right: 0;
@@ -637,10 +618,10 @@
             backdrop-filter: blur(16px);
             animation: fadeInModal 0.15s ease;
         }
-        .portal-menu-dropdown.show, .account-menu-dropdown.show {
+        .account-menu-dropdown.show {
             display: flex;
         }
-        .portal-menu-item, .account-menu-item {
+        .account-menu-item {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -653,13 +634,9 @@
             transition: all 0.15s ease;
             cursor: pointer;
         }
-        .portal-menu-item:hover, .account-menu-item:hover {
+        .account-menu-item:hover {
             background: var(--surface-2);
             color: var(--text-primary);
-        }
-        .portal-menu-item.active {
-            color: var(--accent);
-            background: rgba(255, 255, 255, 0.08);
         }
         .account-btn {
             display: flex;
@@ -2478,9 +2455,6 @@
             .header-actions {
                 gap: 6px;
             }
-            .portal-selector-btn span {
-                display: none;
-            }
             .cta-btn-primary {
                 padding: 8px 12px;
                 font-size: 12px;
@@ -2569,22 +2543,6 @@
         }
         .hero-luxury-media:hover .hero-luxury-img {
             transform: scale(1.03);
-        }
-        .hero-media-badge {
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            background: rgba(11, 11, 11, 0.78);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(200, 169, 106, 0.4);
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 11px;
-            color: var(--text-primary);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         /* Luxury Chauffeur Section */
@@ -2722,38 +2680,6 @@
 
             <!-- CLEAN, BALANCED RIGHT CONTROLS -->
             <div class="header-actions">
-                <!-- Ecosystem Portals Dropdown -->
-                <div class="portals-dropdown-wrap">
-                    <button class="portal-selector-btn" onclick="togglePortalMenu()" id="portalMenuBtn" title="Switch between Customer, Captain, and Admin">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                        <span>Portals</span>
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    </button>
-                    <div class="portal-menu-dropdown" id="portalMenuDropdown">
-                        <a href="/" class="portal-menu-item active">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            <div>
-                                <div style="font-weight:700; font-size:12px;">Customer Web</div>
-                                <div style="font-size:10px; color:var(--text-muted);">ridedriveahead.com</div>
-                            </div>
-                        </a>
-                        <a href="/driver" target="_blank" class="portal-menu-item">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
-                            <div>
-                                <div style="font-weight:700; font-size:12px;">Captain Portal</div>
-                                <div style="font-size:10px; color:var(--text-muted);">driver.ridedriveahead.com</div>
-                            </div>
-                        </a>
-                        <a href="/admin" target="_blank" class="portal-menu-item">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            <div>
-                                <div style="font-weight:700; font-size:12px;">Admin Command Center</div>
-                                <div style="font-size:10px; color:var(--text-muted);">admin.ridedriveahead.com</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
                 <!-- Help / Support -->
                 <a href="javascript:void(0)" class="nav-item" style="padding:6px 12px; font-size:13px;" onclick="openCustomerModal('customerSupportModal')">Help</a>
 
@@ -2838,10 +2764,6 @@
                 <!-- Cinematic Hero Photograph: Black Mercedes Sedan at Night -->
                 <div class="hero-luxury-media">
                     <img class="hero-luxury-img" src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=1200&auto=format&fit=crop" alt="Luxury Black Mercedes Sedan" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop';" />
-                    <div class="hero-media-badge">
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>Flagship Mobility · Executive Class</span>
-                    </div>
                 </div>
             </div>
 
@@ -4108,26 +4030,13 @@
             showToast('Welcome back, Vikram! Gold Member Telemetry active', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg>');
         }
 
-        /* PORTAL & ACCOUNT DROPDOWN CONTROLLERS */
-        function togglePortalMenu() {
-            const m = document.getElementById('portalMenuDropdown');
-            if (m) m.classList.toggle('show');
-            const a = document.getElementById('accountMenuDropdown');
-            if (a) a.classList.remove('show');
-        }
-
+        /* ACCOUNT DROPDOWN CONTROLLER */
         function toggleAccountMenu() {
             const a = document.getElementById('accountMenuDropdown');
             if (a) a.classList.toggle('show');
-            const m = document.getElementById('portalMenuDropdown');
-            if (m) m.classList.remove('show');
         }
 
         window.addEventListener('click', (e) => {
-            if (!e.target.closest('.portals-dropdown-wrap')) {
-                const m = document.getElementById('portalMenuDropdown');
-                if (m) m.classList.remove('show');
-            }
             if (!e.target.closest('.account-dropdown-wrap')) {
                 const a = document.getElementById('accountMenuDropdown');
                 if (a) a.classList.remove('show');
