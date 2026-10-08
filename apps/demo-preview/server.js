@@ -245,8 +245,8 @@ const server = http.createServer(async (req, res) => {
       elapsedSeconds: 0,
       fuelHandover: '80% Full',
       odometerStart: 34812,
-      riderName: body.riderName || 'Arjun Verma',
-      driverName: 'Rajesh Kumar',
+      riderName: body.riderName || 'Verified Rider',
+      driverName: 'Verified Captain',
       createdAt: new Date().toISOString()
     };
     db.bookings.unshift(newBooking);

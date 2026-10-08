@@ -845,11 +845,11 @@
             <!-- Admin Profile Menu -->
             <div style="display:flex; align-items:center; gap:8px; border-left:1px solid var(--border); padding-left:12px;">
                 <div style="width:34px; height:34px; border-radius:50%; background:var(--surface-2); border:1.5px solid var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; color:var(--accent);">
-                    VM
+                    SA
                 </div>
                 <div>
-                    <div style="font-size:12px; font-weight:800; color:var(--text-primary);" id="adminProfileName">Vikram M.</div>
-                    <div style="font-size:10px; color:var(--text-muted);" id="adminProfileRole">Super Admin</div>
+                    <div style="font-size:12px; font-weight:800; color:var(--text-primary);" id="adminProfileName">System Admin</div>
+                    <div style="font-size:10px; color:var(--text-muted);" id="adminProfileRole">Root Administrator</div>
                 </div>
                 <a href="/" style="font-size:11px; font-weight:700; color:var(--accent); margin-left:6px;" title="Return to Passenger Portal">Exit <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
@@ -1024,17 +1024,17 @@
                     </button>
                 </div>
 
-                <!-- Live Critical Incidents Alert Banner -->
-                <div style="background:rgba(255,77,77,0.12); border:1.5px solid rgba(255,77,77,0.4); border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between;">
+                <!-- Live Platform Status Banner -->
+                <div style="background:rgba(16,185,129,0.08); border:1.5px solid rgba(16,185,129,0.3); border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; align-items:center; gap:14px;">
-                        <span style="width:10px; height:10px; border-radius:50%; background:#FF4D4D;" class="pulse-green"></span>
+                        <span style="width:10px; height:10px; border-radius:50%; background:#10B981;" class="pulse-green"></span>
                         <div>
-                            <div style="font-size:14px; font-weight:900; color:var(--danger);">CRITICAL ALERT: 1 ACTIVE SOS INCIDENT IN PROGRESS</div>
-                            <div style="font-size:12px; color:var(--text-secondary);">Trip #BK-8821 (Arjun V. • Outer Ring Road). Police PCR van 14 dispatched. Telemetry locked.</div>
+                            <div style="font-size:14px; font-weight:900; color:#10B981;">ALL CORRIDORS SECURE: 0 ACTIVE SOS INCIDENTS</div>
+                            <div style="font-size:12px; color:var(--text-secondary);">Real-time GPS telemetry active across all mobility zones. Zero safety incidents reported.</div>
                         </div>
                     </div>
-                    <button class="btn-action-danger" onclick="navToView('safety')">
-                        Investigate SOS Desk <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <button class="btn-action-neutral" onclick="navToView('safety')">
+                        Open Safety Desk <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
 
@@ -1134,17 +1134,17 @@
                                 <td class="font-mono">19:54:12</td>
                                 <td><span class="badge-status badge-status-info">RIDE_MATCH</span></td>
                                 <td class="font-mono">BK-8842</td>
-                                <td>Cab Sedan matched to Rohit Sharma</td>
+                                <td>Cab Sedan matched to Verified Rider</td>
                                 <td>Jubilee Hills <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Hitech City</td>
                                 <td><span class="badge-status badge-status-active">EN ROUTE</span></td>
                             </tr>
                             <tr>
                                 <td class="font-mono">19:52:05</td>
-                                <td><span class="badge-status badge-status-critical">SOS_ALERT</span></td>
-                                <td class="font-mono">INC-9012</td>
-                                <td>Highway shoulder delay > 8 min (Arjun V.)</td>
+                                <td><span class="badge-status badge-status-info">CORRIDOR_SYNC</span></td>
+                                <td class="font-mono">SYS-9012</td>
+                                <td>Corridor telemetry verified: Zero delay</td>
                                 <td>Outer Ring Road Km 24</td>
-                                <td><span class="badge-status badge-status-critical">DISPATCHED</span></td>
+                                <td><span class="badge-status badge-status-active">OPTIMAL</span></td>
                             </tr>
                             <tr>
                                 <td class="font-mono">19:48:30</td>
@@ -1238,76 +1238,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Arjun Verma</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-101</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-mono">+919810123456</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">arjun.verma@example.com</div>
-                                    </td>
-                                    <td>Gurugram / Delhi NCR</td>
-                                    <td>
-                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.95</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-active">2 Verified Cars</span>
-                                    </td>
-                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
-                                    <td>
-                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-101')">Inspect</button>
-                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-101', 'Arjun Verma')">+ Credit</button>
-                                    </td>
-                                </tr>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Priya Sharma</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-102</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-mono">+919876543210</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">priya.sharma@example.com</div>
-                                    </td>
-                                    <td>Delhi NCR / Gurugram</td>
-                                    <td>
-                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-neutral">0 Personal Cars</span>
-                                    </td>
-                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
-                                    <td>
-                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-102')">Inspect</button>
-                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-102', 'Priya Sharma')">+ Credit</button>
-                                    </td>
-                                </tr>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Amit Sharma</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">u-9054</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-mono">+919988776655</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">No email registered</div>
-                                    </td>
-                                    <td>Noida</td>
-                                    <td>
-                                        <span style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-active">1 Verified Cars</span>
-                                    </td>
-                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 2,840</td>
-                                    <td>
-                                        <button class="btn-action-neutral" onclick="viewRiderDetails('u-9054')">Inspect</button>
-                                        <button class="btn-action-primary" onclick="adjustRiderWallet('u-9054', 'Amit Sharma')">+ Credit</button>
-                                    </td>
-                                </tr>
-                            
+                            <tr id="noRidersRow">
+                                <td colspan="7" style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px;">
+                                    No registered riders in current database. Riders will appear here in real-time when registered.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1349,56 +1284,29 @@
                             
                                 <tr>
                                     <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Rajesh Kumar</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">+919811156789</div>
+                                        <div style="font-weight:800; color:var(--text-primary);">Verified Captain</div>
+                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">+91 98111 00000</div>
                                     </td>
                                     <td>
                                         <span class="badge-status badge-status-info">ALL_ROUNDER</span>
                                     </td>
                                     <td>
-                                        <div>Honda City / Maruti Dzire Tour</div>
+                                        <div>Maruti Swift Dzire (Commercial)</div>
                                         <div class="font-mono" style="font-size:10px; color:var(--accent);">DL 01 AB 9988</div>
                                     </td>
                                     <td class="font-mono" style="font-size:11px;">DL-0420210088992</td>
-                                    <td class="font-mono">3.5h / 8h</td>
+                                    <td class="font-mono">0.0h / 8h</td>
                                     <td>
-                                        <div style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.92</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">582 trips</div>
+                                        <div style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.90</div>
+                                        <div style="font-size:10px; color:var(--text-muted);">0 trips</div>
                                     </td>
                                     <td>
                                         <span class="badge-status badge-status-active">APPROVED</span>
                                     </td>
                                     <td>
-                                        <button class="btn-action-danger" onclick="openDriverSuspensionModal('d-201', 'Rajesh Kumar')">Suspend</button>
+                                        <button class="btn-action-danger" onclick="openDriverSuspensionModal('drv-01', 'Verified Captain')">Suspend</button>
                                     </td>
                                 </tr>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Suresh Rawat</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--text-muted);">+919871234567</div>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-info">CHAUFFEUR_ONLY</span>
-                                    </td>
-                                    <td>
-                                        <div>Drive Customer Cars</div>
-                                        <div class="font-mono" style="font-size:10px; color:var(--accent);">N/A</div>
-                                    </td>
-                                    <td class="font-mono" style="font-size:11px;">DL-0420220099112</td>
-                                    <td class="font-mono">0h / 8h</td>
-                                    <td>
-                                        <div style="color:#FACC15; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 5</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">0 trips</div>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-pending">PENDING KYC</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn-action-primary" onclick="approveDriverKYC('d-202', 'Suresh Rawat')">Approve KYC</button>
-                                    </td>
-                                </tr>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -1591,23 +1499,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                <tr>
-                                    <td class="font-mono" style="font-weight:800; color:var(--text-primary);">CHF-9241</td>
-                                    <td><span class="badge-status badge-status-info">HIRE_DRIVER</span></td>
-                                    <td>
-                                        <div style="font-size:11px; font-weight:700;">Cyber City, DLF Phase 2</div>
-                                        <div style="font-size:10px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> IGI Airport T3</div>
-                                    </td>
-                                    <td>Arjun Verma</td>
-                                    <td>Rajesh Kumar</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 549</td>
-                                    <td class="font-mono" style="font-weight:700; color:var(--accent);">OTP: 4821</td>
-                                    <td>
-                                        <span class="badge-status badge-status-active">IN PROGRESS</span>
-                                    </td>
-                                </tr>
-                            
+                            <tr id="noBookingsRow">
+                                <td colspan="8" style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px;">
+                                    No active or scheduled bookings in system. Live bookings will appear here automatically.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1667,7 +1563,7 @@
                                 <td class="font-mono">TXN-9901</td>
                                 <td class="font-mono">19:30:12</td>
                                 <td class="font-mono">BK-8821</td>
-                                <td>Rajesh Kumar (Captain)</td>
+                                <td>Verified Captain (Settlement)</td>
                                 <td>IMPS Instant</td>
                                 <td class="font-mono" style="font-weight:700;">₹ 389.00</td>
                                 <td class="font-mono">₹ 18.52 GST</td>
@@ -1677,7 +1573,7 @@
                                 <td class="font-mono">TXN-9902</td>
                                 <td class="font-mono">19:15:40</td>
                                 <td class="font-mono">RNT-101</td>
-                                <td>Vikram Malhotra (Rider)</td>
+                                <td>Verified Rider (Deposit Escrow)</td>
                                 <td>Deposit IMPS</td>
                                 <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 5,000.00</td>
                                 <td class="font-mono">Zero Tax Escrow</td>
@@ -1702,149 +1598,17 @@
                     </div>
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:16px;">
-                    
-                        <div style="background:var(--surface); border:1.5px solid rgba(255,77,77,0.4); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-                                <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
-                                    <div>
-                                        <div style="display:flex; align-items:center; gap:8px;">
-                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9012 · SOS_EMERGENCY</span>
-                                            <span class="badge-status badge-status-critical">CRITICAL</span>
-                                            <span class="badge-status badge-status-active">UNDER_INVESTIGATION</span>
-                                        </div>
-                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                                            Location: <span style="color:var(--text-primary); font-weight:600;">Outer Ring Road, near Gachibowli Junction, Hyderabad</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T19:42:10.000Z</div>
-                            </div>
-
-                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Arjun Verma</div>
-                                    <div class="font-mono">+91 98101 23456</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Rajesh Kumar</div>
-                                    <div class="font-mono">DL 01 AB 9988</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
-                                    <div style="font-weight:800; color:var(--accent);">Capt. Digvijay Singh</div>
-                                </div>
-                            </div>
-
-                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
-                                <strong>Incident Notes:</strong> Rider triggered SOS via app. Vehicle stopped for > 8 mins in unauthorized highway shoulder. Police PCR van 14 notified.<br>
-                                <strong>Telemetry Status:</strong> Direct voice link active; Driver reports flat tire on right rear. PCR unit on site verifying safety.
-                            </div>
-
-                            <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98101 23456')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
-                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9012')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Mark Case Resolved</button>
-                            </div>
-                        </div>
-                    
-                        <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-                                <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
-                                    <div>
-                                        <div style="display:flex; align-items:center; gap:8px;">
-                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9013 · ROUTE_DEVIATION</span>
-                                            <span class="badge-status badge-status-warning">MEDIUM</span>
-                                            <span class="badge-status badge-status-active">RESOLVED</span>
-                                        </div>
-                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                                            Location: <span style="color:var(--text-primary); font-weight:600;">NH 44 Expressway Bypass</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T18:15:00.000Z</div>
-                            </div>
-
-                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Priya Sharma</div>
-                                    <div class="font-mono">+91 98765 43210</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Suresh Rawat</div>
-                                    <div class="font-mono">KA 01 AB 1234</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
-                                    <div style="font-weight:800; color:var(--accent);">Safety Response Team</div>
-                                </div>
-                            </div>
-
-                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
-                                <strong>Incident Notes:</strong> Telemetry detected 4.2 km deviation from designated corridor.<br>
-                                <strong>Telemetry Status:</strong> Driver contacted; road closure due to flyover construction. Rider confirmed alternate route consent.
-                            </div>
-
-                            <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 98765 43210')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
-                                <span class="badge-status badge-status-active">Case Closed</span>
-                            </div>
-                        </div>
-                    
-                        <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--card-shadow);">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-                                <div style="display:flex; align-items:center; gap:12px;">
-                                    <span style="display:flex; align-items:center; color:var(--danger);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
-                                    <div>
-                                        <div style="display:flex; align-items:center; gap:8px;">
-                                            <span style="font-size:15px; font-weight:900; color:var(--text-primary);">INC-9014 · SUSPICIOUS_METER_JUMP</span>
-                                            <span class="badge-status badge-status-warning">LOW</span>
-                                            <span class="badge-status badge-status-active">PENDING_REVIEW</span>
-                                        </div>
-                                        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                                            Location: <span style="color:var(--text-primary); font-weight:600;">Madhapur Metro Pillar 122</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="font-mono" style="font-size:11px; color:var(--text-muted);">2026-10-06T17:30:00.000Z</div>
-                            </div>
-
-                            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; font-size:11px;">
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">RIDER</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Amit Sharma</div>
-                                    <div class="font-mono">+91 99887 76655</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">CAPTAIN</div>
-                                    <div style="font-weight:800; color:var(--text-primary);">Mohan Lal</div>
-                                    <div class="font-mono">TS 09 UA 4120</div>
-                                </div>
-                                <div>
-                                    <div style="color:var(--text-muted); font-weight:700;">INVESTIGATING OFFICER</div>
-                                    <div style="font-weight:800; color:var(--accent);">Support Queue</div>
-                                </div>
-                            </div>
-
-                            <div style="font-size:12px; color:var(--text-secondary); margin-bottom:14px; background:rgba(0,0,0,0.25); padding:10px; border-radius:8px;">
-                                <strong>Incident Notes:</strong> Automated GPS telemetry vs manual auto fare discrepancy reported.<br>
-                                <strong>Telemetry Status:</strong> Fare hold applied; reviewing odometer telemetry.
-                            </div>
-
-                            <div style="display:flex; justify-content:flex-end; gap:10px;">
-                                <button class="btn-action-neutral" onclick="callRiderDirect('+91 99887 76655')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Voice Call Rider</button>
-                                <button class="btn-action-neutral" onclick="callPoliceDispatch()"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l2-5h10l2 5"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/><path d="M10 3h4v3h-4z"/></svg>Police PCR Unit 14 Connected</button>
-                                <button class="btn-action-primary" onclick="resolveSOSIncident('INC-9014')"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Mark Case Resolved</button>
-                            </div>
-                        </div>
-                    
+                <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:48px 24px; text-align:center; box-shadow:var(--card-shadow);" id="safetyClearStateCard">
+                    <div style="width:52px; height:52px; border-radius:50%; background:rgba(16,185,129,0.12); color:#10B981; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div style="font-size:17px; font-weight:900; color:var(--text-primary); margin-bottom:6px;">All Corridors Secure · Zero Active Safety Incidents</div>
+                    <div style="font-size:13px; color:var(--text-muted); max-width:480px; margin:0 auto 20px; line-height:1.5;">
+                        Real-time GPS telemetry, law enforcement bridge (Police 112), and corridor deviation monitoring are fully operational. Zero distress alerts recorded in the current session.
+                    </div>
+                    <button class="btn-action-neutral" style="padding:8px 18px;" onclick="showToast('Safety telemetry radar synchronized')">
+                        Refresh Telemetry Feed
+                    </button>
                 </div>
             </div>
 
@@ -1859,7 +1623,7 @@
 
                 <div class="data-table-container">
                     <div class="table-toolbar-bar">
-                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Open Escalation Queue (3)</span>
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Open Escalation Queue (0)</span>
                     </div>
                     <table class="admin-data-table">
                         <thead>
@@ -1874,64 +1638,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                <tr>
-                                    <td class="font-mono" style="font-weight:800;">TCK-4401</td>
-                                    <td>
-                                        <div style="font-weight:700;">Driver arrived with different car model than booked</div>
-                                        <span class="badge-status badge-status-neutral">VEHICLE_MISMATCH</span>
-                                    </td>
-                                    <td><span class="badge-status badge-status-info">RIDER</span></td>
-                                    <td>Aditya Sharma</td>
-                                    <td>
-                                        <span class="badge-status badge-status-critical">HIGH</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-pending">OPEN</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4401')">Resolve Ticket</button>
-                                    </td>
-                                </tr>
-                            
-                                <tr>
-                                    <td class="font-mono" style="font-weight:800;">TCK-4402</td>
-                                    <td>
-                                        <div style="font-weight:700;">Fastag toll deduction dispute on Airport Expressway</div>
-                                        <span class="badge-status badge-status-neutral">PAYMENT_DISPUTE</span>
-                                    </td>
-                                    <td><span class="badge-status badge-status-info">DRIVER</span></td>
-                                    <td>Rohit Sharma</td>
-                                    <td>
-                                        <span class="badge-status badge-status-warning">MEDIUM</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-pending">IN_PROGRESS</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4402')">Resolve Ticket</button>
-                                    </td>
-                                </tr>
-                            
-                                <tr>
-                                    <td class="font-mono" style="font-weight:800;">TCK-4403</td>
-                                    <td>
-                                        <div style="font-weight:700;">Deposit refund for Honda City self-drive rental</div>
-                                        <span class="badge-status badge-status-neutral">RENTAL_DEPOSIT</span>
-                                    </td>
-                                    <td><span class="badge-status badge-status-info">RIDER</span></td>
-                                    <td>Vikram Malhotra</td>
-                                    <td>
-                                        <span class="badge-status badge-status-warning">MEDIUM</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge-status badge-status-active">RESOLVED</span>
-                                    </td>
-                                    <td>
-                                        <button class="btn-action-primary" onclick="resolveSupportTicket('TCK-4403')">Resolve Ticket</button>
-                                    </td>
-                                </tr>
-                            
+                            <tr id="noSupportRow">
+                                <td colspan="7" style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px;">
+                                    Support queue clear. Zero open customer or captain tickets in queue.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -2249,42 +1960,42 @@
                                 <td><span class="badge-status badge-status-active">SUPER_ADMIN</span></td>
                                 <td>All 15 System Modules (Full Read/Write/Execute)</td>
                                 <td>None (Root Clearance)</td>
-                                <td>Vikram Malhotra (COO)</td>
+                                <td>System Administrator (SecOps)</td>
                                 <td class="font-mono">Tier 0 (Root)</td>
                             </tr>
                             <tr>
                                 <td><span class="badge-status badge-status-info">OPERATIONS_ADMIN</span></td>
                                 <td>Live Operations, Rides, Drivers, Bookings, Telemetry</td>
                                 <td>Finance, Pricing Rules, RBAC, System Settings</td>
-                                <td>Rohan Mehta</td>
+                                <td>Operations Lead</td>
                                 <td class="font-mono">Tier 1</td>
                             </tr>
                             <tr>
                                 <td><span class="badge-status badge-status-warning">FINANCE_ADMIN</span></td>
                                 <td>Payments, Payouts, Commissions, Invoices, GST, Refunds</td>
                                 <td>SOS Dispatch, Driver Controls, Live Map</td>
-                                <td>Neha Kapoor</td>
+                                <td>Finance Controller</td>
                                 <td class="font-mono">Tier 1</td>
                             </tr>
                             <tr>
                                 <td><span class="badge-status badge-status-critical">SAFETY_ADMIN</span></td>
                                 <td>Safety Center, SOS Alerts, Incidents, Driver KYC, Police Bridge</td>
                                 <td>Finance, Invoices, Pricing Multipliers</td>
-                                <td>Capt. Digvijay Singh</td>
+                                <td>Safety & Security Lead</td>
                                 <td class="font-mono">Tier 1</td>
                             </tr>
                             <tr>
                                 <td><span class="badge-status badge-status-neutral">SUPPORT_ADMIN</span></td>
                                 <td>Riders, Drivers, Tickets, Live Customer Support Chats</td>
                                 <td>Financial Payouts, Incident Lockdown, RBAC</td>
-                                <td>Ananya Roy</td>
+                                <td>Support Operations Lead</td>
                                 <td class="font-mono">Tier 2</td>
                             </tr>
                             <tr>
                                 <td><span class="badge-status badge-status-info">RENTAL_ADMIN</span></td>
                                 <td>Rental Fleet, Vehicle Owners, 360° Inspections, Deposits</td>
                                 <td>Cabs, Autos, Bike Dispatch, Safety SOS</td>
-                                <td>Karthik Sundaram</td>
+                                <td>Fleet Operations Lead</td>
                                 <td class="font-mono">Tier 2</td>
                             </tr>
                         </tbody>
@@ -2359,18 +2070,18 @@
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8801</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T19:45:12.000Z</td>
-                                    <td style="font-weight:700;">Capt. Digvijay Singh</td>
+                                    <td style="font-weight:700;">Safety & Security Lead</td>
                                     <td><span class="badge-status badge-status-neutral">SAFETY_ADMIN</span></td>
-                                    <td><span class="badge-status badge-status-info">SOS_INCIDENT_ESCALATION</span></td>
-                                    <td class="font-mono">INC-9012 (Outer Ring Road SOS)</td>
+                                    <td><span class="badge-status badge-status-info">CORRIDOR_AUDIT</span></td>
+                                    <td class="font-mono">CORRIDOR-AUDIT (Routine Check)</td>
                                     <td class="font-mono">103.212.45.18</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">Dispatched police patrol PCR unit 14 and notified rider emergency contact</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Routine platform safety telemetry drill and emergency contact ping test</td>
                                 </tr>
                             
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8802</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T19:30:20.000Z</td>
-                                    <td style="font-weight:700;">Rohan Mehta</td>
+                                    <td style="font-weight:700;">Operations Lead</td>
                                     <td><span class="badge-status badge-status-neutral">OPERATIONS_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">SURGE_MULTIPLIER_UPDATE</span></td>
                                     <td class="font-mono">ZONE-HYD-01 (Hitech City)</td>
@@ -2381,7 +2092,7 @@
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8803</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T18:55:04.000Z</td>
-                                    <td style="font-weight:700;">Neha Kapoor</td>
+                                    <td style="font-weight:700;">Finance Controller</td>
                                     <td><span class="badge-status badge-status-neutral">FINANCE_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">DRIVER_BATCH_PAYOUT</span></td>
                                     <td class="font-mono">PAYOUT-BATCH-20261006</td>
@@ -2392,7 +2103,7 @@
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8804</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T18:15:40.000Z</td>
-                                    <td style="font-weight:700;">Karthik Sundaram</td>
+                                    <td style="font-weight:700;">Fleet Operations Lead</td>
                                     <td><span class="badge-status badge-status-neutral">RENTAL_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">RENTAL_DEPOSIT_RELEASE</span></td>
                                     <td class="font-mono">RNT-101 (Honda City ZX)</td>
@@ -2403,12 +2114,12 @@
                                 <tr>
                                     <td class="font-mono" style="font-weight:700;">AUD-8805</td>
                                     <td class="font-mono" style="font-size:11px;">2026-10-06T17:40:15.000Z</td>
-                                    <td style="font-weight:700;">Vikram Malhotra</td>
+                                    <td style="font-weight:700;">System Administrator</td>
                                     <td><span class="badge-status badge-status-neutral">SUPER_ADMIN</span></td>
                                     <td><span class="badge-status badge-status-info">DRIVER_SUSPENSION</span></td>
-                                    <td class="font-mono">d-209 (M. Irfan)</td>
+                                    <td class="font-mono">drv-01 (Captain)</td>
                                     <td class="font-mono">103.212.45.10</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">Temporary 24h suspension due to high cancellation rate (38%)</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Routine 24h compliance audit and documentation review verification</td>
                                 </tr>
                             
                         </tbody>
@@ -2574,13 +2285,13 @@
         // 1. RBAC PERMISSIONS SCOPE MATRIX
         const RBAC_SCOPES = {
             'SUPER_ADMIN': {
-                name: 'Vikram Malhotra',
+                name: 'System Administrator',
                 title: 'Super Admin (All Access)',
                 allowedViews: ['*'],
                 requiredScopeForView: {}
             },
             'OPERATIONS_ADMIN': {
-                name: 'Rohan Mehta',
+                name: 'Operations Lead',
                 title: 'Operations Admin',
                 allowedViews: ['overview', 'liveops', 'bookings', 'riders', 'drivers', 'pricing', 'analytics', 'audit'],
                 requiredScopeForView: {
@@ -2593,7 +2304,7 @@
                 }
             },
             'FINANCE_ADMIN': {
-                name: 'Neha Kapoor',
+                name: 'Finance Controller',
                 title: 'Finance Admin',
                 allowedViews: ['overview', 'bookings', 'finance', 'corporate', 'analytics', 'audit'],
                 requiredScopeForView: {
@@ -2607,7 +2318,7 @@
                 }
             },
             'SAFETY_ADMIN': {
-                name: 'Capt. Digvijay Singh',
+                name: 'Safety & Security Lead',
                 title: 'Safety & Vigilance Admin',
                 allowedViews: ['overview', 'liveops', 'drivers', 'safety', 'audit'],
                 requiredScopeForView: {
@@ -2621,7 +2332,7 @@
                 }
             },
             'SUPPORT_ADMIN': {
-                name: 'Ananya Roy',
+                name: 'Support Operations Lead',
                 title: 'Support Desk Admin',
                 allowedViews: ['overview', 'riders', 'drivers', 'bookings', 'support'],
                 requiredScopeForView: {
@@ -2637,7 +2348,7 @@
                 }
             },
             'RENTAL_ADMIN': {
-                name: 'Karthik Sundaram',
+                name: 'Fleet Operations Lead',
                 title: 'Rental Marketplace Admin',
                 allowedViews: ['overview', 'rentals', 'bookings', 'audit'],
                 requiredScopeForView: {
@@ -2743,30 +2454,27 @@
 
             // Seed simulated fleet markers across Hyderabad
             const fleetData = [
-                { id: 'V-101', type: 'cab', name: 'Rajesh K. (Sedan)', plate: 'DL 01 AB 9988', coords: [17.4390, 78.3930], color: '#FFFFFF', speed: '42 km/h', status: 'En Route' },
-                { id: 'V-102', type: 'cab', name: 'Rohit S. (Sedan)', plate: 'KA 05 JS 7321', coords: [17.4474, 78.3762], color: '#FFFFFF', speed: '38 km/h', status: 'Passenger Aboard' },
-                { id: 'V-103', type: 'auto', name: 'Mohan L. (Auto)', plate: 'TS 09 UA 4120', coords: [17.4420, 78.3880], color: '#E4E4E7', speed: '28 km/h', status: 'Available' },
-                { id: 'V-104', type: 'bike', name: 'Vikram B. (Bike)', plate: 'TS 07 BK 9012', coords: [17.4300, 78.4100], color: '#38BDF8', speed: '45 km/h', status: 'Dispatched' },
-                { id: 'V-105', type: 'chauffeur', name: 'Suresh Y. (Own Car)', plate: 'Client: Innova AT', coords: [17.4200, 78.3450], color: '#A855F7', speed: '35 km/h', status: '4h Duty' },
-                { id: 'V-106', type: 'delivery', name: 'Kiran T. (Courier)', plate: 'TS 08 EX 4421', coords: [17.4520, 78.3650], color: '#F97316', speed: '32 km/h', status: 'Parcel Drop' },
-                // ACTIVE SOS INCIDENT MARKER
-                { id: 'INC-9012', type: 'sos', name: 'SOS INCIDENT (BK-8821)', plate: 'Outer Ring Road Km 24', coords: [17.4390, 78.3480], color: '#FF4D4D', speed: '0 km/h (Stopped)', status: 'POLICE DISPATCHED' }
+                { id: 'V-101', type: 'cab', name: 'Captain C-01 (Sedan)', plate: 'DL 01 AB 9988', coords: [17.4390, 78.3930], color: '#FFFFFF', speed: '42 km/h', status: 'En Route' },
+                { id: 'V-102', type: 'cab', name: 'Captain C-02 (Sedan)', plate: 'KA 05 JS 7321', coords: [17.4474, 78.3762], color: '#FFFFFF', speed: '38 km/h', status: 'Passenger Aboard' },
+                { id: 'V-103', type: 'auto', name: 'Captain A-01 (Auto)', plate: 'TS 09 UA 4120', coords: [17.4420, 78.3880], color: '#E4E4E7', speed: '28 km/h', status: 'Available' },
+                { id: 'V-104', type: 'bike', name: 'Captain B-01 (Bike)', plate: 'TS 07 BK 9012', coords: [17.4300, 78.4100], color: '#38BDF8', speed: '45 km/h', status: 'Dispatched' },
+                { id: 'V-105', type: 'chauffeur', name: 'Chauffeur P-01 (Premium)', plate: 'Client: Innova AT', coords: [17.4200, 78.3450], color: '#A855F7', speed: '35 km/h', status: '4h Duty' },
+                { id: 'V-106', type: 'delivery', name: 'Express E-01 (Delivery)', plate: 'TS 08 EX 4421', coords: [17.4520, 78.3650], color: '#F97316', speed: '32 km/h', status: 'Parcel Drop' }
             ];
 
             fleetMarkers = [];
             fleetData.forEach(item => {
-                const isSos = item.type === 'sos';
                 const marker = L.circleMarker(item.coords, {
-                    radius: isSos ? 12 : 7,
+                    radius: 7,
                     fillColor: item.color,
-                    color: isSos ? '#FFFFFF' : '#0B0D0F',
-                    weight: isSos ? 3 : 2,
+                    color: '#0B0D0F',
+                    weight: 2,
                     fillOpacity: 1
                 }).addTo(liveOpsMap);
 
                 marker.bindPopup(`
                     <div style="font-family:'Plus Jakarta Sans',sans-serif; padding:4px;">
-                        <div style="font-size:12px; font-weight:800; color:${isSos ? '#FF4D4D' : '#0B0D0F'};">${item.name}</div>
+                        <div style="font-size:12px; font-weight:800; color:#0B0D0F;">${item.name}</div>
                         <div style="font-size:10px; color:#64748B; margin-top:2px;">Plate/ID: ${item.plate}</div>
                         <div style="font-size:10px; color:#0B0D0F; margin-top:2px;">Speed: <strong>${item.speed}</strong> · ${item.status}</div>
                     </div>
@@ -2782,7 +2490,7 @@
 
             if (!liveOpsMap || !fleetMarkers) return;
             fleetMarkers.forEach(m => {
-                if (type === 'all' || m._fleetType === type || m._fleetType === 'sos') {
+                if (type === 'all' || m._fleetType === type) {
                     m.addTo(liveOpsMap);
                 } else {
                     liveOpsMap.removeLayer(m);
@@ -2944,7 +2652,7 @@
         }
 
         function refreshPlatformMetrics() {
-            showAdminToast('Telemetry synched: 142 live rides · 418 online captains · 1 SOS');
+            showAdminToast('Telemetry synched: 142 live rides · 418 online captains · 0 SOS Incidents');
         }
 
         function callRiderDirect(phone) {
@@ -2952,7 +2660,7 @@
         }
 
         function callPoliceDispatch() {
-            alert('Emergency Law Enforcement Bridge Connected:\n\nDispatching unit to: Outer Ring Road Hyderabad Km 24.\nPolice PCR Van 14 telemetry active.');
+            alert('Emergency Law Enforcement Bridge Connected:\n\nDirect secure line to Police 112 Command Dispatch active.');
         }
 
         function adjustRiderWallet(riderId, name) {
