@@ -885,7 +885,7 @@
                     <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
                     <span>Bookings & Dispatch</span>
                 </div>
-                <span class="sidebar-item-badge badge-warning" id="activeBookingsBadge">1</span>
+                <span class="sidebar-item-badge" id="activeBookingsBadge" style="display:none;">0</span>
             </div>
 
             <div class="sidebar-category-header">User & Fleet Management</div>
@@ -902,7 +902,6 @@
                     <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
                     <span>Drivers / Captains</span>
                 </div>
-                <span class="sidebar-item-badge badge-warning">KYC (1)</span>
             </div>
 
             <div class="sidebar-item-btn" data-view="rentals" onclick="navToView('rentals')">
@@ -919,7 +918,6 @@
                     <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     <span>Safety Center</span>
                 </div>
-                <span class="sidebar-item-badge badge-danger">1 SOS</span>
             </div>
 
             <div class="sidebar-item-btn" data-view="support" onclick="navToView('support')">
@@ -927,7 +925,6 @@
                     <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                     <span>Support & Tickets</span>
                 </div>
-                <span class="sidebar-item-badge badge-warning">2 Open</span>
             </div>
 
             <div class="sidebar-category-header">Financials & Commercial</div>
@@ -1045,10 +1042,9 @@
                             <span class="kpi-metric-label">Live Rides & Trips</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">142</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>▲ +14%</span>
-                            <span class="sub-muted">vs 1 hour ago</span>
+                        <div class="kpi-metric-val font-mono">0</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>Zero active trips in session</span>
                         </div>
                     </div>
 
@@ -1057,10 +1053,9 @@
                             <span class="kpi-metric-label">Active Drivers Online</span>
                             <span style="color:var(--success);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">418</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>86%</span>
-                            <span class="sub-muted">utilization rate</span>
+                        <div class="kpi-metric-val font-mono">0</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>0% fleet utilization</span>
                         </div>
                     </div>
 
@@ -1069,9 +1064,9 @@
                             <span class="kpi-metric-label">Active Rentals</span>
                             <span style="color:var(--info);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17H3v-4l2-4h10l2 4v4h-2"/><path d="M18 6l2-2m-2 0l2 2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">48</div>
+                        <div class="kpi-metric-val font-mono">0</div>
                         <div class="kpi-metric-sub sub-muted">
-                            <span>₹ 1,850/day avg rate</span>
+                            <span>Zero active rentals</span>
                         </div>
                     </div>
 
@@ -1080,10 +1075,9 @@
                             <span class="kpi-metric-label">Express Deliveries</span>
                             <span style="color:var(--warning);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4L7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55l8.95-5.16a1.78 1.78 0 0 0 0-3.16z"/><polyline points="3.29 7 12 12 20.71 7"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">89</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>98.4%</span>
-                            <span class="sub-muted">on-time SLA</span>
+                        <div class="kpi-metric-val font-mono">0</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>Zero pending dispatches</span>
                         </div>
                     </div>
 
@@ -1092,10 +1086,9 @@
                             <span class="kpi-metric-label">Today Gross Revenue</span>
                             <span style="color:var(--accent);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><circle cx="18" cy="16" r="2"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 4,82,350</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>▲ +18.2%</span>
-                            <span class="sub-muted">vs yesterday</span>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 0.00</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>No revenue settled today</span>
                         </div>
                     </div>
 
@@ -1104,10 +1097,9 @@
                             <span class="kpi-metric-label">Cancellation Rate</span>
                             <span style="color:var(--text-muted);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>
                         </div>
-                        <div class="kpi-metric-val font-mono">2.1%</div>
-                        <div class="kpi-metric-sub sub-up">
-                            <span>▼ -0.8%</span>
-                            <span class="sub-muted">within healthy threshold</span>
+                        <div class="kpi-metric-val font-mono">0.0%</div>
+                        <div class="kpi-metric-sub sub-muted">
+                            <span>Zero cancellations recorded</span>
                         </div>
                     </div>
                 </div>
@@ -1131,36 +1123,9 @@
                         </thead>
                         <tbody id="overviewLiveFeedBody">
                             <tr>
-                                <td class="font-mono">19:54:12</td>
-                                <td><span class="badge-status badge-status-info">RIDE_MATCH</span></td>
-                                <td class="font-mono">BK-8842</td>
-                                <td>Cab Sedan matched to Verified Rider</td>
-                                <td>Jubilee Hills <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Hitech City</td>
-                                <td><span class="badge-status badge-status-active">EN ROUTE</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-mono">19:52:05</td>
-                                <td><span class="badge-status badge-status-info">CORRIDOR_SYNC</span></td>
-                                <td class="font-mono">SYS-9012</td>
-                                <td>Corridor telemetry verified: Zero delay</td>
-                                <td>Outer Ring Road Km 24</td>
-                                <td><span class="badge-status badge-status-active">OPTIMAL</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-mono">19:48:30</td>
-                                <td><span class="badge-status badge-status-active">RENTAL_RETURN</span></td>
-                                <td class="font-mono">RNT-101</td>
-                                <td>Honda City ZX 360° Inspection Verified</td>
-                                <td>Hyderabad Cyber Hub Point</td>
-                                <td><span class="badge-status badge-status-active">DEPOSIT RETURNED</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-mono">19:44:18</td>
-                                <td><span class="badge-status badge-status-warning">SURGE_TRIGGER</span></td>
-                                <td class="font-mono">ZONE-01</td>
-                                <td>Multiplier elevated to 1.6x (Tech Departure)</td>
-                                <td>Hitech City / Cyber Towers</td>
-                                <td><span class="badge-status badge-status-pending">SURGE ACTIVE</span></td>
+                                <td colspan="6" style="text-align:center; padding:32px 16px; color:var(--text-muted); font-size:13px;">
+                                    Corridor telemetry synchronized · Zero events pending · System in ready standby mode
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -1175,12 +1140,12 @@
                         <p>Real-time geospatial tracking of all active vehicles, drivers, rentals, delivery couriers and incidents.</p>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button class="filter-chip active" onclick="filterLiveMapFleet('all')">All Fleet (697)</button>
-                        <button class="filter-chip" onclick="filterLiveMapFleet('cab')">Cabs (280)</button>
-                        <button class="filter-chip" onclick="filterLiveMapFleet('auto')">Autos (140)</button>
-                        <button class="filter-chip" onclick="filterLiveMapFleet('bike')">Bikes (120)</button>
-                        <button class="filter-chip" onclick="filterLiveMapFleet('chauffeur')">Chauffeurs (85)</button>
-                        <button class="filter-chip" onclick="filterLiveMapFleet('delivery')">Delivery (72)</button>
+                        <button class="filter-chip active" onclick="filterLiveMapFleet('all')">All Fleet</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('cab')">Cabs</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('auto')">Autos</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('bike')">Bikes</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('chauffeur')">Chauffeurs</button>
+                        <button class="filter-chip" onclick="filterLiveMapFleet('delivery')">Delivery</button>
                     </div>
                 </div>
 
@@ -1190,18 +1155,18 @@
                 <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:20px;">
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">Hitech City Zone</div>
-                        <div style="font-size:18px; font-weight:900; color:var(--danger); margin-top:4px;">88% Congestion</div>
-                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.6x · 42 Active Captains</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--success); margin-top:4px;">Optimal Flow</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.0x (Normal) · Telemetry Active</div>
                     </div>
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">Gachibowli Financial District</div>
-                        <div style="font-size:18px; font-weight:900; color:var(--warning); margin-top:4px;">74% Congestion</div>
-                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.4x · 38 Active Captains</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--success); margin-top:4px;">Optimal Flow</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.0x (Normal) · Telemetry Active</div>
                     </div>
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">RGIA Airport Expressway</div>
-                        <div style="font-size:18px; font-weight:900; color:var(--accent); margin-top:4px;">52% Congestion</div>
-                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.3x · 29 Active Captains</div>
+                        <div style="font-size:18px; font-weight:900; color:var(--success); margin-top:4px;">Optimal Flow</div>
+                        <div style="font-size:11px; color:var(--text-muted);">Surge: 1.0x (Normal) · Corridor Clear</div>
                     </div>
                 </div>
             </div>
@@ -1219,7 +1184,7 @@
                     <div class="table-toolbar-bar">
                         <input type="text" class="table-search-input" placeholder="Search riders by name, phone or email..." onkeyup="filterRidersTable(this.value)" />
                         <div class="table-filter-chips">
-                            <span class="filter-chip active">All Riders (3)</span>
+                            <span class="filter-chip active">All Riders (0)</span>
                             <span class="filter-chip">Active</span>
                             <span class="filter-chip">KYC Verified</span>
                             <span class="filter-chip">Disputed</span>
@@ -1261,7 +1226,7 @@
                     <div class="table-toolbar-bar">
                         <input type="text" class="table-search-input" placeholder="Search drivers by name, plate, license..." onkeyup="filterDriversTable(this.value)" />
                         <div class="table-filter-chips">
-                            <span class="filter-chip active">All Captains (2)</span>
+                            <span class="filter-chip active">All Captains (1)</span>
                             <span class="filter-chip">Online Now</span>
                             <span class="filter-chip">KYC Pending</span>
                             <span class="filter-chip">Suspended</span>
@@ -1477,7 +1442,7 @@
                     <div class="table-toolbar-bar">
                         <input type="text" class="table-search-input" placeholder="Search by booking ID, rider, or address..." onkeyup="filterBookingsTable(this.value)" />
                         <div class="table-filter-chips">
-                            <span class="filter-chip active">All (1)</span>
+                            <span class="filter-chip active">All (0)</span>
                             <span class="filter-chip">Cab</span>
                             <span class="filter-chip">Chauffeur</span>
                             <span class="filter-chip">Auto</span>
@@ -1517,26 +1482,26 @@
                         <p>Gross booking revenue, instant IMPS driver batch payouts, GST 5% tax reports, and refund management.</p>
                     </div>
                     <button class="btn-action-primary" onclick="executeBatchPayout()">
-                        Execute Batch IMPS Payout (₹ 3,95,000)
+                        Execute Batch IMPS Payout (₹ 0.00)
                     </button>
                 </div>
 
                 <div class="kpi-metrics-grid">
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">Gross Bookings Value</div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--text-primary);">₹ 4,82,350</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--text-primary);">₹ 0.00</div>
                     </div>
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">Platform Take Rate (15%)</div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 72,352</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--accent);">₹ 0.00</div>
                     </div>
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">Captain Net Disbursements</div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--success);">₹ 3,95,000</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--success);">₹ 0.00</div>
                     </div>
                     <div class="kpi-metric-card">
                         <div class="kpi-metric-label">GST 5% Tax Collection</div>
-                        <div class="kpi-metric-val font-mono" style="color:var(--info);">₹ 24,118</div>
+                        <div class="kpi-metric-val font-mono" style="color:var(--info);">₹ 0.00</div>
                     </div>
                 </div>
 
@@ -1560,24 +1525,9 @@
                         </thead>
                         <tbody id="financeTxnBody">
                             <tr>
-                                <td class="font-mono">TXN-9901</td>
-                                <td class="font-mono">19:30:12</td>
-                                <td class="font-mono">BK-8821</td>
-                                <td>Verified Captain (Settlement)</td>
-                                <td>IMPS Instant</td>
-                                <td class="font-mono" style="font-weight:700;">₹ 389.00</td>
-                                <td class="font-mono">₹ 18.52 GST</td>
-                                <td><span class="badge-status badge-status-active">SETTLED</span></td>
-                            </tr>
-                            <tr>
-                                <td class="font-mono">TXN-9902</td>
-                                <td class="font-mono">19:15:40</td>
-                                <td class="font-mono">RNT-101</td>
-                                <td>Verified Rider (Deposit Escrow)</td>
-                                <td>Deposit IMPS</td>
-                                <td class="font-mono" style="font-weight:700; color:var(--accent);">₹ 5,000.00</td>
-                                <td class="font-mono">Zero Tax Escrow</td>
-                                <td><span class="badge-status badge-status-active">RELEASED</span></td>
+                                <td colspan="8" style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px;">
+                                    Zero settlement transactions in current cycle. Disbursed payouts will appear here in real-time.
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -1793,7 +1743,7 @@
 
                 <div class="data-table-container">
                     <div class="table-toolbar-bar">
-                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Active Enterprise Clients (3)</span>
+                        <span style="font-size:14px; font-weight:800; color:var(--text-primary);">Active Enterprise Clients (0)</span>
                     </div>
                     <table class="admin-data-table">
                         <thead>
@@ -1809,49 +1759,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Infosys Technologies Ltd</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">Hyderabad & Bengaluru</div>
-                                    </td>
-                                    <td class="font-mono">36AAACI1234F1Z5</td>
-                                    <td><span class="badge-status badge-status-info">ENTERPRISE_PREMIUM</span></td>
-                                    <td class="font-mono">342 staff</td>
-                                    <td class="font-mono">₹ 15,00,000</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 8,42,150</td>
-                                    <td>NET_30</td>
-                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
-                                </tr>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Deloitte US-India Offices</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">Hyderabad</div>
-                                    </td>
-                                    <td class="font-mono">36AAACD9876E1Z9</td>
-                                    <td><span class="badge-status badge-status-info">ENTERPRISE_ELITE</span></td>
-                                    <td class="font-mono">512 staff</td>
-                                    <td class="font-mono">₹ 25,00,000</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 16,40,900</td>
-                                    <td>NET_15</td>
-                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
-                                </tr>
-                            
-                                <tr>
-                                    <td>
-                                        <div style="font-weight:800; color:var(--text-primary);">Tata Consultancy Services</div>
-                                        <div style="font-size:10px; color:var(--text-muted);">Delhi NCR / Hyderabad</div>
-                                    </td>
-                                    <td class="font-mono">07AAACT4321C1Z2</td>
-                                    <td><span class="badge-status badge-status-info">ENTERPRISE_STANDARD</span></td>
-                                    <td class="font-mono">218 staff</td>
-                                    <td class="font-mono">₹ 10,00,000</td>
-                                    <td class="font-mono" style="font-weight:800; color:var(--accent);">₹ 4,12,300</td>
-                                    <td>NET_30</td>
-                                    <td><span class="badge-status badge-status-active">ACTIVE</span></td>
-                                </tr>
-                            
+                            <tr>
+                                <td colspan="8" style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:13px;">
+                                    Zero enterprise client contracts active. Corporate accounts will appear here once onboarded.
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1867,67 +1779,22 @@
                 </div>
 
                 <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;">
-                    <div class="kpi-metric-card">
-                        <div class="kpi-metric-label">24-Hour Trip Volume Distribution</div>
-                        <div style="height:220px; display:flex; align-items:flex-end; gap:10px; padding-top:20px;">
-                            <div style="flex:1; background:var(--surface-3); height:25%; border-radius:4px;" title="00:00 - 32 trips"></div>
-                            <div style="flex:1; background:var(--surface-3); height:15%; border-radius:4px;" title="03:00 - 18 trips"></div>
-                            <div style="flex:1; background:var(--surface-3); height:40%; border-radius:4px;" title="06:00 - 64 trips"></div>
-                            <div style="flex:1; background:var(--accent); height:95%; border-radius:4px;" title="09:00 (Peak Morning) - 182 trips"></div>
-                            <div style="flex:1; background:var(--surface-3); height:60%; border-radius:4px;" title="12:00 - 95 trips"></div>
-                            <div style="flex:1; background:var(--surface-3); height:75%; border-radius:4px;" title="15:00 - 120 trips"></div>
-                            <div style="flex:1; background:var(--accent); height:100%; border-radius:4px;" title="18:00 (Peak Evening) - 198 trips"></div>
-                            <div style="flex:1; background:var(--surface-3); height:55%; border-radius:4px;" title="21:00 - 88 trips"></div>
+                    <div class="kpi-metric-card" style="text-align:center; padding:44px 20px;">
+                        <div class="kpi-metric-label" style="margin-bottom:14px;">24-Hour Trip Volume Distribution</div>
+                        <div style="width:44px; height:44px; border-radius:50%; background:rgba(200, 169, 106, 0.1); border:1px solid var(--accent); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:var(--accent);">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                         </div>
-                        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:8px;">
-                            <span>00:00</span>
-                            <span>06:00</span>
-                            <span>12:00</span>
-                            <span>18:00</span>
-                            <span>23:59</span>
-                        </div>
+                        <div style="font-size:14px; font-weight:800; color:var(--text-primary); margin-bottom:4px;">No Trip Volume Recorded</div>
+                        <div style="font-size:12px; color:var(--text-muted); line-height:1.5;">24-hour distribution curve will plot automatically in real-time as rides occur.</div>
                     </div>
 
-                    <div class="kpi-metric-card">
-                        <div class="kpi-metric-label">Mobility Service Breakdown by GMV</div>
-                        <div style="padding-top:16px; display:flex; flex-direction:column; gap:10px;">
-                            <div>
-                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                                    <span>Cab Sedan & Mini (48%)</span>
-                                    <span class="font-mono">₹ 2,31,528</span>
-                                </div>
-                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
-                                    <div style="width:48%; height:100%; background:var(--accent);"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                                    <span>Hire Driver Chauffeur (22%)</span>
-                                    <span class="font-mono">₹ 1,06,117</span>
-                                </div>
-                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
-                                    <div style="width:22%; height:100%; background:#38BDF8;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                                    <span>Rental Cars & Bikes (18%)</span>
-                                    <span class="font-mono">₹ 86,823</span>
-                                </div>
-                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
-                                    <div style="width:18%; height:100%; background:#FACC15;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
-                                    <span>Auto & Bike Taxi (12%)</span>
-                                    <span class="font-mono">₹ 57,882</span>
-                                </div>
-                                <div style="height:6px; background:var(--surface-3); border-radius:10px; overflow:hidden;">
-                                    <div style="width:12%; height:100%; background:var(--accent);"></div>
-                                </div>
-                            </div>
+                    <div class="kpi-metric-card" style="text-align:center; padding:44px 20px;">
+                        <div class="kpi-metric-label" style="margin-bottom:14px;">Mobility Service Breakdown by GMV</div>
+                        <div style="width:44px; height:44px; border-radius:50%; background:rgba(200, 169, 106, 0.1); border:1px solid var(--accent); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:var(--accent);">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                         </div>
+                        <div style="font-size:14px; font-weight:800; color:var(--text-primary); margin-bottom:4px;">Zero GMV Settled Today</div>
+                        <div style="font-size:12px; color:var(--text-muted); line-height:1.5;">Revenue share across Cab, Chauffeur, Rental & Delivery will appear once rides settle.</div>
                     </div>
                 </div>
             </div>
@@ -2097,7 +1964,7 @@
                                     <td><span class="badge-status badge-status-info">DRIVER_BATCH_PAYOUT</span></td>
                                     <td class="font-mono">PAYOUT-BATCH-20261006</td>
                                     <td class="font-mono">103.212.45.31</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">Executed IMPS instant settlement of ₹4,82,350 to 142 online captains</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">System initialization cycle verified: Zero active settlement backlog</td>
                                 </tr>
                             
                                 <tr>
@@ -2108,7 +1975,7 @@
                                     <td><span class="badge-status badge-status-info">RENTAL_DEPOSIT_RELEASE</span></td>
                                     <td class="font-mono">RNT-101 (Honda City ZX)</td>
                                     <td class="font-mono">103.212.45.19</td>
-                                    <td style="font-size:11px; color:var(--text-secondary);">Released security deposit ₹5,000 after zero-damage inspection review</td>
+                                    <td style="font-size:11px; color:var(--text-secondary);">Inspection escrow verified: Zero deposit claims pending</td>
                                 </tr>
                             
                                 <tr>
@@ -2253,7 +2120,7 @@
             </div>
             <div class="admin-modal-body">
                 <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
-                    Transmit high-priority alert banner to all 418 active online captains and active passenger sessions.
+                    Transmit high-priority alert banner to all registered fleet captains and active passenger sessions.
                 </p>
                 <label class="form-label">Target Geofence / Zone</label>
                 <select class="form-control">
@@ -2266,7 +2133,7 @@
             </div>
             <div class="admin-modal-footer">
                 <button class="btn-action-neutral" onclick="closeAdminModal('emergencyBroadcastModal')">Cancel</button>
-                <button class="btn-action-danger" onclick="confirmEmergencyBroadcast()">Broadcast to 418 Active Devices</button>
+                <button class="btn-action-danger" onclick="confirmEmergencyBroadcast()">Broadcast to Fleet Devices</button>
             </div>
         </div>
     </div>
@@ -2568,8 +2435,8 @@
 
         // 11. Action: Execute Instant Driver Payout
         function executeBatchPayout() {
-            recordAuditEvent('BATCH_IMPS_PAYOUT', 'PAYOUT-BATCH-' + Date.now(), 'Executed automated IMPS payout of ₹3,95,000 to 142 online captains');
-            showAdminToast('Batch IMPS Payout of ₹3,95,000 disbursed via bank gateway!', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>');
+            recordAuditEvent('BATCH_IMPS_PAYOUT', 'PAYOUT-BATCH-' + Date.now(), 'Executed automated IMPS payout cycle to registered fleet captains');
+            showAdminToast('Batch IMPS Payout cycle executed via bank gateway!', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>');
         }
 
         // 12. Action: Refund Modal
@@ -2605,8 +2472,8 @@
         }
         function confirmEmergencyBroadcast() {
             closeAdminModal('emergencyBroadcastModal');
-            recordAuditEvent('EMERGENCY_FLEET_BROADCAST', 'ALL_HYD_GEOFENCES', 'Broadcasted weather & road safety emergency bulletin to 418 active devices');
-            showAdminToast('Emergency alert broadcasted to 418 devices!', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>');
+            recordAuditEvent('EMERGENCY_FLEET_BROADCAST', 'ALL_HYD_GEOFENCES', 'Broadcasted weather & road safety emergency bulletin to all active devices');
+            showAdminToast('Emergency alert broadcasted to fleet devices!', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>');
         }
 
         // Modal Helpers
@@ -2652,7 +2519,7 @@
         }
 
         function refreshPlatformMetrics() {
-            showAdminToast('Telemetry synched: 142 live rides · 418 online captains · 0 SOS Incidents');
+            showAdminToast('Telemetry synchronized: All corridors operational · 0 SOS Incidents');
         }
 
         function callRiderDirect(phone) {

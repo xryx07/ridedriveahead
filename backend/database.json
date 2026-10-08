@@ -216,6 +216,12 @@
   "kycDocuments": [],
   "apiLogs": [
     {
+      "time": "12:09:46 am",
+      "method": "GET",
+      "endpoint": "/api/v1/health",
+      "status": 200
+    },
+    {
       "time": "11:45:08 pm",
       "method": "GET",
       "endpoint": "/api/v1/health",

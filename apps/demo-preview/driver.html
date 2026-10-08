@@ -899,7 +899,7 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     <span>Ride Requests</span>
                 </div>
-                <span class="nav-pill-badge active-alert" id="requestsBadge">1 LIVE</span>
+                <span class="nav-pill-badge" id="requestsBadge">0</span>
             </a>
 
             <a href="#activetrip" class="driver-nav-item" data-nav="activetrip" onclick="navDriverView('activetrip')">
@@ -907,7 +907,6 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
                     <span>Active Trip & Nav</span>
                 </div>
-                <span class="nav-pill-badge" style="background:var(--online-green); color:#080A0D;">ON TRIP</span>
             </a>
 
             <a href="#earnings" class="driver-nav-item" data-nav="earnings" onclick="navDriverView('earnings')">
@@ -925,7 +924,7 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     <span>Hire-Driver & Gigs</span>
                 </div>
-                <span class="nav-pill-badge">4 Open</span>
+                <span class="nav-pill-badge">0</span>
             </a>
 
             <a href="#history" class="driver-nav-item" data-nav="history" onclick="navDriverView('history')">
@@ -933,7 +932,7 @@
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
                     <span>Trip History</span>
                 </div>
-                <span class="nav-pill-badge">14</span>
+                <span class="nav-pill-badge">0</span>
             </a>
 
             <div class="sidebar-section-title">Compliance & Vehicle</div>
@@ -994,23 +993,23 @@
                 <div class="captain-stats-grid">
                     <div class="captain-stat-card">
                         <div class="stat-card-title">Today's Earnings</div>
-                        <div class="stat-card-val font-mono" style="color:var(--accent);">₹2,480.00</div>
-                        <div class="stat-card-sub">▲ +18% vs yesterday</div>
+                        <div class="stat-card-val font-mono" style="color:var(--accent);">₹0.00</div>
+                        <div class="stat-card-sub">No trips settled today</div>
                     </div>
                     <div class="captain-stat-card">
                         <div class="stat-card-title">Trips Completed</div>
-                        <div class="stat-card-val font-mono">14</div>
-                        <div class="stat-card-sub">Goal: 16 trips (2 to bonus)</div>
+                        <div class="stat-card-val font-mono">0</div>
+                        <div class="stat-card-sub">Goal: 10 trips to bonus</div>
                     </div>
                     <div class="captain-stat-card">
                         <div class="stat-card-title">Online Duty Time</div>
-                        <div class="stat-card-val font-mono">6h 24m</div>
+                        <div class="stat-card-val font-mono">0h 0m</div>
                         <div class="stat-card-sub" style="color:var(--text-muted);">Max allowed: 10h 00m</div>
                     </div>
                     <div class="captain-stat-card">
                         <div class="stat-card-title">Acceptance Rate</div>
-                        <div class="stat-card-val font-mono" style="color:var(--online-green);">94%</div>
-                        <div class="stat-card-sub">Tier: Gold Captain</div>
+                        <div class="stat-card-val font-mono" style="color:var(--online-green);">100%</div>
+                        <div class="stat-card-sub">Tier: Standard Captain</div>
                     </div>
                 </div>
 
@@ -1052,8 +1051,17 @@
 
                     <!-- Right Column: Priority Incoming Ride & Daily Goals -->
                     <div>
-                        <!-- Incoming Ride Prompt Card -->
-                        <div class="incoming-request-card" id="incomingRideCard">
+                        <!-- Standby Radar Scanning Box (Active when awaiting requests) -->
+                        <div id="radarStandbyCard" class="captain-table-card" style="padding:28px 20px; text-align:center; margin-bottom:16px;">
+                            <div style="width:48px; height:48px; border-radius:50%; background:rgba(200, 169, 106, 0.1); border:1px solid var(--accent); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:var(--accent);">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><circle cx="12" cy="12" r="2"/></svg>
+                            </div>
+                            <div style="font-size:14px; font-weight:800; color:var(--text-primary); margin-bottom:4px;">Radar Scanning for Requests</div>
+                            <div style="font-size:11.5px; color:var(--text-muted); line-height:1.5;">You are online in Outer Ring Road corridor.<br>Incoming ride dispatches will appear here automatically.</div>
+                        </div>
+
+                        <!-- Incoming Ride Prompt Card (Hidden by default; revealed on dispatch / simulation) -->
+                        <div class="incoming-request-card" id="incomingRideCard" style="display:none; margin-bottom:16px;">
                             <div class="timer-progress-bar"></div>
                             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
                                 <div>
@@ -1065,10 +1073,10 @@
 
                             <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:var(--surface-2); border-radius:var(--radius-sm); margin-bottom:14px;">
                                 <div style="width:36px; height:36px; border-radius:50%; background:var(--surface-elevated); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; color:var(--text-primary);">
-                                    SR
+                                    VR
                                 </div>
                                 <div style="flex:1;">
-                                    <div style="font-size:13px; font-weight:800; color:var(--text-primary);">Sneha Reddy</div>
+                                    <div style="font-size:13px; font-weight:800; color:var(--text-primary);">Verified Rider</div>
                                     <div style="font-size:11px; color:var(--text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9 · 124 completed rides</div>
                                 </div>
                                 <span class="status-badge completed">UPI Prepaid</span>
@@ -1100,13 +1108,13 @@
                         <div class="captain-table-card" style="padding:20px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                                 <span style="font-weight:800; font-size:13px;">Daily Target Progress</span>
-                                <span class="font-mono" style="color:var(--accent); font-weight:800;">82% Completed</span>
+                                <span class="font-mono" style="color:var(--accent); font-weight:800;">0% Completed</span>
                             </div>
                             <div style="height:8px; background:var(--surface-elevated); border-radius:var(--radius-pill); overflow:hidden; margin-bottom:14px;">
-                                <div style="height:100%; width:82%; background:var(--accent); border-radius:var(--radius-pill);"></div>
+                                <div style="height:100%; width:0%; background:var(--accent); border-radius:var(--radius-pill);"></div>
                             </div>
                             <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted);">
-                                <span>Earned: ₹2,480</span>
+                                <span>Earned: ₹0</span>
                                 <span>Target: ₹3,000 (+₹300 Extra Bonus)</span>
                             </div>
                         </div>
@@ -1214,7 +1222,7 @@
                         <div class="captain-table-card" style="padding:24px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                                 <div>
-                                    <div style="font-size:16px; font-weight:900;">Sneha Reddy</div>
+                                    <div style="font-size:16px; font-weight:900;">Verified Rider</div>
                                     <div style="font-size:11px; color:var(--text-muted);">Trip ID: <span class="font-mono">CAB-4820</span></div>
                                 </div>
                                 <div style="display:flex; gap:8px;">
@@ -1435,8 +1443,8 @@
             <div class="driver-panel" id="view-history">
                 <div class="captain-table-card">
                     <div class="table-header-bar">
-                        <div style="font-size:16px; font-weight:900;">Today's Completed Trips (14)</div>
-                        <span class="status-badge verified">₹2,480 Settled</span>
+                        <div style="font-size:16px; font-weight:900;">Today's Completed Trips (0)</div>
+                        <span class="status-badge verified">₹0 Settled</span>
                     </div>
                     <table class="captain-table">
                         <thead>
@@ -1933,21 +1941,29 @@
 
         // 5. Ride Request Actions
         function acceptIncomingTrip() {
+            const card = document.getElementById('incomingRideCard');
+            if (card) card.style.display = 'none';
+            const standby = document.getElementById('radarStandbyCard');
+            if (standby) standby.style.display = 'block';
             navDriverView('activetrip');
-            showDriverToast('Trip Accepted! Navigating to Sneha Reddy (1.2 km)', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>');
+            showDriverToast('Trip Accepted! Navigating to pickup (1.2 km)', '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>');
         }
 
         function declineIncomingTrip() {
             const card = document.getElementById('incomingRideCard');
             if (card) card.style.display = 'none';
+            const standby = document.getElementById('radarStandbyCard');
+            if (standby) standby.style.display = 'block';
             showDriverToast('Trip declined. Looking for next request...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>');
         }
 
         function triggerSimulatedRideAlert() {
             const card = document.getElementById('incomingRideCard');
+            const standby = document.getElementById('radarStandbyCard');
+            if (standby) standby.style.display = 'none';
             if (card) {
                 card.style.display = 'block';
-                showDriverToast('New Ride Dispatched: Sneha Reddy (₹348)', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
+                showDriverToast('New Ride Dispatched: Verified Rider (₹348)', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
             }
         }
 
@@ -1978,8 +1994,8 @@
 
         function completeActiveDuty() {
             showDriverToast('Trip Settled! ₹348.00 received via UPI & credited to wallet.', '<svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>');
-            document.getElementById('topMetricEarnings').innerText = '₹2,828';
-            document.getElementById('topMetricTrips').innerText = '15';
+            document.getElementById('topMetricEarnings').innerText = '₹348';
+            document.getElementById('topMetricTrips').innerText = '1';
             navDriverView('earnings');
         }
 
@@ -2069,11 +2085,11 @@
         }
 
         function callRiderDemo() {
-            showDriverToast('Dialing passenger Sneha Reddy (+91 98765 43210)...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>');
+            showDriverToast('Dialing passenger (+91 98765 43210)...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>');
         }
 
         function chatRiderDemo() {
-            showDriverToast('Opening masked in-app chat with Sneha...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>');
+            showDriverToast('Opening masked in-app chat with rider...', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>');
         }
 
         function callDispatcherHelp() {

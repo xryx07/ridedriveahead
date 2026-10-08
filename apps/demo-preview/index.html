@@ -4186,9 +4186,9 @@
             btn.classList.add('active');
             const totalEl = document.getElementById('phoneEarningsTotal');
             if (totalEl) {
-                if (period === 'daily') totalEl.innerText = '₹ 2,480';
-                else if (period === 'weekly') totalEl.innerText = '₹ 15,340';
-                else if (period === 'monthly') totalEl.innerText = '₹ 64,200';
+                if (period === 'daily') totalEl.innerText = '₹ 0.00';
+                else if (period === 'weekly') totalEl.innerText = '₹ 0.00';
+                else if (period === 'monthly') totalEl.innerText = '₹ 0.00';
             }
             showToast('Earnings view: ' + period.toUpperCase());
         }
@@ -5935,7 +5935,7 @@
                                     <span class="screen-ribbon-chip" style="padding:4px 8px; font-size:10px;">Full Day</span>
                                 </div>
 
-                                <!-- Driver Profile 1: Suresh Yadav -->
+                                <!-- Driver Profile 1: Verified Chauffeur -->
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:14px; padding:12px; margin-bottom:10px;">
                                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
                                         <div style="display:flex; align-items:center; gap:10px;">
@@ -6001,39 +6001,9 @@
 
                                 <!-- Activity Items -->
                                 <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
-                                    <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
-                                        <div>
-                                            <div style="font-size:11px; font-weight:800; color:var(--p-text);">Completed Rides</div>
-                                            <div style="font-size:9px; color:var(--p-text-muted);">24 trips</div>
-                                        </div>
-                                        <span style="font-size:13px; font-weight:900; color:var(--p-text);">₹ 4,320</span>
-                                    </div>
-
-                                    <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
-                                        <div style="display:flex; align-items:center; gap:8px;">
-                                            <span style="color:var(--p-accent);"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10l4-2-1-2-7 3-4-4-2 1 2 4-4 2v2l5-1 3 5 2-1-1-5 6-2z"/></svg></span>
-                                            <div>
-                                                <div style="font-size:11px; font-weight:800; color:var(--p-text);">Ongoing Ride</div>
-                                                <div style="font-size:9px; color:var(--p-text-muted);">Airport Pickup · ETA 12 min</div>
-                                            </div>
-                                        </div>
-                                        <span style="font-size:10px; font-weight:800; color:var(--p-accent); cursor:pointer;" onclick="switchRiderScreen('livetrip')">Track →</span>
-                                    </div>
-
-                                    <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
-                                        <div>
-                                            <div style="font-size:11px; font-weight:800; color:var(--p-text);">Rental Booking</div>
-                                            <div style="font-size:9px; color:var(--p-text-muted);">Honda City • 3 days</div>
-                                        </div>
-                                        <span style="font-size:13px; font-weight:900; color:var(--p-text);">₹ 5,400</span>
-                                    </div>
-
-                                    <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
-                                        <div>
-                                            <div style="font-size:11px; font-weight:800; color:var(--p-text);">Driver Booking</div>
-                                            <div style="font-size:9px; color:var(--p-text-muted);">Suresh Yadav • 8 hrs</div>
-                                        </div>
-                                        <span style="font-size:13px; font-weight:900; color:var(--p-text);">₹ 2,392</span>
+                                    <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:24px 12px; text-align:center;">
+                                        <div style="font-size:12px; font-weight:800; color:var(--p-text); margin-bottom:4px;">No Past Activity</div>
+                                        <div style="font-size:10px; color:var(--p-text-muted);">Your booked rides, rentals, and driver hires will appear here.</div>
                                     </div>
                                 </div>
 
@@ -6042,7 +6012,7 @@
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
                                         <div>
                                             <div style="font-size:10px; color:var(--p-text-muted);">Wallet Balance</div>
-                                            <div style="font-size:18px; font-weight:900; color:var(--p-accent);" id="pWalletAmount">₹ 2,840</div>
+                                            <div style="font-size:18px; font-weight:900; color:var(--p-accent);" id="pWalletAmount">₹ 0.00</div>
                                         </div>
                                         <button style="background:var(--p-accent); color:#0B0D0F; border:none; border-radius:8px; font-size:10px; font-weight:800; padding:6px 10px; cursor:pointer;" onclick="addPhoneWalletMoney(500)">
                                             + Add Money
@@ -6054,7 +6024,7 @@
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
                                     <div>
                                         <div style="font-size:11px; font-weight:800; color:var(--p-text);">RDA Rewards</div>
-                                        <div style="font-size:9px; color:var(--p-accent); font-weight:700;">320 points · Level: Plus</div>
+                                        <div style="font-size:9px; color:var(--p-accent); font-weight:700;">0 points · Standard Tier</div>
                                     </div>
                                     <span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></span>
                                 </div>
@@ -6158,20 +6128,20 @@
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
                                         <div>
                                             <div style="font-size:11px; color:var(--p-text-muted); font-weight:600;">Today's Earnings</div>
-                                            <div style="font-size:24px; font-weight:900; color:var(--p-text); margin:2px 0;">₹ 2,480</div>
+                                            <div style="font-size:24px; font-weight:900; color:var(--p-text); margin:2px 0;">₹ 0.00</div>
                                         </div>
-                                        <span style="font-size:11px; font-weight:800; color:var(--p-accent); background:rgba(255, 255, 255, 0.10); padding:3px 8px; border-radius:6px;">+ 12%</span>
+                                        <span style="font-size:11px; font-weight:800; color:var(--p-accent); background:rgba(255, 255, 255, 0.10); padding:3px 8px; border-radius:6px;">0%</span>
                                     </div>
                                 </div>
 
                                 <!-- Stats Row -->
                                 <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:12px;">
                                     <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px; text-align:center;">
-                                        <div style="font-size:16px; font-weight:900; color:var(--p-text);">6</div>
+                                        <div style="font-size:16px; font-weight:900; color:var(--p-text);">0</div>
                                         <div style="font-size:9px; color:var(--p-text-muted);">Completed Trips</div>
                                     </div>
                                     <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px; text-align:center;">
-                                        <div style="font-size:16px; font-weight:900; color:var(--p-text);">2h 45m</div>
+                                        <div style="font-size:16px; font-weight:900; color:var(--p-text);">0h 0m</div>
                                         <div style="font-size:9px; color:var(--p-text-muted);">Online Time</div>
                                     </div>
                                     <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:12px; padding:10px; text-align:center;">
@@ -6327,9 +6297,9 @@
 
                                 <!-- Total Box -->
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:14px; padding:14px; margin-bottom:12px;">
-                                    <div style="font-size:10px; color:var(--p-text-muted);">Today, 06 Oct 2025</div>
-                                    <div id="phoneEarningsTotal" style="font-size:24px; font-weight:900; color:var(--p-accent); margin:4px 0;">₹ 2,480</div>
-                                    <div style="font-size:10px; color:var(--p-accent);">+ 12% from yesterday</div>
+                                    <div style="font-size:10px; color:var(--p-text-muted);">Today</div>
+                                    <div id="phoneEarningsTotal" style="font-size:24px; font-weight:900; color:var(--p-accent); margin:4px 0;">₹ 0.00</div>
+                                    <div style="font-size:10px; color:var(--p-text-muted);">No trips completed today</div>
                                 </div>
 
                                 <!-- Breakdown -->
