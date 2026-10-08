@@ -58,7 +58,7 @@ export const HomeScreen: React.FC = () => {
           activeOpacity={0.8}
         >
           <View style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: '#181D20', borderWidth: 1.5, borderColor: '#C7FF3D', alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ color: '#C7FF3D', fontWeight: '900', fontSize: 12 }}>AS</Text>
+            <Text style={{ color: '#C7FF3D', fontWeight: '900', fontSize: 12 }}>VR</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -70,8 +70,8 @@ export const HomeScreen: React.FC = () => {
       >
         {/* Skyline Greeting Banner */}
         <View style={{ backgroundColor: '#121619', borderRadius: 16, padding: 18, marginBottom: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
-          <Text style={{ fontSize: 13, color: '#8094A6', fontWeight: '600' }}>Good morning,</Text>
-          <Text style={{ fontSize: 22, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>Aditya 👋</Text>
+          <Text style={{ fontSize: 13, color: '#8094A6', fontWeight: '600' }}>Good day,</Text>
+          <Text style={{ fontSize: 22, fontWeight: '900', color: '#F4F6F3', marginTop: 2 }}>Rider Partner 👋</Text>
         </View>
 
         {/* WHERE ARE YOU GOING? DESTINATION SEARCH BOX */}

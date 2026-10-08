@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+      <StatusBar barStyle="light-content" backgroundColor="#0B0D0F" translucent={false} />
       {renderScreen()}
     </SafeAreaView>
   );
@@ -59,7 +59,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#0B0D0F',
     paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0
   }
 });

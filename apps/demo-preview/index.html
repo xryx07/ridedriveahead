@@ -4808,7 +4808,7 @@
             if (isDriverOnline) {
                 if (sw) sw.classList.add('active');
                 if (lbl) { lbl.innerText = 'Online'; lbl.style.color = '#FFFFFF'; }
-                showToast('Rohit is ONLINE! Scanning dispatch radar...', '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
+                showToast('Captain is ONLINE! Scanning dispatch radar...', '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>');
                 // Trigger incoming ride simulation after 2 seconds
                 setTimeout(() => {
                     switchDriverScreen('incoming');
@@ -4817,7 +4817,7 @@
             } else {
                 if (sw) sw.classList.remove('active');
                 if (lbl) { lbl.innerText = 'Offline'; lbl.style.color = '#8094A6'; }
-                showToast('Rohit went OFFLINE. No dispatches queued.');
+                showToast('Captain went OFFLINE. No dispatches queued.');
                 clearInterval(driverCountdownInterval);
             }
         }
@@ -5508,10 +5508,10 @@
                 <!-- App Mode Switcher (Rider vs Driver) -->
                 <div class="studio-btn-group">
                     <button class="studio-pill-btn active" id="btnStudioRider" onclick="switchAppMode('rider')">
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg> Rider App (Aditya)
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-5l2 -5h10l2 5h2v5h-2"/><path d="M7 8h8"/><circle cx="12" cy="5" r="1"/></svg> Rider App
                     </button>
                     <button class="studio-pill-btn" id="btnStudioDriver" onclick="switchAppMode('driver')">
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg> Driver App (Rohit)
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M8 7h8"/></svg> Driver App
                     </button>
                 </div>
 
@@ -5608,8 +5608,8 @@
                                             <div style="font-size:9px; color:var(--p-text-muted);">One app. Every way to move.</div>
                                         </div>
                                     </div>
-                                    <div style="width:32px; height:32px; border-radius:50%; background:#1E262C; border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:var(--p-accent); cursor:pointer;" onclick="switchRiderScreen('account')" title="Aditya Sharma">
-                                        AS
+                                    <div style="width:32px; height:32px; border-radius:50%; background:#1E262C; border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:var(--p-accent); cursor:pointer;" onclick="switchRiderScreen('account')" title="Verified Rider">
+                                        VR
                                     </div>
                                 </div>
 
@@ -5617,7 +5617,7 @@
                                 <div class="rider-skyline-banner">
                                     <div class="skyline-art-bg"></div>
                                     <div style="font-size:12px; color:var(--p-text-muted); font-weight:600;">Good morning,</div>
-                                    <div style="font-size:20px; font-weight:900; color:var(--p-text); margin-top:1px;">Aditya</div>
+                                    <div style="font-size:20px; font-weight:900; color:var(--p-text); margin-top:1px;">Verified Rider</div>
                                 </div>
 
                                 <!-- "Where are you going?" Search Card -->
@@ -5939,16 +5939,16 @@
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:14px; padding:12px; margin-bottom:10px;">
                                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
                                         <div style="display:flex; align-items:center; gap:10px;">
-                                            <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">SY</div>
+                                            <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">VC</div>
                                             <div>
                                                 <div style="display:flex; align-items:center; gap:6px;">
-                                                    <span style="font-size:13px; font-weight:800; color:var(--p-text);">Suresh Yadav</span>
+                                                    <span style="font-size:13px; font-weight:800; color:var(--p-text);">Verified Chauffeur (Gold)</span>
                                                     <span style="font-size:8px; font-weight:800; color:#0B0D0F; background:var(--p-accent); padding:1px 5px; border-radius:3px;">Pickup</span>
                                                 </div>
                                                 <div style="font-size:10px; color:var(--p-text-muted); display:flex; align-items:center; gap:4px;">
                                                     <svg viewBox="0 0 24 24" width="14" height="14" fill="#FACC15" stroke="#FACC15" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.8 (1.2k trips)
                                                 </div>
-                                                <div style="font-size:9px; color:var(--p-text-muted);">5 years exp • Telugu, Hindi, English</div>
+                                                <div style="font-size:9px; color:var(--p-text-muted);">5 years exp • Verified Pro</div>
                                             </div>
                                         </div>
                                     </div>
@@ -5965,17 +5965,17 @@
                                     </div>
                                 </div>
 
-                                <!-- Driver Profile 2: Rohit Sharma -->
+                                <!-- Driver Profile 2: Verified Chauffeur Platinum -->
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:14px; padding:12px;">
                                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
                                         <div style="display:flex; align-items:center; gap:10px;">
-                                            <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">RS</div>
+                                            <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">VP</div>
                                             <div>
-                                                <div style="font-size:13px; font-weight:800; color:var(--p-text);">Rohit Sharma</div>
+                                                <div style="font-size:13px; font-weight:800; color:var(--p-text);">Verified Chauffeur (Platinum)</div>
                                                 <div style="font-size:10px; color:var(--p-text-muted); display:flex; align-items:center; gap:4px;">
-                                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#FACC15" stroke="#FACC15" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.7 (860 trips)
+                                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#FACC15" stroke="#FACC15" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9 (860 trips)
                                                 </div>
-                                                <div style="font-size:9px; color:var(--p-text-muted);">7 years exp • Hindi, English, Tamil</div>
+                                                <div style="font-size:9px; color:var(--p-text-muted);">7 years exp • Elite Luxury Rating</div>
                                             </div>
                                         </div>
                                     </div>
@@ -6065,12 +6065,12 @@
                                 <!-- Profile Header -->
                                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--p-border);">
                                     <div style="width:44px; height:44px; border-radius:50%; background:var(--p-surface-2); border:2px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; color:var(--p-accent);">
-                                        AS
+                                        VR
                                     </div>
                                     <div>
-                                        <div style="font-size:14px; font-weight:900; color:var(--p-text);">Aditya Sharma</div>
-                                        <div style="font-size:10px; color:var(--p-text-muted);">aditya@gmail.com</div>
-                                        <div style="display:inline-block; font-size:8px; font-weight:800; color:#0B0D0F; background:var(--p-accent); padding:1px 6px; border-radius:100px; margin-top:2px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> RDA Plus Member</div>
+                                        <div style="font-size:14px; font-weight:900; color:var(--p-text);">Verified Rider</div>
+                                        <div style="font-size:10px; color:var(--p-text-muted);">rider@ridedriveahead.com</div>
+                                        <div style="display:inline-block; font-size:8px; font-weight:800; color:#0B0D0F; background:var(--p-accent); padding:1px 6px; border-radius:100px; margin-top:2px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> RDA Member</div>
                                     </div>
                                 </div>
 
@@ -6136,11 +6136,11 @@
                                 <!-- Driver Profile Card with Online Toggle -->
                                 <div style="background:var(--p-surface); border:1px solid var(--p-border); border-radius:14px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                                     <div style="display:flex; align-items:center; gap:10px;">
-                                        <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">RS</div>
+                                        <div style="width:38px; height:38px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">CP</div>
                                         <div>
-                                            <div style="font-size:13px; font-weight:800; color:var(--p-text);">Rohit Sharma</div>
+                                            <div style="font-size:13px; font-weight:800; color:var(--p-text);">Verified Captain</div>
                                             <div style="font-size:10px; color:var(--p-text-muted); display:flex; align-items:center; gap:4px;">
-                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="#FACC15" stroke="#FACC15" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.8 (1.2k rides)
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="#FACC15" stroke="#FACC15" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9 (1.2k rides)
                                             </div>
                                         </div>
                                     </div>
@@ -6460,10 +6460,10 @@
                             <div class="phone-screen-page" id="driverScreenReadiness">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                                     <div style="display:flex; align-items:center; gap:8px;">
-                                        <div style="width:36px; height:36px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">RS</div>
+                                        <div style="width:36px; height:36px; border-radius:50%; background:var(--p-surface-2); border:1.5px solid var(--p-accent); display:flex; align-items:center; justify-content:center; font-weight:900; color:var(--p-accent);">CP</div>
                                         <div>
-                                            <div style="font-size:13px; font-weight:800; color:var(--p-text);">Rohit Sharma</div>
-                                            <div style="font-size:9px; color:var(--p-text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.8 (1.2k rides)</div>
+                                            <div style="font-size:13px; font-weight:800; color:var(--p-text);">Verified Captain</div>
+                                            <div style="font-size:9px; color:var(--p-text-muted);"><svg viewBox="0 0 24 24" width="12" height="12" fill="#FBBF24" stroke="#FBBF24" stroke-width="1" style="display:inline-block; vertical-align:-1px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 4.9 (1.2k rides)</div>
                                         </div>
                                     </div>
                                     <span style="font-size:9px; font-weight:800; color:#0B0D0F; background:var(--p-accent); padding:2px 8px; border-radius:100px;">Ready</span>

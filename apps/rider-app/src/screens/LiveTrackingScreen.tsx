@@ -33,8 +33,8 @@ export const LiveTrackingScreen: React.FC = () => {
 
   // Safe fallback if activeBooking is not yet created
   const isChauffeur = activeBooking?.serviceMode === 'HIRE_DRIVER';
-  const driverName = activeBooking?.driverName || 'Rohit Kumar';
-  const driverRating = activeBooking?.driverRating || 4.88;
+  const driverName = activeBooking?.driverName || 'Verified Captain';
+  const driverRating = activeBooking?.driverRating || 4.90;
   const vehicleDetails = isChauffeur
     ? `${activeBooking?.carModel || 'Personal Car'} (${activeBooking?.carTransmission || 'Automatic AT'})`
     : activeBooking?.vehicleModel
