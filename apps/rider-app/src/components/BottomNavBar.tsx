@@ -3,25 +3,22 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRiderStore } from '../store/useRiderStore';
 
 interface BottomNavBarProps {
-  currentTab: 'home' | 'rides' | 'activity' | 'wallet' | 'account';
+  currentTab: 'home' | 'book' | 'activity' | 'account';
 }
 
 export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
   const { navigate } = useRiderStore();
 
-  const handleTabPress = (tab: 'home' | 'rides' | 'activity' | 'wallet' | 'account') => {
+  const handleTabPress = (tab: 'home' | 'book' | 'activity' | 'account') => {
     switch (tab) {
       case 'home':
         navigate('HOME');
         break;
-      case 'rides':
+      case 'book':
         navigate('FARE_ESTIMATE');
         break;
       case 'activity':
         navigate('RIDE_HISTORY');
-        break;
-      case 'wallet':
-        navigate('TRIP_SUMMARY');
         break;
       case 'account':
         navigate('PROFILE');
@@ -42,15 +39,15 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         {currentTab === 'home' && <View style={styles.activeDot} />}
       </TouchableOpacity>
 
-      {/* Rides Tab */}
+      {/* Book Tab */}
       <TouchableOpacity
         style={styles.navItem}
-        onPress={() => handleTabPress('rides')}
+        onPress={() => handleTabPress('book')}
         activeOpacity={0.8}
       >
-        <Text style={[styles.navIcon, currentTab === 'rides' && styles.navIconActive]}>◈</Text>
-        <Text style={[styles.navLabel, currentTab === 'rides' && styles.navLabelActive]}>Rides</Text>
-        {currentTab === 'rides' && <View style={styles.activeDot} />}
+        <Text style={[styles.navIcon, currentTab === 'book' && styles.navIconActive]}>◈</Text>
+        <Text style={[styles.navLabel, currentTab === 'book' && styles.navLabelActive]}>Book</Text>
+        {currentTab === 'book' && <View style={styles.activeDot} />}
       </TouchableOpacity>
 
       {/* Activity Tab */}
@@ -62,17 +59,6 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab }) => {
         <Text style={[styles.navIcon, currentTab === 'activity' && styles.navIconActive]}>◷</Text>
         <Text style={[styles.navLabel, currentTab === 'activity' && styles.navLabelActive]}>Activity</Text>
         {currentTab === 'activity' && <View style={styles.activeDot} />}
-      </TouchableOpacity>
-
-      {/* Wallet Tab */}
-      <TouchableOpacity
-        style={styles.navItem}
-        onPress={() => handleTabPress('wallet')}
-        activeOpacity={0.8}
-      >
-        <Text style={[styles.navIcon, currentTab === 'wallet' && styles.navIconActive]}>◫</Text>
-        <Text style={[styles.navLabel, currentTab === 'wallet' && styles.navLabelActive]}>Wallet</Text>
-        {currentTab === 'wallet' && <View style={styles.activeDot} />}
       </TouchableOpacity>
 
       {/* Account Tab */}

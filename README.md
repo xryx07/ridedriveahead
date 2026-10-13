@@ -6,7 +6,7 @@ RideDriveAhead is an enterprise-grade, two-sided mobility platform built around 
    - For drivers who want flexible gigs driving for a few hours (2h, 4h, 8h), special events/weddings, or 1–2 day outstation road trips without commercial taxi overhead.
    - For private car owners who want to relax during traffic, attend events/weddings without DUI worries, or take weekend road trips.
    - Automatic (AT) and Manual (MT) transmission matching.
-2. **Book a Cab (Ola / Uber Model)**:
+2. **Book a Cab (Fleet & Airport Transfers)**:
    - Instant city cabs and guaranteed advance-scheduled airport transfers with upfront locked fares.
 
 ---

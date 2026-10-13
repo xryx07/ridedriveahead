@@ -112,45 +112,45 @@ export const FareEstimateScreen: React.FC = () => {
 
   const selectedPkg = CHAUFFEUR_PACKAGES.find((p) => p.id === selectedPkgId) || CHAUFFEUR_PACKAGES[1];
 
-  // Pricing definitions combining Rapido (Bike/Parcel), Ola (Auto/Rentals), Uber (Go/Premier/XL) & RDA (Chauffeur)
+  // Standard cab fleet categories
   const CAB_TIERS = [
     {
       id: 'BIKE' as const,
-      icon: '🛵',
-      name: 'Bike Taxi (Rapido Moto)',
-      sub: 'Fastest commute through traffic • Helmet provided',
+      icon: 'BIKE',
+      name: 'Bike Taxi',
+      sub: 'Fast commute through traffic • Helmet provided',
       fare: 49,
       seats: 1,
       eta: '2 min',
-      tag: 'FASTEST ⚡',
+      tag: 'FAST COMMUTE',
       isPopular: false
     },
     {
       id: 'AUTO' as const,
-      icon: '🛺',
-      name: 'Auto Rickshaw (Ola / Rapido)',
+      icon: 'AUTO',
+      name: 'Auto Rickshaw',
       sub: 'Doorstep pickup, meter guaranteed, no haggling',
       fare: 89,
       seats: 3,
       eta: '3 min',
-      tag: 'POPULAR 🛺',
+      tag: 'CITY RUN',
       isPopular: false
     },
     {
       id: 'HATCHBACK' as const,
-      icon: '🚕',
-      name: 'Go Economy / Mini (Uber Go)',
+      icon: 'MINI',
+      name: 'Economy Hatchback',
       sub: 'WagonR, Swift • AC affordable everyday rides',
       fare: 189,
       seats: 4,
       eta: '4 min',
-      tag: 'BEST VALUE',
+      tag: 'AFFORDABLE',
       isPopular: false
     },
     {
       id: 'SEDAN' as const,
-      icon: '🚘',
-      name: 'Premier Sedan (Prime)',
+      icon: 'SEDAN',
+      name: 'Executive Sedan',
       sub: 'Dzire, Honda City • Top-rated drivers & extra legroom',
       fare: 269,
       seats: 4,
@@ -160,9 +160,9 @@ export const FareEstimateScreen: React.FC = () => {
     },
     {
       id: 'SUV' as const,
-      icon: '🚙',
-      name: 'Executive SUV XL (Uber XL)',
-      sub: 'Innova Crysta, Ertiga • 6 seater for airport luggage',
+      icon: 'SUV',
+      name: 'Executive SUV (6-Seater)',
+      sub: 'Innova Crysta, Ertiga • Spacious seating for group & airport luggage',
       fare: 399,
       seats: 6,
       eta: '6 min',
@@ -171,9 +171,9 @@ export const FareEstimateScreen: React.FC = () => {
     },
     {
       id: 'RENTAL' as const,
-      icon: '⏱️',
-      name: 'Hourly Rentals (Ola Style)',
-      sub: 'Keep cab & driver: 2h/20km with multiple stops',
+      icon: 'HOURLY',
+      name: 'Hourly Multi-Stop Rental',
+      sub: 'Retain car & driver: 2h/20km with flexible stops',
       fare: 449,
       seats: 4,
       eta: 'Instant',

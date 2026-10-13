@@ -98,114 +98,69 @@ export const HomeScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {/* 9-TILE CORE MOBILITY PLATFORM GRID */}
+        {/* FOCUSED PRODUCT SELECTION */}
         <View style={styles.mobilityGridSection}>
-          <Text style={styles.sectionTitle}>Mobility Options</Text>
-          <View style={styles.mobilityTilesGrid}>
-            {/* 1. Cab */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('BOOK_CAB')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>CAB</Text>
+          <Text style={styles.sectionTitle}>Choose Your Service</Text>
+          
+          {/* Primary Hero: Hire a Driver for Your Car */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#161B1E',
+              borderRadius: 16,
+              padding: 18,
+              borderWidth: 1.5,
+              borderColor: '#C7FF3D',
+              marginBottom: 12
+            }}
+            onPress={() => handleSelectService('HIRE_DRIVER')}
+            activeOpacity={0.88}
+          >
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <View style={{ backgroundColor: 'rgba(199,255,61,0.15)', paddingVertical: 4, paddingHorizontal: 10, borderRadius: 6 }}>
+                <Text style={{ color: '#C7FF3D', fontSize: 10, fontWeight: '900', letterSpacing: 0.5 }}>CORE SPECIALTY • DRIVE MY CAR</Text>
               </View>
-              <Text style={styles.tileName}>Cab</Text>
-              <Text style={styles.tileSub}>Mini • Sedan • SUV</Text>
-            </TouchableOpacity>
+              <Text style={{ color: '#C7FF3D', fontSize: 18, fontWeight: '900' }}>→</Text>
+            </View>
+            <Text style={{ fontSize: 18, fontWeight: '800', color: '#F4F6F3', marginTop: 4 }}>Hire a Driver (For Your Car)</Text>
+            <Text style={{ fontSize: 12, color: '#8094A6', marginTop: 4, lineHeight: 18 }}>
+              Verified chauffeurs qualified for your Manual (MT), Automatic (AT), or Luxury personal vehicle.
+            </Text>
+            <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
+              <View style={{ backgroundColor: '#1F262B', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6 }}>
+                <Text style={{ fontSize: 10, color: '#F4F6F3', fontWeight: '700' }}>Hourly (2h–8h)</Text>
+              </View>
+              <View style={{ backgroundColor: '#1F262B', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6 }}>
+                <Text style={{ fontSize: 10, color: '#F4F6F3', fontWeight: '700' }}>Outstation Trips</Text>
+              </View>
+              <View style={{ backgroundColor: '#1F262B', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 6 }}>
+                <Text style={{ fontSize: 10, color: '#F4F6F3', fontWeight: '700' }}>Night Safe Return</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
-            {/* 2. Auto */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('AUTO')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>AUTO</Text>
+          {/* Secondary: Book a Cab */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#121619',
+              borderRadius: 16,
+              padding: 16,
+              borderWidth: 1,
+              borderColor: 'rgba(255,255,255,0.08)'
+            }}
+            onPress={() => handleSelectService('BOOK_CAB')}
+            activeOpacity={0.88}
+          >
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+              <View style={{ backgroundColor: 'rgba(255,255,255,0.06)', paddingVertical: 3, paddingHorizontal: 8, borderRadius: 6 }}>
+                <Text style={{ color: '#8094A6', fontSize: 10, fontWeight: '800' }}>FLEET & TRANSFERS</Text>
               </View>
-              <Text style={styles.tileName}>Auto</Text>
-              <Text style={styles.tileSub}>Meter Guarantee</Text>
-            </TouchableOpacity>
-
-            {/* 3. Bike */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('BIKE_TAXI')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>BIKE</Text>
-              </View>
-              <Text style={styles.tileName}>Bike</Text>
-              <Text style={styles.tileSub}>Fast Commute</Text>
-            </TouchableOpacity>
-
-            {/* 4. Driver (My Car Chauffeur) */}
-            <TouchableOpacity
-              style={[styles.mobilityTile, styles.mobilityTileDifferentiator]}
-              onPress={() => handleSelectService('HIRE_DRIVER')}
-              activeOpacity={0.85}
-            >
-              <View style={[styles.tileIconCircle, styles.tileIconChauffeur]}>
-                <Text style={[styles.tileCode, { color: '#C7FF3D', fontWeight: '900' }]}>DRIVER</Text>
-              </View>
-              <Text style={[styles.tileName, { color: '#C7FF3D' }]}>Driver</Text>
-              <Text style={styles.tileSub}>Have Your Own Car</Text>
-            </TouchableOpacity>
-
-            {/* 5. Rental */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('RENTALS')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>RENT</Text>
-              </View>
-              <Text style={styles.tileName}>Rental</Text>
-              <Text style={styles.tileSub}>Cars & Bikes</Text>
-            </TouchableOpacity>
-
-            {/* 6. Outstation */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('OUTSTATION')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>CITY+</Text>
-              </View>
-              <Text style={styles.tileName}>Outstation</Text>
-              <Text style={styles.tileSub}>One Way / Round</Text>
-            </TouchableOpacity>
-
-            {/* 7. Airport */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('AIRPORT')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>AIR</Text>
-              </View>
-              <Text style={styles.tileName}>Airport</Text>
-              <Text style={styles.tileSub}>Flight Sync Reserve</Text>
-            </TouchableOpacity>
-
-            {/* 8. Delivery */}
-            <TouchableOpacity
-              style={styles.mobilityTile}
-              onPress={() => handleSelectService('PARCEL')}
-              activeOpacity={0.85}
-            >
-              <View style={styles.tileIconCircle}>
-                <Text style={styles.tileCode}>SEND</Text>
-              </View>
-              <Text style={styles.tileName}>Delivery</Text>
-              <Text style={styles.tileSub}>Instant Send</Text>
-            </TouchableOpacity>
-          </View>
+              <Text style={{ color: '#8094A6', fontSize: 16, fontWeight: '700' }}>→</Text>
+            </View>
+            <Text style={{ fontSize: 16, fontWeight: '800', color: '#F4F6F3', marginTop: 2 }}>Book a Cab</Text>
+            <Text style={{ fontSize: 12, color: '#8094A6', marginTop: 2, lineHeight: 18 }}>
+              City point-to-point cabs and advance-guaranteed airport transfers with upfront locked pricing.
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* HIRE CHAUFFEUR FOR YOUR CAR */}

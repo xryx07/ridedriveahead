@@ -1,19 +1,19 @@
 import { DriverProfile, EarningsData, KycDocItem, ScheduledRide } from '../types';
 
 export const mockDriver: DriverProfile = {
-  id: 'd-verified-01',
+  id: 'd-driver-01',
   userId: 'u-driver-01',
-  fullName: 'Verified Captain',
+  fullName: 'Driver Partner',
   phoneNumber: '+919800000000',
-  role: 'ALL_ROUNDER',
-  transmissionSkills: ['MANUAL', 'AUTOMATIC', 'LUXURY'],
-  vehicleModel: 'Executive Vehicle',
-  vehiclePlate: 'DL 01 AB 0001',
+  role: 'CHAUFFEUR_ONLY',
+  transmissionSkills: ['MANUAL', 'AUTOMATIC'],
+  vehicleModel: 'Driver for Hire (Customer Car)',
+  vehiclePlate: 'N/A',
   vehicleType: 'SEDAN',
   isOnline: false,
-  rating: 5.0,
+  rating: null,
   totalTrips: 0,
-  kycStatus: 'APPROVED',
+  kycStatus: 'PENDING',
   drivingHoursToday: 0,
   lastRestTime: new Date().toISOString()
 };
@@ -22,30 +22,30 @@ export const sampleKycDocs: KycDocItem[] = [
   {
     type: 'AADHAAR',
     title: 'Aadhaar Card',
-    maskedNumber: 'XXXX-XXXX-0000',
-    status: 'APPROVED',
-    uploadedAt: '2026-10-01'
+    maskedNumber: 'Verification Pending',
+    status: 'PENDING',
+    uploadedAt: undefined
   },
   {
     type: 'PAN',
     title: 'PAN Card',
-    maskedNumber: 'ABCDE****F',
-    status: 'APPROVED',
-    uploadedAt: '2026-10-01'
+    maskedNumber: 'Verification Pending',
+    status: 'PENDING',
+    uploadedAt: undefined
   },
   {
     type: 'DRIVING_LICENSE',
     title: 'Commercial Driving License (LMV)',
-    maskedNumber: 'DL-04********001',
-    status: 'APPROVED',
-    uploadedAt: '2026-10-01'
+    maskedNumber: 'Verification Pending',
+    status: 'PENDING',
+    uploadedAt: undefined
   },
   {
     type: 'VEHICLE_REGISTRATION',
-    title: 'Vehicle RC & Chauffeur Badge',
-    maskedNumber: 'DL 01 AB 0001',
-    status: 'APPROVED',
-    uploadedAt: '2026-10-01'
+    title: 'Driver Badge & Background Check',
+    maskedNumber: 'Verification Pending',
+    status: 'PENDING',
+    uploadedAt: undefined
   }
 ];
 

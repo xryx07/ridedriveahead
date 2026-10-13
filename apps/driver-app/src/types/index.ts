@@ -35,7 +35,7 @@ export interface DriverProfile {
   vehiclePlate: string;
   vehicleType: 'HATCHBACK' | 'SEDAN' | 'SUV' | 'PREMIER';
   isOnline: boolean;
-  rating: number;
+  rating: number | null;
   totalTrips: number;
   kycStatus: KycStatus;
   drivingHoursToday: number;

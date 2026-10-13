@@ -22,14 +22,11 @@ export const DriverHomeScreen: React.FC = () => {
 
   const [showIncomingModal, setShowIncomingModal] = useState(false);
   const [activeModes, setActiveModes] = useState({
-    cab: true,
-    auto: false,
-    bike: false,
     chauffeur: true,
-    delivery: true
+    cab: true
   });
 
-  const toggleMode = (modeKey: 'cab' | 'auto' | 'bike' | 'chauffeur' | 'delivery') => {
+  const toggleMode = (modeKey: 'chauffeur' | 'cab') => {
     setActiveModes((prev) => ({ ...prev, [modeKey]: !prev[modeKey] }));
   };
 
@@ -110,26 +107,34 @@ export const DriverHomeScreen: React.FC = () => {
             <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Online Time</Text>
           </View>
           <View style={{ flex: 1, backgroundColor: '#121619', borderRadius: 12, padding: 12, alignItems: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)' }}>
-            <Text style={{ fontSize: 16, fontWeight: '900', color: '#C7FF3D' }}>{driver.rating ? driver.rating.toFixed(1) : '5.0'}</Text>
+            <Text style={{ fontSize: 16, fontWeight: '900', color: '#C7FF3D' }}>{driver.rating != null ? driver.rating.toFixed(1) : 'Not rated yet'}</Text>
             <Text style={{ fontSize: 9, color: '#8094A6', marginTop: 2 }}>Rating</Text>
           </View>
         </View>
 
-        {/* Motivational Card */}
+        {/* Console Ready Card */}
         <View style={{ backgroundColor: 'rgba(199,255,61,0.08)', borderRadius: 12, padding: 12, marginBottom: 14, flexDirection: 'row', alignItems: 'center', gap: 10, borderWidth: 1, borderColor: 'rgba(199,255,61,0.25)' }}>
           <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: '#C7FF3D', alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ fontSize: 11, fontWeight: '900', color: '#0B0D0F' }}>OK</Text>
           </View>
           <View>
-            <Text style={{ fontSize: 12, fontWeight: '800', color: '#F4F6F3' }}>Captain Console Ready</Text>
-            <Text style={{ fontSize: 10, color: '#8094A6' }}>Toggle Online above to begin receiving duty dispatches.</Text>
+            <Text style={{ fontSize: 12, fontWeight: '800', color: '#F4F6F3' }}>Driver Duty Console</Text>
+            <Text style={{ fontSize: 10, color: '#8094A6' }}>Toggle Online above to receive assigned chauffeur and cab duties.</Text>
           </View>
         </View>
         
         {/* GO ONLINE AS (DRIVER MODES SELECTOR) */}
         <View style={styles.driverModesCard}>
-          <Text style={styles.driverModesTitle}>GO ONLINE AS (QUALIFIED MODES)</Text>
+          <Text style={styles.driverModesTitle}>QUALIFIED DUTY MODES</Text>
           <View style={styles.driverModesRow}>
+            <TouchableOpacity
+              style={[styles.modeTogglePill, activeModes.chauffeur && styles.modeTogglePillActive]}
+              onPress={() => toggleMode('chauffeur')}
+              activeOpacity={0.8}
+            >
+              <Text style={[styles.modeText, activeModes.chauffeur && styles.modeTextActive]}>CHAUFFEUR (PRIVATE CAR)</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={[styles.modeTogglePill, activeModes.cab && styles.modeTogglePillActive]}
               onPress={() => toggleMode('cab')}
@@ -137,86 +142,44 @@ export const DriverHomeScreen: React.FC = () => {
             >
               <Text style={[styles.modeText, activeModes.cab && styles.modeTextActive]}>CAB</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modeTogglePill, activeModes.auto && styles.modeTogglePillActive]}
-              onPress={() => toggleMode('auto')}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.modeText, activeModes.auto && styles.modeTextActive]}>AUTO</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modeTogglePill, activeModes.bike && styles.modeTogglePillActive]}
-              onPress={() => toggleMode('bike')}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.modeText, activeModes.bike && styles.modeTextActive]}>BIKE</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modeTogglePill, activeModes.chauffeur && styles.modeTogglePillActive]}
-              onPress={() => toggleMode('chauffeur')}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.modeText, activeModes.chauffeur && styles.modeTextActive]}>CHAUFFEUR</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modeTogglePill, activeModes.delivery && styles.modeTogglePillActive]}
-              onPress={() => toggleMode('delivery')}
-              activeOpacity={0.8}
-            >
-              <Text style={[styles.modeText, activeModes.delivery && styles.modeTextActive]}>DELIVERY</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
-        {/* Fatigue Protection Cockpit */}
+        {/* Daily Driving Duty Compliance */}
         <View style={styles.fatigueCard}>
           <View style={styles.fatigueHeaderRow}>
             <View style={styles.fatigueTitleRow}>
-              <Text style={styles.fatigueIcon}>🛡️</Text>
-              <Text style={styles.fatigueTitle}>DRIVER OS FATIGUE ENGINE</Text>
+              <Text style={styles.fatigueIcon}>⏱️</Text>
+              <Text style={styles.fatigueTitle}>DUTY HOURS & SAFETY LIMITS</Text>
             </View>
             <View style={styles.fatigueSafeBadge}>
-              <Text style={styles.fatigueSafeBadgeText}>SAFE ZONE</Text>
+              <Text style={styles.fatigueSafeBadgeText}>8H MAX SAFE SHIFT</Text>
             </View>
           </View>
 
-          {/* Fatigue Metric Cards */}
+          {/* Metric Cards */}
           <View style={styles.fatigueMetricsRow}>
             <View style={styles.fatigueMetricCol}>
               <Text style={styles.fatigueMetricLabel}>DRIVING TODAY</Text>
-              <Text style={styles.fatigueMetricValue}>5h 42m</Text>
-              <Text style={styles.fatigueMetricSub}>71% of daily cap</Text>
+              <Text style={styles.fatigueMetricValue}>{driver.drivingHoursToday ? `${driver.drivingHoursToday}h` : '0h 0m'}</Text>
+              <Text style={styles.fatigueMetricSub}>Logged on platform</Text>
             </View>
             <View style={styles.fatigueDivider} />
             <View style={styles.fatigueMetricCol}>
-              <Text style={styles.fatigueMetricLabel}>RECOMMENDED BREAK</Text>
-              <Text style={[styles.fatigueMetricValue, { color: '#FBBF24' }]}>in 18 min</Text>
-              <Text style={styles.fatigueMetricSub}>15-min tea pause</Text>
+              <Text style={styles.fatigueMetricLabel}>MANDATORY REST</Text>
+              <Text style={[styles.fatigueMetricValue, { color: '#FBBF24' }]}>After 4.5h</Text>
+              <Text style={styles.fatigueMetricSub}>30-min break rule</Text>
             </View>
             <View style={styles.fatigueDivider} />
             <View style={styles.fatigueMetricCol}>
-              <Text style={styles.fatigueMetricLabel}>AVAILABLE DUTY</Text>
-              <Text style={[styles.fatigueMetricValue, { color: '#D2FF00' }]}>2h 18m</Text>
-              <Text style={styles.fatigueMetricSub}>Remaining today</Text>
+              <Text style={styles.fatigueMetricLabel}>MAX REMAINING</Text>
+              <Text style={[styles.fatigueMetricValue, { color: '#D2FF00' }]}>{Math.max(0, 8 - (driver.drivingHoursToday || 0))}h</Text>
+              <Text style={styles.fatigueMetricSub}>Within safety cap</Text>
             </View>
-          </View>
-
-          {/* Visual Fatigue Meter */}
-          <View style={styles.fatigueMeterTrack}>
-            <View style={[styles.fatigueMeterFill, { width: '71%' }]} />
-          </View>
-          <View style={styles.fatigueLabelsRow}>
-            <Text style={styles.fatigueMeterSub}>0h Start</Text>
-            <Text style={styles.fatigueMeterSub}>Break at 6h</Text>
-            <Text style={styles.fatigueMeterSub}>8h Max Safe Limit</Text>
           </View>
         </View>
 
-        {/* Shift Net Earnings Cockpit */}
+        {/* Shift Net Earnings */}
         <View style={styles.earningsCard}>
           <View style={styles.earningsHeaderRow}>
             <Text style={styles.earningsLabel}>TODAY'S NET EARNINGS</Text>
@@ -236,18 +199,24 @@ export const DriverHomeScreen: React.FC = () => {
           </View>
           <View style={styles.earningsFooterRow}>
             <Text style={styles.earningsSub}>
-              {earnings.todayCompletedTrips || 0} Duties Completed • ₹0 Platform Deductions
+              {earnings.todayCompletedTrips || 0} Duties Completed
             </Text>
           </View>
         </View>
 
-        {/* Transmission & Skill Badges */}
+        {/* Verification Status */}
         <View style={styles.skillsCard}>
           <View style={styles.skillsHeaderRow}>
-            <Text style={styles.skillsTitle}>YOUR CERTIFIED CREDENTIALS</Text>
-            <View style={styles.badgeVerified}>
-              <Text style={styles.badgeVerifiedText}>POLICE VERIFIED ✓</Text>
-            </View>
+            <Text style={styles.skillsTitle}>VERIFICATION STATUS</Text>
+            {driver.kycStatus === 'APPROVED' ? (
+              <View style={styles.badgeVerified}>
+                <Text style={styles.badgeVerifiedText}>DOCUMENTS APPROVED ✓</Text>
+              </View>
+            ) : (
+              <View style={[styles.badgeVerified, { backgroundColor: 'rgba(251,191,36,0.15)', borderColor: '#FBBF24' }]}>
+                <Text style={[styles.badgeVerifiedText, { color: '#FBBF24' }]}>VERIFICATION PENDING</Text>
+              </View>
+            )}
           </View>
           <View style={styles.badgeRow}>
             <View style={styles.skillBadge}>

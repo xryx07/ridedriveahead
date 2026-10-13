@@ -95,8 +95,12 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { status: 'UP', database: 'CONNECTED', timestamp: new Date().toISOString() }, method, pathname);
   }
 
-  // 2. DATABASE INSPECT
+  // 2. DATABASE INSPECT (ADMIN PROTECTED)
   if (pathname === '/api/v1/db/inspect' && method === 'GET') {
+    const authHeader = req.headers['authorization'] || '';
+    if (!authHeader.startsWith('Bearer ') || authHeader.replace('Bearer ', '').trim() !== 'admin-ops-key') {
+      return sendJson(res, 401, { error: 'Unauthorized: Admin authentication token required to inspect database' }, method, pathname);
+    }
     const db = readDb();
     return sendJson(res, 200, {
       databaseFile: DB_PATH,
@@ -115,10 +119,13 @@ const server = http.createServer(async (req, res) => {
   // 3. AUTH: REQUEST OTP
   if (pathname === '/api/v1/auth/otp/request' && method === 'POST') {
     const body = await parseJsonBody(req);
-    const phone = body.phoneNumber || '+919876543210';
+    const phone = body.phoneNumber || '';
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
+      return sendJson(res, 400, { success: false, message: 'Valid 10-digit mobile number required' }, method, pathname);
+    }
     return sendJson(res, 200, {
       success: true,
-      message: `OTP 123456 sent to ${phone}`,
+      message: `OTP sent to ${phone}`,
       data: { otp: '123456', expiresInSeconds: 300 }
     }, method, pathname);
   }
@@ -126,11 +133,18 @@ const server = http.createServer(async (req, res) => {
   // 4. AUTH: VERIFY OTP / LOGIN / SIGNUP
   if (pathname === '/api/v1/auth/otp/verify' && method === 'POST') {
     const body = await parseJsonBody(req);
-    const phone = body.phoneNumber ? body.phoneNumber.trim() : '+919876543210';
+    const phone = body.phoneNumber ? body.phoneNumber.trim() : '';
+    const otpCode = body.otpCode ? String(body.otpCode).trim() : '';
+    if (!phone || phone.replace(/\D/g, '').length < 10) {
+      return sendJson(res, 400, { success: false, message: 'Valid mobile number required' }, method, pathname);
+    }
+    if (!otpCode || (otpCode !== '123456' && otpCode !== '4821')) {
+      return sendJson(res, 401, { success: false, message: 'Invalid or expired OTP code' }, method, pathname);
+    }
     const fullName = body.fullName ? body.fullName.trim() : '';
     const role = body.userRole || 'RIDER';
     const email = body.email || '';
-    const city = body.city || 'Delhi NCR';
+    const city = body.city || 'National Operations';
 
     const db = readDb();
     let user = null;
@@ -144,16 +158,16 @@ const server = http.createServer(async (req, res) => {
           fullName: fullName || 'New Driver Partner',
           phoneNumber: phone,
           city: city,
-          licenseNumber: body.licenseNumber || 'DL-042026001234',
-          role: body.preference || 'ALL_ROUNDER',
+          licenseNumber: body.licenseNumber || '',
+          role: body.preference || 'CHAUFFEUR',
           transmissionSkills: body.skills || ['MANUAL', 'AUTOMATIC'],
-          vehicleModel: 'Customer Car Chauffeur',
+          vehicleModel: 'Personal Vehicle Chauffeur',
           vehiclePlate: 'N/A',
           vehicleType: 'SEDAN',
-          isOnline: true,
-          rating: 5.0,
+          isOnline: false,
+          rating: null,
           totalTrips: 0,
-          kycStatus: 'APPROVED',
+          kycStatus: 'PENDING_REVIEW',
           drivingHoursToday: 0.0,
           maxDrivingHours: 8.0,
           todayEarnings: 0
@@ -176,10 +190,8 @@ const server = http.createServer(async (req, res) => {
           email: email,
           role: 'RIDER',
           city: city,
-          rating: 5.0,
-          registeredCars: [
-            { model: 'Honda City (2022)', transmission: 'AUTOMATIC', plate: 'DL 01 AB 9988' }
-          ],
+          rating: null,
+          registeredCars: [],
           createdAt: new Date().toISOString()
         };
         db.users.push(user);
@@ -245,8 +257,8 @@ const server = http.createServer(async (req, res) => {
       elapsedSeconds: 0,
       fuelHandover: '80% Full',
       odometerStart: 34812,
-      riderName: body.riderName || 'Verified Rider',
-      driverName: 'Verified Captain',
+      riderName: body.riderName || 'Rider',
+      driverName: 'Assigned on Dispatch',
       createdAt: new Date().toISOString()
     };
     db.bookings.unshift(newBooking);
@@ -287,6 +299,14 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, { success: true, message: 'Duty settled and completed!', booking: b }, method, pathname);
     }
     return sendJson(res, 404, { success: false, message: 'No active booking' }, method, pathname);
+  }
+
+  // ADMIN AUTHENTICATION GUARD
+  if (pathname.startsWith('/api/v1/admin/')) {
+    const authHeader = req.headers['authorization'] || '';
+    if (!authHeader.startsWith('Bearer ') || authHeader.replace('Bearer ', '').trim() !== 'admin-ops-key') {
+      return sendJson(res, 401, { error: 'Unauthorized: Admin authentication token required' }, method, pathname);
+    }
   }
 
   // 13. ADMIN COMMAND CENTER ACTION AUDIT & MUTATION

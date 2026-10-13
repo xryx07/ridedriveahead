@@ -59,8 +59,8 @@ export const riderApi = {
       tiers: [
         {
           vehicleType: 'BIKE',
-          tierName: 'Bike Taxi (Rapido Moto)',
-          description: 'Fastest commute through traffic • Sanitized helmet provided',
+          tierName: 'Bike Taxi',
+          description: 'Fast commute through traffic • Sanitized helmet provided',
           capacity: 1,
           baseFare: 25,
           distanceFare: 24,
@@ -71,7 +71,7 @@ export const riderApi = {
         },
         {
           vehicleType: 'AUTO',
-          tierName: 'Auto Rickshaw (Ola / Rapido)',
+          tierName: 'Auto Rickshaw',
           description: 'Doorstep pickup, meter guaranteed, no bargaining',
           capacity: 3,
           baseFare: 40,
@@ -95,7 +95,7 @@ export const riderApi = {
         },
         {
           vehicleType: 'SEDAN',
-          tierName: 'Premier Sedan (Prime)',
+          tierName: 'Premier Sedan',
           description: 'Comfortable sedans (Dzire, Honda City) with top drivers',
           capacity: 4,
           baseFare: 120,
@@ -119,7 +119,7 @@ export const riderApi = {
         },
         {
           vehicleType: 'RENTAL',
-          tierName: 'Hourly Rental (Ola Style)',
+          tierName: 'Hourly Multi-Stop Rental',
           description: 'Keep car & driver: 2h/20km package with multiple stops',
           capacity: 4,
           baseFare: 300,

@@ -5,7 +5,7 @@
   "main": "apps/demo-preview/server.js",
   "scripts": {
     "start": "node apps/demo-preview/server.js",
-    "test": "node -e \"console.log('RideDriveAhead build verification: PASS')\""
+    "test": "node tests/platform-verification.test.js"
   },
   "engines": {
     "node": ">=18.0.0"
