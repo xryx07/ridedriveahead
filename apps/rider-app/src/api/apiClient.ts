@@ -6,10 +6,10 @@ export const USE_MOCK_API = true; // Toggle for live API integration
 export const mockRider: UserProfile = {
   id: 'u-rider-guest',
   phoneNumber: '+919800000000',
-  fullName: 'Verified Rider',
+  fullName: 'Rider Partner',
   email: 'rider@ridedriveahead.com',
   role: 'RIDER',
-  rating: 5.0
+  rating: null
 };
 
 export const sampleScheduledBooking: Booking | null = null;

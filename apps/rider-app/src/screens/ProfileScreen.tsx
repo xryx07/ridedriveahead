@@ -39,7 +39,7 @@ export const ProfileScreen: React.FC = () => {
             <Text style={styles.userName}>{user?.fullName || 'Verified Rider'}</Text>
             <Text style={styles.userPhone}>{user?.phoneNumber || '+91 98000 00000'}</Text>
             <View style={styles.ratingBadge}>
-              <Text style={styles.ratingText}>★ {user?.rating ? user.rating.toFixed(1) : '5.0'} Rider Rating</Text>
+              <Text style={styles.ratingText}>{user?.rating != null ? `★ ${user.rating.toFixed(1)} Rider Rating` : 'Not rated yet'}</Text>
             </View>
           </View>
         </View>

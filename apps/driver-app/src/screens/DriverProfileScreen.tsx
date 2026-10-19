@@ -30,7 +30,7 @@ export const DriverProfileScreen: React.FC = () => {
             <Text style={styles.driverPhone}>{driver.phoneNumber}</Text>
             <View style={styles.tagRow}>
               <View style={styles.ratingBadge}>
-                <Text style={styles.ratingText}>★ {driver.rating} Rating</Text>
+                <Text style={styles.ratingText}>{driver.rating != null ? `★ ${driver.rating.toFixed(1)} Rating` : 'Not rated yet'}</Text>
               </View>
               <View style={styles.tripsBadge}>
                 <Text style={styles.tripsText}>{driver.totalTrips} Total Duties</Text>
@@ -48,17 +48,19 @@ export const DriverProfileScreen: React.FC = () => {
             <Text style={styles.checkGreen}>✓</Text>
             <View style={{ flex: 1 }}>
               <Text style={styles.skillTitle}>Commercial Driving License (LMV)</Text>
-              <Text style={styles.skillSub}>DL-04********921 • Valid till 2031</Text>
+              <Text style={styles.skillSub}>Official LMV Commercial License</Text>
             </View>
-            <View style={styles.verifiedBadge}>
-              <Text style={styles.verifiedBadgeText}>VERIFIED</Text>
+            <View style={driver.kycStatus === 'APPROVED' ? styles.verifiedBadge : [styles.verifiedBadge, { backgroundColor: 'rgba(251,191,36,0.15)', borderColor: '#FBBF24' }]}>
+              <Text style={driver.kycStatus === 'APPROVED' ? styles.verifiedBadgeText : [styles.verifiedBadgeText, { color: '#FBBF24' }]}>
+                {driver.kycStatus === 'APPROVED' ? 'VERIFIED' : 'PENDING'}
+              </Text>
             </View>
           </View>
 
           <View style={styles.skillItem}>
             <Text style={styles.checkGreen}>✓</Text>
             <View style={{ flex: 1 }}>
-              <Text style={styles.skillTitle}>Automatic (AT / DCT / CVT) Certified</Text>
+              <Text style={styles.skillTitle}>Automatic (AT / DCT / CVT) Qualified</Text>
               <Text style={styles.skillSub}>Qualified for luxury and modern automatics</Text>
             </View>
             <View style={styles.verifiedBadge}>
@@ -80,11 +82,13 @@ export const DriverProfileScreen: React.FC = () => {
           <View style={styles.skillItem}>
             <Text style={styles.checkGreen}>✓</Text>
             <View style={{ flex: 1 }}>
-              <Text style={styles.skillTitle}>Police Background Verification</Text>
-              <Text style={styles.skillSub}>Clear Record • Delhi Police Cert #8921</Text>
+              <Text style={styles.skillTitle}>Identity & Background Document Review</Text>
+              <Text style={styles.skillSub}>Aadhaar, PAN & Address verification</Text>
             </View>
-            <View style={styles.verifiedBadge}>
-              <Text style={styles.verifiedBadgeText}>CLEARED</Text>
+            <View style={driver.kycStatus === 'APPROVED' ? styles.verifiedBadge : [styles.verifiedBadge, { backgroundColor: 'rgba(251,191,36,0.15)', borderColor: '#FBBF24' }]}>
+              <Text style={driver.kycStatus === 'APPROVED' ? styles.verifiedBadgeText : [styles.verifiedBadgeText, { color: '#FBBF24' }]}>
+                {driver.kycStatus === 'APPROVED' ? 'APPROVED' : 'REVIEW PENDING'}
+              </Text>
             </View>
           </View>
         </View>

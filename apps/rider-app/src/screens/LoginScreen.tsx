@@ -68,7 +68,7 @@ export const LoginScreen: React.FC = () => {
         phoneNumber: fullPhone,
         fullName: signupName.trim(),
         email: signupEmail.trim() || undefined,
-        rating: 5.0,
+        rating: null,
         role: 'RIDER' as const
       };
       signup(newUser);

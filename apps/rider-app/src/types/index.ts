@@ -64,7 +64,7 @@ export interface UserProfile {
   fullName: string;
   email?: string;
   role: 'RIDER' | 'DRIVER' | 'ADMIN';
-  rating: number;
+  rating?: number | null;
 }
 
 export interface VehicleTier {
@@ -113,7 +113,7 @@ export interface Booking {
   otpCode: string;
   driverName?: string;
   driverPhone?: string;
-  driverRating?: number;
+  driverRating?: number | null;
   vehicleModel?: string;
   vehiclePlate?: string;
   flightNumber?: string;

@@ -54,19 +54,19 @@ export const DriverLoginScreen: React.FC = () => {
     setTimeout(() => {
       setLoading(false);
       const partnerProfile: DriverProfile = {
-        id: 'd-101',
-        userId: 'u-driver-001',
-        fullName: 'Verified Captain',
+        id: 'd-' + Math.floor(1000 + Math.random() * 9000),
+        userId: 'u-driver-' + Math.floor(1000 + Math.random() * 9000),
+        fullName: 'Driver Partner',
         phoneNumber: phoneNumber,
-        role: 'ALL_ROUNDER',
-        transmissionSkills: ['MANUAL', 'AUTOMATIC', 'LUXURY'],
-        vehicleModel: 'Executive Vehicle',
-        vehiclePlate: 'DL 01 AB 0001',
+        role: 'CHAUFFEUR_ONLY',
+        transmissionSkills: ['MANUAL', 'AUTOMATIC'],
+        vehicleModel: 'Personal Vehicle Chauffeur',
+        vehiclePlate: 'N/A',
         vehicleType: 'SEDAN',
-        isOnline: true,
-        rating: 5.0,
+        isOnline: false,
+        rating: null,
         totalTrips: 0,
-        kycStatus: 'APPROVED',
+        kycStatus: 'PENDING',
         drivingHoursToday: 0
       };
       login(partnerProfile);
@@ -99,10 +99,10 @@ export const DriverLoginScreen: React.FC = () => {
         role: chauffeurOrCab,
         transmissionSkills: selectedSkills,
         vehicleModel: chauffeurOrCab === 'CHAUFFEUR_ONLY' ? 'Drive Customer Cars' : 'Commercial Sedan',
-        vehiclePlate: chauffeurOrCab === 'CHAUFFEUR_ONLY' ? 'N/A' : 'DL 04 CZ 8890',
+        vehiclePlate: chauffeurOrCab === 'CHAUFFEUR_ONLY' ? 'N/A' : 'Pending Verification',
         vehicleType: 'SEDAN',
-        isOnline: true,
-        rating: 5.0,
+        isOnline: false,
+        rating: null,
         totalTrips: 0,
         kycStatus: 'PENDING',
         drivingHoursToday: 0.0
@@ -114,11 +114,11 @@ export const DriverLoginScreen: React.FC = () => {
   const autofillDemoDriver = () => {
     setPhoneNumber('+919800000000');
     setOtpCode('123456');
-    setFullName('Verified Partner');
+    setFullName('Driver Candidate');
     setSignupPhone('+919800000000');
     setCity('National Operations');
-    setLicenseNumber('DL-0420210088992');
-    setSelectedSkills(['AUTOMATIC', 'MANUAL', 'LUXURY']);
+    setLicenseNumber('DL-PENDING-REVIEW');
+    setSelectedSkills(['AUTOMATIC', 'MANUAL']);
     setChauffeurOrCab('CHAUFFEUR_ONLY');
   };
 
