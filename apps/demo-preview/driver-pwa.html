@@ -232,6 +232,23 @@ a{text-decoration:none;color:inherit}
   transition:transform .3s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
+
+/* INSECURE GPS BANNER (MOBILE HTTP) */
+.insecure-gps-banner{
+  background:linear-gradient(135deg, rgba(245,158,11,0.22), rgba(18,22,25,0.95));
+  border:1.5px solid rgba(245,158,11,0.6);border-radius:16px;margin:12px 14px 6px;
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);position:relative;z-index:900;
+}
+.btn-https-switch{
+  background:#F59E0B;color:#0B0D0F;border:none;border-radius:10px;padding:8px 12px;
+  font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(245,158,11,0.3);transition:all .15s;
+}
+.btn-https-switch:active{transform:scale(0.95)}
+.map-recenter-btn.active{
+  border-color:var(--accent);color:var(--accent);box-shadow:0 0 14px rgba(199,255,61,0.35);
+}
 </style>
 </head>
 <body>
@@ -282,6 +299,18 @@ a{text-decoration:none;color:inherit}
      SCREEN 2: DRIVER HOME (UBER DRIVER LIVE RADAR)
 ========================================== -->
 <div class="screen" id="screen-home">
+  <!-- Insecure GPS Warning Banner (shown if on HTTP on mobile) -->
+  <div class="insecure-gps-banner" id="insecureDriverGpsBanner" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2" style="flex-shrink:0"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <div>
+        <div style="font-weight:800;font-size:12px;color:#F59E0B;">Device GPS Blocked by Browser (HTTP)</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Mobile Chrome requires HTTPS for live driver location.</div>
+      </div>
+    </div>
+    <button class="btn-https-switch" onclick="switchToDriverHttps()">Switch to HTTPS &rarr;</button>
+  </div>
+
   <!-- Interactive Navigation & Demand Heatmap Viewport -->
   <div class="map-viewport">
     <div id="driverMap"></div>
@@ -566,6 +595,9 @@ let driverCurrentCity = 'Sagar';
 let driverCarMarker = null;
 let driverSurgeLayers = [];
 let hasDriverGps = false;
+let driverGpsWatchId = null;
+let driverAccuracyCircle = null;
+let isDriverFollowMode = true;
 
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('rda_driver_user');
@@ -583,6 +615,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Auto-detect driver location on boot
   autoDetectDriverLocation();
+
+  // Start live continuous vehicle GPS tracking
+  startLiveDriverGpsTracking();
 });
 
 async function autoDetectDriverLocation() {
@@ -594,23 +629,75 @@ async function autoDetectDriverLocation() {
       driverCurrentLng = data.lng;
       driverCurrentCity = data.city || 'Sagar';
 
-      if (driverLeafletMap) {
+      if (driverLeafletMap && !hasDriverGps) {
         driverLeafletMap.setView([driverCurrentLat, driverCurrentLng], 14);
         if (driverCarMarker) driverCarMarker.setLatLng([driverCurrentLat, driverCurrentLng]);
         spawnDriverHotspots(driverCurrentLat, driverCurrentLng);
       }
     }
   } catch(e) {}
+}
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        applyDriverGpsCoordinates(pos.coords.latitude, pos.coords.longitude, false);
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-    );
+function startLiveDriverGpsTracking() {
+  const banner = document.getElementById('insecureDriverGpsBanner');
+  const isSecure = window.isSecureContext || location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if (!isSecure && banner) {
+    banner.style.display = 'flex';
   }
+
+  if (!navigator.geolocation) return;
+
+  if (driverGpsWatchId !== null) {
+    navigator.geolocation.clearWatch(driverGpsWatchId);
+    driverGpsWatchId = null;
+  }
+
+  driverGpsWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const accuracy = Math.round(pos.coords.accuracy || 15);
+      driverCurrentLat = lat;
+      driverCurrentLng = lng;
+      hasDriverGps = true;
+
+      if (banner) banner.style.display = 'none';
+
+      if (driverLeafletMap) {
+        if (driverCarMarker) driverCarMarker.setLatLng([lat, lng]);
+
+        if (!driverAccuracyCircle) {
+          driverAccuracyCircle = L.circle([lat, lng], {
+            radius: Math.max(accuracy, 12),
+            color: '#C7FF3D',
+            fillColor: '#C7FF3D',
+            fillOpacity: 0.12,
+            weight: 1.5
+          }).addTo(driverLeafletMap);
+        } else {
+          driverAccuracyCircle.setLatLng([lat, lng]);
+          driverAccuracyCircle.setRadius(Math.max(accuracy, 12));
+        }
+
+        if (isDriverFollowMode) {
+          driverLeafletMap.panTo([lat, lng], { animate: true, duration: 0.6 });
+        }
+        spawnDriverHotspots(lat, lng);
+      }
+    },
+    (err) => {
+      console.warn('[DRIVER GPS ERROR]', err.code, err.message);
+      if (err.code === 1 && !isSecure && banner) {
+        banner.style.display = 'flex';
+      }
+    },
+    { enableHighAccuracy: true, maximumAge: 1500, timeout: 12000 }
+  );
+}
+
+function switchToDriverHttps() {
+  const currentHost = window.location.hostname;
+  window.location.href = `https://${currentHost}:3443${window.location.pathname}${window.location.search}`;
 }
 
 function showToast(msg) {
@@ -732,18 +819,12 @@ function initDriverMap() {
   });
   driverCarMarker = L.marker([driverCurrentLat, driverCurrentLng], { icon: carIcon }).addTo(driverLeafletMap);
 
-  spawnDriverHotspots(driverCurrentLat, driverCurrentLng);
+  // Pause follow mode if driver drags map
+  driverLeafletMap.on('dragstart', () => {
+    isDriverFollowMode = false;
+  });
 
-  // Auto-detect GPS quietly if permitted
-  if (navigator.geolocation && !hasDriverGps) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        applyDriverGpsCoordinates(pos.coords.latitude, pos.coords.longitude, false);
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 6000, maximumAge: 60000 }
-    );
-  }
+  spawnDriverHotspots(driverCurrentLat, driverCurrentLng);
 }
 
 function spawnDriverHotspots(lat, lng) {
@@ -796,48 +877,14 @@ function applyDriverGpsCoordinates(lat, lng, showConfirmation = true) {
 }
 
 function recenterDriverMap() {
-  showToast('Detecting driver position...');
-
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        applyDriverGpsCoordinates(pos.coords.latitude, pos.coords.longitude, true);
-      },
-      (err) => {
-        // Fallback to IP geolocation when browser blocks GPS on HTTP
-        fetch('/api/v1/geo/current?_t=' + Date.now())
-          .then(r => r.json())
-          .then(data => {
-            if (data && data.success) {
-              driverCurrentLat = data.lat;
-              driverCurrentLng = data.lng;
-              driverCurrentCity = data.city || 'Sagar';
-              if (driverLeafletMap) {
-                driverLeafletMap.setView([driverCurrentLat, driverCurrentLng], 14, { animate: true });
-                if (driverCarMarker) driverCarMarker.setLatLng([driverCurrentLat, driverCurrentLng]);
-                spawnDriverHotspots(driverCurrentLat, driverCurrentLng);
-              }
-              showToast(`Located: ${data.city}, ${data.region}`);
-            } else {
-              showToast('Location service unavailable');
-            }
-          })
-          .catch(() => {
-            if (driverLeafletMap) driverLeafletMap.setView([driverCurrentLat, driverCurrentLng], 14, { animate: true });
-            showToast('Centered on map');
-          });
-      },
-      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
-    );
+  isDriverFollowMode = true;
+  if (driverLeafletMap && hasDriverGps) {
+    driverLeafletMap.setView([driverCurrentLat, driverCurrentLng], 15, { animate: true });
+    showToast('Following vehicle live GPS');
   } else {
-    fetch('/api/v1/geo/current?_t=' + Date.now())
-      .then(r => r.json())
-      .then(data => {
-        if (data && data.success) {
-          applyDriverGpsCoordinates(data.lat, data.lng, true);
-        }
-      });
+    showToast('Detecting driver position...');
   }
+  startLiveDriverGpsTracking();
 }
 
 // Uber Driver Iconic "GO" Button Toggle

@@ -416,6 +416,52 @@ a{text-decoration:none;color:inherit}
   border-radius:18px;padding:14px 16px;z-index:800;display:none;box-shadow:0 12px 36px rgba(0,0,0,0.7);
 }
 .confirm-map-spot-drawer.active{display:block}
+
+/* LIVE GPS TRACKING PILL & ACCURACY */
+.gps-tracking-pill{
+  display:inline-flex;align-items:center;gap:6px;background:rgba(18,22,25,0.88);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1.5px solid var(--border);border-radius:100px;padding:6px 12px;
+  font-size:11px;font-weight:800;color:var(--text);box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  cursor:pointer;transition:all .2s;user-select:none;
+}
+.gps-tracking-pill:active{transform:scale(0.96)}
+.gps-tracking-pill.active{border-color:var(--accent);color:var(--accent)}
+.gps-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--muted);transition:all .2s;flex-shrink:0;
+}
+.gps-tracking-pill.active .gps-dot{
+  background:var(--accent);box-shadow:0 0 10px var(--accent);
+  animation:gpsPulse 1.8s infinite;
+}
+.gps-tracking-pill.searching .gps-dot{
+  background:#F59E0B;box-shadow:0 0 8px #F59E0B;
+}
+.gps-tracking-pill.error .gps-dot{
+  background:#EF4444;box-shadow:0 0 8px #EF4444;
+}
+@keyframes gpsPulse{
+  0%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(199,255,61,0.7)}
+  70%{transform:scale(1.15);box-shadow:0 0 0 8px rgba(199,255,61,0)}
+  100%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(199,255,61,0)}
+}
+.map-recenter-btn.active{
+  border-color:var(--accent);color:var(--accent);box-shadow:0 0 14px rgba(199,255,61,0.35);
+}
+
+/* INSECURE GPS BANNER (MOBILE HTTP) */
+.insecure-gps-banner{
+  background:linear-gradient(135deg, rgba(245,158,11,0.22), rgba(18,22,25,0.95));
+  border:1.5px solid rgba(245,158,11,0.6);border-radius:16px;margin:12px 14px 6px;
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);position:relative;z-index:900;
+}
+.btn-https-switch{
+  background:#F59E0B;color:#0B0D0F;border:none;border-radius:10px;padding:8px 12px;
+  font-size:11px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(245,158,11,0.3);transition:all .15s;
+}
+.btn-https-switch:active{transform:scale(0.95)}
 </style>
 </head>
 <body>
@@ -469,6 +515,18 @@ a{text-decoration:none;color:inherit}
      SCREEN 2: HOME (UBER / OLA STYLE LIVE MAP + SHEET)
 ========================================== -->
 <div class="screen" id="screen-home">
+  <!-- Insecure GPS Warning Banner (shown if on HTTP on mobile) -->
+  <div class="insecure-gps-banner" id="insecureGpsBanner" style="display:none;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.2" style="flex-shrink:0"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <div>
+        <div style="font-weight:800;font-size:12px;color:#F59E0B;">Device GPS Blocked by Browser (HTTP)</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Mobile Chrome/Safari requires HTTPS for live device location.</div>
+      </div>
+    </div>
+    <button class="btn-https-switch" onclick="switchToHttps()">Switch to HTTPS &rarr;</button>
+  </div>
+
   <!-- Interactive Live Map Viewport -->
   <div class="map-viewport">
     <div id="homeMap"></div>
@@ -477,7 +535,11 @@ a{text-decoration:none;color:inherit}
         <div class="brand-pill-logo">R</div>
         <div class="brand-pill-text" id="homeBrandPill">RideDriveAhead</div>
       </div>
-      <div class="map-recenter-btn" onclick="recenterHomeMap()" title="Recenter Location">
+      <div class="gps-tracking-pill" id="gpsTrackingPill" onclick="toggleGpsFollowMode()" title="Toggle Live GPS Follow Mode">
+        <span class="gps-dot"></span>
+        <span id="gpsTrackingText">Live GPS</span>
+      </div>
+      <div class="map-recenter-btn active" id="homeRecenterBtn" onclick="recenterHomeMap()" title="Recenter Location & Follow">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
       </div>
     </div>
@@ -1018,6 +1080,15 @@ let activeSearchTarget = 'DROP'; // 'PICKUP' or 'DROP'
 let isSettingOnMap = false;
 let searchDebounceTimer = null;
 
+// Live GPS Tracking & Continuous Follow Engine
+let gpsWatchId = null;
+let gpsAccuracyCircle = null;
+let isFollowMode = true;
+let lastGeocodedLat = null;
+let lastGeocodedLng = null;
+let lastGeocodeTime = 0;
+let gpsFixCount = 0;
+
 // Initializer
 window.addEventListener('DOMContentLoaded', () => {
   const savedUser = localStorage.getItem('rda_rider_user');
@@ -1038,9 +1109,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Instant network-based location auto-detection on boot
   autoDetectUserLocation();
+
+  // Start continuous live device GPS tracking
+  startLiveGpsTracking();
 });
 
-// Auto-detect user's true location on launch
+// Auto-detect user's true location on launch (Instant network fallback)
 async function autoDetectUserLocation() {
   try {
     const res = await fetch('/api/v1/geo/current?_t=' + Date.now());
@@ -1061,7 +1135,7 @@ async function autoDetectUserLocation() {
       const olaPickup = document.getElementById('olaPickupInput');
       if (olaPickup) olaPickup.value = currentPickupAddress;
 
-      if (homeLeafletMap) {
+      if (homeLeafletMap && !hasGpsLocation) {
         homeLeafletMap.setView([currentLat, currentLng], 15);
         if (homeUserMarker) homeUserMarker.setLatLng([currentLat, currentLng]);
         spawnNearbyCabs(currentLat, currentLng);
@@ -1070,16 +1144,189 @@ async function autoDetectUserLocation() {
   } catch(e) {
     console.warn('IP geo auto-detect fallback:', e);
   }
+}
 
-  // Progressive refinement with high-precision GPS if available
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        applyGpsCoordinates(pos.coords.latitude, pos.coords.longitude, false);
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-    );
+// Distance helper in meters
+function getDistanceMeters(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lon1 || !lat2 || !lon2) return 999999;
+  const R = 6371e3;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+// Live GPS Tracking Manager
+function startLiveGpsTracking() {
+  const pill = document.getElementById('gpsTrackingPill');
+  const txt = document.getElementById('gpsTrackingText');
+  const banner = document.getElementById('insecureGpsBanner');
+
+  // Check if browser context is secure
+  const isSecure = window.isSecureContext || location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  if (!isSecure) {
+    if (banner) banner.style.display = 'flex';
+    if (pill) { pill.className = 'gps-tracking-pill error'; }
+    if (txt) { txt.textContent = 'HTTP: GPS Blocked'; }
+  }
+
+  if (!navigator.geolocation) {
+    if (pill) { pill.className = 'gps-tracking-pill error'; }
+    if (txt) { txt.textContent = 'No GPS Sensor'; }
+    return;
+  }
+
+  if (pill && isSecure) {
+    pill.className = 'gps-tracking-pill searching';
+    if (txt) txt.textContent = 'Acquiring GPS...';
+  }
+
+  if (gpsWatchId !== null) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+  }
+
+  gpsWatchId = navigator.geolocation.watchPosition(
+    (pos) => {
+      handleLiveGpsSuccess(pos);
+    },
+    (err) => {
+      handleLiveGpsFailure(err);
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 1500,
+      timeout: 12000
+    }
+  );
+}
+
+function handleLiveGpsSuccess(pos) {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
+  const accuracy = Math.round(pos.coords.accuracy || 15);
+
+  currentLat = lat;
+  currentLng = lng;
+  hasGpsLocation = true;
+
+  // Hide insecure warning banner once live GPS lock is acquired
+  const banner = document.getElementById('insecureGpsBanner');
+  if (banner) banner.style.display = 'none';
+
+  // Update live GPS pill indicator
+  const pill = document.getElementById('gpsTrackingPill');
+  const txt = document.getElementById('gpsTrackingText');
+  if (pill) pill.className = 'gps-tracking-pill active';
+  if (txt) txt.textContent = `Live GPS \u2022 \u00B1${accuracy}m`;
+
+  if (homeLeafletMap) {
+    // Update live user marker
+    if (homeUserMarker) {
+      homeUserMarker.setLatLng([lat, lng]);
+    }
+
+    // Update GPS accuracy radius circle
+    if (!gpsAccuracyCircle) {
+      gpsAccuracyCircle = L.circle([lat, lng], {
+        radius: Math.max(accuracy, 12),
+        color: '#C7FF3D',
+        fillColor: '#C7FF3D',
+        fillOpacity: 0.12,
+        weight: 1.5
+      }).addTo(homeLeafletMap);
+    } else {
+      gpsAccuracyCircle.setLatLng([lat, lng]);
+      gpsAccuracyCircle.setRadius(Math.max(accuracy, 12));
+    }
+
+    // Follow mode: smoothly pan map along with user movement
+    if (isFollowMode && !isSettingOnMap) {
+      homeLeafletMap.panTo([lat, lng], { animate: true, duration: 0.6 });
+    }
+
+    // Update nearby cab positions
+    spawnNearbyCabs(lat, lng);
+  }
+
+  // Throttled reverse-geocoding (every 12 seconds or 35m movement)
+  const now = Date.now();
+  const movedDist = getDistanceMeters(lat, lng, lastGeocodedLat, lastGeocodedLng);
+  if (now - lastGeocodeTime > 12000 || movedDist > 35) {
+    lastGeocodedLat = lat;
+    lastGeocodedLng = lng;
+    lastGeocodeTime = now;
+    fetchReverseGeocode(lat, lng);
+  }
+
+  if (gpsFixCount === 0) {
+    showToast(`Live GPS locked (\u00B1${accuracy}m accuracy)`);
+  }
+  gpsFixCount++;
+}
+
+function handleLiveGpsFailure(err) {
+  console.warn('[LIVE GPS ERROR]', err.code, err.message);
+  const pill = document.getElementById('gpsTrackingPill');
+  const txt = document.getElementById('gpsTrackingText');
+  const banner = document.getElementById('insecureGpsBanner');
+
+  if (err.code === 1) { // PERMISSION_DENIED
+    const isSecure = window.isSecureContext || location.protocol === 'https:';
+    if (!isSecure) {
+      if (banner) banner.style.display = 'flex';
+      if (pill) pill.className = 'gps-tracking-pill error';
+      if (txt) txt.textContent = 'HTTP: GPS Blocked';
+    } else {
+      if (pill) pill.className = 'gps-tracking-pill error';
+      if (txt) txt.textContent = 'GPS Permission Denied';
+      showToast('Please enable Location permission in browser settings');
+    }
+  } else if (err.code === 2) { // POSITION_UNAVAILABLE
+    if (pill) pill.className = 'gps-tracking-pill searching';
+    if (txt) txt.textContent = 'Searching GPS Signal...';
+  } else if (err.code === 3) { // TIMEOUT
+    if (pill) pill.className = 'gps-tracking-pill searching';
+    if (txt) txt.textContent = 'GPS Retrying...';
+  }
+}
+
+// Switch to HTTPS on Mobile for 100% Unlocked Device GPS
+function switchToHttps() {
+  const currentHost = window.location.hostname;
+  const httpsPort = '3443';
+  const targetUrl = `https://${currentHost}:${httpsPort}${window.location.pathname}${window.location.search}`;
+  showToast('Switching to Secure GPS mode...');
+  setTimeout(() => {
+    window.location.href = targetUrl;
+  }, 400);
+}
+
+// Toggle GPS Follow Mode
+function toggleGpsFollowMode() {
+  isFollowMode = !isFollowMode;
+  updateFollowModeBtn();
+  if (isFollowMode) {
+    if (homeLeafletMap && hasGpsLocation) {
+      homeLeafletMap.setView([currentLat, currentLng], 16, { animate: true });
+    }
+    showToast('Follow Mode: ON (Map tracks your movement)');
+  } else {
+    showToast('Follow Mode: OFF (Free browsing mode)');
+  }
+}
+
+function updateFollowModeBtn() {
+  const btn = document.getElementById('homeRecenterBtn');
+  if (btn) {
+    if (isFollowMode) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
   }
 }
 
@@ -1216,6 +1463,23 @@ function initHomeMap() {
   });
   homeUserMarker = L.marker([currentLat, currentLng], { icon: pulseIcon }).addTo(homeLeafletMap);
 
+  // Add accuracy circle if GPS is already active
+  if (hasGpsLocation && !gpsAccuracyCircle) {
+    gpsAccuracyCircle = L.circle([currentLat, currentLng], {
+      radius: 20,
+      color: '#C7FF3D',
+      fillColor: '#C7FF3D',
+      fillOpacity: 0.12,
+      weight: 1.5
+    }).addTo(homeLeafletMap);
+  }
+
+  // When user drags map manually, temporarily pause auto-follow
+  homeLeafletMap.on('dragstart', () => {
+    isFollowMode = false;
+    updateFollowModeBtn();
+  });
+
   // Spawn simulated nearby cabs around initial location
   spawnNearbyCabs(currentLat, currentLng);
 }
@@ -1245,6 +1509,28 @@ function spawnNearbyCabs(lat, lng) {
   });
 }
 
+async function fetchReverseGeocode(lat, lng) {
+  try {
+    const res = await fetch(`/api/v1/geo/reverse?lat=${lat}&lng=${lng}&_t=${Date.now()}`);
+    const data = await res.json();
+    if (data && data.success) {
+      currentAddress = data.displayName || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      currentPickupAddress = data.mainName ? `${data.mainName} (${data.subtitle || ''})` : currentAddress;
+      if (data.subtitle && data.subtitle.includes(',')) {
+        currentCity = data.subtitle.split(',')[0].trim();
+        const brandPill = document.getElementById('homeBrandPill');
+        if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
+      }
+      const pickupInput = document.getElementById('routePickup');
+      if (pickupInput) pickupInput.value = currentPickupAddress;
+      const olaPickup = document.getElementById('olaPickupInput');
+      if (olaPickup) olaPickup.value = currentPickupAddress;
+    }
+  } catch(e) {
+    console.warn('Reverse geocode error:', e);
+  }
+}
+
 async function applyGpsCoordinates(lat, lng, showConfirmation = true) {
   currentLat = lat;
   currentLng = lng;
@@ -1258,28 +1544,7 @@ async function applyGpsCoordinates(lat, lng, showConfirmation = true) {
     spawnNearbyCabs(lat, lng);
   }
 
-  // Reverse geocode to get real street address
-  try {
-    const res = await fetch(`/api/v1/geo/reverse?lat=${lat}&lng=${lng}&_t=${Date.now()}`);
-    const data = await res.json();
-    if (data && data.success) {
-      currentAddress = data.displayName || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-      currentPickupAddress = data.mainName ? `${data.mainName} (${data.subtitle || ''})` : currentAddress;
-      if (data.subtitle && data.subtitle.includes(',')) {
-        currentCity = data.subtitle.split(',')[0].trim();
-        const brandPill = document.getElementById('homeBrandPill');
-        if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
-      }
-    }
-  } catch(e) {
-    currentPickupAddress = `GPS Location (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
-  }
-
-  const pickupInput = document.getElementById('routePickup');
-  if (pickupInput) pickupInput.value = currentPickupAddress;
-
-  const olaPickup = document.getElementById('olaPickupInput');
-  if (olaPickup) olaPickup.value = currentPickupAddress;
+  fetchReverseGeocode(lat, lng);
 
   if (showConfirmation) {
     showToast(`Located: ${currentPickupAddress}`);
@@ -1287,60 +1552,18 @@ async function applyGpsCoordinates(lat, lng, showConfirmation = true) {
 }
 
 function recenterHomeMap() {
-  showToast('Locating your position...');
+  isFollowMode = true;
+  updateFollowModeBtn();
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        applyGpsCoordinates(pos.coords.latitude, pos.coords.longitude, true);
-      },
-      (err) => {
-        // Fallback to IP geolocation when browser blocks GPS on HTTP
-        fetch('/api/v1/geo/current?_t=' + Date.now())
-          .then(r => r.json())
-          .then(data => {
-            if (data && data.success) {
-              currentLat = data.lat;
-              currentLng = data.lng;
-              currentCity = data.city || 'Sagar';
-              currentAddress = data.displayName || `${currentCity}, ${data.region || ''}`;
-              currentPickupAddress = `Current Location (${currentCity})`;
-
-              if (homeLeafletMap) {
-                homeLeafletMap.setView([currentLat, currentLng], 15, { animate: true });
-                if (homeUserMarker) homeUserMarker.setLatLng([currentLat, currentLng]);
-                spawnNearbyCabs(currentLat, currentLng);
-              }
-              const pickupInput = document.getElementById('routePickup');
-              if (pickupInput) pickupInput.value = currentPickupAddress;
-              const olaPickup = document.getElementById('olaPickupInput');
-              if (olaPickup) olaPickup.value = currentPickupAddress;
-
-              const brandPill = document.getElementById('homeBrandPill');
-              if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
-
-              showToast(`Located: ${data.city}, ${data.region}`);
-            } else {
-              showToast('Location service unavailable');
-            }
-          })
-          .catch(() => {
-            if (homeLeafletMap) homeLeafletMap.setView([currentLat, currentLng], 15, { animate: true });
-            showToast('Centered on map');
-          });
-      },
-      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
-    );
+  if (hasGpsLocation && homeLeafletMap) {
+    homeLeafletMap.setView([currentLat, currentLng], 16, { animate: true });
+    showToast('Following your live GPS location');
   } else {
-    // Geolocation not supported, fallback to server IP geo
-    fetch('/api/v1/geo/current?_t=' + Date.now())
-      .then(r => r.json())
-      .then(data => {
-        if (data && data.success) {
-          applyGpsCoordinates(data.lat, data.lng, true);
-        }
-      });
+    showToast('Locating your position...');
   }
+
+  // Ensure live GPS tracking is running
+  startLiveGpsTracking();
 }
 
 /* ========================================================

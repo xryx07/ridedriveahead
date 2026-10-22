@@ -2,8 +2,10 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const PORT = process.env.PORT || 3000;
+const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
 const DB_PATH = path.join(__dirname, '..', '..', 'backend', 'database.json');
 
 // Helper to read DB
@@ -71,8 +73,10 @@ function sendJson(res, statusCode, data, reqMethod, reqUrl) {
   }
 }
 
-const server = http.createServer(async (req, res) => {
-  const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
+const requestHandler = async (req, res) => {
+  const host = (req.headers.host || `localhost:${PORT}`).toLowerCase();
+  const protocol = req.socket && req.socket.encrypted ? 'https' : 'http';
+  const parsedUrl = new URL(req.url, `${protocol}://${host}`);
   const pathname = parsedUrl.pathname;
   const method = req.method;
 
@@ -642,7 +646,6 @@ const server = http.createServer(async (req, res) => {
   // 2. Driver Web: driver.ridedriveahead.com / /driver
   // 3. Admin Web: admin.ridedriveahead.com / /admin
   // ========================================================
-  const host = (req.headers.host || '').toLowerCase();
 
   // 1. DRIVER WEB (driver.ridedriveahead.com or /driver)
   if (pathname === '/driver' || pathname === '/driver.html' || (host.startsWith('driver.') && (pathname === '/' || pathname === '/index.html'))) {
@@ -729,13 +732,55 @@ const server = http.createServer(async (req, res) => {
   // 404 FALLBACK
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Endpoint Not Found', pathname }));
-});
+};
 
-server.listen(PORT, () => {
+// Helper to determine active local network IP address
+function getLocalNetworkIp() {
+  try {
+    const nets = os.networkInterfaces();
+    for (const name of Object.keys(nets)) {
+      for (const net of nets[name]) {
+        if (net.family === 'IPv4' && !net.internal) {
+          return net.address;
+        }
+      }
+    }
+  } catch (e) {}
+  return 'localhost';
+}
+
+const localIp = getLocalNetworkIp();
+
+// Start HTTP Server (Port 3000)
+const httpServer = http.createServer(requestHandler);
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`\n======================================================`);
   console.log(`RideDriveAhead Full-Stack Server & Database Online`);
-  console.log(`Web Simulator: http://localhost:${PORT}`);
-  console.log(`Backend REST API: http://localhost:${PORT}/api/v1/...`);
-  console.log(`Database File: ${DB_PATH}`);
-  console.log(`======================================================\n`);
+  console.log(`HTTP Local:       http://localhost:${PORT}`);
+  console.log(`HTTP Mobile:      http://${localIp}:${PORT}/app`);
+  console.log(`Database File:    ${DB_PATH}`);
+
+  // Start HTTPS Server (Port 3443) for Real-Time Mobile GPS Tracking
+  const certPath = path.join(__dirname, 'certs', 'server.pfx');
+  if (fs.existsSync(certPath)) {
+    try {
+      const pfx = fs.readFileSync(certPath);
+      const httpsServer = https.createServer({ pfx, passphrase: 'ridedriveahead' }, requestHandler);
+      httpsServer.listen(HTTPS_PORT, '0.0.0.0', () => {
+        console.log(`------------------------------------------------------`);
+        console.log(`SECURE HTTPS SERVER ACTIVE (REQUIRED FOR MOBILE GPS):`);
+        console.log(`Rider Live GPS:   https://${localIp}:${HTTPS_PORT}/app`);
+        console.log(`Driver Live GPS:  https://${localIp}:${HTTPS_PORT}/driver-app`);
+        console.log(`Desktop HTTPS:    https://localhost:${HTTPS_PORT}/app`);
+        console.log(`======================================================\n`);
+      });
+      httpsServer.on('error', (err) => {
+        console.warn(`[HTTPS SERVER WARNING] ${err.message}`);
+      });
+    } catch (e) {
+      console.warn(`[HTTPS CERT ERROR] ${e.message}`);
+    }
+  } else {
+    console.log(`======================================================\n`);
+  }
 });
