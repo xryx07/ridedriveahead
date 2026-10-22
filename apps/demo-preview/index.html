@@ -3300,8 +3300,13 @@
                     <h2>Rent a Car or Bike</h2>
                     <p>Verified fleet from local partners. Choose self-drive or travel with a professional captain.</p>
                 </div>
-                <div style="font-size: 13px; color: var(--accent); font-weight: 700;">
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Zero Security Deposit on Select Fleets
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                    <div style="font-size: 13px; color: var(--accent); font-weight: 700;">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg> Zero Security Deposit on Select Fleets
+                    </div>
+                    <button class="cta-btn-primary" onclick="openHostModal()" style="padding: 7px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> List Your Vehicle & Earn
+                    </button>
                 </div>
             </div>
 
@@ -3463,7 +3468,7 @@
                         <li><a href="#rent">Rent a Car</a></li>
                         <li><a href="#rent">Rent a Bike</a></li>
                         <li><a href="#hire-driver">Hire a Chauffeur</a></li>
-                        <li><a href="#partner">Host Your Vehicle</a></li>
+                        <li><a href="javascript:void(0)" onclick="openHostModal()">Host Your Vehicle (Earn ₹25k–₹50k/mo)</a></li>
                         <li><a href="#pricing">Handover Protocol</a></li>
                     </ul>
                 </div>
@@ -3986,6 +3991,57 @@
             document.getElementById('successRentalCar').innerText = carName;
             document.getElementById('rentalSuccessModalBackdrop').style.display = 'flex';
             showToast('Reservation Confirmed! Host release PIN: 7391 generated', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg>');
+        }
+
+        /* 1.1 HOST VEHICLE / LIST & EARN WORKFLOW */
+        let hostSelectedDailyRate = 1800;
+        let hostSelectedDays = 15;
+
+        function openHostModal() {
+            const modal = document.getElementById('hostVehicleModalBackdrop');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('hostFormView').style.display = 'block';
+                document.getElementById('hostSuccessView').style.display = 'none';
+                updateHostEarningsCalc();
+            }
+        }
+
+        function selectHostCategory(type, dailyRate, btn) {
+            hostSelectedDailyRate = dailyRate;
+            document.querySelectorAll('#hostCategoryPills .rental-pill').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            updateHostEarningsCalc();
+        }
+
+        function updateHostDaysSlider(val) {
+            hostSelectedDays = parseInt(val, 10);
+            const disp = document.getElementById('hostDaysDisplay');
+            if (disp) disp.innerText = val + ' days/month';
+            updateHostEarningsCalc();
+        }
+
+        function updateHostEarningsCalc() {
+            const gross = hostSelectedDailyRate * hostSelectedDays;
+            const netHostPayout = Math.round(gross * 0.85); // 85% host share, 15% RDA platform commission
+            const earnDisplay = document.getElementById('hostEarningsAmount');
+            if (earnDisplay) earnDisplay.innerText = '₹ ' + netHostPayout.toLocaleString('en-IN');
+        }
+
+        function submitHostVehicle() {
+            const modelInput = document.getElementById('hostVehicleModel');
+            const regInput = document.getElementById('hostRegNo');
+            const model = (modelInput && modelInput.value.trim()) ? modelInput.value.trim() : 'Hyundai Creta SX';
+            const regNo = (regInput && regInput.value.trim()) ? regInput.value.trim() : 'DL 01 AB 8841';
+            
+            const successModel = document.getElementById('hostSuccessModel');
+            const successReg = document.getElementById('hostSuccessReg');
+            if (successModel) successModel.innerText = model;
+            if (successReg) successReg.innerText = regNo.toUpperCase();
+            
+            document.getElementById('hostFormView').style.display = 'none';
+            document.getElementById('hostSuccessView').style.display = 'block';
+            showToast('Vehicle listing submitted! Review ID HOST-8841 generated.', '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg>');
         }
 
         /* 2. CHAUFFEUR WORKFLOW */
@@ -5475,6 +5531,122 @@
             <button class="cta-btn-primary" style="width:100%; justify-content:center; margin-top:16px; padding:12px;" onclick="closeModal('rentalSuccessModalBackdrop'); showToast('Handover pass saved to your wallet!')">
                 Done & Save Pass
             </button>
+        </div>
+    </div>
+
+    <!-- 10. HOST VEHICLE / LIST & EARN MODAL -->
+    <div class="modal-backdrop" id="hostVehicleModalBackdrop" style="display:none;" onclick="closeModal('hostVehicleModalBackdrop')">
+        <div class="modal-card-elevated" style="max-width: 500px; max-height: 90vh; overflow-y: auto;" onclick="event.stopPropagation()">
+            <div class="modal-header-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:16px; font-weight:800;">Host Your Vehicle & Earn</span>
+                    <span style="font-size:10px; font-weight:800; background:rgba(199,255,61,0.15); color:var(--accent); padding:2px 8px; border-radius:12px; border:1px solid rgba(199,255,61,0.3);">85% Payout</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('hostVehicleModalBackdrop')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+
+            <!-- Form View -->
+            <div id="hostFormView">
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px; line-height:1.5;">
+                    Turn your idle car or bike into guaranteed monthly earnings. Backed by escrow security deposits, ₹10L insurance, and 24/7 telematics monitoring.
+                </p>
+
+                <!-- Step 1: Dynamic Earning Calculator -->
+                <div style="background:var(--surface-3); border-radius:12px; padding:14px; margin-bottom:16px; border:1px solid var(--border);">
+                    <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">1. Select Vehicle Category</div>
+                    <div class="rental-toggle-pills" id="hostCategoryPills" style="margin-bottom:12px;">
+                        <button class="rental-pill" onclick="selectHostCategory('hatchback', 1200, this)">Hatchback · ₹1.2k</button>
+                        <button class="rental-pill active" onclick="selectHostCategory('sedan', 1800, this)">Sedan · ₹1.8k</button>
+                        <button class="rental-pill" onclick="selectHostCategory('suv', 3200, this)">SUV · ₹3.2k</button>
+                        <button class="rental-pill" onclick="selectHostCategory('bike', 750, this)">Bike · ₹750</button>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:12px; color:var(--text-secondary);">Days available per month:</span>
+                        <span style="font-size:13px; font-weight:800; color:var(--accent);" id="hostDaysDisplay">15 days/month</span>
+                    </div>
+                    <input type="range" min="5" max="30" value="15" step="1" style="width:100%; accent-color:var(--accent); cursor:pointer;" oninput="updateHostDaysSlider(this.value)">
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding-top:10px; border-top:1px dashed var(--border);">
+                        <div>
+                            <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Projected Net Payout (85%)</div>
+                            <div style="font-size:22px; font-weight:900; color:var(--accent);" id="hostEarningsAmount">₹ 22,950</div>
+                        </div>
+                        <div style="text-align:right; font-size:10px; color:var(--text-muted);">
+                            <div>✓ Direct IMPS in 24h</div>
+                            <div>✓ Escrow Deposit Shield</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Vehicle Information -->
+                <div style="margin-bottom:12px;">
+                    <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:4px;">Vehicle Brand & Model</label>
+                    <input type="text" id="hostVehicleModel" placeholder="e.g. Hyundai Creta SX / Honda City" style="width:100%; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:13px;">
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+                    <div>
+                        <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:4px;">Registration No.</label>
+                        <input type="text" id="hostRegNo" placeholder="DL 01 AB 8841" style="width:100%; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:13px; text-transform:uppercase;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; display:block; margin-bottom:4px;">City</label>
+                        <select id="hostCitySelect" style="width:100%; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; color:var(--text-primary); font-size:13px;">
+                            <option>Delhi NCR / Gurugram</option>
+                            <option>Hyderabad</option>
+                            <option>Bengaluru</option>
+                            <option>Mumbai</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-secondary); cursor:pointer;">
+                        <input type="checkbox" checked style="accent-color:var(--accent);">
+                        <span>Allow <strong>RDA Chauffeur Trips</strong> (Customers get car + verified captain; earns ~20% more)</span>
+                    </label>
+                </div>
+
+                <button class="cta-btn-primary" style="width:100%; justify-content:center; padding:12px; font-size:14px; font-weight:800;" onclick="submitHostVehicle()">
+                    Submit Vehicle for Host Verification →
+                </button>
+            </div>
+
+            <!-- Success / Review View -->
+            <div id="hostSuccessView" style="display:none; text-align:center; padding:10px 0;">
+                <div style="width:52px; height:52px; border-radius:50%; background:rgba(199,255,61,0.15); color:var(--accent); display:flex; align-items:center; justify-content:center; margin:0 auto 12px;">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div style="font-size:18px; font-weight:900;">Vehicle Submitted for Onboarding!</div>
+                <div style="font-size:12px; color:var(--text-secondary); margin-top:3px;">Your application has been logged with RDA Fleet Operations</div>
+
+                <div style="background:var(--surface-3); border-radius:12px; padding:14px; margin:16px 0; text-align:left;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span style="font-size:12px; color:var(--text-muted);">Vehicle</span>
+                        <span style="font-size:13px; font-weight:800;" id="hostSuccessModel">Hyundai Creta SX</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span style="font-size:12px; color:var(--text-muted);">Registration</span>
+                        <span style="font-size:12px; font-family:'JetBrains Mono', monospace; color:var(--accent);" id="hostSuccessReg">DL 01 AB 8841</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="font-size:12px; color:var(--text-muted);">Status</span>
+                        <span style="font-size:11px; font-weight:700; color:#F59E0B; background:rgba(245,158,11,0.15); padding:2px 8px; border-radius:6px;">KYC REVIEW PENDING</span>
+                    </div>
+                </div>
+
+                <div style="background:var(--surface-2); border-radius:12px; padding:12px; text-align:left; font-size:11px; color:var(--text-muted); line-height:1.6; margin-bottom:16px;">
+                    <div style="font-weight:700; color:var(--text-primary); margin-bottom:4px;">Next Steps:</div>
+                    <div>1. <strong>RC & Insurance Verification:</strong> Checked via Parivahan in ~2 hours.</div>
+                    <div>2. <strong>OBD-II Telematics Tracker:</strong> Courier tracking link will be sent to your phone.</div>
+                    <div>3. <strong>Payout Setup:</strong> Add your UPI VPA or Bank Account to receive automatic 24h settlements.</div>
+                </div>
+
+                <button class="cta-btn-primary" style="width:100%; justify-content:center; padding:12px;" onclick="closeModal('hostVehicleModalBackdrop'); showToast('Host profile active! Welcome to RDA Fleet Partner Network');">
+                    Done
+                </button>
+            </div>
         </div>
     </div>
 
