@@ -37,14 +37,15 @@
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bottom:env(safe-area-inset-bottom,0px);
 }
-html{-webkit-text-size-adjust:100%;height:100%}
+html{-webkit-text-size-adjust:100%;min-height:100%}
 body{
   font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
   background:var(--bg);
   color:var(--text);
-  min-height:100dvh;
+  min-height:100%;
   overflow-x:hidden;
-  overscroll-behavior:none;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
   -webkit-font-smoothing:antialiased;
   -webkit-tap-highlight-color:transparent;
 }
@@ -57,8 +58,8 @@ a{text-decoration:none;color:inherit}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:4px}
 
 /* APP SHELL */
-.app{position:relative;width:100%;min-height:100dvh;max-width:480px;margin:0 auto;background:var(--bg)}
-.screen{display:none;flex-direction:column;min-height:100dvh;padding-bottom:calc(76px + var(--safe-bottom));overflow-y:auto;overscroll-behavior-y:contain;position:relative}
+.app{position:relative;width:100%;min-height:100vh;min-height:100dvh;max-width:480px;margin:0 auto;background:var(--bg)}
+.screen{display:none;flex-direction:column;width:100%;min-height:100vh;padding-bottom:calc(130px + var(--safe-bottom));box-sizing:border-box;position:relative}
 .screen.active{display:flex}
 .screen.no-nav{padding-bottom:0}
 
@@ -141,7 +142,7 @@ a{text-decoration:none;color:inherit}
 .home-sheet{
   position:relative;z-index:20;background:var(--bg);
   border-radius:24px 24px 0 0;border-top:1px solid var(--border);
-  padding:14px 16px 24px;margin-top:-20px;
+  padding:16px 16px calc(140px + var(--safe-bottom));margin-top:-20px;
   box-shadow:0 -16px 40px rgba(0,0,0,0.6);
 }
 .sheet-drag-handle{
@@ -263,7 +264,7 @@ a{text-decoration:none;color:inherit}
 /* ACTIVE TRIP TRACKING SHEET (Uber Style) */
 .tracking-sheet{
   background:var(--surface);border-radius:24px 24px 0 0;border-top:1px solid var(--border);
-  padding:18px 20px calc(24px + var(--safe-bottom));margin-top:-24px;position:relative;z-index:20;
+  padding:18px 20px calc(140px + var(--safe-bottom));margin-top:-24px;position:relative;z-index:20;
 }
 .otp-uber-badge{
   background:var(--surface2);border:1.5px dashed var(--accent);border-radius:14px;
@@ -852,13 +853,17 @@ function initHomeMap() {
 
   homeLeafletMap = L.map('homeMap', {
     zoomControl: false,
-    attributionControl: false
+    attributionControl: false,
+    scrollWheelZoom: false,
+    touchZoom: false,
+    dragging: false,
+    doubleClickZoom: false,
+    boxZoom: false
   }).setView([HUB_LAT, HUB_LNG], 15);
 
-  // CartoDB Dark Matter tile layer
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd'
+  // Esri World Dark Gray Base (Clean, high performance, zero watermark)
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 16
   }).addTo(homeLeafletMap);
 
   // User location pulsing marker
@@ -1038,12 +1043,16 @@ function initActiveMap() {
 
   activeLeafletMap = L.map('activeMap', {
     zoomControl: false,
-    attributionControl: false
+    attributionControl: false,
+    scrollWheelZoom: false,
+    touchZoom: false,
+    dragging: false,
+    doubleClickZoom: false,
+    boxZoom: false
   }).setView([HUB_LAT, HUB_LNG], 15);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd'
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 16
   }).addTo(activeLeafletMap);
 
   // User Pickup Pin

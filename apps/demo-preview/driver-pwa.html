@@ -37,14 +37,15 @@
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bottom:env(safe-area-inset-bottom,0px);
 }
-html{-webkit-text-size-adjust:100%;height:100%}
+html{-webkit-text-size-adjust:100%;min-height:100%}
 body{
   font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
   background:var(--bg);
   color:var(--text);
-  min-height:100dvh;
+  min-height:100%;
   overflow-x:hidden;
-  overscroll-behavior:none;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
   -webkit-font-smoothing:antialiased;
   -webkit-tap-highlight-color:transparent;
 }
@@ -54,8 +55,8 @@ a{text-decoration:none;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* APP SHELL */
-.app{position:relative;width:100%;min-height:100dvh;max-width:480px;margin:0 auto;background:var(--bg)}
-.screen{display:none;flex-direction:column;min-height:100dvh;padding-bottom:calc(76px + var(--safe-bottom));overflow-y:auto;overscroll-behavior-y:contain;position:relative}
+.app{position:relative;width:100%;min-height:100vh;min-height:100dvh;max-width:480px;margin:0 auto;background:var(--bg)}
+.screen{display:none;flex-direction:column;width:100%;min-height:100vh;padding-bottom:calc(130px + var(--safe-bottom));box-sizing:border-box;position:relative}
 .screen.active{display:flex}
 .screen.no-nav{padding-bottom:0}
 
@@ -165,7 +166,7 @@ a{text-decoration:none;color:inherit}
 .driver-sheet{
   position:relative;z-index:20;background:var(--bg);
   border-radius:24px 24px 0 0;border-top:1px solid var(--border);
-  padding:14px 16px 24px;margin-top:-20px;
+  padding:16px 16px calc(140px + var(--safe-bottom));margin-top:-20px;
   box-shadow:0 -16px 40px rgba(0,0,0,0.6);
 }
 .sheet-drag-handle{
@@ -661,12 +662,17 @@ function initDriverMap() {
 
   driverLeafletMap = L.map('driverMap', {
     zoomControl: false,
-    attributionControl: false
+    attributionControl: false,
+    scrollWheelZoom: false,
+    touchZoom: false,
+    dragging: false,
+    doubleClickZoom: false,
+    boxZoom: false
   }).setView([HUB_LAT, HUB_LNG], 14);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd'
+  // Esri World Dark Gray Base (Clean, high performance, zero watermark)
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 16
   }).addTo(driverLeafletMap);
 
   // Driver car marker
