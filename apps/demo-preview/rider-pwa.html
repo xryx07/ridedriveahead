@@ -7,1352 +7,1110 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0B0D0F">
 <meta name="apple-mobile-web-app-title" content="RDA Rider">
-<title>RideDriveAhead Rider</title>
+<title>RideDriveAhead — Elite Mobility</title>
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmlkZURyaXZlQWhlYWQgUmlkZXIiLCJzaG9ydF9uYW1lIjoiUkRBIFJpZGVyIiwic3RhcnRfdXJsIjoiL2FwcCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwQjBEMEYiLCJ0aGVtZV9jb2xvciI6IiMwQjBEMEYiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyB2aWV3Qm94PScwIDAgMTkyIDE5MiclM0UlM0NyZWN0IHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyByeD0nMzInIGZpbGw9JyUyMzBCMEQwRiclM0UlM0MvcmVjdCUzRSUzQ3RleHQgeD0nOTYnIHk9JzExNicgZm9udC1mYW1pbHk9J3NhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nNzInIGZvbnQtd2VpZ2h0PSc4MDAnIGZpbGw9JyUyM0M3RkYzRCcgdGV4dC1hbmNob3I9J21pZGRsZSclM0VSREElM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230B0D0F'/%3E%3Ctext x='90' y='110' font-family='sans-serif' font-size='64' font-weight='800' fill='%23C7FF3D' text-anchor='middle'%3ERDA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Leaflet Map (Free OpenStreetMap / CartoDB Dark Matter, zero API key needed) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
---bg:#0B0D0F;--surface:#121619;--surface2:#1A1F23;--accent:#C7FF3D;--text:#F4F6F3;--muted:#8094A6;
---success:#17D68A;--danger:#EF4444;--radius-card:15px;--radius-btn:11px;--radius-avatar:50%;
---safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
---safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
+  --bg:#0A0B0E;
+  --surface:#12151B;
+  --surface2:#191D26;
+  --surface3:#222734;
+  --accent:#C7FF3D;
+  --accent-glow:rgba(199,255,61,0.25);
+  --text:#F4F6F9;
+  --muted:#8590A2;
+  --border:rgba(255,255,255,0.08);
+  --border-active:rgba(199,255,61,0.4);
+  --success:#17D68A;
+  --danger:#EF4444;
+  --warning:#FBBF24;
+  --radius-card:18px;
+  --radius-btn:14px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 html{-webkit-text-size-adjust:100%;height:100%}
 body{
-font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
-min-height:100dvh;overflow-x:hidden;overscroll-behavior:none;-webkit-font-smoothing:antialiased;
--webkit-tap-highlight-color:transparent;
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100dvh;
+  overflow-x:hidden;
+  overscroll-behavior:none;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
 input,button,textarea,select{font-family:inherit;font-size:inherit;color:inherit;border:none;outline:none;background:none}
 button{cursor:pointer;-webkit-user-select:none;user-select:none}
 a{text-decoration:none;color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:4px}
 
 /* APP SHELL */
-.app{position:relative;width:100%;min-height:100dvh;max-width:480px;margin:0 auto}
-.screen{display:none;flex-direction:column;min-height:100dvh;padding-bottom:calc(72px + var(--safe-bottom));overflow-y:auto;overscroll-behavior-y:contain}
+.app{position:relative;width:100%;min-height:100dvh;max-width:480px;margin:0 auto;background:var(--bg)}
+.screen{display:none;flex-direction:column;min-height:100dvh;padding-bottom:calc(76px + var(--safe-bottom));overflow-y:auto;overscroll-behavior-y:contain;position:relative}
 .screen.active{display:flex}
 .screen.no-nav{padding-bottom:0}
-.screen-pad{padding:0 16px}
 
 /* HEADER */
-.header{display:flex;align-items:center;gap:10px;padding:calc(12px + var(--safe-top)) 16px 12px;position:sticky;top:0;background:var(--bg);z-index:50}
-.header-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--surface);flex-shrink:0;cursor:pointer;transition:background .15s}
-.header-back:hover,.header-back:active{background:var(--surface2)}
-.header-back svg{width:20px;height:20px;stroke:var(--text);stroke-width:2;fill:none}
-.header-title{font-size:18px;font-weight:700;flex:1}
-.header-right{display:flex;align-items:center;gap:8px}
+.header{
+  display:flex;align-items:center;gap:12px;
+  padding:calc(12px + var(--safe-top)) 16px 12px;
+  position:sticky;top:0;background:rgba(10,11,14,0.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  z-index:50;border-bottom:1px solid var(--border);
+}
+.header-back{
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  border-radius:12px;background:var(--surface2);cursor:pointer;transition:all .15s;flex-shrink:0;
+}
+.header-back:active{transform:scale(0.92)}
+.header-back svg{width:20px;height:20px;stroke:var(--text);stroke-width:2.2;fill:none}
+.header-title{font-size:18px;font-weight:800;flex:1;letter-spacing:-0.02em}
 
-/* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
-background:var(--surface);border-top:1px solid rgba(255,255,255,.06);
-padding:6px 0 calc(6px + var(--safe-bottom));z-index:100;display:flex}
+/* BOTTOM NAVIGATION (Uber/Ola Style) */
+.bottom-nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
+  background:rgba(15,18,24,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  padding:8px 12px calc(8px + var(--safe-bottom));
+  z-index:100;display:flex;justify-content:space-around;
+}
 .bottom-nav.hidden{display:none}
-.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;cursor:pointer;
-border-radius:8px;transition:color .15s;color:var(--muted);min-height:48px;justify-content:center}
-.nav-tab svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;transition:stroke .15s}
-.nav-tab span{font-size:10px;font-weight:600;letter-spacing:.3px}
+.nav-tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;
+  cursor:pointer;border-radius:12px;transition:all .18s;color:var(--muted);min-height:50px;justify-content:center;
+}
+.nav-tab svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;transition:stroke .18s}
+.nav-tab span{font-size:11px;font-weight:600;letter-spacing:.2px}
 .nav-tab.active{color:var(--accent)}
-.nav-tab:active{opacity:.7}
+.nav-tab.active svg{stroke:var(--accent);stroke-width:2.2}
+.nav-tab:active{transform:scale(0.92)}
 
 /* BUTTONS */
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;height:52px;border-radius:var(--radius-btn);
-font-weight:700;font-size:15px;padding:0 24px;transition:transform .12s,opacity .12s;cursor:pointer;width:100%}
-.btn:active{transform:scale(.97);opacity:.9}
-.btn-accent{background:var(--accent);color:#0B0D0F}
-.btn-surface{background:var(--surface2);color:var(--text)}
-.btn-danger{background:rgba(239,68,68,.15);color:var(--danger)}
-.btn-outline{border:1.5px solid var(--surface2);color:var(--text)}
-.btn:disabled{opacity:.4;pointer-events:none}
-.btn-sm{height:44px;font-size:13px;padding:0 16px;border-radius:10px}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius-btn);
+  font-weight:800;font-size:15px;letter-spacing:-0.01em;padding:0 24px;transition:transform .12s,background .15s;
+  cursor:pointer;width:100%;box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+.btn:active{transform:scale(.97)}
+.btn-accent{background:var(--accent);color:#0A0B0E}
+.btn-accent:hover{background:#d5ff5c}
+.btn-surface{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.btn-sm{height:44px;font-size:13px;padding:0 18px;border-radius:12px}
+
+/* MAP STYLES */
+.map-viewport{
+  width:100%;height:44vh;min-height:280px;position:relative;background:#06080B;
+}
+#homeMap, #activeMap{width:100%;height:100%;position:absolute;inset:0;z-index:1}
+.map-overlay-top{
+  position:absolute;top:calc(12px + var(--safe-top));left:16px;right:16px;
+  z-index:10;display:flex;justify-content:space-between;align-items:center;pointer-events:none;
+}
+.map-brand-chip{
+  pointer-events:auto;background:rgba(10,11,14,0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:100px;padding:6px 14px 6px 8px;display:flex;align-items:center;gap:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+}
+.brand-pill-logo{
+  width:28px;height:28px;border-radius:50%;background:var(--accent);color:#0A0B0E;
+  font-weight:900;font-size:11px;display:flex;align-items:center;justify-content:center;
+}
+.brand-pill-text{font-size:13px;font-weight:800;letter-spacing:-0.02em}
+.map-recenter-btn{
+  pointer-events:auto;width:42px;height:42px;border-radius:50%;background:rgba(18,21,27,0.9);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .12s;
+}
+.map-recenter-btn:active{transform:scale(0.9)}
+
+/* HOME BOTTOM SHEET (Uber Style Floating Drawer) */
+.home-sheet{
+  position:relative;z-index:20;background:var(--bg);
+  border-radius:24px 24px 0 0;border-top:1px solid var(--border);
+  padding:14px 16px 24px;margin-top:-20px;
+  box-shadow:0 -16px 40px rgba(0,0,0,0.6);
+}
+.sheet-drag-handle{
+  width:38px;height:4px;border-radius:2px;background:rgba(255,255,255,0.2);margin:0 auto 14px;
+}
+
+/* WHERE TO SEARCH BAR (Signature Uber Style) */
+.uber-search-card{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:18px;
+  padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:all .18s;box-shadow:0 8px 24px rgba(0,0,0,0.25);margin-bottom:18px;
+}
+.uber-search-card:active{border-color:var(--accent);transform:scale(0.99)}
+.search-icon-circle{
+  width:40px;height:40px;border-radius:50%;background:rgba(199,255,61,0.12);
+  display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;
+}
+.search-content{flex:1;min-width:0}
+.search-title{font-size:16px;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
+.search-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* SHORTCUT CHIPS ROW (Uber Recent Spots) */
+.quick-spots-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:22px;scrollbar-width:none}
+.quick-spots-row::-webkit-scrollbar{display:none}
+.spot-chip{
+  flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:100px;
+  padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .15s;
+}
+.spot-chip:active{background:var(--surface2);border-color:var(--accent)}
+.spot-chip svg{width:14px;height:14px;stroke:var(--accent);fill:none}
+
+/* SERVICE SELECTION CARDS (Dual Hero Design) */
+.service-hero-card{
+  background:linear-gradient(135deg,#131822 0%,#1B2332 100%);
+  border:1.5px solid var(--accent);border-radius:20px;padding:18px;
+  margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden;
+  box-shadow:0 12px 32px rgba(0,0,0,0.35);transition:all .18s;
+}
+.service-hero-card:active{transform:scale(0.985)}
+.card-shine{
+  position:absolute;top:0;right:0;width:140px;height:140px;
+  background:radial-gradient(circle,rgba(199,255,61,0.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.service-badge-pill{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;
+  font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  background:rgba(199,255,61,0.18);color:var(--accent);margin-bottom:10px;
+}
+.service-title{font-size:19px;font-weight:900;letter-spacing:-0.03em;margin-bottom:4px}
+.service-desc{font-size:12px;color:#A4B1C5;line-height:1.5;margin-bottom:14px}
+.service-pills-row{display:flex;gap:8px;flex-wrap:wrap}
+.service-mini-tag{
+  background:rgba(255,255,255,0.06);border-radius:8px;padding:4px 8px;
+  font-size:11px;font-weight:700;color:var(--text);
+}
+.service-price-chip{
+  position:absolute;top:18px;right:18px;text-align:right;
+}
+.price-from{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:700}
+.price-val{font-size:18px;font-weight:900;color:var(--accent)}
+
+/* SECONDARY CAB CARD */
+.service-cab-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:16px 18px;margin-bottom:20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  transition:all .18s;box-shadow:0 8px 24px rgba(0,0,0,0.2);
+}
+.service-cab-card:active{border-color:rgba(255,255,255,0.25);transform:scale(0.985)}
+
+/* PACKAGE SELECTOR CARDS */
+.pkg-card{
+  background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid var(--border);
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:14px;margin-bottom:10px;
+}
+.pkg-card.selected{
+  border-color:var(--accent);background:rgba(199,255,61,0.05);box-shadow:0 0 20px rgba(199,255,61,0.12);
+}
+.pkg-card:active{transform:scale(0.98)}
+.pkg-radio{
+  width:22px;height:22px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;
+}
+.pkg-card.selected .pkg-radio{border-color:var(--accent)}
+.pkg-radio-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .15s}
+.pkg-card.selected .pkg-radio-dot{transform:scale(1)}
+
+/* VEHICLE TIER (Uber Style) */
+.tier-card{
+  background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid var(--border);
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:14px;margin-bottom:10px;
+}
+.tier-card.selected{border-color:var(--accent);background:rgba(199,255,61,0.05);box-shadow:0 0 20px rgba(199,255,61,0.12)}
+.tier-card:active{transform:scale(0.98)}
+.tier-icon-wrap{
+  width:54px;height:54px;border-radius:14px;background:var(--surface2);display:flex;
+  align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border);
+}
+.tier-icon-wrap svg{width:32px;height:32px;stroke:var(--accent);fill:none}
 
 /* INPUTS */
-.input-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.input-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
-.input-field{height:52px;background:var(--surface);border:1.5px solid var(--surface2);border-radius:var(--radius-btn);
-padding:0 16px;font-size:15px;font-weight:500;color:var(--text);transition:border-color .15s}
+.input-field{
+  width:100%;height:52px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:var(--radius-btn);padding:0 16px;font-size:15px;font-weight:600;color:var(--text);
+  transition:border-color .15s;
+}
 .input-field:focus{border-color:var(--accent)}
-.input-field::placeholder{color:var(--muted)}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-prefix{height:52px;background:var(--surface);border:1.5px solid var(--surface2);border-radius:var(--radius-btn) 0 0 var(--radius-btn);
-padding:0 14px;font-size:15px;font-weight:600;color:var(--muted);display:flex;align-items:center;flex-shrink:0}
-.input-row .input-field{border-radius:0 var(--radius-btn) var(--radius-btn) 0;border-left:none;flex:1}
+.input-field::placeholder{color:var(--muted);font-weight:500}
 
-/* CARDS */
-.card{background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid transparent;transition:border-color .15s,transform .12s}
-.card-accent{border-color:var(--accent)}
-.card-subtle{border-color:var(--surface2)}
-.card:active{transform:scale(.985)}
+/* TRANSMISSION SWITCHER */
+.pill-group{display:flex;gap:8px;margin-top:6px}
+.pill-option{
+  flex:1;padding:12px;border-radius:12px;background:var(--surface2);border:1.5px solid var(--border);
+  text-align:center;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.pill-option.active{border-color:var(--accent);color:var(--accent);background:rgba(199,255,61,0.08)}
 
-/* BADGE */
-.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.badge-accent{background:rgba(199,255,61,.12);color:var(--accent)}
-.badge-muted{background:var(--surface2);color:var(--muted)}
-.badge-success{background:rgba(23,214,138,.12);color:var(--success)}
-.badge-danger{background:rgba(239,68,68,.12);color:var(--danger)}
+/* ACTIVE TRIP TRACKING SHEET (Uber Style) */
+.tracking-sheet{
+  background:var(--surface);border-radius:24px 24px 0 0;border-top:1px solid var(--border);
+  padding:18px 20px calc(24px + var(--safe-bottom));margin-top:-24px;position:relative;z-index:20;
+}
+.otp-uber-badge{
+  background:var(--surface2);border:1.5px dashed var(--accent);border-radius:14px;
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin:14px 0;
+}
+.otp-val-highlight{font-size:22px;font-weight:900;letter-spacing:4px;color:var(--accent)}
 
-/* AVATAR */
-.avatar{width:40px;height:40px;border-radius:var(--radius-avatar);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--accent);flex-shrink:0}
-.avatar-lg{width:64px;height:64px;font-size:26px}
-
-/* PILL SELECTOR */
-.pill-row{display:flex;gap:8px;flex-wrap:wrap}
-.pill{padding:10px 16px;border-radius:10px;background:var(--surface);border:1.5px solid var(--surface2);font-size:13px;font-weight:600;
-cursor:pointer;transition:all .15s;color:var(--muted);min-height:44px;display:flex;align-items:center}
-.pill.active{border-color:var(--accent);color:var(--accent);background:rgba(199,255,61,.06)}
-.pill:active{transform:scale(.95)}
-
-/* TABS */
-.tab-row{display:flex;gap:0;background:var(--surface);border-radius:12px;padding:3px;margin-bottom:20px}
-.tab-item{flex:1;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:14px;
-font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s}
-.tab-item.active{background:var(--surface2);color:var(--text)}
-
-/* STATUS STEPS */
-.status-steps{display:flex;flex-direction:column;gap:0;padding:4px 0}
-.status-step{display:flex;align-items:flex-start;gap:12px;position:relative;padding-bottom:20px}
-.status-step:last-child{padding-bottom:0}
-.status-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--surface2);background:var(--bg);flex-shrink:0;margin-top:3px;z-index:2;transition:all .3s}
-.status-step.done .status-dot{background:var(--success);border-color:var(--success)}
-.status-step.current .status-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(199,255,61,.4)}
-.status-line{position:absolute;left:6px;top:20px;width:2px;height:calc(100% - 10px);background:var(--surface2)}
-.status-step.done .status-line{background:var(--success)}
-.status-step:last-child .status-line{display:none}
-.status-text{font-size:14px;font-weight:600;color:var(--muted);transition:color .3s}
-.status-step.done .status-text,.status-step.current .status-text{color:var(--text)}
-
-/* OTP BOX */
-.otp-display{display:flex;gap:8px;justify-content:center;padding:16px 0}
-.otp-digit{width:52px;height:60px;border-radius:12px;background:var(--surface);border:1.5px solid var(--surface2);
-display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--accent)}
-
-/* PACKAGE CARD */
-.pkg-card{background:var(--surface);border-radius:var(--radius-card);padding:14px 16px;border:1.5px solid var(--surface2);
-cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:12px}
-.pkg-card.selected{border-color:var(--accent);background:rgba(199,255,61,.04)}
-.pkg-card:active{transform:scale(.98)}
-.pkg-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .15s}
-.pkg-card.selected .pkg-radio{border-color:var(--accent)}
-.pkg-radio-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .15s}
-.pkg-card.selected .pkg-radio-dot{transform:scale(1)}
-.pkg-info{flex:1;min-width:0}
-.pkg-name{font-size:14px;font-weight:700;margin-bottom:2px}
-.pkg-meta{font-size:12px;color:var(--muted)}
-.pkg-right{text-align:right;flex-shrink:0}
-.pkg-price{font-size:16px;font-weight:800;color:var(--accent)}
-.pkg-tag{margin-top:3px}
-
-/* VEHICLE TIER */
-.tier-card{background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid var(--surface2);
-cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:14px}
-.tier-card.selected{border-color:var(--accent);background:rgba(199,255,61,.04)}
-.tier-card:active{transform:scale(.98)}
-.tier-icon{width:52px;height:52px;border-radius:12px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tier-icon svg{width:28px;height:28px;stroke:var(--accent);stroke-width:1.5;fill:none}
-.tier-info{flex:1;min-width:0}
-.tier-name{font-size:15px;font-weight:700;margin-bottom:2px}
-.tier-desc{font-size:12px;color:var(--muted)}
-.tier-right{text-align:right;flex-shrink:0}
-.tier-price{font-size:17px;font-weight:800;color:var(--text)}
-.tier-eta{font-size:11px;color:var(--muted);margin-top:2px}
-
-/* UTILITY */
-.spacer{height:16px}.spacer-sm{height:8px}.spacer-lg{height:24px}
-.section-title{font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px;padding:0 16px}
-.text-muted{color:var(--muted)}.text-accent{color:var(--accent)}.text-sm{font-size:13px}.text-xs{font-size:11px}
-.fw-700{font-weight:700}.fw-800{font-weight:800}
-.flex-between{display:flex;align-items:center;justify-content:space-between}
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;gap:12px}
-.empty-state svg{width:48px;height:48px;stroke:var(--muted);stroke-width:1.2;fill:none;opacity:.5}
-.empty-state p{color:var(--muted);font-size:14px;line-height:1.5}
-.divider{height:1px;background:var(--surface2);margin:16px 0}
-
-/* LOADING */
-.spinner{width:20px;height:20px;border:2.5px solid transparent;border-top-color:currentColor;border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* TAG CHIPS */
-.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.tag{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;background:var(--surface2);color:var(--muted)}
-
-/* ASSURANCE ITEMS */
-.assurance-item{display:flex;align-items:center;gap:10px;padding:8px 0}
-.assurance-check{width:20px;height:20px;border-radius:6px;background:rgba(23,214,138,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.assurance-check svg{width:12px;height:12px;stroke:var(--success);stroke-width:2.5;fill:none}
+/* LEAFLET CUSTOM PULSING MARKERS */
+.user-pulse-marker{
+  width:18px;height:18px;background:var(--accent);border:3px solid #0A0B0E;border-radius:50%;
+  box-shadow:0 0 0 0 rgba(199,255,61,0.7);animation:pulseWave 2s infinite;
+}
+@keyframes pulseWave{
+  0%{box-shadow:0 0 0 0 rgba(199,255,61,0.7)}
+  70%{box-shadow:0 0 0 16px rgba(199,255,61,0)}
+  100%{box-shadow:0 0 0 0 rgba(199,255,61,0)}
+}
+.cab-marker-icon{
+  width:32px;height:32px;border-radius:50%;background:#12151B;border:1.5px solid var(--accent);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.5);
+}
+.cab-marker-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none}
 
 /* TOAST */
-.toast{position:fixed;top:calc(20px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-120%);
-background:var(--surface2);color:var(--text);padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;
-z-index:999;transition:transform .3s cubic-bezier(.175,.885,.32,1.275);max-width:calc(100% - 32px);text-align:center;
-box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.toast{
+  position:fixed;top:calc(20px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-100px);
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:12px 20px;
+  border-radius:100px;font-size:13px;font-weight:700;z-index:999;box-shadow:0 12px 32px rgba(0,0,0,0.5);
+  transition:transform .3s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;display:flex;align-items:center;gap:8px;
+}
 .toast.show{transform:translateX(-50%) translateY(0)}
-
-/* SEARCH BOX HOME */
-.search-box{background:var(--surface);border-radius:var(--radius-card);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1.5px solid var(--surface2);transition:border-color .15s}
-.search-box:active{border-color:var(--accent)}
-.search-dots{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.search-dot-green{width:10px;height:10px;border-radius:50%;background:var(--success)}
-.search-dot-red{width:10px;height:10px;border-radius:50%;background:var(--danger)}
-.search-dot-line{width:1px;height:8px;background:var(--muted);margin:0 auto}
-.search-labels{flex:1;display:flex;flex-direction:column;gap:8px}
-.search-label{font-size:14px;font-weight:500}
-.search-label.muted{color:var(--muted)}
-.search-go{width:44px;height:44px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.search-go svg{width:20px;height:20px;stroke:#0B0D0F;stroke-width:2.5;fill:none}
-
-/* CONFIRMATION MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:flex-end;justify-content:center}
-.modal-overlay.show{display:flex}
-.modal-box{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 16px calc(24px + var(--safe-bottom));width:100%;max-width:480px}
-.modal-title{font-size:18px;font-weight:800;margin-bottom:8px}
-.modal-text{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.5}
-.modal-actions{display:flex;gap:10px}
-.modal-actions .btn{flex:1}
 </style>
 </head>
 <body>
-<div class="app" id="app">
+<div class="app">
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="cancelModal">
-<div class="modal-box">
-<div class="modal-title">Cancel Booking?</div>
-<div class="modal-text">Are you sure you want to cancel this ride? Cancellation charges may apply.</div>
-<div class="modal-actions">
-<button class="btn btn-surface btn-sm" onclick="closeCancelModal()">Keep Ride</button>
-<button class="btn btn-danger btn-sm" onclick="confirmCancel()">Cancel Ride</button>
-</div>
-</div>
+<!-- GLOBAL TOAST NOTIFICATION -->
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg">Notification</span>
 </div>
 
-<!-- ==================== SCREEN: LOGIN ==================== -->
+<!-- ==========================================
+     SCREEN 1: LOGIN / AUTH
+========================================== -->
 <div class="screen no-nav active" id="screen-login">
-<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 20px">
-<!-- Brand -->
-<div style="text-align:center;margin-bottom:40px">
-<div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--surface);border:1.5px solid var(--accent);margin-bottom:16px">
-<span style="font-size:18px;font-weight:900;color:var(--accent)">RDA</span>
-</div>
-<h1 style="font-size:22px;font-weight:800;margin-bottom:6px">RideDriveAhead</h1>
-<p style="font-size:13px;color:var(--muted);font-weight:500">Chauffeur On-Demand &amp; Guaranteed Cabs</p>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 22px">
+    <div style="text-align:center;margin-bottom:36px">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:20px;background:var(--surface);border:1.5px solid var(--accent);margin-bottom:16px;box-shadow:0 8px 24px rgba(199,255,61,0.15)">
+        <span style="font-size:22px;font-weight:900;color:var(--accent);letter-spacing:1px">RDA</span>
+      </div>
+      <h1 style="font-size:24px;font-weight:900;letter-spacing:-0.03em;margin-bottom:6px">RideDriveAhead</h1>
+      <p style="font-size:13px;color:var(--muted);font-weight:600">Hire a Chauffeur for Your Car &bull; Guaranteed Cabs</p>
+    </div>
+
+    <!-- Phone input -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:20px;margin-bottom:20px">
+      <label style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:8px">Enter Mobile Number</label>
+      <div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:12px;padding:0 14px;border:1px solid var(--border)">
+        <span style="font-weight:800;font-size:15px;color:var(--muted)">+91</span>
+        <input type="tel" id="loginPhone" maxlength="10" placeholder="98765 43210" style="height:50px;width:100%;font-size:16px;font-weight:700" />
+      </div>
+
+      <div id="otpBox" style="display:none;margin-top:16px">
+        <label style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:8px">Enter 6-Digit OTP</label>
+        <input type="tel" id="loginOtp" maxlength="6" placeholder="&bull; &bull; &bull; &bull; &bull; &bull;" style="height:50px;width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:12px;text-align:center;font-size:20px;font-weight:900;letter-spacing:8px;color:var(--accent)" />
+      </div>
+
+      <button class="btn btn-accent" id="authActionBtn" onclick="handleAuthClick()" style="margin-top:18px">
+        Continue with OTP &rarr;
+      </button>
+    </div>
+
+    <button class="btn btn-surface btn-sm" onclick="quickDemoLogin()" style="margin-top:8px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      One-Tap Demo Rider Login
+    </button>
+  </div>
 </div>
 
-<!-- Tabs -->
-<div class="tab-row" id="authTabs">
-<div class="tab-item active" onclick="switchAuthTab('login')">Log In</div>
-<div class="tab-item" onclick="switchAuthTab('signup')">Sign Up</div>
-</div>
-
-<!-- Login Form -->
-<div id="loginForm">
-<div class="input-group">
-<label class="input-label">Phone Number</label>
-<div class="input-row">
-<div class="input-prefix">+91</div>
-<input type="tel" class="input-field" id="phoneInput" placeholder="Enter phone number" maxlength="10" inputmode="numeric" autocomplete="tel">
-</div>
-</div>
-<button class="btn btn-accent" id="sendOtpBtn" onclick="sendOtp()">Send OTP</button>
-
-<div id="otpSection" style="display:none;margin-top:20px">
-<div class="input-group">
-<label class="input-label">Enter OTP</label>
-<input type="tel" class="input-field" id="otpInput" placeholder="6-digit OTP" maxlength="6" inputmode="numeric" style="text-align:center;font-size:20px;letter-spacing:8px;font-weight:800">
-</div>
-<button class="btn btn-accent" onclick="verifyOtp()">
-<span id="verifyText">Verify &amp; Login</span>
-<span id="verifySpinner" class="spinner" style="display:none"></span>
-</button>
-</div>
-
-<div class="spacer-lg"></div>
-<button class="btn btn-surface btn-sm" onclick="demoAutofill()" style="gap:6px">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-Demo Autofill
-</button>
-</div>
-
-<!-- Signup Form -->
-<div id="signupForm" style="display:none">
-<div class="input-group">
-<label class="input-label">Full Name</label>
-<input type="text" class="input-field" id="signupName" placeholder="Your full name" autocomplete="name">
-</div>
-<div class="input-group">
-<label class="input-label">Phone Number</label>
-<div class="input-row">
-<div class="input-prefix">+91</div>
-<input type="tel" class="input-field" id="signupPhone" placeholder="Phone number" maxlength="10" inputmode="numeric">
-</div>
-</div>
-<div class="input-group">
-<label class="input-label">Email</label>
-<input type="email" class="input-field" id="signupEmail" placeholder="Email address" autocomplete="email">
-</div>
-<div class="input-group">
-<label class="input-label">City</label>
-<input type="text" class="input-field" id="signupCity" placeholder="Your city" value="Hyderabad">
-</div>
-<button class="btn btn-accent" onclick="signupUser()">Create Account</button>
-</div>
-</div>
-</div>
-
-<!-- ==================== SCREEN: HOME ==================== -->
+<!-- ==========================================
+     SCREEN 2: HOME (UBER / OLA STYLE LIVE MAP + SHEET)
+========================================== -->
 <div class="screen" id="screen-home">
-<!-- Header -->
-<div class="header">
-<div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
-<div style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--surface);border:1px solid var(--accent);flex-shrink:0">
-<span style="font-size:10px;font-weight:900;color:var(--accent)">RDA</span>
-</div>
-<span style="font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">RideDriveAhead</span>
-</div>
-<div class="header-right">
-<button class="pill active" style="padding:6px 12px;min-height:34px;font-size:12px;gap:4px" onclick="showToast('City: Hyderabad')">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-Hyderabad
-</button>
-<div class="avatar" id="homeAvatar" onclick="navigate('profile')">?</div>
-</div>
+  <!-- Interactive Live Map Viewport -->
+  <div class="map-viewport">
+    <div id="homeMap"></div>
+    <div class="map-overlay-top">
+      <div class="map-brand-chip">
+        <div class="brand-pill-logo">R</div>
+        <div class="brand-pill-text">RideDriveAhead</div>
+      </div>
+      <div class="map-recenter-btn" onclick="recenterHomeMap()" title="Recenter Location">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Uber / Ola Floating Bottom Sheet -->
+  <div class="home-sheet">
+    <div class="sheet-drag-handle"></div>
+
+    <!-- Greeting Banner -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted)">Hello,</div>
+        <div style="font-size:20px;font-weight:900;letter-spacing:-0.03em" id="homeUserName">Rider Partner 👋</div>
+      </div>
+      <div style="width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--accent)" id="homeUserAvatar">
+        R
+      </div>
+    </div>
+
+    <!-- Signature "Where to?" Search Card -->
+    <div class="uber-search-card" onclick="openBookingFlow('CAB')">
+      <div class="search-icon-circle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="search-content">
+        <div class="search-title">Where to?</div>
+        <div class="search-sub">Enter destination or airport terminal</div>
+      </div>
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- Quick Spots Row -->
+    <div class="quick-spots-row">
+      <div class="spot-chip" onclick="quickSelectDestination('Airport Terminal 2')">
+        <svg viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7 4 8l6 4.5-3.5 3.5L4 15.5 3 16.5l3.5 1 1 3.5 1-1-.5-2.5 3.5-3.5 4.5 6 1.3-1.3z"/></svg>
+        <span>Airport T2</span>
+      </div>
+      <div class="spot-chip" onclick="quickSelectDestination('Cyber Towers, Hitech City')">
+        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="9" y1="18" x2="9" y2="18.01"/><line x1="15" y1="18" x2="15" y2="18.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/></svg>
+        <span>Tech Park</span>
+      </div>
+      <div class="spot-chip" onclick="quickSelectDestination('Jubilee Hills Road No. 36')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Jubilee Hills</span>
+      </div>
+    </div>
+
+    <!-- PRIMARY HERO SERVICE: HIRE CHAUFFEUR FOR YOUR CAR -->
+    <div class="service-hero-card" onclick="openBookingFlow('CHAUFFEUR')">
+      <div class="card-shine"></div>
+      <div class="service-price-chip">
+        <div class="price-from">Starts from</div>
+        <div class="price-val">&#8377;549</div>
+      </div>
+      <div class="service-badge-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span>CORE SPECIALTY &bull; DRIVE MY CAR</span>
+      </div>
+      <div class="service-title">Hire a Chauffeur for Your Car</div>
+      <div class="service-desc">
+        Verified drivers certified for your Manual (MT), Automatic (AT), or Luxury car. Hourly duties, outstation road trips &amp; safe night returns.
+      </div>
+      <div class="service-pills-row">
+        <span class="service-mini-tag">2h Local (&#8377;549)</span>
+        <span class="service-mini-tag">4h Half-Day (&#8377;999)</span>
+        <span class="service-mini-tag">8h Full-Day (&#8377;1,899)</span>
+        <span class="service-mini-tag">Outstation Trips</span>
+      </div>
+    </div>
+
+    <!-- SECONDARY: BOOK A CAB -->
+    <div class="service-cab-card" onclick="openBookingFlow('CAB')">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:48px;height:48px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);color:var(--text)">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="18" height="9" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 9l2-5h6l2 5"/></svg>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:16px;font-weight:900">Book a Cab</span>
+            <span style="font-size:10px;font-weight:800;color:var(--success);background:rgba(23,214,138,0.12);padding:2px 6px;border-radius:4px">NO SURGE</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">City point-to-point cabs &amp; advance airport transfers</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--muted)">From</div>
+        <div style="font-size:17px;font-weight:900;color:var(--text)">&#8377;189</div>
+      </div>
+    </div>
+
+    <!-- Trip Assurance Strip -->
+    <div style="background:var(--surface);border-radius:16px;padding:14px 16px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span style="font-size:12px;font-weight:800">Trip Guardian Security Active</span>
+      </div>
+      <span style="font-size:11px;color:var(--muted);font-weight:700">24/7 Roadside &bull; SOS</span>
+    </div>
+  </div>
 </div>
 
-<div class="screen-pad" style="padding-bottom:16px">
-<!-- Greeting -->
-<div class="card" style="margin-bottom:16px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%)">
-<div style="font-size:20px;font-weight:800" id="greetingText">Good day 👋</div>
-<div style="font-size:13px;color:var(--muted);margin-top:4px">Where are you headed today?</div>
-</div>
-
-<!-- Search Box -->
-<div class="search-box" onclick="navigate('fare_estimate')" style="margin-bottom:24px">
-<div class="search-dots">
-<div class="search-dot-green"></div>
-<div class="search-dot-line"></div>
-<div class="search-dot-red"></div>
-</div>
-<div class="search-labels">
-<div class="search-label" style="font-size:13px;color:var(--success)">Current location</div>
-<div style="height:1px;background:var(--surface2)"></div>
-<div class="search-label muted" style="font-size:13px">Enter destination</div>
-</div>
-<div class="search-go" aria-label="Search rides">
-<svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-</div>
-</div>
-
-<!-- Choose Your Service -->
-<div style="font-size:16px;font-weight:800;margin-bottom:12px">Choose Your Service</div>
-
-<!-- HERO: Hire a Driver -->
-<div class="card card-accent" style="margin-bottom:12px;cursor:pointer" onclick="navigate('booking')">
-<div style="display:flex;align-items:flex-start;gap:12px">
-<div style="width:44px;height:44px;border-radius:12px;background:rgba(199,255,61,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
-</div>
-<div style="flex:1;min-width:0">
-<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-<span class="badge badge-accent">Core Specialty</span>
-<span class="badge badge-muted">Drive My Car</span>
-</div>
-<div style="font-size:17px;font-weight:800;margin-bottom:4px">Hire a Driver</div>
-<div style="font-size:12px;font-weight:500;color:var(--text);opacity:.85">For Your Car</div>
-<p style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45">Professional chauffeurs for AT/MT/Luxury vehicles. Hourly, daily, or outstation.</p>
-<div class="tag-row">
-<span class="tag">Hourly (2h–8h)</span>
-<span class="tag">Outstation Trips</span>
-<span class="tag">Night Safe Return</span>
-</div>
-</div>
-</div>
-</div>
-
-<!-- Secondary: Book a Cab -->
-<div class="card card-subtle" style="margin-bottom:24px;cursor:pointer" onclick="navigate('fare_estimate')">
-<div style="display:flex;align-items:flex-start;gap:12px">
-<div style="width:44px;height:44px;border-radius:12px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8"><rect x="2" y="6" width="20" height="10" rx="3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>
-</div>
-<div style="flex:1;min-width:0">
-<div style="margin-bottom:6px"><span class="badge badge-muted">Fleet &amp; Transfers</span></div>
-<div style="font-size:16px;font-weight:800;margin-bottom:4px">Book a Cab</div>
-<p style="font-size:12px;color:var(--muted);line-height:1.45">City cabs, airport pickups &amp; drop-offs with guaranteed pricing.</p>
-</div>
-</div>
-</div>
-
-<!-- Professional Chauffeur -->
-<div class="card" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(199,255,61,.06),transparent)">
-<div style="font-size:15px;font-weight:800;margin-bottom:4px">Professional Chauffeur Service</div>
-<p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.45">Available for Manual, Automatic &amp; Luxury Vehicles</p>
-<button class="btn btn-accent btn-sm" style="width:auto;padding:0 20px" onclick="navigate('booking')">Hire a Professional Chauffeur
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-</button>
-</div>
-
-<!-- Trip Assurance -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">Trip Assurance</div>
-<div class="card" style="margin-bottom:12px" id="assuranceCard">
-<div style="font-size:15px;font-weight:800;margin-bottom:10px">Guaranteed Advance Rides</div>
-<div class="assurance-item">
-<div class="assurance-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-<span style="font-size:13px;font-weight:600">Zero Surge Guarantee</span>
-</div>
-<div class="assurance-item">
-<div class="assurance-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-<span style="font-size:13px;font-weight:600">On-Time Arrival</span>
-</div>
-<div class="assurance-item">
-<div class="assurance-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-<span style="font-size:13px;font-weight:600">Verified Drivers</span>
-</div>
-</div>
-
-<!-- Safety Card -->
-<div class="card" style="border:1px solid rgba(23,214,138,.2)">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-<div style="width:32px;height:32px;border-radius:10px;background:rgba(23,214,138,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-</div>
-<div style="font-size:15px;font-weight:800">Trip Guardian Status</div>
-</div>
-<p style="font-size:12px;color:var(--muted)">Live sharing &bull; Roadside Assistance &bull; Emergency SOS</p>
-</div>
-</div>
-<div class="spacer-lg"></div>
-</div>
-
-<!-- ==================== SCREEN: BOOKING (Hire a Driver) ==================== -->
+<!-- ==========================================
+     SCREEN 3: BOOKING FLOW (CHAUFFEUR OR CAB)
+========================================== -->
 <div class="screen" id="screen-booking">
-<div class="header">
-<div class="header-back" onclick="navigate('home')" aria-label="Go back">
-<svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-</div>
-<div class="header-title">Hire a Driver</div>
+  <div class="header">
+    <div class="header-back" onclick="navigate('home')">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div class="header-title" id="bookingScreenTitle">Hire a Driver</div>
+  </div>
+
+  <div style="padding:16px">
+    <!-- Pickup & Drop Input Card -->
+    <div style="background:var(--surface);border-radius:18px;border:1px solid var(--border);padding:14px;margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--success);flex-shrink:0"></div>
+        <input type="text" id="routePickup" value="Current Location (Banjara Hills Rd 12)" class="input-field" style="height:44px;font-size:14px" />
+      </div>
+      <div style="height:1px;background:var(--border);margin-left:22px;margin-bottom:12px"></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);flex-shrink:0"></div>
+        <input type="text" id="routeDrop" placeholder="Enter destination / airport terminal" class="input-field" style="height:44px;font-size:14px" />
+      </div>
+    </div>
+
+    <!-- CHAUFFEUR MODE OPTIONS -->
+    <div id="chauffeurOptions">
+      <!-- Transmission skill selector -->
+      <div style="margin-bottom:18px">
+        <label style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Your Car's Transmission</label>
+        <div class="pill-group">
+          <div class="pill-option active" id="transAT" onclick="selectTransmission('AUTOMATIC')">Automatic (AT / DCT)</div>
+          <div class="pill-option" id="transMT" onclick="selectTransmission('MANUAL')">Manual (MT) Stick Shift</div>
+        </div>
+      </div>
+
+      <!-- Packages list -->
+      <div style="font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Choose Chauffeur Duty</div>
+      <div id="packagesContainer"></div>
+    </div>
+
+    <!-- CAB MODE OPTIONS -->
+    <div id="cabOptions" style="display:none">
+      <div style="font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Select Vehicle Tier</div>
+      <div id="cabTiersContainer"></div>
+    </div>
+
+    <!-- Payment Choice Strip -->
+    <div style="background:var(--surface);border-radius:14px;padding:12px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin:16px 0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span style="font-size:13px;font-weight:700">Payment: UPI / Cash at Duty End</span>
+      </div>
+      <span style="font-size:11px;color:var(--success);font-weight:800">GUARANTEED FARE</span>
+    </div>
+
+    <button class="btn btn-accent" id="confirmHireBtn" onclick="confirmBooking()">
+      Confirm &amp; Dispatch &rarr;
+    </button>
+  </div>
 </div>
 
-<div class="screen-pad" style="padding-bottom:16px">
-<!-- Package Selection -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">Select Package</div>
-<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px" id="packageList"></div>
+<!-- ==========================================
+     SCREEN 4: ACTIVE RIDE & LIVE TRACKING (UBER STYLE)
+========================================== -->
+<div class="screen" id="screen-active">
+  <div class="map-viewport" style="height:48vh">
+    <div id="activeMap"></div>
+    <div class="map-overlay-top">
+      <div class="map-brand-chip">
+        <div class="brand-pill-logo" style="background:var(--success)">&#10003;</div>
+        <div class="brand-pill-text" id="trackingStatusPill">Chauffeur Assigned</div>
+      </div>
+    </div>
+  </div>
 
-<!-- Your Car Details -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">Your Car Details</div>
+  <div class="tracking-sheet">
+    <div class="sheet-drag-handle"></div>
 
-<div style="margin-bottom:12px">
-<div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px">Transmission</div>
-<div class="pill-row" id="transmissionPills">
-<div class="pill active" data-val="AT" onclick="selectPill('transmissionPills',this)">Automatic (AT)</div>
-<div class="pill" data-val="MT" onclick="selectPill('transmissionPills',this)">Manual (MT)</div>
-</div>
-</div>
-<div style="margin-bottom:20px">
-<div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px">Car Category</div>
-<div class="pill-row" id="categoryPills">
-<div class="pill" data-val="Hatchback" onclick="selectPill('categoryPills',this)">Hatchback</div>
-<div class="pill active" data-val="Sedan" onclick="selectPill('categoryPills',this)">Sedan</div>
-<div class="pill" data-val="SUV" onclick="selectPill('categoryPills',this)">SUV</div>
-<div class="pill" data-val="Luxury" onclick="selectPill('categoryPills',this)">Luxury</div>
-</div>
-</div>
+    <!-- Driver Card Strip -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:52px;height:52px;border-radius:50%;background:var(--surface2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--accent)" id="activeDriverAvatar">
+          RK
+        </div>
+        <div>
+          <div style="font-size:17px;font-weight:900" id="activeDriverName">Rajesh Kumar</div>
+          <div style="font-size:12px;color:var(--muted)" id="activeDriverDetails">Verified Partner &bull; <span style="color:var(--accent);font-weight:700">AT &amp; MT Expert</span></div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:18px;font-weight:900;color:var(--accent)" id="activeFareDisplay">&#8377;999</div>
+        <div style="font-size:11px;color:var(--muted)">Fare Locked</div>
+      </div>
+    </div>
 
-<!-- Pickup -->
-<div class="input-group">
-<label class="input-label">Pickup Location</label>
-<input type="text" class="input-field" id="bookingPickup" value="Current location" placeholder="Enter pickup location">
-</div>
+    <!-- Start OTP Security Box -->
+    <div class="otp-uber-badge">
+      <div>
+        <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Handover Security PIN</div>
+        <div style="font-size:12px;color:var(--text);font-weight:600">Share with driver at arrival</div>
+      </div>
+      <div class="otp-val-highlight" id="activeOtpDisplay">4 8 2 1</div>
+    </div>
 
-<!-- Schedule -->
-<div style="display:flex;gap:10px;margin-bottom:20px">
-<div style="flex:1">
-<label class="input-label" style="margin-bottom:6px;display:block">Date</label>
-<input type="date" class="input-field" id="bookingDate" style="width:100%">
-</div>
-<div style="flex:1">
-<label class="input-label" style="margin-bottom:6px;display:block">Time</label>
-<input type="time" class="input-field" id="bookingTime" style="width:100%">
-</div>
-</div>
+    <!-- Trip Progress Status Bar -->
+    <div style="background:var(--surface2);border-radius:12px;padding:12px 14px;margin-bottom:16px;border:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--accent)"></div>
+        <span style="font-size:13px;font-weight:800;color:var(--text)" id="tripProgressTitle">Chauffeur en route to your vehicle</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-left:16px" id="tripProgressSub">ETA: 3 mins &bull; 1.2 km away</div>
+    </div>
 
-<!-- Fare Breakdown -->
-<div class="card" style="margin-bottom:20px;background:var(--surface2)" id="fareBreakdown">
-<div style="font-size:14px;font-weight:700;margin-bottom:10px">Fare Breakdown</div>
-<div class="flex-between" style="margin-bottom:6px">
-<span style="font-size:13px;color:var(--muted)" id="fareLabel">Package Base</span>
-<span style="font-size:15px;font-weight:800" id="fareAmount">₹1,199</span>
-</div>
-<div class="flex-between">
-<span style="font-size:12px;color:var(--muted)" id="fareOvertime">Overtime rate</span>
-<span style="font-size:13px;font-weight:600;color:var(--muted)" id="fareOvertimeAmt">₹149/hr</span>
-</div>
-</div>
+    <!-- Action Buttons -->
+    <div style="display:flex;gap:10px;margin-bottom:12px">
+      <button class="btn btn-surface btn-sm" style="flex:1" onclick="showToast('Calling driver partner...')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call Driver
+      </button>
+      <button class="btn btn-surface btn-sm" style="flex:1" onclick="shareLiveTrip()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share Trip
+      </button>
+    </div>
 
-<button class="btn btn-accent" onclick="confirmHireDriver()">
-<span id="hireText">Confirm &amp; Hire Chauffeur</span>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-<span id="hireSpinner" class="spinner" style="display:none"></span>
-</button>
-</div>
-<div class="spacer-lg"></div>
-</div>
-
-<!-- ==================== SCREEN: FARE ESTIMATE (Book a Cab) ==================== -->
-<div class="screen" id="screen-fare_estimate">
-<div class="header">
-<div class="header-back" onclick="navigate('home')" aria-label="Go back">
-<svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-</div>
-<div class="header-title">Book a Cab</div>
+    <button class="btn btn-danger btn-sm" onclick="cancelActiveTrip()">Cancel Duty</button>
+  </div>
 </div>
 
-<div class="screen-pad" style="padding-bottom:16px">
-<!-- Route Inputs -->
-<div style="display:flex;gap:12px;margin-bottom:24px">
-<div class="search-dots" style="padding-top:16px">
-<div class="search-dot-green"></div>
-<div class="search-dot-line"></div>
-<div class="search-dot-red"></div>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:8px">
-<div class="input-group" style="margin-bottom:0">
-<label class="input-label">Pickup</label>
-<input type="text" class="input-field" id="cabPickup" value="Current location" placeholder="Pickup location">
-</div>
-<div class="input-group" style="margin-bottom:0">
-<label class="input-label">Destination</label>
-<input type="text" class="input-field" id="cabDest" placeholder="Where are you going?">
-</div>
-</div>
-</div>
-
-<!-- Vehicle Tiers -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">Select Vehicle</div>
-<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px" id="tierList"></div>
-
-<button class="btn btn-accent" id="bookCabBtn" onclick="bookCab()">
-<span id="bookCabText">Book Sedan</span>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-<span id="bookCabSpinner" class="spinner" style="display:none"></span>
-</button>
-</div>
-<div class="spacer-lg"></div>
-</div>
-
-<!-- ==================== SCREEN: ACTIVE BOOKING ==================== -->
-<div class="screen" id="screen-active_booking">
-<div class="header">
-<div class="header-back" onclick="navigate('home')" aria-label="Go back">
-<svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-</div>
-<div class="header-title">Your Ride</div>
-<div class="header-right">
-<span class="badge badge-success" id="rideStatusBadge">Confirmed</span>
-</div>
-</div>
-
-<div class="screen-pad" style="padding-bottom:16px">
-<!-- Status Steps -->
-<div class="card" style="margin-bottom:16px">
-<div style="font-size:14px;font-weight:700;margin-bottom:12px">Ride Status</div>
-<div class="status-steps" id="statusSteps">
-<div class="status-step current"><div class="status-dot"></div><div class="status-line"></div><div class="status-text">Confirmed</div></div>
-<div class="status-step"><div class="status-dot"></div><div class="status-line"></div><div class="status-text">Driver Assigned</div></div>
-<div class="status-step"><div class="status-dot"></div><div class="status-line"></div><div class="status-text">En Route to You</div></div>
-<div class="status-step"><div class="status-dot"></div><div class="status-line"></div><div class="status-text">Arrived</div></div>
-<div class="status-step"><div class="status-dot"></div><div class="status-line"></div><div class="status-text">In Progress</div></div>
-<div class="status-step"><div class="status-dot"></div><div class="status-text">Completed</div></div>
-</div>
-</div>
-
-<!-- Driver Card -->
-<div class="card" style="margin-bottom:16px" id="driverCard">
-<div style="display:flex;align-items:center;gap:12px">
-<div class="avatar" id="driverAvatar">D</div>
-<div style="flex:1;min-width:0">
-<div style="font-size:15px;font-weight:700" id="driverName">Assigned on Dispatch</div>
-<div style="font-size:12px;color:var(--muted)" id="driverRating">Not rated yet</div>
-</div>
-<div style="text-align:right">
-<div style="font-size:12px;color:var(--muted)" id="driverVehicle">Awaiting details</div>
-</div>
-</div>
-</div>
-
-<!-- OTP -->
-<div class="card" style="margin-bottom:16px;text-align:center">
-<div style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:8px">RIDE OTP — Share with driver at pickup</div>
-<div class="otp-display" id="rideOtp">
-<div class="otp-digit">-</div>
-<div class="otp-digit">-</div>
-<div class="otp-digit">-</div>
-<div class="otp-digit">-</div>
-</div>
-</div>
-
-<!-- Route Info -->
-<div class="card" style="margin-bottom:16px">
-<div style="font-size:14px;font-weight:700;margin-bottom:10px">Route</div>
-<div style="display:flex;gap:12px;align-items:flex-start">
-<div class="search-dots" style="padding-top:2px">
-<div class="search-dot-green"></div>
-<div class="search-dot-line"></div>
-<div class="search-dot-red"></div>
-</div>
-<div style="flex:1">
-<div style="font-size:13px;font-weight:600;margin-bottom:10px" id="activePickup">Current location</div>
-<div style="font-size:13px;font-weight:600;color:var(--muted)" id="activeDrop">—</div>
-</div>
-</div>
-</div>
-
-<!-- Fare -->
-<div class="card" style="margin-bottom:20px;border:1px solid rgba(199,255,61,.15)">
-<div class="flex-between">
-<span style="font-size:13px;color:var(--muted)">Fare Locked</span>
-<span style="font-size:18px;font-weight:800;color:var(--accent)" id="activeFare">₹0</span>
-</div>
-</div>
-
-<!-- Actions -->
-<div style="display:flex;gap:10px;margin-bottom:12px">
-<button class="btn btn-surface btn-sm" style="flex:1" disabled>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
-Call Driver
-</button>
-<button class="btn btn-surface btn-sm" style="flex:1" onclick="showToast('Trip sharing link copied!')">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-Share Trip
-</button>
-</div>
-<button class="btn btn-danger btn-sm" onclick="openCancelModal()">Cancel Ride</button>
-</div>
-<div class="spacer-lg"></div>
-</div>
-
-<!-- ==================== SCREEN: ACTIVITY ==================== -->
+<!-- ==========================================
+     SCREEN 5: ACTIVITY / TRIP HISTORY
+========================================== -->
 <div class="screen" id="screen-activity">
-<div class="header">
-<div class="header-title">My Trips</div>
+  <div class="header">
+    <div class="header-title">My Rides &amp; Duties</div>
+  </div>
+  <div style="padding:16px" id="activityListContainer">
+    <div style="text-align:center;padding:60px 20px;color:var(--muted)">
+      <div style="width:64px;height:64px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--muted)">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px">No Completed Trips</div>
+      <div style="font-size:13px;line-height:1.5">You have not completed any chauffeur duties or cab rides yet. Book your first service today!</div>
+    </div>
+  </div>
 </div>
 
-<div class="screen-pad" id="activityContent">
-<div class="empty-state" id="emptyTrips">
-<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-<p>No completed trips yet.<br>Your ride history will appear here.</p>
-</div>
-<div id="tripsList" style="display:none"></div>
-</div>
-</div>
-
-<!-- ==================== SCREEN: PROFILE ==================== -->
+<!-- ==========================================
+     SCREEN 6: PROFILE & VEHICLES
+========================================== -->
 <div class="screen" id="screen-profile">
-<div class="header">
-<div class="header-title">Profile &amp; Settings</div>
+  <div class="header">
+    <div class="header-title">Account &amp; Vehicles</div>
+  </div>
+  <div style="padding:16px">
+    <!-- User Card -->
+    <div style="background:var(--surface);border-radius:20px;padding:20px;border:1px solid var(--border);display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="width:60px;height:60px;border-radius:50%;background:var(--surface2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:var(--accent)" id="profileAvatarBig">
+        R
+      </div>
+      <div>
+        <div style="font-size:18px;font-weight:900" id="profileNameBig">Rider Partner</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px" id="profilePhoneBig">+91 98765 43210</div>
+        <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;color:var(--muted);margin-top:6px">
+          <span>&#9733; Not rated yet</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Saved Cars for Chauffeurs -->
+    <div style="font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">My Personal Vehicles</div>
+    <div style="background:var(--surface);border-radius:18px;padding:16px;border:1px solid var(--border);margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span style="font-size:15px;font-weight:800">Hyundai Creta (Automatic AT)</span>
+        <span style="font-size:10px;font-weight:800;color:var(--accent);background:rgba(199,255,61,0.12);padding:2px 8px;border-radius:4px">DEFAULT</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">SUV &bull; TS 09 EA 4821 &bull; Personal Vehicle</div>
+    </div>
+
+    <!-- Saved Places -->
+    <div style="font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Saved Places</div>
+    <div style="background:var(--surface);border-radius:18px;border:1px solid var(--border);overflow:hidden;margin-bottom:24px">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer" onclick="quickSelectDestination('Home (Jubilee Hills)')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <div>
+          <div style="font-size:14px;font-weight:800">Home</div>
+          <div style="font-size:11px;color:var(--muted)">Jubilee Hills, Road No. 36</div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="quickSelectDestination('Work (Cyber Towers)')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <div>
+          <div style="font-size:14px;font-weight:800">Office / Work</div>
+          <div style="font-size:11px;color:var(--muted)">Hitech City, Madhapur</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-danger btn-sm" onclick="logoutRider()">Log Out</button>
+  </div>
 </div>
 
-<div class="screen-pad" style="padding-bottom:16px">
-<!-- User Card -->
-<div class="card" style="margin-bottom:20px;display:flex;align-items:center;gap:16px">
-<div class="avatar avatar-lg" id="profileAvatar">?</div>
-<div style="flex:1;min-width:0">
-<div style="font-size:18px;font-weight:800" id="profileName">—</div>
-<div style="font-size:13px;color:var(--muted);margin-top:2px" id="profilePhone">—</div>
-<div style="font-size:12px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:4px" id="profileRating">
-<svg width="12" height="12" viewBox="0 0 24 24" fill="var(--muted)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-<span>Not rated yet</span>
-</div>
-</div>
-</div>
-
-<!-- My Cars -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">My Cars for Chauffeur Services</div>
-<div class="card" style="margin-bottom:20px">
-<div class="empty-state" style="padding:20px 0">
-<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="10" rx="3" stroke="currentColor" fill="none"/><circle cx="7" cy="19" r="2" stroke="currentColor" fill="none"/><circle cx="17" cy="19" r="2" stroke="currentColor" fill="none"/></svg>
-<p style="font-size:13px">No personal vehicles registered yet.<br>Tap + Add Car to save your vehicle.</p>
-<button class="btn btn-surface btn-sm" style="width:auto;margin-top:4px" onclick="showToast('Vehicle registration coming soon')">+ Add Car</button>
-</div>
+<!-- ==========================================
+     GLOBAL BOTTOM NAV (4 TABS)
+========================================== -->
+<div class="bottom-nav" id="bottomNav">
+  <div class="nav-tab active" id="tab-home" onclick="navigate('home')">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    <span>Home</span>
+  </div>
+  <div class="nav-tab" id="tab-booking" onclick="navigate('booking')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="7" cy="21" r="2"/><circle cx="17" cy="21" r="2"/><path d="M5 11l2-6h10l2 6"/></svg>
+    <span>Book</span>
+  </div>
+  <div class="nav-tab" id="tab-activity" onclick="navigate('activity')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Activity</span>
+  </div>
+  <div class="nav-tab" id="tab-profile" onclick="navigate('profile')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Account</span>
+  </div>
 </div>
 
-<!-- Saved Addresses -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">Saved Addresses</div>
-<div class="card" style="margin-bottom:20px">
-<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-<div style="flex:1"><div style="font-size:14px;font-weight:600">Home</div><div style="font-size:12px;color:var(--muted)">Set your home address</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
-<div style="flex:1"><div style="font-size:14px;font-weight:600">Office</div><div style="font-size:12px;color:var(--muted)">Set your office address</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:10px 0">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-<div style="flex:1"><div style="font-size:14px;font-weight:600">Airport</div><div style="font-size:12px;color:var(--muted)">Rajiv Gandhi Intl Airport, HYD</div></div>
-</div>
-</div>
-
-<!-- Emergency Contact -->
-<div style="font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px">Emergency Contact</div>
-<div class="input-group">
-<input type="tel" class="input-field" id="emergencyContact" placeholder="Enter emergency contact number" inputmode="numeric">
-</div>
-<button class="btn btn-surface btn-sm" style="margin-bottom:24px" onclick="showToast('Emergency contact saved')">Save Contact</button>
-
-<!-- Logout -->
-<button class="btn btn-danger" onclick="logoutUser()">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-Logout
-</button>
-</div>
-<div class="spacer-lg"></div>
-</div>
-
-<!-- ==================== BOTTOM NAV ==================== -->
-<nav class="bottom-nav" id="bottomNav">
-<div class="nav-tab active" data-screen="home" onclick="navTo('home')">
-<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-<span>Home</span>
-</div>
-<div class="nav-tab" data-screen="booking" onclick="navTo('fare_estimate')">
-<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="10" rx="3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>
-<span>Book</span>
-</div>
-<div class="nav-tab" data-screen="activity" onclick="navTo('activity')">
-<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-<span>Activity</span>
-</div>
-<div class="nav-tab" data-screen="profile" onclick="navTo('profile')">
-<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-<span>Account</span>
-</div>
-</nav>
-
-</div><!-- /app -->
+</div><!-- .app -->
 
 <script>
-/* ===========================
-   STATE
-   =========================== */
+/* ========================================================
+   RIDEDRIVEAHEAD RIDER APP ENGINE (UBER / OLA STANDARD)
+======================================================== */
+
+const CHAUFFEUR_PACKAGES = [
+  { id: 'HOURLY_2H', name: '2 Hours Local Duty', hours: 2, fare: 549, overtime: 99, desc: 'Quick errands, doctor visits, hospital runs' },
+  { id: 'HOURLY_4H', name: '4 Hours Half Day', hours: 4, fare: 999, overtime: 99, desc: 'Client meetings, dining out, family shopping' },
+  { id: 'HOURLY_8H', name: '8 Hours Full Day', hours: 8, fare: 1899, overtime: 99, desc: 'Full-day multi-stop city travel & personal duty' },
+  { id: 'OUTSTATION_ROUND', name: 'Outstation Road Trip', hours: 14, fare: 2699, overtime: 120, desc: 'Highway certified driver for intercity round trips' }
+];
+
+const CAB_TIERS = [
+  { id: 'MINI', name: 'Go Compact', capacity: 4, fare: 189, eta: '3 mins away', desc: 'Affordable AC hatchback (Swift, WagonR)' },
+  { id: 'SEDAN', name: 'Premier Sedan', capacity: 4, fare: 269, eta: '2 mins away', desc: 'Comfortable sedans (Dzire, City) with top drivers' },
+  { id: 'SUV_XL', name: 'Executive SUV XL', capacity: 6, fare: 399, eta: '5 mins away', desc: 'Spacious 6-seater (Innova, Ertiga) for luggage & family' }
+];
+
+// App State
 let currentUser = null;
-let activeBooking = null;
-let tripHistory = [];
-let currentScreen = 'login';
-let selectedPackageIdx = 1;
-let selectedTierIdx = 1;
-let statusSimTimer = null;
+let currentBookingMode = 'CHAUFFEUR';
+let selectedTransmission = 'AUTOMATIC';
+let selectedPackageId = 'HOURLY_4H';
+let selectedCabTierId = 'SEDAN';
+let activeTrip = null;
+let homeLeafletMap = null;
+let activeLeafletMap = null;
+let homeNearbyMarkers = [];
+let activeDriverMarker = null;
 
-const PACKAGES = [
-  {name:'2 Hours Local Duty',price:699,overtime:149,tag:'Quick Run',tagClass:'badge-muted'},
-  {name:'4 Hours Half Day',price:1199,overtime:149,tag:'Most Popular',tagClass:'badge-accent'},
-  {name:'8 Hours Full Day',price:2199,overtime:149,tag:'Best Value',tagClass:'badge-success'},
-  {name:'Event / Wedding Chauffeur',price:3499,overtime:199,tag:'White Glove',tagClass:'badge-accent'},
-  {name:'Outstation 1 Day',price:2999,overtime:199,tag:'Highway Certified',tagClass:'badge-muted'},
-  {name:'Outstation 2 Days',price:4999,overtime:199,tag:'Overnight Trip',tagClass:'badge-muted'}
-];
+// Base Coordinates (Hyderabad Hub)
+const HUB_LAT = 17.4399;
+const HUB_LNG = 78.3908;
 
-const TIERS = [
-  {name:'Mini',desc:'AC Compact (WagonR, Swift)',price:189,eta:4},
-  {name:'Sedan',desc:'Premier Sedan (Dzire, City)',price:269,eta:5},
-  {name:'SUV XL',desc:'6-Seater (Innova, Ertiga)',price:399,eta:6}
-];
-
-/* ===========================
-   INIT
-   =========================== */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // Set today's date + current time as defaults
-  const now = new Date();
-  const dateStr = now.toISOString().split('T')[0];
-  const timeStr = now.toTimeString().slice(0,5);
-  const dateEl = document.getElementById('bookingDate');
-  const timeEl = document.getElementById('bookingTime');
-  if(dateEl) dateEl.value = dateStr;
-  if(timeEl) timeEl.value = timeStr;
+// Initializer
+window.addEventListener('DOMContentLoaded', () => {
+  const savedUser = localStorage.getItem('rda_rider_user');
+  if (savedUser) {
+    try {
+      currentUser = JSON.parse(savedUser);
+      updateUserUI();
+      navigate('home');
+    } catch(e) {
+      navigate('login');
+    }
+  } else {
+    navigate('login');
+  }
 
   renderPackages();
-  renderTiers();
-
-  // Check localStorage for user
-  const saved = localStorage.getItem('rda_rider_user');
-  if(saved){
-    try{
-      currentUser = JSON.parse(saved);
-      showApp();
-    }catch(e){localStorage.removeItem('rda_rider_user')}
-  }
-
-  // Check for active booking
-  const savedBooking = localStorage.getItem('rda_active_booking');
-  if(savedBooking){
-    try{activeBooking = JSON.parse(savedBooking)}catch(e){localStorage.removeItem('rda_active_booking')}
-  }
-
-  // Load trip history
-  const savedTrips = localStorage.getItem('rda_trip_history');
-  if(savedTrips){
-    try{tripHistory = JSON.parse(savedTrips)}catch(e){}
-  }
+  renderCabTiers();
 });
 
-/* ===========================
-   NAVIGATION
-   =========================== */
-function navigate(screen, opts){
-  // Clear any sim timers
-  if(statusSimTimer){clearTimeout(statusSimTimer);statusSimTimer=null}
+// Toast notification
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
 
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const el = document.getElementById('screen-'+screen);
-  if(el){
-    el.classList.add('active');
-    el.scrollTop = 0;
-  }
-  currentScreen = screen;
+// Navigation Router
+function navigate(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
 
-  // Bottom nav visibility
-  const noNavScreens = ['login','booking','fare_estimate','active_booking'];
-  const nav = document.getElementById('bottomNav');
-  if(noNavScreens.includes(screen)){
-    nav.classList.add('hidden');
-    // Remove nav padding for these screens
-    if(el) el.style.paddingBottom = screen==='login'?'0':'16px';
+  const target = document.getElementById('screen-' + screenId);
+  if (target) target.classList.add('active');
+
+  const tab = document.getElementById('tab-' + screenId);
+  if (tab) tab.classList.add('active');
+
+  const bottomNav = document.getElementById('bottomNav');
+  if (screenId === 'login') {
+    bottomNav.classList.add('hidden');
   } else {
-    nav.classList.remove('hidden');
-    if(el) el.style.paddingBottom = '';
+    bottomNav.classList.remove('hidden');
   }
 
-  // Update nav active state
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  const mapping = {home:'home',activity:'activity',profile:'profile',fare_estimate:'booking'};
-  const tabName = mapping[screen] || screen;
-  const activeTab = document.querySelector(`.nav-tab[data-screen="${tabName}"]`);
-  if(activeTab) activeTab.classList.add('active');
-
-  // Screen-specific init
-  if(screen==='home') updateHomeScreen();
-  if(screen==='active_booking') renderActiveBooking();
-  if(screen==='activity') renderActivity();
-  if(screen==='profile') renderProfile();
-}
-
-function navTo(screen){navigate(screen)}
-
-function showApp(){
-  navigate('home');
-  updateHomeScreen();
-}
-
-function updateHomeScreen(){
-  if(!currentUser) return;
-  const hour = new Date().getHours();
-  let greeting = 'Good evening';
-  if(hour<12) greeting = 'Good morning';
-  else if(hour<17) greeting = 'Good afternoon';
-  const name = currentUser.name || currentUser.phoneNumber || 'Rider';
-  const firstName = name.split(' ')[0];
-  document.getElementById('greetingText').textContent = `${greeting}, ${firstName} 👋`;
-  document.getElementById('homeAvatar').textContent = (firstName[0]||'?').toUpperCase();
-}
-
-/* ===========================
-   AUTH
-   =========================== */
-function switchAuthTab(tab){
-  const tabs = document.querySelectorAll('#authTabs .tab-item');
-  tabs.forEach(t=>t.classList.remove('active'));
-  if(tab==='login'){
-    tabs[0].classList.add('active');
-    document.getElementById('loginForm').style.display='block';
-    document.getElementById('signupForm').style.display='none';
-  } else {
-    tabs[1].classList.add('active');
-    document.getElementById('loginForm').style.display='none';
-    document.getElementById('signupForm').style.display='block';
+  // Map invalidation for proper rendering
+  if (screenId === 'home') {
+    setTimeout(initHomeMap, 100);
+  } else if (screenId === 'active') {
+    setTimeout(initActiveMap, 100);
   }
 }
 
-function sendOtp(){
-  const phone = document.getElementById('phoneInput').value.trim();
-  if(phone.length<10){showToast('Enter a valid 10-digit phone number');return}
-  // Call API
-  fetch('/api/v1/auth/otp/request',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({phoneNumber:'+91'+phone,userRole:'RIDER'})
-  }).then(r=>r.json()).catch(()=>null);
+// Auth Handlers
+function handleAuthClick() {
+  const phone = document.getElementById('loginPhone').value.trim();
+  const otpSection = document.getElementById('otpBox');
 
-  document.getElementById('otpSection').style.display='block';
-  document.getElementById('sendOtpBtn').disabled=true;
-  document.getElementById('sendOtpBtn').textContent='OTP Sent';
-  showToast('OTP sent to +91 '+phone);
-  setTimeout(()=>document.getElementById('otpInput').focus(),200);
-}
-
-function verifyOtp(){
-  const phone = document.getElementById('phoneInput').value.trim();
-  const otp = document.getElementById('otpInput').value.trim();
-  if(otp.length<6){showToast('Enter 6-digit OTP');return}
-
-  document.getElementById('verifyText').style.display='none';
-  document.getElementById('verifySpinner').style.display='inline-block';
-
-  fetch('/api/v1/auth/otp/verify',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({phoneNumber:'+91'+phone,otpCode:otp,userRole:'RIDER'})
-  })
-  .then(r=>{if(!r.ok) throw new Error('API error');return r.json()})
-  .then(data=>{
-    currentUser = data.user || data;
-    if(!currentUser.name) currentUser.name = 'Rider';
-    if(!currentUser.phoneNumber) currentUser.phoneNumber = '+91'+phone;
-    if(currentUser.rating===undefined) currentUser.rating = null;
-    localStorage.setItem('rda_rider_user',JSON.stringify(currentUser));
-    showApp();
-  })
-  .catch(()=>{
-    // Offline/fallback: create local user
-    currentUser = {
-      name:'Rider',
-      phoneNumber:'+91'+phone,
-      rating:null,
-      city:'Hyderabad',
-      id:'local_'+Date.now()
-    };
-    localStorage.setItem('rda_rider_user',JSON.stringify(currentUser));
-    showApp();
-  })
-  .finally(()=>{
-    document.getElementById('verifyText').style.display='';
-    document.getElementById('verifySpinner').style.display='none';
-  });
-}
-
-function demoAutofill(){
-  document.getElementById('phoneInput').value='9876543210';
-  document.getElementById('otpSection').style.display='block';
-  document.getElementById('otpInput').value='123456';
-  document.getElementById('sendOtpBtn').disabled=true;
-  document.getElementById('sendOtpBtn').textContent='OTP Sent';
-  showToast('Demo credentials filled');
-}
-
-function signupUser(){
-  const name = document.getElementById('signupName').value.trim();
-  const phone = document.getElementById('signupPhone').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
-  const city = document.getElementById('signupCity').value.trim();
-  if(!name||!phone){showToast('Name and phone are required');return}
-
-  currentUser = {
-    name:name,
-    phoneNumber:'+91'+phone,
-    email:email,
-    city:city||'Hyderabad',
-    rating:null,
-    id:'local_'+Date.now()
-  };
-  localStorage.setItem('rda_rider_user',JSON.stringify(currentUser));
-  showToast('Account created!');
-  showApp();
-}
-
-function logoutUser(){
-  localStorage.removeItem('rda_rider_user');
-  localStorage.removeItem('rda_active_booking');
-  currentUser = null;
-  activeBooking = null;
-  // Reset login form
-  document.getElementById('phoneInput').value='';
-  document.getElementById('otpInput').value='';
-  document.getElementById('otpSection').style.display='none';
-  document.getElementById('sendOtpBtn').disabled=false;
-  document.getElementById('sendOtpBtn').textContent='Send OTP';
-  navigate('login');
-}
-
-/* ===========================
-   PACKAGES (Hire a Driver)
-   =========================== */
-function renderPackages(){
-  const c = document.getElementById('packageList');
-  c.innerHTML = PACKAGES.map((p,i)=>`
-    <div class="pkg-card ${i===selectedPackageIdx?'selected':''}" onclick="selectPackage(${i})">
-      <div class="pkg-radio"><div class="pkg-radio-dot"></div></div>
-      <div class="pkg-info">
-        <div class="pkg-name">${p.name}</div>
-        <div class="pkg-meta">Overtime: ₹${p.overtime}/hr</div>
-      </div>
-      <div class="pkg-right">
-        <div class="pkg-price">₹${p.price.toLocaleString('en-IN')}</div>
-        <span class="badge ${p.tagClass} pkg-tag">${p.tag}</span>
-      </div>
-    </div>
-  `).join('');
-  updateFareBreakdown();
-}
-
-function selectPackage(idx){
-  selectedPackageIdx=idx;
-  document.querySelectorAll('#packageList .pkg-card').forEach((c,i)=>{
-    c.classList.toggle('selected',i===idx);
-  });
-  updateFareBreakdown();
-}
-
-function updateFareBreakdown(){
-  const p = PACKAGES[selectedPackageIdx];
-  document.getElementById('fareLabel').textContent = p.name;
-  document.getElementById('fareAmount').textContent = '₹'+p.price.toLocaleString('en-IN');
-  document.getElementById('fareOvertimeAmt').textContent = '₹'+p.overtime+'/hr';
-}
-
-function selectPill(groupId, el){
-  document.querySelectorAll('#'+groupId+' .pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function confirmHireDriver(){
-  const p = PACKAGES[selectedPackageIdx];
-  const pickup = document.getElementById('bookingPickup').value.trim() || 'Current location';
-  const transmission = document.querySelector('#transmissionPills .pill.active')?.dataset.val || 'AT';
-  const category = document.querySelector('#categoryPills .pill.active')?.dataset.val || 'Sedan';
-  const date = document.getElementById('bookingDate').value;
-  const time = document.getElementById('bookingTime').value;
-
-  document.getElementById('hireText').style.display='none';
-  document.getElementById('hireSpinner').style.display='inline-block';
-
-  const bookingData = {
-    type:'HIRE_DRIVER',
-    packageName:p.name,
-    fare:p.price,
-    overtimeRate:p.overtime,
-    pickup:pickup,
-    transmission:transmission,
-    carCategory:category,
-    scheduledDate:date,
-    scheduledTime:time,
-    userRole:'RIDER'
-  };
-
-  fetch('/api/v1/bookings',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(bookingData)
-  })
-  .then(r=>{if(!r.ok) throw new Error();return r.json()})
-  .then(data=>{
-    activeBooking = data;
-    activeBooking._fare = p.price;
-    activeBooking._pickup = pickup;
-    activeBooking._type = 'HIRE_DRIVER';
-    activeBooking._package = p.name;
-  })
-  .catch(()=>{
-    // Create local booking
-    const otp = String(Math.floor(1000+Math.random()*9000));
-    activeBooking = {
-      id:'bk_'+Date.now(),
-      status:'CONFIRMED',
-      _fare:p.price,
-      _pickup:pickup,
-      _drop:'—',
-      _type:'HIRE_DRIVER',
-      _package:p.name,
-      _otp:otp,
-      _statusIdx:0,
-      createdAt:new Date().toISOString()
-    };
-  })
-  .finally(()=>{
-    if(!activeBooking._otp) activeBooking._otp = String(Math.floor(1000+Math.random()*9000));
-    if(activeBooking._statusIdx===undefined) activeBooking._statusIdx=0;
-    localStorage.setItem('rda_active_booking',JSON.stringify(activeBooking));
-    document.getElementById('hireText').style.display='';
-    document.getElementById('hireSpinner').style.display='none';
-    navigate('active_booking');
-  });
-}
-
-/* ===========================
-   TIERS (Book a Cab)
-   =========================== */
-function renderTiers(){
-  const c = document.getElementById('tierList');
-  c.innerHTML = TIERS.map((t,i)=>`
-    <div class="tier-card ${i===selectedTierIdx?'selected':''}" onclick="selectTier(${i})">
-      <div class="tier-icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M5 8l2-4h10l2 4"/></svg>
-      </div>
-      <div class="tier-info">
-        <div class="tier-name">${t.name}</div>
-        <div class="tier-desc">${t.desc}</div>
-      </div>
-      <div class="tier-right">
-        <div class="tier-price">₹${t.price}</div>
-        <div class="tier-eta">ETA ${t.eta} min</div>
-      </div>
-    </div>
-  `).join('');
-  updateBookCabBtn();
-}
-
-function selectTier(idx){
-  selectedTierIdx=idx;
-  document.querySelectorAll('#tierList .tier-card').forEach((c,i)=>{
-    c.classList.toggle('selected',i===idx);
-  });
-  updateBookCabBtn();
-}
-
-function updateBookCabBtn(){
-  document.getElementById('bookCabText').textContent = 'Book '+TIERS[selectedTierIdx].name;
-}
-
-function bookCab(){
-  const t = TIERS[selectedTierIdx];
-  const pickup = document.getElementById('cabPickup').value.trim() || 'Current location';
-  const dest = document.getElementById('cabDest').value.trim() || 'Destination';
-
-  document.getElementById('bookCabText').style.display='none';
-  document.getElementById('bookCabSpinner').style.display='inline-block';
-
-  const bookingData = {
-    type:'BOOK_CAB',
-    vehicleTier:t.name,
-    fare:t.price,
-    pickup:pickup,
-    destination:dest,
-    userRole:'RIDER'
-  };
-
-  fetch('/api/v1/bookings',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(bookingData)
-  })
-  .then(r=>{if(!r.ok) throw new Error();return r.json()})
-  .then(data=>{
-    activeBooking = data;
-    activeBooking._fare = t.price;
-    activeBooking._pickup = pickup;
-    activeBooking._drop = dest;
-    activeBooking._type = 'BOOK_CAB';
-    activeBooking._tier = t.name;
-  })
-  .catch(()=>{
-    const otp = String(Math.floor(1000+Math.random()*9000));
-    activeBooking = {
-      id:'bk_'+Date.now(),
-      status:'CONFIRMED',
-      _fare:t.price,
-      _pickup:pickup,
-      _drop:dest,
-      _type:'BOOK_CAB',
-      _tier:t.name,
-      _otp:otp,
-      _statusIdx:0,
-      createdAt:new Date().toISOString()
-    };
-  })
-  .finally(()=>{
-    if(!activeBooking._otp) activeBooking._otp = String(Math.floor(1000+Math.random()*9000));
-    if(activeBooking._statusIdx===undefined) activeBooking._statusIdx=0;
-    localStorage.setItem('rda_active_booking',JSON.stringify(activeBooking));
-    document.getElementById('bookCabText').style.display='';
-    document.getElementById('bookCabSpinner').style.display='none';
-    navigate('active_booking');
-  });
-}
-
-/* ===========================
-   ACTIVE BOOKING
-   =========================== */
-const STATUS_LABELS = ['Confirmed','Driver Assigned','En Route to You','Arrived','In Progress','Completed'];
-
-function renderActiveBooking(){
-  if(!activeBooking){navigate('home');return}
-
-  const idx = activeBooking._statusIdx || 0;
-  const statusBadge = document.getElementById('rideStatusBadge');
-  statusBadge.textContent = STATUS_LABELS[idx];
-  statusBadge.className = 'badge '+(idx>=5?'badge-success':'badge-accent');
-
-  // Status steps
-  const steps = document.querySelectorAll('#statusSteps .status-step');
-  steps.forEach((s,i)=>{
-    s.classList.remove('done','current');
-    if(i<idx) s.classList.add('done');
-    if(i===idx) s.classList.add('current');
-  });
-
-  // Driver card
-  document.getElementById('driverName').textContent = idx>=1?'Assigned on Dispatch':'Searching for driver...';
-  document.getElementById('driverRating').textContent = 'Not rated yet';
-  document.getElementById('driverAvatar').textContent = 'D';
-  document.getElementById('driverVehicle').textContent = idx>=1?'Vehicle assigned':'Awaiting details';
-
-  // OTP
-  const otp = activeBooking._otp || '----';
-  const otpDigits = document.querySelectorAll('#rideOtp .otp-digit');
-  otpDigits.forEach((d,i)=>d.textContent = otp[i]||'-');
-
-  // Route
-  document.getElementById('activePickup').textContent = activeBooking._pickup || 'Current location';
-  document.getElementById('activeDrop').textContent = activeBooking._drop || '—';
-
-  // Fare
-  const fare = activeBooking._fare || 0;
-  document.getElementById('activeFare').textContent = '₹'+Number(fare).toLocaleString('en-IN');
-
-  // Start simulation
-  if(idx < 2) startStatusSimulation();
-}
-
-function startStatusSimulation(){
-  if(statusSimTimer) return;
-  statusSimTimer = setTimeout(()=>{
-    if(!activeBooking) return;
-    if(activeBooking._statusIdx < 2){
-      activeBooking._statusIdx++;
-      localStorage.setItem('rda_active_booking',JSON.stringify(activeBooking));
-      renderActiveBooking();
-      // Continue sim
-      statusSimTimer = null;
-      if(activeBooking._statusIdx < 2) startStatusSimulation();
+  if (otpSection.style.display === 'none') {
+    if (phone.length < 10) {
+      showToast('Enter valid 10-digit mobile number');
+      return;
     }
-  }, 5000);
-}
-
-function openCancelModal(){
-  document.getElementById('cancelModal').classList.add('show');
-}
-function closeCancelModal(){
-  document.getElementById('cancelModal').classList.remove('show');
-}
-function confirmCancel(){
-  closeCancelModal();
-  if(statusSimTimer){clearTimeout(statusSimTimer);statusSimTimer=null}
-
-  // Add to trip history as cancelled
-  if(activeBooking){
-    tripHistory.unshift({
-      id:activeBooking.id,
-      type:activeBooking._type,
-      pickup:activeBooking._pickup,
-      drop:activeBooking._drop,
-      fare:activeBooking._fare,
-      status:'CANCELLED',
-      date:activeBooking.createdAt || new Date().toISOString()
-    });
-    localStorage.setItem('rda_trip_history',JSON.stringify(tripHistory));
+    otpSection.style.display = 'block';
+    document.getElementById('authActionBtn').textContent = 'Verify & Enter App →';
+    showToast('OTP sent to +91 ' + phone + ' (Code: 123456)');
+    document.getElementById('loginOtp').value = '123456';
+  } else {
+    const otp = document.getElementById('loginOtp').value.trim();
+    if (otp !== '123456' && otp.length < 4) {
+      showToast('Enter 6-digit verification code');
+      return;
+    }
+    // Login success
+    currentUser = {
+      fullName: 'Rider Partner',
+      phoneNumber: '+91 ' + phone,
+      rating: null
+    };
+    localStorage.setItem('rda_rider_user', JSON.stringify(currentUser));
+    updateUserUI();
+    navigate('home');
+    showToast('Welcome to RideDriveAhead!');
   }
-
-  activeBooking = null;
-  localStorage.removeItem('rda_active_booking');
-  showToast('Ride cancelled');
-  navigate('home');
 }
 
-/* ===========================
-   ACTIVITY
-   =========================== */
-function renderActivity(){
-  const emptyEl = document.getElementById('emptyTrips');
-  const listEl = document.getElementById('tripsList');
+function quickDemoLogin() {
+  document.getElementById('loginPhone').value = '9876543210';
+  document.getElementById('otpBox').style.display = 'block';
+  document.getElementById('loginOtp').value = '123456';
+  currentUser = {
+    fullName: 'Verified Rider',
+    phoneNumber: '+91 9876543210',
+    rating: null
+  };
+  localStorage.setItem('rda_rider_user', JSON.stringify(currentUser));
+  updateUserUI();
+  navigate('home');
+  showToast('Signed in successfully');
+}
 
-  if(tripHistory.length===0){
-    emptyEl.style.display='flex';
-    listEl.style.display='none';
+function logoutRider() {
+  localStorage.removeItem('rda_rider_user');
+  currentUser = null;
+  navigate('login');
+  showToast('Logged out');
+}
+
+function updateUserUI() {
+  if (!currentUser) return;
+  const name = currentUser.fullName || 'Rider';
+  document.getElementById('homeUserName').textContent = name + ' 👋';
+  document.getElementById('profileNameBig').textContent = name;
+  document.getElementById('profilePhoneBig').textContent = currentUser.phoneNumber;
+  const init = name.charAt(0).toUpperCase();
+  document.getElementById('homeUserAvatar').textContent = init;
+  document.getElementById('profileAvatarBig').textContent = init;
+}
+
+// Leaflet Map on Home Screen (Uber Style)
+function initHomeMap() {
+  if (homeLeafletMap) {
+    homeLeafletMap.invalidateSize();
     return;
   }
-  emptyEl.style.display='none';
-  listEl.style.display='block';
-  listEl.innerHTML = tripHistory.map(t=>{
-    const d = new Date(t.date);
-    const dateStr = d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
-    const statusClass = t.status==='CANCELLED'?'badge-danger':'badge-success';
-    const fare = t.fare ? '₹'+Number(t.fare).toLocaleString('en-IN') : '—';
-    return `
-      <div class="card" style="margin-bottom:10px">
-        <div class="flex-between" style="margin-bottom:8px">
-          <span style="font-size:12px;color:var(--muted)">${dateStr}</span>
-          <span class="badge ${statusClass}">${t.status}</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start">
-          <div class="search-dots" style="padding-top:2px">
-            <div class="search-dot-green" style="width:8px;height:8px"></div>
-            <div class="search-dot-line" style="height:6px"></div>
-            <div class="search-dot-red" style="width:8px;height:8px"></div>
-          </div>
-          <div style="flex:1;min-width:0">
-            <div style="font-size:13px;font-weight:600;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.pickup||'—'}</div>
-            <div style="font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.drop||'—'}</div>
-          </div>
-          <div style="font-size:15px;font-weight:800;flex-shrink:0">${fare}</div>
-        </div>
-      </div>
-    `;
-  }).join('');
+  const el = document.getElementById('homeMap');
+  if (!el || typeof L === 'undefined') return;
+
+  homeLeafletMap = L.map('homeMap', {
+    zoomControl: false,
+    attributionControl: false
+  }).setView([HUB_LAT, HUB_LNG], 15);
+
+  // CartoDB Dark Matter tile layer
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd'
+  }).addTo(homeLeafletMap);
+
+  // User location pulsing marker
+  const pulseIcon = L.divIcon({
+    className: 'custom-user-marker',
+    html: '<div class="user-pulse-marker"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+  L.marker([HUB_LAT, HUB_LNG], { icon: pulseIcon }).addTo(homeLeafletMap);
+
+  // Add 4 simulated nearby cabs idling around user
+  const carOffsets = [
+    [0.003, 0.002],
+    [-0.002, 0.003],
+    [-0.003, -0.002],
+    [0.002, -0.004]
+  ];
+  carOffsets.forEach(off => {
+    const carIcon = L.divIcon({
+      className: 'cab-div-icon',
+      html: '<div class="cab-marker-icon"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="9" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 9l2-5h6l2 5"/></svg></div>',
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+    const m = L.marker([HUB_LAT + off[0], HUB_LNG + off[1]], { icon: carIcon }).addTo(homeLeafletMap);
+    homeNearbyMarkers.push(m);
+  });
 }
 
-/* ===========================
-   PROFILE
-   =========================== */
-function renderProfile(){
-  if(!currentUser) return;
-  const name = currentUser.name || 'Rider';
-  const initial = (name[0]||'?').toUpperCase();
-  document.getElementById('profileAvatar').textContent = initial;
-  document.getElementById('profileName').textContent = name;
-  document.getElementById('profilePhone').textContent = currentUser.phoneNumber || '—';
-
-  const ratingEl = document.getElementById('profileRating');
-  if(currentUser.rating && currentUser.rating > 0){
-    ratingEl.innerHTML = `
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--accent)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span>${currentUser.rating.toFixed(1)}</span>`;
-  } else {
-    ratingEl.innerHTML = `
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--muted)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span>Not rated yet</span>`;
+function recenterHomeMap() {
+  if (homeLeafletMap) {
+    homeLeafletMap.setView([HUB_LAT, HUB_LNG], 15, { animate: true });
+    showToast('Centered on current location');
   }
 }
 
-/* ===========================
-   TOAST
-   =========================== */
-let toastTimer=null;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.add('show');
-  if(toastTimer)clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+// Booking Flow Launchers
+function openBookingFlow(mode) {
+  currentBookingMode = mode;
+  if (mode === 'CHAUFFEUR') {
+    document.getElementById('bookingScreenTitle').textContent = 'Hire a Chauffeur (Your Car)';
+    document.getElementById('chauffeurOptions').style.display = 'block';
+    document.getElementById('cabOptions').style.display = 'none';
+  } else {
+    document.getElementById('bookingScreenTitle').textContent = 'Book a Cab';
+    document.getElementById('chauffeurOptions').style.display = 'none';
+    document.getElementById('cabOptions').style.display = 'block';
+  }
+  navigate('booking');
 }
 
-/* ===========================
-   ACTIVE BOOKING CHECK ON HOME
-   =========================== */
-// Check for active booking from API
-function checkActiveBooking(){
-  fetch('/api/v1/bookings/active?_t='+Date.now())
-    .then(r=>{if(!r.ok)throw new Error();return r.json()})
-    .then(data=>{
-      if(data && data.id){
-        activeBooking = {...activeBooking,...data};
-        localStorage.setItem('rda_active_booking',JSON.stringify(activeBooking));
-      }
+function quickSelectDestination(destName) {
+  document.getElementById('routeDrop').value = destName;
+  openBookingFlow('CHAUFFEUR');
+}
+
+function selectTransmission(type) {
+  selectedTransmission = type;
+  document.getElementById('transAT').classList.toggle('active', type === 'AUTOMATIC');
+  document.getElementById('transMT').classList.toggle('active', type === 'MANUAL');
+}
+
+function renderPackages() {
+  const container = document.getElementById('packagesContainer');
+  if (!container) return;
+  container.innerHTML = CHAUFFEUR_PACKAGES.map(p => `
+    <div class="pkg-card ${p.id === selectedPackageId ? 'selected' : ''}" onclick="selectPackage('${p.id}')">
+      <div class="pkg-radio"><div class="pkg-radio-dot"></div></div>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:800;letter-spacing:-0.02em">${p.name}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${p.desc}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:18px;font-weight:900;color:var(--accent)">&#8377;${p.fare}</div>
+        <div style="font-size:11px;color:var(--muted)">+&#8377;${p.overtime}/hr</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectPackage(id) {
+  selectedPackageId = id;
+  renderPackages();
+}
+
+function renderCabTiers() {
+  const container = document.getElementById('cabTiersContainer');
+  if (!container) return;
+  container.innerHTML = CAB_TIERS.map(t => `
+    <div class="tier-card ${t.id === selectedCabTierId ? 'selected' : ''}" onclick="selectCabTier('${t.id}')">
+      <div class="tier-icon-wrap">
+        <svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="9" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 9l2-5h6l2 5"/></svg>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:15px;font-weight:800">${t.name}</span>
+          <span style="font-size:11px;color:var(--muted);font-weight:700">&bull; ${t.capacity} Seats</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${t.desc}</div>
+        <div style="font-size:11px;color:var(--success);font-weight:700;margin-top:4px">${t.eta}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:18px;font-weight:900;color:var(--text)">&#8377;${t.fare}</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700">LOCKED</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectCabTier(id) {
+  selectedCabTierId = id;
+  renderCabTiers();
+}
+
+// Confirm Booking & Trigger Live Simulation
+function confirmBooking() {
+  const pickup = document.getElementById('routePickup').value;
+  const drop = document.getElementById('routeDrop').value || 'City Local Duty Round-Trip';
+
+  let fare = 999;
+  let serviceDesc = '4h Chauffeur';
+  if (currentBookingMode === 'CHAUFFEUR') {
+    const pkg = CHAUFFEUR_PACKAGES.find(p => p.id === selectedPackageId);
+    fare = pkg ? pkg.fare : 999;
+    serviceDesc = `${pkg.name} (${selectedTransmission === 'AUTOMATIC' ? 'AT' : 'MT'})`;
+  } else {
+    const tier = CAB_TIERS.find(t => t.id === selectedCabTierId);
+    fare = tier ? tier.fare : 269;
+    serviceDesc = tier.name;
+  }
+
+  activeTrip = {
+    id: 'BK-' + Math.floor(1000 + Math.random() * 9000),
+    serviceMode: currentBookingMode,
+    serviceDesc,
+    pickup,
+    drop,
+    fare,
+    otp: '4821',
+    status: 'ASSIGNED',
+    driverName: 'Rajesh Kumar',
+    driverPhone: '+91 98765 00123'
+  };
+
+  // Sync to backend API if available
+  fetch('/api/v1/bookings', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      serviceMode: currentBookingMode === 'CHAUFFEUR' ? 'HIRE_DRIVER' : 'BOOK_CAB',
+      fare,
+      pickup,
+      drop,
+      transmission: selectedTransmission,
+      riderName: currentUser ? currentUser.fullName : 'Rider Partner'
     })
-    .catch(()=>{});
+  }).catch(() => {});
+
+  document.getElementById('activeDriverName').textContent = activeTrip.driverName;
+  document.getElementById('activeFareDisplay').innerHTML = `&#8377;${activeTrip.fare}`;
+  document.getElementById('activeOtpDisplay').textContent = '4 8 2 1';
+  document.getElementById('trackingStatusPill').textContent = 'Chauffeur Dispatched';
+
+  navigate('active');
+  showToast('Booking Confirmed! Chauffeur Assigned');
+}
+
+// Active Map Simulation
+function initActiveMap() {
+  if (activeLeafletMap) {
+    activeLeafletMap.invalidateSize();
+    return;
+  }
+  const el = document.getElementById('activeMap');
+  if (!el || typeof L === 'undefined') return;
+
+  activeLeafletMap = L.map('activeMap', {
+    zoomControl: false,
+    attributionControl: false
+  }).setView([HUB_LAT, HUB_LNG], 15);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd'
+  }).addTo(activeLeafletMap);
+
+  // User Pickup Pin
+  const userIcon = L.divIcon({
+    className: 'custom-user-marker',
+    html: '<div class="user-pulse-marker"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  });
+  L.marker([HUB_LAT, HUB_LNG], { icon: userIcon }).addTo(activeLeafletMap);
+
+  // Driver Car Marker starting 800m away
+  let driverLat = HUB_LAT + 0.007;
+  let driverLng = HUB_LNG + 0.005;
+
+  const carIcon = L.divIcon({
+    className: 'cab-div-icon',
+    html: '<div class="cab-marker-icon" style="border-color:var(--accent);background:#0A0B0E"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="9" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 9l2-5h6l2 5"/></svg></div>',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18]
+  });
+  activeDriverMarker = L.marker([driverLat, driverLng], { icon: carIcon }).addTo(activeLeafletMap);
+
+  // Draw Route Polyline connecting driver to pickup
+  const routeLine = L.polyline([[driverLat, driverLng], [HUB_LAT, HUB_LNG]], {
+    color: '#C7FF3D',
+    weight: 4,
+    dashArray: '8, 8',
+    opacity: 0.8
+  }).addTo(activeLeafletMap);
+
+  // Animate Driver car moving toward user
+  const moveInterval = setInterval(() => {
+    if (!activeDriverMarker) { clearInterval(moveInterval); return; }
+    driverLat += (HUB_LAT - driverLat) * 0.12;
+    driverLng += (HUB_LNG - driverLng) * 0.12;
+    activeDriverMarker.setLatLng([driverLat, driverLng]);
+
+    const dist = Math.hypot(HUB_LAT - driverLat, HUB_LNG - driverLng);
+    if (dist < 0.0008) {
+      clearInterval(moveInterval);
+      document.getElementById('tripProgressTitle').textContent = 'Chauffeur Arrived at Your Car';
+      document.getElementById('tripProgressSub').textContent = 'Verify OTP and hand over keys';
+      document.getElementById('trackingStatusPill').textContent = 'Arrived at Pickup';
+      showToast('Chauffeur has arrived at your location!');
+    }
+  }, 2000);
+}
+
+function shareLiveTrip() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'RideDriveAhead Live Trip',
+      text: 'Track my chauffeur duty live on RideDriveAhead',
+      url: window.location.href
+    }).catch(() => {});
+  } else {
+    showToast('Live tracking link copied to clipboard');
+  }
+}
+
+function cancelActiveTrip() {
+  if (confirm('Cancel active chauffeur duty? Cancellation fees may apply.')) {
+    activeTrip = null;
+    navigate('home');
+    showToast('Booking cancelled');
+  }
 }
 </script>
 </body>
