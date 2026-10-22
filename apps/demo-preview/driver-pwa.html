@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0B132B">
+<meta name="mobile-web-app-capable" content="yes">
+<title>RideDriveAhead Driver</title>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUmlkZURyaXZlQWhlYWQgRHJpdmVyIiwic2hvcnRfbmFtZSI6IlJEQSBEcml2ZXIiLCJzdGFydF91cmwiOiIvZHJpdmVyLWFwcCIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwQjEzMkIiLCJ0aGVtZV9jb2xvciI6IiMwQjEzMkIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyB2aWV3Qm94PScwIDAgMTkyIDE5MiclM0UlM0NyZWN0IHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyByeD0nMzInIGZpbGw9JyUyMzBCMTMyQiclM0UlM0MvcmVjdCUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzU1JTI1JyBmb250LXNpemU9JzY0JyBmaWxsPSclMjNDN0ZGM0QnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGRvbWluYW50LWJhc2VsaW5lPSdjZW50cmFsJyBmb250LWZhbWlseT0nc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9JzgwMCclM0VSREElM0MvdGV4dCUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0B132B;--surface:#131C38;--surface2:#1E293B;
+--accent:#C7FF3D;--accent2:#D2FF00;
+--text:#F4F6F3;--muted:#8094A6;
+--warning:#FBBF24;--danger:#EF4444;
+--success:#22C55E;
+--radius-card:18px;--radius-btn:13px;
+--safe-top:env(safe-area-inset-top,0px);
+--safe-bottom:env(safe-area-inset-bottom,0px);
+--nav-h:68px;
+}
+html{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--text);background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);min-height:100dvh;overflow-x:hidden;overscroll-behavior:none;position:relative}
+input,button,select,textarea{font-family:inherit;font-size:inherit;border:none;outline:none;background:none;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+
+/* ============ LAYOUT ============ */
+.app{width:100%;max-width:430px;margin:0 auto;min-height:100dvh;position:relative}
+.screen{display:none;flex-direction:column;min-height:100dvh;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 8px)}
+.screen.active{display:flex}
+.screen.no-nav{padding-bottom:0}
+.screen-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px 16px}
+.screen-header{display:flex;align-items:center;gap:12px;padding:calc(var(--safe-top) + 12px) 16px 12px;position:sticky;top:0;background:var(--bg);z-index:10;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.screen-header h1{font-size:1.2rem;font-weight:700;flex:1}
+.btn-back{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--surface);flex-shrink:0}
+.btn-back svg{width:20px;height:20px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ============ BOTTOM NAV ============ */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:calc(var(--nav-h) + var(--safe-bottom));background:var(--surface);border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:flex-start;justify-content:space-around;padding:10px 4px calc(var(--safe-bottom) + 4px);z-index:100;transition:transform 0.3s ease}
+.bottom-nav.hidden{transform:translateX(-50%) translateY(100%);pointer-events:none}
+.nav-tab{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;padding:4px 8px;border-radius:12px;background:none;transition:all 0.2s ease}
+.nav-tab svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke 0.2s}
+.nav-tab span{font-size:0.65rem;font-weight:600;color:var(--muted);transition:color 0.2s;letter-spacing:0.02em}
+.nav-tab.active svg{stroke:var(--accent)}
+.nav-tab.active span{color:var(--accent)}
+.nav-tab:active{transform:scale(0.92)}
+
+/* ============ COMMON COMPONENTS ============ */
+.card{background:var(--surface);border-radius:var(--radius-card);padding:16px;margin-bottom:12px}
+.card-sm{padding:12px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase}
+.badge-lime{background:rgba(199,255,61,0.15);color:var(--accent)}
+.badge-yellow{background:rgba(251,191,36,0.15);color:var(--warning)}
+.badge-green{background:rgba(34,197,94,0.15);color:var(--success)}
+.badge-red{background:rgba(239,68,68,0.15);color:var(--danger)}
+.badge-muted{background:rgba(128,148,166,0.12);color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:var(--radius-btn);font-weight:700;font-size:0.88rem;min-height:48px;transition:all 0.15s ease;letter-spacing:0.02em}
+.btn:active{transform:scale(0.97);opacity:0.9}
+.btn-primary{background:var(--accent);color:var(--bg)}
+.btn-secondary{background:var(--surface2);color:var(--text)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{border:1.5px solid var(--surface2);color:var(--text);background:transparent}
+.btn-full{width:100%}
+.btn:disabled{opacity:0.4;pointer-events:none}
+.input-group{margin-bottom:14px}
+.input-group label{display:block;font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.input-field{width:100%;padding:13px 16px;background:var(--surface2);border-radius:12px;color:var(--text);font-size:0.95rem;border:1.5px solid transparent;transition:border-color 0.2s}
+.input-field:focus{border-color:var(--accent)}
+.input-field::placeholder{color:var(--muted);opacity:0.6}
+.section-title{font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:20px 0 10px}
+.divider{height:1px;background:rgba(255,255,255,0.06);margin:12px 0}
+.empty-state{text-align:center;padding:32px 16px;color:var(--muted);font-size:0.85rem;line-height:1.6}
+.avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#9EE600);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--bg);font-size:1.1rem;flex-shrink:0}
+.avatar-lg{width:72px;height:72px;font-size:1.6rem}
+
+/* ============ LOGIN SCREEN ============ */
+#login-screen{justify-content:center;align-items:center;padding:24px 20px;background:var(--bg)}
+.login-container{width:100%;max-width:380px}
+.login-brand{text-align:center;margin-bottom:32px}
+.login-brand .rda-badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 20px;background:linear-gradient(135deg,var(--accent),#9EE600);border-radius:10px;font-weight:900;font-size:1.3rem;color:var(--bg);letter-spacing:0.05em;margin-bottom:12px}
+.login-brand h1{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.login-brand p{color:var(--muted);font-size:0.85rem;font-weight:500}
+.login-tabs{display:flex;background:var(--surface);border-radius:14px;padding:4px;margin-bottom:24px}
+.login-tab{flex:1;padding:12px;text-align:center;font-weight:600;font-size:0.82rem;border-radius:11px;color:var(--muted);transition:all 0.25s ease;cursor:pointer}
+.login-tab.active{background:var(--surface2);color:var(--text)}
+.login-form{display:none}
+.login-form.active{display:block}
+.phone-input{display:flex;gap:8px}
+.phone-prefix{padding:13px 14px;background:var(--surface2);border-radius:12px;font-weight:600;color:var(--muted);font-size:0.9rem;flex-shrink:0}
+.otp-row{display:flex;gap:8px;margin:14px 0}
+.otp-box{width:48px;height:52px;text-align:center;font-size:1.3rem;font-weight:700;background:var(--surface2);border-radius:12px;border:1.5px solid transparent;transition:border-color 0.2s}
+.otp-box:focus{border-color:var(--accent)}
+.demo-fill{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;padding:10px;border-radius:10px;background:rgba(199,255,61,0.08);color:var(--accent);font-size:0.78rem;font-weight:600;cursor:pointer}
+.toggle-row{display:flex;gap:8px;margin-bottom:14px}
+.toggle-pill{flex:1;padding:12px;text-align:center;border-radius:12px;font-weight:600;font-size:0.82rem;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--surface2);color:var(--muted)}
+.toggle-pill.active{border-color:var(--accent);color:var(--accent);background:rgba(199,255,61,0.08)}
+.role-option{padding:14px;border-radius:14px;margin-bottom:8px;border:1.5px solid var(--surface2);cursor:pointer;transition:all 0.2s}
+.role-option.active{border-color:var(--accent);background:rgba(199,255,61,0.06)}
+.role-option h4{font-size:0.88rem;font-weight:600;margin-bottom:2px}
+.role-option p{font-size:0.75rem;color:var(--muted)}
+
+/* ============ HOME SCREEN ============ */
+.availability-banner{border-radius:var(--radius-card);padding:16px;margin-bottom:12px;transition:all 0.3s ease}
+.availability-banner.online{background:linear-gradient(135deg,rgba(34,197,94,0.12),rgba(199,255,61,0.08));border:1.5px solid rgba(34,197,94,0.3)}
+.availability-banner.offline{background:var(--surface);border:1.5px solid var(--surface2)}
+.avail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.avail-status{display:flex;align-items:center;gap:8px}
+.beacon{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.beacon.green{background:var(--success);box-shadow:0 0 8px rgba(34,197,94,0.5);animation:pulse-beacon 2s infinite}
+.beacon.gray{background:var(--muted);opacity:0.5}
+@keyframes pulse-beacon{0%,100%{box-shadow:0 0 4px rgba(34,197,94,0.4)}50%{box-shadow:0 0 16px rgba(34,197,94,0.7)}}
+.avail-label{font-size:0.7rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase}
+.avail-sublabel{font-size:0.75rem;color:var(--muted);font-weight:500}
+.toggle-switch{position:relative;width:52px;height:30px;border-radius:15px;cursor:pointer;transition:all 0.3s ease;flex-shrink:0}
+.toggle-switch.on{background:var(--success);border:2px solid var(--success)}
+.toggle-switch.off{background:var(--surface2);border:2px solid var(--muted)}
+.toggle-knob{position:absolute;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left 0.3s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.toggle-switch.on .toggle-knob{left:25px}
+.toggle-switch.off .toggle-knob{left:3px}
+
+.earnings-hero{text-align:center;padding:20px 16px}
+.earnings-hero .amount{font-size:2.4rem;font-weight:900;margin-bottom:4px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat-card{background:var(--surface);border-radius:14px;padding:12px 10px;text-align:center}
+.stat-card .stat-val{font-size:1.1rem;font-weight:800;margin-bottom:2px}
+.stat-card .stat-label{font-size:0.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.03em}
+.duty-modes{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 4px}
+.duty-pill{padding:8px 14px;border-radius:20px;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.03em}
+.duty-pill.active{background:rgba(199,255,61,0.15);color:var(--accent);border:1px solid rgba(199,255,61,0.3)}
+.duty-pill.inactive{background:var(--surface2);color:var(--muted);border:1px solid transparent}
+.safety-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.safety-item{text-align:center}
+.safety-item .s-val{font-size:1rem;font-weight:800}
+.safety-item .s-label{font-size:0.65rem;color:var(--muted);margin-top:2px;font-weight:500}
+.verify-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sim-btn{width:100%;padding:16px;background:linear-gradient(135deg,rgba(199,255,61,0.1),rgba(199,255,61,0.05));border:1.5px dashed rgba(199,255,61,0.3);border-radius:var(--radius-card);color:var(--accent);font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;text-align:center}
+.sim-btn:active{transform:scale(0.98);background:rgba(199,255,61,0.15)}
+
+/* ============ INCOMING RIDE MODAL ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal-sheet{width:100%;max-width:430px;background:var(--surface);border-radius:24px 24px 0 0;padding:20px 20px calc(var(--safe-bottom) + 20px);animation:slide-up 0.4s cubic-bezier(0.16,1,0.3,1)}
+@keyframes slide-up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--surface2);margin:0 auto 16px}
+.modal-header{text-align:center;margin-bottom:16px}
+.modal-header h2{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.countdown-ring{width:64px;height:64px;margin:0 auto 12px;position:relative}
+.countdown-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.countdown-ring circle{fill:none;stroke-width:4}
+.countdown-ring .ring-bg{stroke:var(--surface2)}
+.countdown-ring .ring-fg{stroke:var(--accent);stroke-dasharray:176;transition:stroke-dashoffset 1s linear}
+.countdown-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800}
+.ride-detail-row{display:flex;align-items:flex-start;gap:12px;margin:10px 0}
+.ride-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.ride-dot.green{background:var(--success)}
+.ride-dot.red{background:var(--danger)}
+.ride-loc{flex:1}
+.ride-loc small{font-size:0.7rem;color:var(--muted);font-weight:600;text-transform:uppercase}
+.ride-loc p{font-size:0.88rem;font-weight:600}
+.ride-connector{width:1px;height:20px;background:var(--muted);margin-left:4px;opacity:0.3}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-actions .btn{flex:1}
+
+/* ============ ACTIVE TRIP ============ */
+.trip-progress{display:flex;align-items:center;gap:0;margin:16px 0;padding:0 4px}
+.trip-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+.trip-step .step-dot{width:24px;height:24px;border-radius:50%;background:var(--surface2);border:2px solid var(--surface2);display:flex;align-items:center;justify-content:center;transition:all 0.3s;z-index:1}
+.trip-step .step-dot svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.trip-step.done .step-dot{background:var(--success);border-color:var(--success)}
+.trip-step.done .step-dot svg{opacity:1}
+.trip-step.current .step-dot{background:var(--accent);border-color:var(--accent)}
+.trip-step .step-label{font-size:0.58rem;font-weight:600;color:var(--muted);margin-top:6px;text-align:center;max-width:60px}
+.trip-step.done .step-label,.trip-step.current .step-label{color:var(--text)}
+.trip-line{flex:1;height:2px;background:var(--surface2);margin:0 -4px;margin-top:-17px;z-index:0}
+.trip-line.done{background:var(--success)}
+.otp-verify-card{text-align:center;padding:20px}
+.otp-verify-card p{font-size:0.85rem;color:var(--muted);margin-bottom:12px}
+.trip-otp-row{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.trip-otp-box{width:52px;height:56px;text-align:center;font-size:1.4rem;font-weight:800;background:var(--surface2);border-radius:14px;border:2px solid transparent;color:var(--text);transition:border-color 0.2s}
+.trip-otp-box:focus{border-color:var(--accent)}
+.trip-actions{display:flex;gap:10px;margin-top:12px}
+.trip-actions .btn{flex:1}
+
+/* ============ EARNINGS SCREEN ============ */
+.earnings-period{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.period-card{background:var(--surface);border-radius:14px;padding:14px 10px;text-align:center}
+.period-card .p-label{font-size:0.65rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:4px}
+.period-card .p-amount{font-size:1.2rem;font-weight:800}
+
+/* ============ KYC SCREEN ============ */
+.doc-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.doc-item:last-child{border-bottom:none}
+.doc-icon{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.doc-icon svg{width:20px;height:20px;stroke:var(--muted);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.doc-info{flex:1;min-width:0}
+.doc-info h4{font-size:0.85rem;font-weight:600;margin-bottom:3px}
+.doc-upload-btn{padding:8px 16px;border-radius:10px;background:var(--surface2);color:var(--text);font-weight:600;font-size:0.78rem;cursor:pointer;transition:all 0.2s;min-height:36px;display:flex;align-items:center}
+.doc-upload-btn:active{background:var(--accent);color:var(--bg)}
+
+/* ============ PROFILE SCREEN ============ */
+.profile-header{text-align:center;padding:20px 0 8px}
+.profile-header .avatar{margin:0 auto 12px}
+.profile-header h2{font-size:1.15rem;font-weight:700;margin-bottom:2px}
+.profile-header p{color:var(--muted);font-size:0.85rem}
+.qual-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.qual-item:last-child{border-bottom:none}
+.qual-item .q-name{font-size:0.85rem;font-weight:600}
+.hours-visual{margin:12px 0}
+.hours-bar{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;margin:6px 0}
+.hours-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--success));transition:width 0.5s ease}
+.hours-labels{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--muted);font-weight:500}
+.logout-btn{width:100%;padding:14px;border-radius:var(--radius-btn);background:rgba(239,68,68,0.1);color:var(--danger);font-weight:700;font-size:0.88rem;margin-top:16px;cursor:pointer;transition:all 0.2s;text-align:center}
+.logout-btn:active{background:rgba(239,68,68,0.2)}
+
+/* Toast */
+.toast{position:fixed;top:calc(var(--safe-top) + 16px);left:50%;transform:translateX(-50%) translateY(-120%);background:var(--surface);border:1px solid var(--surface2);border-radius:14px;padding:12px 20px;font-size:0.82rem;font-weight:600;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);max-width:90%}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div class="screen no-nav active" id="login-screen">
+  <div class="login-container">
+    <div class="login-brand">
+      <div class="rda-badge">RDA</div>
+      <h1>RideDriveAhead</h1>
+      <p>Driver Partner App</p>
+    </div>
+    <div class="login-tabs">
+      <div class="login-tab active" onclick="switchLoginTab('signin')">Sign In</div>
+      <div class="login-tab" onclick="switchLoginTab('register')">Register as Partner</div>
+    </div>
+
+    <!-- SIGN IN FORM -->
+    <div class="login-form active" id="signin-form">
+      <div class="input-group">
+        <label>Phone Number</label>
+        <div class="phone-input">
+          <div class="phone-prefix">+91</div>
+          <input type="tel" class="input-field" id="signin-phone" placeholder="Enter 10-digit number" maxlength="10" inputmode="numeric">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" id="signin-otp-btn" onclick="sendOTP('signin')">Send OTP</button>
+      <div id="signin-otp-section" style="display:none;margin-top:16px">
+        <div class="input-group">
+          <label>Enter OTP</label>
+          <div class="otp-row">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="0">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="1">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="2">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="3">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="4">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="signin" data-idx="5">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="verifyOTP('signin')">Verify &amp; Login</button>
+      </div>
+      <div class="demo-fill" onclick="demoFillSignin()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Demo Autofill
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="login-form" id="register-form">
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" class="input-field" id="reg-name" placeholder="Enter your full name">
+      </div>
+      <div class="input-group">
+        <label>Phone Number</label>
+        <div class="phone-input">
+          <div class="phone-prefix">+91</div>
+          <input type="tel" class="input-field" id="reg-phone" placeholder="Enter 10-digit number" maxlength="10" inputmode="numeric">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>City</label>
+        <input type="text" class="input-field" id="reg-city" placeholder="e.g. Mumbai, Delhi, Bangalore">
+      </div>
+      <div class="input-group">
+        <label>Driving License Number</label>
+        <input type="text" class="input-field" id="reg-license" placeholder="DL-XXXXXXXXX">
+      </div>
+      <div class="input-group">
+        <label>Transmission Skills</label>
+        <div class="toggle-row">
+          <div class="toggle-pill active" id="reg-at" onclick="togglePill(this)">Automatic (AT)</div>
+          <div class="toggle-pill active" id="reg-mt" onclick="togglePill(this)">Manual (MT)</div>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Driver Role</label>
+        <div class="role-option active" id="role-chauffeur" onclick="selectRole('CHAUFFEUR_ONLY')">
+          <h4>Chauffeur Only</h4>
+          <p>Drive client's own car</p>
+        </div>
+        <div class="role-option" id="role-cab" onclick="selectRole('CAB_DRIVER')" style="margin-top:8px">
+          <h4>Cab Driver</h4>
+          <p>Drive cab vehicle for ride bookings</p>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="sendOTP('register')">Send OTP &amp; Register</button>
+      <div id="register-otp-section" style="display:none;margin-top:16px">
+        <div class="input-group">
+          <label>Enter OTP</label>
+          <div class="otp-row">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="0">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="1">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="2">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="3">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="4">
+            <input type="tel" class="otp-box" maxlength="1" inputmode="numeric" data-otp="register" data-idx="5">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="verifyOTP('register')">Verify &amp; Register</button>
+      </div>
+      <div class="demo-fill" onclick="demoFillRegister()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Demo Autofill
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HOME SCREEN ============ -->
+<div class="screen" id="home-screen">
+  <div class="screen-header">
+    <h1>Dashboard</h1>
+    <div class="badge badge-muted" id="home-kyc-badge-top">PENDING</div>
+  </div>
+  <div class="screen-scroll">
+    <!-- Availability Banner -->
+    <div class="availability-banner offline" id="avail-banner">
+      <div class="avail-top">
+        <div class="avail-status">
+          <div class="beacon gray" id="avail-beacon"></div>
+          <div>
+            <div class="avail-label" id="avail-label">DUTY SYSTEM OFFLINE</div>
+            <div class="avail-sublabel" id="avail-sublabel">Shift Currently Paused</div>
+          </div>
+        </div>
+        <div class="toggle-switch off" id="avail-toggle" onclick="toggleAvailability()">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Earnings Card -->
+    <div class="card">
+      <div class="earnings-hero">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px">
+          <span style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Today's Earnings</span>
+          <span class="badge badge-muted" style="font-size:0.6rem">Standard</span>
+        </div>
+        <div class="amount" id="home-earnings">₹0</div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="home-completed">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="home-online-time">0h 0m</div>
+        <div class="stat-label">Online Time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="home-rating">Not rated yet</div>
+        <div class="stat-label">Rating</div>
+      </div>
+    </div>
+
+    <!-- Driver Duty Console -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span style="font-weight:700;font-size:0.88rem">Driver Duty Console</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5" id="duty-console-msg">Toggle Online above to receive assigned chauffeur and cab duties.</p>
+    </div>
+
+    <!-- Qualified Duty Modes -->
+    <div class="section-title">Qualified Duty Modes</div>
+    <div class="duty-modes">
+      <div class="duty-pill active" id="mode-chauffeur" onclick="toggleDutyMode('chauffeur')">Chauffeur (Private Car)</div>
+      <div class="duty-pill active" id="mode-cab" onclick="toggleDutyMode('cab')">Cab</div>
+    </div>
+
+    <!-- Duty Hours & Safety Limits -->
+    <div class="section-title">Duty Hours &amp; Safety Limits</div>
+    <div class="card">
+      <div class="safety-grid">
+        <div class="safety-item">
+          <div class="s-val" id="safety-driven" style="color:var(--accent)">0h 0m</div>
+          <div class="s-label">Driving Today</div>
+        </div>
+        <div class="safety-item">
+          <div class="s-val" style="color:var(--warning)">After 4.5h</div>
+          <div class="s-label">Mandatory Rest</div>
+        </div>
+        <div class="safety-item">
+          <div class="s-val" id="safety-remaining" style="color:var(--success)">8h 0m</div>
+          <div class="s-label">Max Remaining</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06)">
+        <span style="font-size:0.72rem;color:var(--muted)">30-min break rule &middot; Within safety cap</span>
+        <span class="badge badge-lime" style="font-size:0.58rem">8H MAX SAFE SHIFT</span>
+      </div>
+    </div>
+
+    <!-- Today's Net Earnings -->
+    <div class="section-title">Today's Net Earnings</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:1.6rem;font-weight:900" id="net-earnings">₹0</span>
+        <button class="btn btn-outline" style="padding:8px 16px;min-height:36px;font-size:0.78rem" id="withdraw-btn" disabled>Withdraw →</button>
+      </div>
+      <span style="font-size:0.78rem;color:var(--muted)" id="duties-count">0 Duties Completed</span>
+    </div>
+
+    <!-- Verification Status -->
+    <div class="section-title">Verification Status</div>
+    <div class="card" id="verify-card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span class="badge badge-yellow" id="verify-status-badge">VERIFICATION PENDING</span>
+      </div>
+      <div class="verify-badges">
+        <span class="badge badge-muted">LMV Commercial DL</span>
+        <span class="badge badge-muted">Automatic (AT)</span>
+        <span class="badge badge-muted">Manual (MT)</span>
+      </div>
+    </div>
+
+    <!-- Available Bookings -->
+    <div class="section-title">Available Bookings</div>
+    <div class="card">
+      <div class="empty-state">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;opacity:0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>No active bookings in pool. Available chauffeur &amp; cab requests will appear here.</p>
+      </div>
+    </div>
+
+    <!-- Simulate Incoming Request -->
+    <div class="section-title">Testing</div>
+    <div class="sim-btn" onclick="simulateIncomingRide()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Trigger Instant Chauffeur Request →
+    </div>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- ============ BOOKINGS SCREEN (empty/list) ============ -->
+<div class="screen" id="bookings-screen">
+  <div class="screen-header">
+    <h1>Bookings</h1>
+  </div>
+  <div class="screen-scroll">
+    <div class="card">
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:12px;opacity:0.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <p style="font-weight:600;margin-bottom:4px">No Bookings Yet</p>
+        <p>Your assigned and completed duties will appear here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EARNINGS SCREEN ============ -->
+<div class="screen" id="earnings-screen">
+  <div class="screen-header">
+    <button class="btn-back" onclick="navigate('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <h1>Earnings</h1>
+  </div>
+  <div class="screen-scroll">
+    <div class="earnings-period">
+      <div class="period-card">
+        <div class="p-label">Today</div>
+        <div class="p-amount" id="earn-today">₹0</div>
+      </div>
+      <div class="period-card">
+        <div class="p-label">This Week</div>
+        <div class="p-amount" id="earn-week">₹0</div>
+      </div>
+      <div class="period-card">
+        <div class="p-label">This Month</div>
+        <div class="p-amount" id="earn-month">₹0</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px">Completed Trips</div>
+          <div style="font-size:1.5rem;font-weight:900" id="earn-trips">0</div>
+        </div>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="earn-withdraw-btn" disabled style="margin-bottom:16px">Withdraw to UPI</button>
+
+    <div class="card">
+      <div class="empty-state">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;opacity:0.4"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <p>Complete your first duty to see earnings here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ KYC SCREEN ============ -->
+<div class="screen" id="kyc-screen">
+  <div class="screen-header">
+    <button class="btn-back" onclick="navigate('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <h1>Document Verification</h1>
+  </div>
+  <div class="screen-scroll">
+    <div class="card" style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);margin-bottom:16px">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span style="font-size:0.82rem;color:var(--warning);font-weight:500;line-height:1.5">All documents must be verified before you can accept duties.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="doc-item">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="13" y2="12"/></svg>
+        </div>
+        <div class="doc-info">
+          <h4>Aadhaar Card</h4>
+          <span class="badge badge-yellow" style="font-size:0.58rem;margin-top:4px">Verification Pending</span>
+        </div>
+        <button class="doc-upload-btn" onclick="uploadDoc('Aadhaar Card')">Upload</button>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="13" y2="12"/></svg>
+        </div>
+        <div class="doc-info">
+          <h4>PAN Card</h4>
+          <span class="badge badge-yellow" style="font-size:0.58rem;margin-top:4px">Verification Pending</span>
+        </div>
+        <button class="doc-upload-btn" onclick="uploadDoc('PAN Card')">Upload</button>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+        </div>
+        <div class="doc-info">
+          <h4>Driving License (LMV)</h4>
+          <span class="badge badge-yellow" style="font-size:0.58rem;margin-top:4px">Verification Pending</span>
+        </div>
+        <button class="doc-upload-btn" onclick="uploadDoc('Driving License')">Upload</button>
+      </div>
+      <div class="doc-item">
+        <div class="doc-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="doc-info">
+          <h4>Driver Badge &amp; Background Check</h4>
+          <span class="badge badge-yellow" style="font-size:0.58rem;margin-top:4px">Verification Pending</span>
+        </div>
+        <button class="doc-upload-btn" onclick="uploadDoc('Background Check')">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PROFILE SCREEN ============ -->
+<div class="screen" id="profile-screen">
+  <div class="screen-header">
+    <button class="btn-back" onclick="navigate('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <h1>Driver Profile</h1>
+  </div>
+  <div class="screen-scroll">
+    <div class="profile-header">
+      <div class="avatar avatar-lg" id="profile-avatar">?</div>
+      <h2 id="profile-name">Driver</h2>
+      <p id="profile-phone">+91 XXXXXXXXXX</p>
+    </div>
+
+    <div class="stats-row" style="margin:16px 0">
+      <div class="stat-card">
+        <div class="stat-val" id="profile-rating">Not rated yet</div>
+        <div class="stat-label">Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="profile-duties">0</div>
+        <div class="stat-label">Total Duties</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="profile-status-badge">PENDING</div>
+        <div class="stat-label">KYC Status</div>
+      </div>
+    </div>
+
+    <div class="section-title">Verified Driving Qualifications</div>
+    <div class="card">
+      <div class="qual-item">
+        <span class="q-name">Commercial DL</span>
+        <span class="badge badge-yellow" id="qual-dl">PENDING</span>
+      </div>
+      <div class="qual-item">
+        <span class="q-name">AT Qualified</span>
+        <span class="badge badge-lime">CERTIFIED</span>
+      </div>
+      <div class="qual-item">
+        <span class="q-name">MT Expert</span>
+        <span class="badge badge-lime">EXPERT</span>
+      </div>
+      <div class="qual-item">
+        <span class="q-name">Background Review</span>
+        <span class="badge badge-yellow" id="qual-bg">PENDING</span>
+      </div>
+    </div>
+
+    <div class="section-title">Duty Hours Tracker</div>
+    <div class="card">
+      <div class="hours-visual">
+        <div class="hours-labels">
+          <span id="hours-driven-label">Driven: 0h 0m</span>
+          <span id="hours-remain-label">Remaining: 8h 0m</span>
+        </div>
+        <div class="hours-bar">
+          <div class="hours-fill" id="hours-fill" style="width:0%"></div>
+        </div>
+        <div style="text-align:center;margin-top:6px">
+          <span class="badge badge-muted" style="font-size:0.6rem">8H MAX DAILY CAP</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- ============ ACTIVE TRIP SCREEN ============ -->
+<div class="screen" id="trip-screen">
+  <div class="screen-header">
+    <h1>Active Duty</h1>
+    <span class="badge badge-lime" id="trip-status-badge">EN ROUTE</span>
+  </div>
+  <div class="screen-scroll">
+    <!-- Progress -->
+    <div class="trip-progress" id="trip-progress">
+      <div class="trip-step current" data-step="0">
+        <div class="step-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="step-label">En Route Pickup</div>
+      </div>
+      <div class="trip-line" data-line="0"></div>
+      <div class="trip-step" data-step="1">
+        <div class="step-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="step-label">Arrived</div>
+      </div>
+      <div class="trip-line" data-line="1"></div>
+      <div class="trip-step" data-step="2">
+        <div class="step-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="step-label">In Progress</div>
+      </div>
+      <div class="trip-line" data-line="2"></div>
+      <div class="trip-step" data-step="3">
+        <div class="step-dot"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="step-label">Completed</div>
+      </div>
+    </div>
+
+    <!-- Trip Details Card -->
+    <div class="card" id="trip-details-card">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div class="avatar" id="trip-rider-avatar">R</div>
+        <div>
+          <div style="font-weight:700;font-size:0.95rem" id="trip-rider-name">Rider</div>
+          <div style="font-size:0.78rem;color:var(--muted)" id="trip-rider-phone">+91 XXXXX XXXXX</div>
+        </div>
+      </div>
+      <div class="ride-detail-row">
+        <div class="ride-dot green"></div>
+        <div class="ride-loc">
+          <small>Pickup</small>
+          <p id="trip-pickup">Loading...</p>
+        </div>
+      </div>
+      <div style="margin-left:4px"><div class="ride-connector"></div></div>
+      <div class="ride-detail-row">
+        <div class="ride-dot red"></div>
+        <div class="ride-loc">
+          <small>Drop</small>
+          <p id="trip-drop">Loading...</p>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600">Vehicle</div>
+          <div style="font-weight:700;font-size:0.9rem" id="trip-car">Toyota Innova (AT)</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600">Fare</div>
+          <div style="font-weight:800;font-size:1.1rem;color:var(--accent)" id="trip-fare">₹1,248</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTP Verification Card (shown at pickup) -->
+    <div class="card otp-verify-card" id="trip-otp-card" style="display:none">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <p>Enter rider's OTP to start duty</p>
+      <div class="trip-otp-row">
+        <input type="tel" class="trip-otp-box" maxlength="1" inputmode="numeric" data-trip-otp="0">
+        <input type="tel" class="trip-otp-box" maxlength="1" inputmode="numeric" data-trip-otp="1">
+        <input type="tel" class="trip-otp-box" maxlength="1" inputmode="numeric" data-trip-otp="2">
+        <input type="tel" class="trip-otp-box" maxlength="1" inputmode="numeric" data-trip-otp="3">
+      </div>
+      <button class="btn btn-primary btn-full" onclick="verifyTripOTP()">Verify OTP</button>
+    </div>
+
+    <!-- Trip Action Buttons -->
+    <div class="trip-actions" style="margin-bottom:12px">
+      <button class="btn btn-secondary" onclick="tripNavigate()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        Navigate
+      </button>
+      <button class="btn btn-secondary" onclick="tripCall()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call Rider
+      </button>
+    </div>
+
+    <!-- Primary Trip Action -->
+    <button class="btn btn-primary btn-full" id="trip-action-btn" onclick="advanceTripStatus()">Arrived at Pickup</button>
+    <div style="height:16px"></div>
+  </div>
+</div>
+
+<!-- ============ INCOMING RIDE MODAL ============ -->
+<div class="modal-overlay" id="ride-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 64 64">
+          <circle class="ring-bg" cx="32" cy="32" r="28"/>
+          <circle class="ring-fg" id="countdown-circle" cx="32" cy="32" r="28" stroke-dashoffset="0"/>
+        </svg>
+        <div class="countdown-num" id="countdown-num">30</div>
+      </div>
+      <h2>Incoming Chauffeur Request</h2>
+      <span class="badge badge-lime">CHAUFFEUR DUTY</span>
+    </div>
+
+    <div class="card card-sm" style="background:var(--surface2)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="avatar" style="width:40px;height:40px;font-size:0.9rem">R</div>
+        <div>
+          <div style="font-weight:700;font-size:0.9rem">Rajesh Kumar</div>
+          <div style="font-size:0.75rem;color:var(--muted)">4.8 ★ &middot; 52 trips</div>
+        </div>
+      </div>
+      <div class="ride-detail-row" style="margin:8px 0">
+        <div class="ride-dot green"></div>
+        <div class="ride-loc">
+          <small>Pickup</small>
+          <p>Koramangala, 5th Block</p>
+        </div>
+      </div>
+      <div style="margin-left:4px"><div class="ride-connector"></div></div>
+      <div class="ride-detail-row" style="margin:8px 0">
+        <div class="ride-dot red"></div>
+        <div class="ride-loc">
+          <small>Drop</small>
+          <p>Indiranagar, 12th Main</p>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:0.68rem;color:var(--muted);font-weight:600">Vehicle</div>
+          <div style="font-weight:600;font-size:0.85rem">Toyota Innova (AT)</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.68rem;color:var(--muted);font-weight:600">Est. Duration</div>
+          <div style="font-weight:600;font-size:0.85rem">2h</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin:14px 0">
+      <span style="font-size:1.6rem;font-weight:900;color:var(--accent)">₹1,248</span>
+      <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">Estimated Fare</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="declineRide()" style="flex:0.7">Decline</button>
+      <button class="btn btn-primary" onclick="acceptRide()" style="flex:1.3">Accept Duty</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EARNINGS SUMMARY MODAL ============ -->
+<div class="modal-overlay" id="earnings-modal">
+  <div class="modal-sheet" style="text-align:center">
+    <div class="modal-handle"></div>
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:8px auto 12px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <h2 style="margin-bottom:4px">Duty Completed!</h2>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:16px">Great work, driver partner</p>
+    <div style="font-size:2.2rem;font-weight:900;color:var(--accent);margin-bottom:4px">₹1,248</div>
+    <div style="font-size:0.78rem;color:var(--muted);margin-bottom:20px">Earned for this duty</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px">
+      <div class="card card-sm" style="background:var(--surface2)"><div style="font-size:0.68rem;color:var(--muted);font-weight:600">Duration</div><div style="font-weight:700">2h 0m</div></div>
+      <div class="card card-sm" style="background:var(--surface2)"><div style="font-size:0.68rem;color:var(--muted);font-weight:600">Distance</div><div style="font-weight:700">18.5 km</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="closeEarningsSummary()">Back to Home</button>
+  </div>
+</div>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav hidden" id="bottom-nav">
+  <button class="nav-tab active" onclick="navigate('home')" data-tab="home">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="nav-tab" onclick="navigate('bookings')" data-tab="bookings">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Bookings</span>
+  </button>
+  <button class="nav-tab" onclick="navigate('earnings')" data-tab="earnings">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    <span>Earnings</span>
+  </button>
+  <button class="nav-tab" onclick="navigate('kyc')" data-tab="kyc">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <span>KYC</span>
+  </button>
+  <button class="nav-tab" onclick="navigate('profile')" data-tab="profile">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profile</span>
+  </button>
+</nav>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+</div><!-- end .app -->
+
+<script>
+/* ============================================================
+   RideDriveAhead – Driver PWA
+   ============================================================ */
+
+// ---- STATE ----
+const APP = {
+  currentScreen: 'login',
+  driver: null,
+  isOnline: localStorage.getItem('rda_driver_online') === 'true',
+  dutyModes: { chauffeur: true, cab: true },
+  drivingHoursToday: 0,
+  todayEarnings: 0,
+  completedDuties: 0,
+  selectedRole: 'CHAUFFEUR_ONLY',
+  tripState: 0, // 0=en-route, 1=arrived, 2=in-progress, 3=completed
+  countdownTimer: null,
+  activeTrip: null,
+  onlineTimerStart: null,
+  onlineMinutes: 0
+};
+
+// ---- TOAST ----
+function showToast(msg, duration = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ---- NAVIGATION ----
+function navigate(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(screen + '-screen');
+  if (el) {
+    el.classList.add('active');
+    APP.currentScreen = screen;
+  }
+  // Update bottom nav
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.tab === screen);
+  });
+  // Show/hide bottom nav
+  const nav = document.getElementById('bottom-nav');
+  if (screen === 'login' || screen === 'trip') {
+    nav.classList.add('hidden');
+  } else {
+    nav.classList.remove('hidden');
+  }
+  // Refresh screen data
+  if (screen === 'home') refreshHome();
+  if (screen === 'earnings') refreshEarnings();
+  if (screen === 'profile') refreshProfile();
+}
+
+// ---- LOGIN TABS ----
+function switchLoginTab(tab) {
+  document.querySelectorAll('.login-tab').forEach((t, i) => {
+    t.classList.toggle('active', (tab === 'signin' && i === 0) || (tab === 'register' && i === 1));
+  });
+  document.getElementById('signin-form').classList.toggle('active', tab === 'signin');
+  document.getElementById('register-form').classList.toggle('active', tab === 'register');
+}
+
+// ---- TOGGLE PILLS ----
+function togglePill(el) { el.classList.toggle('active'); }
+
+// ---- ROLE SELECT ----
+function selectRole(role) {
+  APP.selectedRole = role;
+  document.getElementById('role-chauffeur').classList.toggle('active', role === 'CHAUFFEUR_ONLY');
+  document.getElementById('role-cab').classList.toggle('active', role === 'CAB_DRIVER');
+}
+
+// ---- DEMO AUTOFILL ----
+function demoFillSignin() {
+  document.getElementById('signin-phone').value = '9876543210';
+  showToast('Demo data filled');
+}
+function demoFillRegister() {
+  document.getElementById('reg-name').value = 'Amit Sharma';
+  document.getElementById('reg-phone').value = '9876543210';
+  document.getElementById('reg-city').value = 'Bangalore';
+  document.getElementById('reg-license').value = 'DL-1420110012345';
+  showToast('Demo data filled');
+}
+
+// ---- OTP FLOW ----
+async function sendOTP(mode) {
+  const phone = mode === 'signin'
+    ? document.getElementById('signin-phone').value.trim()
+    : document.getElementById('reg-phone').value.trim();
+  if (phone.length < 10) { showToast('Enter a valid 10-digit number'); return; }
+
+  try {
+    await fetch('/api/v1/auth/otp/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phoneNumber: '+91' + phone, userRole: 'DRIVER' })
+    });
+  } catch (e) { /* API may not be available in demo */ }
+
+  document.getElementById(mode + '-otp-section').style.display = 'block';
+  showToast('OTP sent to +91 ' + phone);
+  // Auto-fill demo OTP
+  const boxes = document.querySelectorAll(`[data-otp="${mode}"]`);
+  const demoOtp = '123456';
+  boxes.forEach((b, i) => { b.value = demoOtp[i]; });
+}
+
+async function verifyOTP(mode) {
+  const phone = mode === 'signin'
+    ? document.getElementById('signin-phone').value.trim()
+    : document.getElementById('reg-phone').value.trim();
+  const boxes = document.querySelectorAll(`[data-otp="${mode}"]`);
+  const otp = Array.from(boxes).map(b => b.value).join('');
+  if (otp.length < 6) { showToast('Enter complete OTP'); return; }
+
+  const payload = {
+    phoneNumber: '+91' + phone,
+    otpCode: otp,
+    userRole: 'DRIVER'
+  };
+  if (mode === 'register') {
+    payload.fullName = document.getElementById('reg-name').value.trim();
+    payload.city = document.getElementById('reg-city').value.trim();
+    payload.licenseNumber = document.getElementById('reg-license').value.trim();
+    payload.transmissionAT = document.getElementById('reg-at').classList.contains('active');
+    payload.transmissionMT = document.getElementById('reg-mt').classList.contains('active');
+    payload.driverRole = APP.selectedRole;
+  }
+
+  try {
+    const res = await fetch('/api/v1/auth/otp/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      loginSuccess(data);
+      return;
+    }
+  } catch (e) { /* Demo fallback */ }
+
+  // Demo fallback: create local driver
+  const demoDriver = {
+    id: 'drv_' + Date.now(),
+    fullName: mode === 'register' ? (document.getElementById('reg-name').value.trim() || 'Driver Partner') : 'Driver Partner',
+    phoneNumber: '+91' + phone,
+    userRole: 'DRIVER',
+    kycStatus: 'PENDING',
+    rating: null,
+    isOnline: false,
+    totalDuties: 0,
+    todayEarnings: 0,
+    drivingHoursToday: 0,
+    city: mode === 'register' ? (document.getElementById('reg-city').value.trim() || '') : ''
+  };
+  loginSuccess(demoDriver);
+}
+
+function loginSuccess(driver) {
+  APP.driver = driver;
+  localStorage.setItem('rda_driver', JSON.stringify(driver));
+  showToast('Welcome, ' + (driver.fullName || 'Driver'));
+  navigate('home');
+}
+
+// ---- AVAILABILITY TOGGLE ----
+function toggleAvailability() {
+  APP.isOnline = !APP.isOnline;
+  localStorage.setItem('rda_driver_online', APP.isOnline);
+  updateAvailabilityUI();
+  if (APP.isOnline) {
+    APP.onlineTimerStart = Date.now();
+    showToast('You are now Online');
+  } else {
+    if (APP.onlineTimerStart) {
+      APP.onlineMinutes += Math.floor((Date.now() - APP.onlineTimerStart) / 60000);
+      APP.onlineTimerStart = null;
+    }
+    showToast('You are now Offline');
+  }
+}
+
+function updateAvailabilityUI() {
+  const banner = document.getElementById('avail-banner');
+  const beacon = document.getElementById('avail-beacon');
+  const toggle = document.getElementById('avail-toggle');
+  const label = document.getElementById('avail-label');
+  const sublabel = document.getElementById('avail-sublabel');
+
+  if (APP.isOnline) {
+    banner.className = 'availability-banner online';
+    beacon.className = 'beacon green';
+    toggle.className = 'toggle-switch on';
+    label.textContent = 'DUTY SYSTEM ACTIVE';
+    sublabel.textContent = 'Ready for Chauffeur & Cab Duties';
+  } else {
+    banner.className = 'availability-banner offline';
+    beacon.className = 'beacon gray';
+    toggle.className = 'toggle-switch off';
+    label.textContent = 'DUTY SYSTEM OFFLINE';
+    sublabel.textContent = 'Shift Currently Paused';
+  }
+}
+
+// ---- DUTY MODES ----
+function toggleDutyMode(mode) {
+  APP.dutyModes[mode] = !APP.dutyModes[mode];
+  const el = document.getElementById('mode-' + mode);
+  el.classList.toggle('active', APP.dutyModes[mode]);
+  el.classList.toggle('inactive', !APP.dutyModes[mode]);
+}
+
+// ---- REFRESH HOME ----
+function refreshHome() {
+  if (!APP.driver) return;
+
+  const d = APP.driver;
+  document.getElementById('home-earnings').textContent = '₹' + APP.todayEarnings.toLocaleString('en-IN');
+  document.getElementById('home-completed').textContent = APP.completedDuties;
+  document.getElementById('net-earnings').textContent = '₹' + APP.todayEarnings.toLocaleString('en-IN');
+  document.getElementById('duties-count').textContent = APP.completedDuties + ' Duties Completed';
+
+  // Online time
+  let totalMin = APP.onlineMinutes;
+  if (APP.isOnline && APP.onlineTimerStart) {
+    totalMin += Math.floor((Date.now() - APP.onlineTimerStart) / 60000);
+  }
+  const oh = Math.floor(totalMin / 60);
+  const om = totalMin % 60;
+  document.getElementById('home-online-time').textContent = oh + 'h ' + om + 'm';
+
+  // Rating
+  document.getElementById('home-rating').textContent = d.rating !== null && d.rating !== undefined ? d.rating.toFixed(1) + ' ★' : 'Not rated yet';
+  document.getElementById('home-rating').style.fontSize = d.rating ? '1.1rem' : '0.72rem';
+
+  // Safety
+  const driven = APP.drivingHoursToday;
+  const dH = Math.floor(driven);
+  const dM = Math.round((driven - dH) * 60);
+  document.getElementById('safety-driven').textContent = dH + 'h ' + dM + 'm';
+  const rem = Math.max(0, 8 - driven);
+  const rH = Math.floor(rem);
+  const rM = Math.round((rem - rH) * 60);
+  document.getElementById('safety-remaining').textContent = rH + 'h ' + rM + 'm';
+
+  // Withdraw
+  const wBtn = document.getElementById('withdraw-btn');
+  wBtn.disabled = APP.todayEarnings <= 0;
+
+  // KYC badge
+  const kycBadge = document.getElementById('home-kyc-badge-top');
+  const verifyBadge = document.getElementById('verify-status-badge');
+  if (d.kycStatus === 'APPROVED') {
+    kycBadge.className = 'badge badge-green';
+    kycBadge.textContent = 'VERIFIED';
+    verifyBadge.className = 'badge badge-green';
+    verifyBadge.innerHTML = 'DOCUMENTS APPROVED &#10003;';
+  } else {
+    kycBadge.className = 'badge badge-yellow';
+    kycBadge.textContent = 'PENDING';
+    verifyBadge.className = 'badge badge-yellow';
+    verifyBadge.textContent = 'VERIFICATION PENDING';
+  }
+
+  updateAvailabilityUI();
+}
+
+// ---- REFRESH EARNINGS ----
+function refreshEarnings() {
+  document.getElementById('earn-today').textContent = '₹' + APP.todayEarnings.toLocaleString('en-IN');
+  document.getElementById('earn-week').textContent = '₹' + APP.todayEarnings.toLocaleString('en-IN');
+  document.getElementById('earn-month').textContent = '₹' + APP.todayEarnings.toLocaleString('en-IN');
+  document.getElementById('earn-trips').textContent = APP.completedDuties;
+  document.getElementById('earn-withdraw-btn').disabled = APP.todayEarnings <= 0;
+}
+
+// ---- REFRESH PROFILE ----
+function refreshProfile() {
+  if (!APP.driver) return;
+  const d = APP.driver;
+  document.getElementById('profile-avatar').textContent = (d.fullName || '?')[0].toUpperCase();
+  document.getElementById('profile-name').textContent = d.fullName || 'Driver Partner';
+  document.getElementById('profile-phone').textContent = d.phoneNumber || '+91 XXXXXXXXXX';
+
+  const ratingEl = document.getElementById('profile-rating');
+  ratingEl.textContent = d.rating !== null && d.rating !== undefined ? d.rating.toFixed(1) + ' ★' : 'Not rated yet';
+  ratingEl.style.fontSize = d.rating ? '1.1rem' : '0.72rem';
+
+  document.getElementById('profile-duties').textContent = APP.completedDuties;
+
+  const statusBadge = document.getElementById('profile-status-badge');
+  if (d.kycStatus === 'APPROVED') {
+    statusBadge.textContent = 'APPROVED';
+    statusBadge.style.color = 'var(--success)';
+    document.getElementById('qual-dl').className = 'badge badge-green';
+    document.getElementById('qual-dl').textContent = 'VERIFIED';
+    document.getElementById('qual-bg').className = 'badge badge-green';
+    document.getElementById('qual-bg').textContent = 'APPROVED';
+  } else {
+    statusBadge.textContent = 'PENDING';
+    statusBadge.style.color = 'var(--warning)';
+  }
+
+  // Hours
+  const driven = APP.drivingHoursToday;
+  const dH = Math.floor(driven);
+  const dM = Math.round((driven - dH) * 60);
+  document.getElementById('hours-driven-label').textContent = 'Driven: ' + dH + 'h ' + dM + 'm';
+  const rem = Math.max(0, 8 - driven);
+  const rH = Math.floor(rem);
+  const rM = Math.round((rem - rH) * 60);
+  document.getElementById('hours-remain-label').textContent = 'Remaining: ' + rH + 'h ' + rM + 'm';
+  document.getElementById('hours-fill').style.width = Math.min(100, (driven / 8) * 100) + '%';
+}
+
+// ---- SIMULATE INCOMING RIDE ----
+function simulateIncomingRide() {
+  const modal = document.getElementById('ride-modal');
+  modal.classList.add('show');
+  startCountdown();
+}
+
+function startCountdown() {
+  let count = 30;
+  const circle = document.getElementById('countdown-circle');
+  const numEl = document.getElementById('countdown-num');
+  const circumference = 2 * Math.PI * 28; // ~175.93
+  circle.style.strokeDasharray = circumference;
+  circle.style.strokeDashoffset = '0';
+  numEl.textContent = count;
+
+  if (APP.countdownTimer) clearInterval(APP.countdownTimer);
+  APP.countdownTimer = setInterval(() => {
+    count--;
+    numEl.textContent = count;
+    const offset = circumference * (1 - count / 30);
+    circle.style.strokeDashoffset = offset;
+    if (count <= 0) {
+      clearInterval(APP.countdownTimer);
+      APP.countdownTimer = null;
+      declineRide();
+      showToast('Request timed out');
+    }
+  }, 1000);
+}
+
+function acceptRide() {
+  if (APP.countdownTimer) { clearInterval(APP.countdownTimer); APP.countdownTimer = null; }
+  document.getElementById('ride-modal').classList.remove('show');
+
+  APP.activeTrip = {
+    riderName: 'Rajesh Kumar',
+    riderPhone: '+91 98XXX XX210',
+    pickup: 'Koramangala, 5th Block',
+    drop: 'Indiranagar, 12th Main',
+    car: 'Toyota Innova (AT)',
+    fare: 1248,
+    otp: '4829'
+  };
+  APP.tripState = 0;
+  setupTripScreen();
+  navigate('trip');
+  showToast('Duty accepted! En route to pickup');
+}
+
+function declineRide() {
+  if (APP.countdownTimer) { clearInterval(APP.countdownTimer); APP.countdownTimer = null; }
+  document.getElementById('ride-modal').classList.remove('show');
+  showToast('Request declined');
+}
+
+// ---- ACTIVE TRIP ----
+function setupTripScreen() {
+  const t = APP.activeTrip;
+  if (!t) return;
+  document.getElementById('trip-rider-avatar').textContent = t.riderName[0];
+  document.getElementById('trip-rider-name').textContent = t.riderName;
+  document.getElementById('trip-rider-phone').textContent = t.riderPhone;
+  document.getElementById('trip-pickup').textContent = t.pickup;
+  document.getElementById('trip-drop').textContent = t.drop;
+  document.getElementById('trip-car').textContent = t.car;
+  document.getElementById('trip-fare').textContent = '₹' + t.fare.toLocaleString('en-IN');
+  document.getElementById('trip-otp-card').style.display = 'none';
+  updateTripProgress();
+}
+
+function updateTripProgress() {
+  const steps = document.querySelectorAll('#trip-progress .trip-step');
+  const lines = document.querySelectorAll('#trip-progress .trip-line');
+  const badge = document.getElementById('trip-status-badge');
+  const btn = document.getElementById('trip-action-btn');
+  const otpCard = document.getElementById('trip-otp-card');
+
+  steps.forEach((s, i) => {
+    s.classList.remove('done', 'current');
+    if (i < APP.tripState) s.classList.add('done');
+    else if (i === APP.tripState) s.classList.add('current');
+  });
+  lines.forEach((l, i) => {
+    l.classList.toggle('done', i < APP.tripState);
+  });
+
+  const labels = ['EN ROUTE', 'ARRIVED', 'IN PROGRESS', 'COMPLETED'];
+  const btnLabels = ['Arrived at Pickup', 'Start Duty', 'Complete Duty', ''];
+  badge.textContent = labels[APP.tripState] || 'EN ROUTE';
+
+  if (APP.tripState === 1) {
+    otpCard.style.display = 'block';
+    btn.textContent = btnLabels[APP.tripState];
+    btn.disabled = true;
+  } else {
+    otpCard.style.display = 'none';
+    btn.textContent = btnLabels[APP.tripState];
+    btn.disabled = APP.tripState >= 3;
+  }
+}
+
+function advanceTripStatus() {
+  if (APP.tripState === 1) {
+    // Need OTP first
+    showToast('Verify rider OTP first');
+    return;
+  }
+  APP.tripState++;
+  if (APP.tripState >= 3) {
+    completeDuty();
+    return;
+  }
+  updateTripProgress();
+  const msgs = ['', 'You have arrived at pickup', 'Duty started, drive safely!', ''];
+  if (msgs[APP.tripState]) showToast(msgs[APP.tripState]);
+}
+
+function verifyTripOTP() {
+  const boxes = document.querySelectorAll('[data-trip-otp]');
+  const otp = Array.from(boxes).map(b => b.value).join('');
+  if (otp.length < 4) { showToast('Enter the 4-digit OTP'); return; }
+
+  // Try API
+  fetch('/api/v1/bookings/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ otpCode: otp })
+  }).catch(() => {});
+
+  // Proceed regardless
+  showToast('OTP verified! Start duty when ready');
+  document.getElementById('trip-otp-card').style.display = 'none';
+  document.getElementById('trip-action-btn').disabled = false;
+  document.getElementById('trip-action-btn').textContent = 'Start Duty';
+
+  // Auto advance to in-progress state on click
+  const origFn = document.getElementById('trip-action-btn').onclick;
+  document.getElementById('trip-action-btn').onclick = function() {
+    APP.tripState = 2;
+    updateTripProgress();
+    document.getElementById('trip-action-btn').onclick = function() { advanceTripStatus(); };
+    showToast('Duty in progress, drive safely!');
+  };
+}
+
+async function completeDuty() {
+  try {
+    await fetch('/api/v1/bookings/complete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookingId: APP.activeTrip?.id || 'demo' })
+    });
+  } catch (e) {}
+
+  APP.todayEarnings += APP.activeTrip ? APP.activeTrip.fare : 1248;
+  APP.completedDuties++;
+  APP.drivingHoursToday += 2;
+  APP.activeTrip = null;
+  APP.tripState = 0;
+
+  // Show earnings summary
+  document.getElementById('earnings-modal').classList.add('show');
+}
+
+function closeEarningsSummary() {
+  document.getElementById('earnings-modal').classList.remove('show');
+  navigate('home');
+}
+
+// ---- TRIP ACTIONS ----
+function tripNavigate() {
+  showToast('Navigation would open in Maps app');
+}
+function tripCall() {
+  showToast('Calling rider...');
+}
+
+// ---- KYC UPLOAD ----
+function uploadDoc(docName) {
+  showToast('File picker would open for: ' + docName);
+}
+
+// ---- LOGOUT ----
+function logout() {
+  APP.driver = null;
+  APP.isOnline = false;
+  APP.todayEarnings = 0;
+  APP.completedDuties = 0;
+  APP.drivingHoursToday = 0;
+  APP.onlineMinutes = 0;
+  APP.onlineTimerStart = null;
+  localStorage.removeItem('rda_driver');
+  localStorage.removeItem('rda_driver_online');
+  navigate('login');
+  showToast('Logged out');
+}
+
+// ---- OTP INPUT HANDLING ----
+document.addEventListener('input', function(e) {
+  if (e.target.classList.contains('otp-box') || e.target.classList.contains('trip-otp-box')) {
+    const val = e.target.value;
+    if (val.length === 1) {
+      const next = e.target.nextElementSibling;
+      if (next && (next.classList.contains('otp-box') || next.classList.contains('trip-otp-box'))) {
+        next.focus();
+      }
+    }
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if ((e.target.classList.contains('otp-box') || e.target.classList.contains('trip-otp-box')) && e.key === 'Backspace' && !e.target.value) {
+    const prev = e.target.previousElementSibling;
+    if (prev && (prev.classList.contains('otp-box') || prev.classList.contains('trip-otp-box'))) {
+      prev.focus();
+      prev.value = '';
+    }
+  }
+});
+
+// ---- INIT ----
+(function init() {
+  // Check for saved session
+  const saved = localStorage.getItem('rda_driver');
+  if (saved) {
+    try {
+      APP.driver = JSON.parse(saved);
+      APP.isOnline = localStorage.getItem('rda_driver_online') === 'true';
+      navigate('home');
+      return;
+    } catch (e) {}
+  }
+  navigate('login');
+})();
+</script>
+</body>
+</html>

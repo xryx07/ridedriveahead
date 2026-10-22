@@ -399,6 +399,52 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ========================================================
+  // SERVE MOBILE PWA APPS (INSTALLABLE, INSTANT-UPDATE)
+  // Rider PWA: /app
+  // Driver PWA: /driver-app
+  // ========================================================
+
+  // RIDER PWA (mobile installable app)
+  if (pathname === '/app' || pathname === '/rider-app' || pathname === '/app/') {
+    const pwaPath = path.join(__dirname, 'rider-pwa.html');
+    fs.readFile(pwaPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Rider PWA not found: ' + err.message);
+        return;
+      }
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      });
+      res.end(data);
+    });
+    return;
+  }
+
+  // DRIVER PWA (mobile installable app)
+  if (pathname === '/driver-app' || pathname === '/driver-app/') {
+    const pwaPath = path.join(__dirname, 'driver-pwa.html');
+    fs.readFile(pwaPath, 'utf8', (err, data) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Driver PWA not found: ' + err.message);
+        return;
+      }
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      });
+      res.end(data);
+    });
+    return;
+  }
+
+  // ========================================================
   // SERVE 3 DISTINCT WEB APPLICATIONS (BY ROUTE OR HOSTNAME)
   // 1. Customer Web: ridedriveahead.com / /
   // 2. Driver Web: driver.ridedriveahead.com / /driver
