@@ -296,6 +296,104 @@ a{text-decoration:none;color:inherit}
   transition:transform .3s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;display:flex;align-items:center;gap:8px;
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
+
+/* OLA STYLE LOCATION SEARCH MODAL */
+.ola-location-modal{
+  position:fixed;inset:0;background:rgba(10,11,14,0.98);z-index:900;
+  display:none;flex-direction:column;max-width:480px;margin:0 auto;
+  box-shadow:0 0 50px rgba(0,0,0,0.9);animation:slideUpModal .22s cubic-bezier(.16,1,.3,1);
+}
+.ola-location-modal.active{display:flex}
+@keyframes slideUpModal{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.ola-modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(12px + var(--safe-top)) 16px 12px;border-bottom:1px solid var(--border);
+}
+.ola-ride-for-btn{
+  background:var(--surface2);border:1px solid var(--border);border-radius:100px;
+  padding:6px 14px;font-size:12px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px;
+}
+
+/* OLA DUAL CONNECTED INPUTS */
+.ola-inputs-card{
+  background:var(--surface);border-radius:18px;margin:16px;padding:12px 14px;
+  border:1.5px solid var(--border);position:relative;
+}
+.ola-route-line{
+  position:absolute;left:24px;top:38px;bottom:38px;width:2px;
+  background:dashed 2px rgba(255,255,255,0.18);pointer-events:none;
+}
+.ola-input-row{display:flex;align-items:center;gap:12px;position:relative}
+.ola-input-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;z-index:2}
+.ola-input-dot.pickup{background:var(--success);box-shadow:0 0 10px var(--success)}
+.ola-input-dot.drop{background:var(--accent);border-radius:3px;box-shadow:0 0 10px var(--accent)}
+.ola-text-input{
+  flex:1;height:48px;font-size:14px;font-weight:700;color:var(--text);width:100%;
+}
+.ola-text-input::placeholder{color:var(--muted);font-weight:500}
+.ola-input-action{
+  width:34px;height:34px;border-radius:50%;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:var(--muted);
+  transition:all .15s;
+}
+.ola-input-action:active{transform:scale(0.9);color:var(--text)}
+
+/* LOCATION TYPE CHIPS (OLA STYLE) */
+.ola-chips-scroll{
+  display:flex;gap:8px;overflow-x:auto;padding:0 16px 14px;scrollbar-width:none;
+}
+.ola-chips-scroll::-webkit-scrollbar{display:none}
+.ola-type-chip{
+  flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);border-radius:100px;
+  padding:8px 14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
+  cursor:pointer;transition:all .15s;color:var(--text);
+}
+.ola-type-chip:active, .ola-type-chip.selected{
+  background:rgba(199,255,61,0.12);border-color:var(--accent);color:var(--accent);
+}
+
+/* OLA AUTOCOMPLETE SUGGESTION LIST */
+.ola-results-list{
+  flex:1;overflow-y:auto;padding:0 16px calc(20px + var(--safe-bottom));
+}
+.ola-result-item{
+  display:flex;align-items:center;gap:14px;padding:14px 10px;
+  border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background .15s;border-radius:12px;
+}
+.ola-result-item:active{background:var(--surface2)}
+.ola-result-icon{
+  width:38px;height:38px;border-radius:50%;background:var(--surface2);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  color:var(--accent);flex-shrink:0;
+}
+.ola-result-text{flex:1;min-width:0}
+.ola-result-title{font-size:14px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ola-result-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* SET ON MAP FLOATING PIN */
+.map-center-pin-overlay{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);z-index:50;
+  display:none;pointer-events:none;flex-direction:column;align-items:center;
+}
+.map-center-pin-overlay.active{display:flex}
+.pin-badge{
+  background:#0A0B0E;color:var(--accent);border:1.5px solid var(--accent);
+  padding:4px 10px;border-radius:100px;font-size:11px;font-weight:800;margin-bottom:4px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.6);white-space:nowrap;
+}
+.pin-icon-drop{
+  width:36px;height:36px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.8));
+}
+.pin-shadow{
+  width:14px;height:6px;background:rgba(0,0,0,0.5);border-radius:50%;margin-top:2px;
+}
+.confirm-map-spot-drawer{
+  position:fixed;bottom:calc(70px + var(--safe-bottom));left:50%;transform:translateX(-50%);
+  width:calc(100% - 32px);max-width:448px;background:var(--surface);border:1.5px solid var(--accent);
+  border-radius:18px;padding:14px 16px;z-index:800;display:none;box-shadow:0 12px 36px rgba(0,0,0,0.7);
+}
+.confirm-map-spot-drawer.active{display:block}
 </style>
 </head>
 <body>
@@ -355,11 +453,31 @@ a{text-decoration:none;color:inherit}
     <div class="map-overlay-top">
       <div class="map-brand-chip">
         <div class="brand-pill-logo">R</div>
-        <div class="brand-pill-text">RideDriveAhead</div>
+        <div class="brand-pill-text" id="homeBrandPill">RideDriveAhead</div>
       </div>
       <div class="map-recenter-btn" onclick="recenterHomeMap()" title="Recenter Location">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
       </div>
+    </div>
+
+    <!-- Center Floating Pin for "Set on Map" Mode -->
+    <div class="map-center-pin-overlay" id="mapCenterPin">
+      <div class="pin-badge" id="mapPinBadge">📍 Set Destination Spot</div>
+      <svg class="pin-icon-drop" viewBox="0 0 24 24" fill="#C7FF3D" stroke="#0A0B0E" stroke-width="1.5">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5" fill="#0A0B0E"/>
+      </svg>
+      <div class="pin-shadow"></div>
+    </div>
+  </div>
+
+  <!-- Confirm Map Spot Floating Drawer -->
+  <div class="confirm-map-spot-drawer" id="confirmMapSpotDrawer">
+    <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px" id="mapSpotLabel">📍 Pinpointed Location</div>
+    <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="mapSpotAddress">Detecting location under pin...</div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-surface btn-sm" style="flex:1" onclick="cancelSetOnMap()">Cancel</button>
+      <button class="btn btn-accent btn-sm" style="flex:2" onclick="confirmSetOnMap()">Confirm Spot &rarr;</button>
     </div>
   </div>
 
@@ -378,14 +496,14 @@ a{text-decoration:none;color:inherit}
       </div>
     </div>
 
-    <!-- Signature "Where to?" Search Card -->
-    <div class="uber-search-card" onclick="openBookingFlow('CAB')">
+    <!-- Signature "Where to?" Search Card (Opens Ola Style Location Search) -->
+    <div class="uber-search-card" onclick="openOlaLocationSearch('DROP')">
       <div class="search-icon-circle">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </div>
       <div class="search-content">
-        <div class="search-title">Where to?</div>
-        <div class="search-sub">Enter destination or airport terminal</div>
+        <div class="search-title" id="homeSearchCardTitle">Where to?</div>
+        <div class="search-sub" id="homeSearchCardSub">Search destination, area, or tap to set on map</div>
       </div>
       <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
@@ -474,17 +592,52 @@ a{text-decoration:none;color:inherit}
   </div>
 
   <div style="padding:16px">
-    <!-- Pickup & Drop Input Card -->
-    <div style="background:var(--surface);border-radius:18px;border:1px solid var(--border);padding:14px;margin-bottom:18px">
+    <!-- Pickup & Drop Input Card (Ola Style Stack with Type Chips) -->
+    <div style="background:var(--surface);border-radius:18px;border:1.5px solid var(--border);padding:14px;margin-bottom:18px;position:relative">
+      <!-- Pickup Row -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);flex-shrink:0"></div>
+        <div style="flex:1;position:relative">
+          <input type="text" id="routePickup" value="Current Location" class="input-field" style="height:44px;font-size:14px;padding-right:40px" oninput="handleInlineSearch('PICKUP', this.value)" />
+          <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;display:flex;align-items:center" onclick="recenterHomeMap()" title="Snap to current GPS">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:1px;background:var(--border);margin-left:24px;margin-bottom:10px"></div>
+
+      <!-- Drop Row -->
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--success);flex-shrink:0"></div>
-        <input type="text" id="routePickup" value="Current Location (Banjara Hills Rd 12)" class="input-field" style="height:44px;font-size:14px" />
+        <div style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0"></div>
+        <input type="text" id="routeDrop" placeholder="Type destination, landmark or area..." class="input-field" style="height:44px;font-size:14px" oninput="handleInlineSearch('DROP', this.value)" />
       </div>
-      <div style="height:1px;background:var(--border);margin-left:22px;margin-bottom:12px"></div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="width:10px;height:10px;border-radius:2px;background:var(--accent);flex-shrink:0"></div>
-        <input type="text" id="routeDrop" placeholder="Enter destination / airport terminal" class="input-field" style="height:44px;font-size:14px" />
+
+      <!-- Ola Location Type Chips Row -->
+      <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none">
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="openOlaLocationSearch('DROP')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>Search</span>
+        </div>
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="startSetOnMapMode('DROP')">
+          <span>📍 Map Pin</span>
+        </div>
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('HOME')">
+          <span>🏠 Home</span>
+        </div>
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('WORK')">
+          <span>💼 Work</span>
+        </div>
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('AIRPORT')">
+          <span>✈️ Airport</span>
+        </div>
+        <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('STATION')">
+          <span>🚉 Station</span>
+        </div>
       </div>
+
+      <!-- Inline Suggestions Dropdown Container -->
+      <div id="inlineSuggestionsBox" style="display:none;background:var(--surface2);border-radius:12px;border:1px solid var(--border);margin-top:10px;max-height:180px;overflow-y:auto"></div>
     </div>
 
     <!-- CHAUFFEUR MODE OPTIONS -->
@@ -666,6 +819,75 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <!-- ==========================================
+     OLA STYLE LOCATION SEARCH & TYPE MODAL
+========================================== -->
+<div class="ola-location-modal" id="olaLocationModal">
+  <div class="ola-modal-header">
+    <div class="header-back" onclick="closeOlaLocationSearch()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div style="font-size:16px;font-weight:800">Your Route</div>
+    <div class="ola-ride-for-btn" onclick="showToast('Booking for Yourself')">
+      <span>👤 For Myself</span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+
+  <!-- Connected Dual Inputs (Ola Signature) -->
+  <div class="ola-inputs-card">
+    <div class="ola-route-line"></div>
+    <!-- Pickup Row -->
+    <div class="ola-input-row" style="margin-bottom:10px">
+      <div class="ola-input-dot pickup"></div>
+      <input type="text" id="olaPickupInput" class="ola-text-input" placeholder="Current Location (Detecting...)" oninput="handleOlaSearchInput('PICKUP', this.value)" onfocus="activeSearchTarget='PICKUP'" />
+      <div class="ola-input-action" onclick="recenterHomeMap()" title="Snap to current GPS">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      </div>
+      <div class="ola-input-action" onclick="clearOlaInput('PICKUP')" title="Clear">✕</div>
+    </div>
+    <!-- Divider -->
+    <div style="height:1px;background:var(--border);margin-left:26px;margin-bottom:10px"></div>
+    <!-- Drop Row -->
+    <div class="ola-input-row">
+      <div class="ola-input-dot drop"></div>
+      <input type="text" id="olaDropInput" class="ola-text-input" placeholder="Where are you going? (Type location)" oninput="handleOlaSearchInput('DROP', this.value)" onfocus="activeSearchTarget='DROP'" />
+      <div class="ola-input-action" onclick="clearOlaInput('DROP')" title="Clear">✕</div>
+    </div>
+  </div>
+
+  <!-- Location Type Selector Chips (Horizontal Scroll Ola Style) -->
+  <div class="ola-chips-scroll">
+    <div class="ola-type-chip" onclick="startSetOnMapMode('DROP')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      <span>Set on Map</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('HOME')">
+      <span>🏠 Home</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('WORK')">
+      <span>💼 Work</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('AIRPORT')">
+      <span>✈️ Airport</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('STATION')">
+      <span>🚉 Railway Station</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('MALL')">
+      <span>🛍️ Shopping Mall</span>
+    </div>
+    <div class="ola-type-chip" onclick="selectLocationTypePreset('HOSPITAL')">
+      <span>🏥 Hospital</span>
+    </div>
+  </div>
+
+  <!-- Live Search Suggestions / Popular Places List -->
+  <div class="ola-results-list" id="olaResultsContainer">
+    <!-- Populated dynamically -->
+  </div>
+</div>
+
+<!-- ==========================================
      GLOBAL BOTTOM NAV (4 TABS)
 ========================================== -->
 <div class="bottom-nav" id="bottomNav">
@@ -717,11 +939,20 @@ let activeTrip = null;
 let homeLeafletMap = null;
 let activeLeafletMap = null;
 let homeNearbyMarkers = [];
+let homeUserMarker = null;
 let activeDriverMarker = null;
 
-// Base Coordinates (Hyderabad Hub)
-const HUB_LAT = 17.4399;
-const HUB_LNG = 78.3908;
+// Base Coordinates & Location State
+let currentLat = 23.8333; // Auto-resolves to user's real location via IP/GPS
+let currentLng = 78.7167;
+let currentCity = 'Sagar';
+let currentAddress = 'Sagar, Madhya Pradesh';
+let currentPickupAddress = 'Current Location';
+let currentDropAddress = '';
+let hasGpsLocation = false;
+let activeSearchTarget = 'DROP'; // 'PICKUP' or 'DROP'
+let isSettingOnMap = false;
+let searchDebounceTimer = null;
 
 // Initializer
 window.addEventListener('DOMContentLoaded', () => {
@@ -740,7 +971,53 @@ window.addEventListener('DOMContentLoaded', () => {
 
   renderPackages();
   renderCabTiers();
+
+  // Instant network-based location auto-detection on boot
+  autoDetectUserLocation();
 });
+
+// Auto-detect user's true location on launch
+async function autoDetectUserLocation() {
+  try {
+    const res = await fetch('/api/v1/geo/current?_t=' + Date.now());
+    const data = await res.json();
+    if (data && data.success && data.lat && data.lng) {
+      currentLat = data.lat;
+      currentLng = data.lng;
+      currentCity = data.city || 'Sagar';
+      currentAddress = data.displayName || `${currentCity}, ${data.region || ''}`;
+      currentPickupAddress = `Current Location (${currentCity})`;
+
+      const brandPill = document.getElementById('homeBrandPill');
+      if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
+
+      const pickupEl = document.getElementById('routePickup');
+      if (pickupEl) pickupEl.value = currentPickupAddress;
+
+      const olaPickup = document.getElementById('olaPickupInput');
+      if (olaPickup) olaPickup.value = currentPickupAddress;
+
+      if (homeLeafletMap) {
+        homeLeafletMap.setView([currentLat, currentLng], 15);
+        if (homeUserMarker) homeUserMarker.setLatLng([currentLat, currentLng]);
+        spawnNearbyCabs(currentLat, currentLng);
+      }
+    }
+  } catch(e) {
+    console.warn('IP geo auto-detect fallback:', e);
+  }
+
+  // Progressive refinement with high-precision GPS if available
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        applyGpsCoordinates(pos.coords.latitude, pos.coords.longitude, false);
+      },
+      () => {},
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+    );
+  }
+}
 
 // Toast notification
 function showToast(msg) {
@@ -842,7 +1119,7 @@ function updateUserUI() {
   document.getElementById('profileAvatarBig').textContent = init;
 }
 
-// Leaflet Map on Home Screen (Uber Style)
+// Leaflet Map on Home Screen
 function initHomeMap() {
   if (homeLeafletMap) {
     homeLeafletMap.invalidateSize();
@@ -854,16 +1131,16 @@ function initHomeMap() {
   homeLeafletMap = L.map('homeMap', {
     zoomControl: false,
     attributionControl: false,
-    scrollWheelZoom: false,
-    touchZoom: false,
-    dragging: false,
-    doubleClickZoom: false,
+    scrollWheelZoom: true,
+    touchZoom: true,
+    dragging: true,
+    doubleClickZoom: true,
     boxZoom: false
-  }).setView([HUB_LAT, HUB_LNG], 15);
+  }).setView([currentLat, currentLng], 15);
 
   // Esri World Dark Gray Base (Clean, high performance, zero watermark)
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 16
+    maxZoom: 18
   }).addTo(homeLeafletMap);
 
   // User location pulsing marker
@@ -873,9 +1150,19 @@ function initHomeMap() {
     iconSize: [20, 20],
     iconAnchor: [10, 10]
   });
-  L.marker([HUB_LAT, HUB_LNG], { icon: pulseIcon }).addTo(homeLeafletMap);
+  homeUserMarker = L.marker([currentLat, currentLng], { icon: pulseIcon }).addTo(homeLeafletMap);
 
-  // Add 4 simulated nearby cabs idling around user
+  // Spawn simulated nearby cabs around initial location
+  spawnNearbyCabs(currentLat, currentLng);
+}
+
+function spawnNearbyCabs(lat, lng) {
+  if (!homeLeafletMap) return;
+  homeNearbyMarkers.forEach(m => {
+    try { homeLeafletMap.removeLayer(m); } catch(e) {}
+  });
+  homeNearbyMarkers = [];
+
   const carOffsets = [
     [0.003, 0.002],
     [-0.002, 0.003],
@@ -889,16 +1176,418 @@ function initHomeMap() {
       iconSize: [32, 32],
       iconAnchor: [16, 16]
     });
-    const m = L.marker([HUB_LAT + off[0], HUB_LNG + off[1]], { icon: carIcon }).addTo(homeLeafletMap);
+    const m = L.marker([lat + off[0], lng + off[1]], { icon: carIcon }).addTo(homeLeafletMap);
     homeNearbyMarkers.push(m);
   });
 }
 
-function recenterHomeMap() {
+async function applyGpsCoordinates(lat, lng, showConfirmation = true) {
+  currentLat = lat;
+  currentLng = lng;
+  hasGpsLocation = true;
+
   if (homeLeafletMap) {
-    homeLeafletMap.setView([HUB_LAT, HUB_LNG], 15, { animate: true });
-    showToast('Centered on current location');
+    homeLeafletMap.setView([lat, lng], 16, { animate: true });
+    if (homeUserMarker) {
+      homeUserMarker.setLatLng([lat, lng]);
+    }
+    spawnNearbyCabs(lat, lng);
   }
+
+  // Reverse geocode to get real street address
+  try {
+    const res = await fetch(`/api/v1/geo/reverse?lat=${lat}&lng=${lng}&_t=${Date.now()}`);
+    const data = await res.json();
+    if (data && data.success) {
+      currentAddress = data.displayName || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      currentPickupAddress = data.mainName ? `${data.mainName} (${data.subtitle || ''})` : currentAddress;
+      if (data.subtitle && data.subtitle.includes(',')) {
+        currentCity = data.subtitle.split(',')[0].trim();
+        const brandPill = document.getElementById('homeBrandPill');
+        if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
+      }
+    }
+  } catch(e) {
+    currentPickupAddress = `GPS Location (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+  }
+
+  const pickupInput = document.getElementById('routePickup');
+  if (pickupInput) pickupInput.value = currentPickupAddress;
+
+  const olaPickup = document.getElementById('olaPickupInput');
+  if (olaPickup) olaPickup.value = currentPickupAddress;
+
+  if (showConfirmation) {
+    showToast(`📍 Located: ${currentPickupAddress}`);
+  }
+}
+
+function recenterHomeMap() {
+  showToast('📡 Locating your position...');
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        applyGpsCoordinates(pos.coords.latitude, pos.coords.longitude, true);
+      },
+      (err) => {
+        // Fallback to IP geolocation when browser blocks GPS on HTTP
+        fetch('/api/v1/geo/current?_t=' + Date.now())
+          .then(r => r.json())
+          .then(data => {
+            if (data && data.success) {
+              currentLat = data.lat;
+              currentLng = data.lng;
+              currentCity = data.city || 'Sagar';
+              currentAddress = data.displayName || `${currentCity}, ${data.region || ''}`;
+              currentPickupAddress = `Current Location (${currentCity})`;
+
+              if (homeLeafletMap) {
+                homeLeafletMap.setView([currentLat, currentLng], 15, { animate: true });
+                if (homeUserMarker) homeUserMarker.setLatLng([currentLat, currentLng]);
+                spawnNearbyCabs(currentLat, currentLng);
+              }
+              const pickupInput = document.getElementById('routePickup');
+              if (pickupInput) pickupInput.value = currentPickupAddress;
+              const olaPickup = document.getElementById('olaPickupInput');
+              if (olaPickup) olaPickup.value = currentPickupAddress;
+
+              const brandPill = document.getElementById('homeBrandPill');
+              if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
+
+              showToast(`📍 Located: ${data.city}, ${data.region}`);
+            } else {
+              showToast('⚠️ Location service unavailable');
+            }
+          })
+          .catch(() => {
+            if (homeLeafletMap) homeLeafletMap.setView([currentLat, currentLng], 15, { animate: true });
+            showToast('📍 Centered on map');
+          });
+      },
+      { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+    );
+  } else {
+    // Geolocation not supported, fallback to server IP geo
+    fetch('/api/v1/geo/current?_t=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.success) {
+          applyGpsCoordinates(data.lat, data.lng, true);
+        }
+      });
+  }
+}
+
+/* ========================================================
+   OLA STYLE LOCATION SEARCH & TYPE SELECTION ENGINE
+======================================================== */
+
+function openOlaLocationSearch(target = 'DROP') {
+  activeSearchTarget = target;
+  const modal = document.getElementById('olaLocationModal');
+  if (!modal) return;
+  modal.classList.add('active');
+
+  const pickupInput = document.getElementById('olaPickupInput');
+  const dropInput = document.getElementById('olaDropInput');
+
+  if (pickupInput) pickupInput.value = currentPickupAddress || `Current Location (${currentCity})`;
+  if (dropInput) {
+    dropInput.value = currentDropAddress || '';
+    if (target === 'DROP') {
+      setTimeout(() => dropInput.focus(), 250);
+    } else {
+      setTimeout(() => pickupInput.focus(), 250);
+    }
+  }
+
+  renderPopularCityPlaces();
+}
+
+function closeOlaLocationSearch() {
+  const modal = document.getElementById('olaLocationModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function clearOlaInput(target) {
+  if (target === 'PICKUP') {
+    const el = document.getElementById('olaPickupInput');
+    if (el) { el.value = ''; el.focus(); }
+  } else {
+    const el = document.getElementById('olaDropInput');
+    if (el) { el.value = ''; el.focus(); }
+    currentDropAddress = '';
+  }
+  renderPopularCityPlaces();
+}
+
+function renderPopularCityPlaces() {
+  const container = document.getElementById('olaResultsContainer');
+  if (!container) return;
+
+  const places = [
+    { icon: '🚉', title: `${currentCity} Central Railway Station`, sub: 'Railway Junction & Main Platform' },
+    { icon: '✈️', title: `${currentCity} Airport / Air Terminal`, sub: 'Terminal 1 & 2 Arrivals & Departures' },
+    { icon: '🏢', title: 'Main Inter-State Bus Stand (ISBT)', sub: 'City Bus Terminal' },
+    { icon: '🛍️', title: 'City Center Mall & Shopping Complex', sub: 'Central Commercial Area' },
+    { icon: '📍', title: 'Civil Lines', sub: `${currentCity}, Commercial & Residential Colony` },
+    { icon: '🏥', title: 'Government District Hospital', sub: 'Civil Hospital Road, Landmark' }
+  ];
+
+  container.innerHTML = `
+    <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:10px 0 6px">
+      Popular Destinations in ${currentCity}
+    </div>
+    ${places.map(p => `
+      <div class="ola-result-item" onclick="selectOlaLocation('${p.title.replace(/'/g, "\\'")}', '${p.sub.replace(/'/g, "\\'")}')">
+        <div class="ola-result-icon">${p.icon}</div>
+        <div class="ola-result-text">
+          <div class="ola-result-title">${p.title}</div>
+          <div class="ola-result-sub">${p.sub}</div>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    `).join('')}
+  `;
+}
+
+function handleOlaSearchInput(target, query) {
+  activeSearchTarget = target;
+  clearTimeout(searchDebounceTimer);
+
+  if (!query || query.trim().length < 2) {
+    renderPopularCityPlaces();
+    return;
+  }
+
+  const container = document.getElementById('olaResultsContainer');
+  container.innerHTML = `<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">Searching "${query}"...</div>`;
+
+  searchDebounceTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/v1/geo/search?q=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      const list = data && data.places ? data.places : [];
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="ola-result-item" onclick="selectOlaLocation('${query.replace(/'/g, "\\'")}', '${currentCity}, India')">
+            <div class="ola-result-icon">📍</div>
+            <div class="ola-result-text">
+              <div class="ola-result-title">${query}</div>
+              <div class="ola-result-sub">${currentCity}, India (Custom Location)</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="ola-result-item" onclick="selectOlaLocation('${item.name.replace(/'/g, "\\'")}', '${item.fullName.replace(/'/g, "\\'")}', ${item.lat}, ${item.lng})">
+          <div class="ola-result-icon">📍</div>
+          <div class="ola-result-text">
+            <div class="ola-result-title">${item.name}</div>
+            <div class="ola-result-sub">${item.fullName}</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      `).join('');
+    } catch(err) {
+      container.innerHTML = `
+        <div class="ola-result-item" onclick="selectOlaLocation('${query.replace(/'/g, "\\'")}', '${currentCity}')">
+          <div class="ola-result-icon">📍</div>
+          <div class="ola-result-text">
+            <div class="ola-result-title">${query}</div>
+            <div class="ola-result-sub">${currentCity}</div>
+          </div>
+        </div>
+      `;
+    }
+  }, 250);
+}
+
+function selectOlaLocation(title, fullAddress, lat, lng) {
+  if (activeSearchTarget === 'PICKUP') {
+    currentPickupAddress = title;
+    const p1 = document.getElementById('olaPickupInput');
+    const p2 = document.getElementById('routePickup');
+    if (p1) p1.value = title;
+    if (p2) p2.value = title;
+    showToast(`Pickup set: ${title}`);
+    if (lat && lng && homeLeafletMap) {
+      currentLat = lat; currentLng = lng;
+      homeLeafletMap.setView([lat, lng], 16);
+      if (homeUserMarker) homeUserMarker.setLatLng([lat, lng]);
+    }
+  } else {
+    currentDropAddress = title;
+    const d1 = document.getElementById('olaDropInput');
+    const d2 = document.getElementById('routeDrop');
+    if (d1) d1.value = title;
+    if (d2) d2.value = title;
+
+    const homeCardSub = document.getElementById('homeSearchCardSub');
+    if (homeCardSub) homeCardSub.textContent = `To: ${title}`;
+
+    closeOlaLocationSearch();
+    openBookingFlow('CAB');
+    showToast(`Destination set: ${title}`);
+  }
+}
+
+function selectLocationTypePreset(type) {
+  let title = '';
+  let sub = `${currentCity}, India`;
+
+  switch(type) {
+    case 'HOME':
+      title = `Home (${currentCity})`;
+      break;
+    case 'WORK':
+      title = `Office / Tech Park (${currentCity})`;
+      break;
+    case 'AIRPORT':
+      title = `${currentCity} Airport Terminal`;
+      break;
+    case 'STATION':
+      title = `${currentCity} Central Railway Station`;
+      break;
+    case 'MALL':
+      title = `City Center Mall (${currentCity})`;
+      break;
+    case 'HOSPITAL':
+      title = `Civil District Hospital (${currentCity})`;
+      break;
+    default:
+      title = `${type} (${currentCity})`;
+  }
+
+  selectOlaLocation(title, sub);
+}
+
+// "Set on Map" Mode
+function startSetOnMapMode(target = 'DROP') {
+  activeSearchTarget = target;
+  closeOlaLocationSearch();
+  navigate('home');
+
+  isSettingOnMap = true;
+  document.getElementById('mapCenterPin').classList.add('active');
+  document.getElementById('mapPinBadge').textContent = target === 'PICKUP' ? '📍 Set Pickup Spot' : '📍 Set Destination Spot';
+  document.getElementById('confirmMapSpotDrawer').classList.add('active');
+
+  if (homeLeafletMap) {
+    homeLeafletMap.dragging.enable();
+    homeLeafletMap.touchZoom.enable();
+    homeLeafletMap.scrollWheelZoom.enable();
+
+    updateMapPinLocationText();
+
+    homeLeafletMap.off('moveend', onMapMoveEndHandler);
+    homeLeafletMap.on('moveend', onMapMoveEndHandler);
+  }
+}
+
+function onMapMoveEndHandler() {
+  updateMapPinLocationText();
+}
+
+async function updateMapPinLocationText() {
+  if (!homeLeafletMap) return;
+  const center = homeLeafletMap.getCenter();
+  const addrEl = document.getElementById('mapSpotAddress');
+  if (addrEl) addrEl.textContent = 'Locating street address...';
+
+  try {
+    const res = await fetch(`/api/v1/geo/reverse?lat=${center.lat}&lng=${center.lng}&_t=${Date.now()}`);
+    const data = await res.json();
+    if (data && data.success && addrEl) {
+      addrEl.textContent = data.displayName || `${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}`;
+      addrEl.dataset.title = data.mainName || 'Pinned Location';
+      addrEl.dataset.lat = center.lat;
+      addrEl.dataset.lng = center.lng;
+    }
+  } catch(e) {
+    if (addrEl) addrEl.textContent = `Pinned: ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}`;
+  }
+}
+
+function confirmSetOnMap() {
+  const addrEl = document.getElementById('mapSpotAddress');
+  const title = (addrEl && addrEl.dataset.title) ? addrEl.dataset.title : (addrEl ? addrEl.textContent : 'Pinned Location');
+  const lat = addrEl && addrEl.dataset.lat ? parseFloat(addrEl.dataset.lat) : currentLat;
+  const lng = addrEl && addrEl.dataset.lng ? parseFloat(addrEl.dataset.lng) : currentLng;
+
+  cancelSetOnMap();
+  selectOlaLocation(title, title, lat, lng);
+}
+
+function cancelSetOnMap() {
+  isSettingOnMap = false;
+  document.getElementById('mapCenterPin').classList.remove('active');
+  document.getElementById('confirmMapSpotDrawer').classList.remove('active');
+
+  if (homeLeafletMap) {
+    homeLeafletMap.off('moveend', onMapMoveEndHandler);
+  }
+}
+
+// Inline search on Screen 3
+function handleInlineSearch(target, value) {
+  const box = document.getElementById('inlineSuggestionsBox');
+  if (!box) return;
+
+  if (!value || value.trim().length < 2) {
+    box.style.display = 'none';
+    return;
+  }
+
+  box.style.display = 'block';
+  box.innerHTML = `<div style="padding:10px;font-size:12px;color:var(--muted)">Searching "${value}"...</div>`;
+
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/v1/geo/search?q=${encodeURIComponent(value)}`);
+      const data = await res.json();
+      const list = data && data.places ? data.places : [];
+
+      if (list.length === 0) {
+        box.innerHTML = `
+          <div style="padding:10px 14px;cursor:pointer;font-size:13px;font-weight:700" onclick="selectInlinePlace('${target}', '${value.replace(/'/g, "\\'")}')">
+            📍 Use "${value}"
+          </div>
+        `;
+        return;
+      }
+
+      box.innerHTML = list.map(item => `
+        <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer" onclick="selectInlinePlace('${target}', '${item.name.replace(/'/g, "\\'")}')">
+          <div style="font-size:13px;font-weight:800">${item.name}</div>
+          <div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.fullName}</div>
+        </div>
+      `).join('');
+    } catch(e) {
+      box.style.display = 'none';
+    }
+  }, 250);
+}
+
+function selectInlinePlace(target, name) {
+  if (target === 'PICKUP') {
+    const el = document.getElementById('routePickup');
+    if (el) el.value = name;
+    currentPickupAddress = name;
+  } else {
+    const el = document.getElementById('routeDrop');
+    if (el) el.value = name;
+    currentDropAddress = name;
+  }
+  const box = document.getElementById('inlineSuggestionsBox');
+  if (box) box.style.display = 'none';
+  showToast(`Selected: ${name}`);
 }
 
 // Booking Flow Launchers
@@ -1044,29 +1733,29 @@ function initActiveMap() {
   activeLeafletMap = L.map('activeMap', {
     zoomControl: false,
     attributionControl: false,
-    scrollWheelZoom: false,
-    touchZoom: false,
-    dragging: false,
-    doubleClickZoom: false,
+    scrollWheelZoom: true,
+    touchZoom: true,
+    dragging: true,
+    doubleClickZoom: true,
     boxZoom: false
-  }).setView([HUB_LAT, HUB_LNG], 15);
+  }).setView([currentLat, currentLng], 15);
 
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 16
+    maxZoom: 18
   }).addTo(activeLeafletMap);
 
-  // User Pickup Pin
+  // User Pickup Pin at current location
   const userIcon = L.divIcon({
     className: 'custom-user-marker',
     html: '<div class="user-pulse-marker"></div>',
     iconSize: [20, 20],
     iconAnchor: [10, 10]
   });
-  L.marker([HUB_LAT, HUB_LNG], { icon: userIcon }).addTo(activeLeafletMap);
+  L.marker([currentLat, currentLng], { icon: userIcon }).addTo(activeLeafletMap);
 
-  // Driver Car Marker starting 800m away
-  let driverLat = HUB_LAT + 0.007;
-  let driverLng = HUB_LNG + 0.005;
+  // Driver Car Marker starting ~800m away
+  let driverLat = currentLat + 0.007;
+  let driverLng = currentLng + 0.005;
 
   const carIcon = L.divIcon({
     className: 'cab-div-icon',
@@ -1077,7 +1766,7 @@ function initActiveMap() {
   activeDriverMarker = L.marker([driverLat, driverLng], { icon: carIcon }).addTo(activeLeafletMap);
 
   // Draw Route Polyline connecting driver to pickup
-  const routeLine = L.polyline([[driverLat, driverLng], [HUB_LAT, HUB_LNG]], {
+  const routeLine = L.polyline([[driverLat, driverLng], [currentLat, currentLng]], {
     color: '#C7FF3D',
     weight: 4,
     dashArray: '8, 8',
@@ -1087,11 +1776,11 @@ function initActiveMap() {
   // Animate Driver car moving toward user
   const moveInterval = setInterval(() => {
     if (!activeDriverMarker) { clearInterval(moveInterval); return; }
-    driverLat += (HUB_LAT - driverLat) * 0.12;
-    driverLng += (HUB_LNG - driverLng) * 0.12;
+    driverLat += (currentLat - driverLat) * 0.12;
+    driverLng += (currentLng - driverLng) * 0.12;
     activeDriverMarker.setLatLng([driverLat, driverLng]);
 
-    const dist = Math.hypot(HUB_LAT - driverLat, HUB_LNG - driverLng);
+    const dist = Math.hypot(currentLat - driverLat, currentLng - driverLng);
     if (dist < 0.0008) {
       clearInterval(moveInterval);
       document.getElementById('tripProgressTitle').textContent = 'Chauffeur Arrived at Your Car';

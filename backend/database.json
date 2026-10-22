@@ -250,6 +250,36 @@
   "kycDocuments": [],
   "apiLogs": [
     {
+      "time": "6:48:19 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/search",
+      "status": 200
+    },
+    {
+      "time": "6:48:19 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/reverse",
+      "status": 200
+    },
+    {
+      "time": "6:48:18 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/current",
+      "status": 200
+    },
+    {
+      "time": "6:40:32 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/reverse",
+      "status": 200
+    },
+    {
+      "time": "6:40:24 pm",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/current",
+      "status": 200
+    },
+    {
       "time": "6:01:22 pm",
       "method": "POST",
       "endpoint": "/api/v1/auth/otp/verify",
