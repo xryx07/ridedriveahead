@@ -246,9 +246,43 @@
       "isClaimed": false
     }
   ],
-  "bookings": [],
+  "bookings": [
+    {
+      "id": "CHF-2924",
+      "serviceMode": "HIRE_DRIVER",
+      "pkgName": "4 Hours Half-Day Chauffeur",
+      "durationHours": 4,
+      "carModel": "Honda City (Automatic AT)",
+      "transmission": "AUTOMATIC",
+      "pickup": "Current Location (Saugor)",
+      "drop": "City Local Duty Round-Trip",
+      "distanceKm": 25,
+      "fare": 999,
+      "overtimeRate": 99,
+      "otp": "5393",
+      "status": "SCHEDULED_CONFIRMED",
+      "elapsedSeconds": 0,
+      "fuelHandover": "80% Full",
+      "odometerStart": 34812,
+      "riderName": "Verified Rider",
+      "driverName": "Assigned on Dispatch",
+      "createdAt": "2026-10-22T19:28:01.191Z"
+    }
+  ],
   "kycDocuments": [],
   "apiLogs": [
+    {
+      "time": "12:58:01 am",
+      "method": "POST",
+      "endpoint": "/api/v1/bookings",
+      "status": 201
+    },
+    {
+      "time": "12:55:59 am",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/current",
+      "status": 200
+    },
     {
       "time": "11:50:38 pm",
       "method": "GET",
