@@ -94,7 +94,7 @@ a{text-decoration:none;color:inherit}
 }
 .nav-tab svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;transition:stroke .18s}
 .nav-tab span{font-size:11px;font-weight:600;letter-spacing:.2px}
-.nav-tab.active{color:var(--accent)}
+.nav-tab.active{color:var(--accent);background:rgba(199,255,61,0.08)}
 .nav-tab.active svg{stroke:var(--accent);stroke-width:2.2}
 .nav-tab:active{transform:scale(0.92)}
 
@@ -163,6 +163,28 @@ a{text-decoration:none;color:inherit}
 .search-content{flex:1;min-width:0}
 .search-title{font-size:16px;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
 .search-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+.schedule-pill{
+  background:var(--surface2);border:1px solid var(--border);border-radius:100px;
+  padding:6px 12px;font-size:12px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;
+  transition:all .15s;
+}
+.schedule-pill:active{transform:scale(0.95);background:var(--surface3)}
+
+.ola-swap-btn{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);
+  transition:all .2s cubic-bezier(.175,.885,.32,1.275);z-index:10;
+}
+.ola-swap-btn:active{transform:translateY(-50%) rotate(180deg) scale(0.9)}
+
+.chauffeur-cta-btn{
+  background:var(--accent);color:#0A0B0E;border-radius:12px;height:46px;
+  font-weight:900;font-size:14px;letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;
+  gap:8px;margin-top:14px;transition:all .15s;box-shadow:0 6px 18px rgba(199,255,61,0.25);
+}
+.chauffeur-cta-btn:active{transform:scale(0.98);background:#d5ff5c}
 
 /* SHORTCUT CHIPS ROW (Uber Recent Spots) */
 .quick-spots-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:22px;scrollbar-width:none}
@@ -462,7 +484,7 @@ a{text-decoration:none;color:inherit}
 
     <!-- Center Floating Pin for "Set on Map" Mode -->
     <div class="map-center-pin-overlay" id="mapCenterPin">
-      <div class="pin-badge" id="mapPinBadge">📍 Set Destination Spot</div>
+      <div class="pin-badge" id="mapPinBadge">Set Destination Spot</div>
       <svg class="pin-icon-drop" viewBox="0 0 24 24" fill="#C7FF3D" stroke="#0A0B0E" stroke-width="1.5">
         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
         <circle cx="12" cy="9" r="2.5" fill="#0A0B0E"/>
@@ -473,7 +495,7 @@ a{text-decoration:none;color:inherit}
 
   <!-- Confirm Map Spot Floating Drawer -->
   <div class="confirm-map-spot-drawer" id="confirmMapSpotDrawer">
-    <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px" id="mapSpotLabel">📍 Pinpointed Location</div>
+    <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px" id="mapSpotLabel">Selected Location</div>
     <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="mapSpotAddress">Detecting location under pin...</div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-surface btn-sm" style="flex:1" onclick="cancelSetOnMap()">Cancel</button>
@@ -488,15 +510,21 @@ a{text-decoration:none;color:inherit}
     <!-- Greeting Banner -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--muted)">Hello,</div>
-        <div style="font-size:20px;font-weight:900;letter-spacing:-0.03em" id="homeUserName">Rider Partner 👋</div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted)">Welcome back,</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:20px;font-weight:900;letter-spacing:-0.03em" id="homeUserName">Rider Partner</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:800;background:rgba(199,255,61,0.12);color:var(--accent);border:1px solid rgba(199,255,61,0.3)">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            VERIFIED
+          </span>
+        </div>
       </div>
-      <div style="width:38px;height:38px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--accent)" id="homeUserAvatar">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--surface2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:var(--accent);box-shadow:0 0 14px rgba(199,255,61,0.2)" id="homeUserAvatar">
         R
       </div>
     </div>
 
-    <!-- Signature "Where to?" Search Card (Opens Ola Style Location Search) -->
+    <!-- Signature "Where to?" Search Card (Uber / Ola Style) -->
     <div class="uber-search-card" onclick="openOlaLocationSearch('DROP')">
       <div class="search-icon-circle">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -505,24 +533,30 @@ a{text-decoration:none;color:inherit}
         <div class="search-title" id="homeSearchCardTitle">Where to?</div>
         <div class="search-sub" id="homeSearchCardSub">Search destination, area, or tap to set on map</div>
       </div>
-      <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      <div class="schedule-pill" onclick="event.stopPropagation(); openOlaLocationSearch('DROP')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Now</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
 
-    <!-- Quick Spots Row -->
+    <!-- Quick Category Chips Row (Ola / Uber Style with Clean SVGs) -->
     <div class="quick-spots-row">
-      <div class="spot-chip" onclick="quickSelectDestination('Airport Terminal 2')">
+      <div class="spot-chip" onclick="selectLocationTypePreset('AIRPORT')">
         <svg viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7 4 8l6 4.5-3.5 3.5L4 15.5 3 16.5l3.5 1 1 3.5 1-1-.5-2.5 3.5-3.5 4.5 6 1.3-1.3z"/></svg>
-        <span>Airport T2</span>
+        <span>Airport</span>
       </div>
-      <div class="spot-chip" onclick="quickSelectDestination('Cyber Towers, Hitech City')">
-        <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="9" y1="18" x2="9" y2="18.01"/><line x1="15" y1="18" x2="15" y2="18.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/></svg>
-        <span>Tech Park</span>
+      <div class="spot-chip" onclick="selectLocationTypePreset('STATION')">
+        <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="16" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="8" cy="15" r="1.5"/><circle cx="16" cy="15" r="1.5"/><path d="M7 19l-3 3M17 19l3 3"/></svg>
+        <span>Railway Station</span>
       </div>
-      <div class="spot-chip" onclick="quickSelectDestination('Jubilee Hills Road No. 36')">
-        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-        <span>Jubilee Hills</span>
+      <div class="spot-chip" onclick="selectLocationTypePreset('WORK')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Office / Tech Hub</span>
+      </div>
+      <div class="spot-chip" onclick="startSetOnMapMode('DROP')">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span>Set on Map</span>
       </div>
     </div>
 
@@ -547,12 +581,16 @@ a{text-decoration:none;color:inherit}
         <span class="service-mini-tag">8h Full-Day (&#8377;1,899)</span>
         <span class="service-mini-tag">Outstation Trips</span>
       </div>
+      <div class="chauffeur-cta-btn">
+        <span>Book Chauffeur Duty</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
     </div>
 
     <!-- SECONDARY: BOOK A CAB -->
     <div class="service-cab-card" onclick="openBookingFlow('CAB')">
       <div style="display:flex;align-items:center;gap:14px">
-        <div style="width:48px;height:48px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);color:var(--text)">
+        <div style="width:48px;height:48px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;border:1px solid var(--border);color:var(--text);flex-shrink:0">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="18" height="9" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 9l2-5h6l2 5"/></svg>
         </div>
         <div>
@@ -563,6 +601,11 @@ a{text-decoration:none;color:inherit}
           <div style="font-size:12px;color:var(--muted);margin-top:2px">City point-to-point cabs &amp; advance airport transfers</div>
         </div>
       </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--muted)">From</div>
+        <div style="font-size:17px;font-weight:900;color:var(--text)">&#8377;189</div>
+      </div>
+    </div>
       <div style="text-align:right">
         <div style="font-size:11px;color:var(--muted)">From</div>
         <div style="font-size:17px;font-weight:900;color:var(--text)">&#8377;189</div>
@@ -613,26 +656,31 @@ a{text-decoration:none;color:inherit}
         <input type="text" id="routeDrop" placeholder="Type destination, landmark or area..." class="input-field" style="height:44px;font-size:14px" oninput="handleInlineSearch('DROP', this.value)" />
       </div>
 
-      <!-- Ola Location Type Chips Row -->
+      <!-- Ola Location Type Chips Row (Clean SVGs) -->
       <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none">
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="openOlaLocationSearch('DROP')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <span>Search</span>
         </div>
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="startSetOnMapMode('DROP')">
-          <span>📍 Map Pin</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Map Pin</span>
         </div>
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('HOME')">
-          <span>🏠 Home</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span>Home</span>
         </div>
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('WORK')">
-          <span>💼 Work</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Work</span>
         </div>
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('AIRPORT')">
-          <span>✈️ Airport</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7 4 8l6 4.5-3.5 3.5L4 15.5 3 16.5l3.5 1 1 3.5 1-1-.5-2.5 3.5-3.5 4.5 6 1.3-1.3z"/></svg>
+          <span>Airport</span>
         </div>
         <div class="ola-type-chip" style="padding:6px 12px;font-size:11px" onclick="selectLocationTypePreset('STATION')">
-          <span>🚉 Station</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="8" cy="15" r="1.5"/><circle cx="16" cy="15" r="1.5"/><path d="M7 19l-3 3M17 19l3 3"/></svg>
+          <span>Station</span>
         </div>
       </div>
 
@@ -826,58 +874,74 @@ a{text-decoration:none;color:inherit}
     <div class="header-back" onclick="closeOlaLocationSearch()">
       <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </div>
-    <div style="font-size:16px;font-weight:800">Your Route</div>
+    <div style="font-size:16px;font-weight:800">Set Route &amp; Destination</div>
     <div class="ola-ride-for-btn" onclick="showToast('Booking for Yourself')">
-      <span>👤 For Myself</span>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>For Myself</span>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
   </div>
 
   <!-- Connected Dual Inputs (Ola Signature) -->
   <div class="ola-inputs-card">
     <div class="ola-route-line"></div>
+    <!-- Swap Button -->
+    <div class="ola-swap-btn" onclick="swapOlaPickupDrop()" title="Swap Pickup &amp; Drop">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="3" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="21" y2="16"/></svg>
+    </div>
+
     <!-- Pickup Row -->
-    <div class="ola-input-row" style="margin-bottom:10px">
+    <div class="ola-input-row" style="margin-bottom:10px;padding-right:40px">
       <div class="ola-input-dot pickup"></div>
       <input type="text" id="olaPickupInput" class="ola-text-input" placeholder="Current Location (Detecting...)" oninput="handleOlaSearchInput('PICKUP', this.value)" onfocus="activeSearchTarget='PICKUP'" />
       <div class="ola-input-action" onclick="recenterHomeMap()" title="Snap to current GPS">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
       </div>
-      <div class="ola-input-action" onclick="clearOlaInput('PICKUP')" title="Clear">✕</div>
+      <div class="ola-input-action" onclick="clearOlaInput('PICKUP')" title="Clear">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
     </div>
     <!-- Divider -->
     <div style="height:1px;background:var(--border);margin-left:26px;margin-bottom:10px"></div>
     <!-- Drop Row -->
-    <div class="ola-input-row">
+    <div class="ola-input-row" style="padding-right:40px">
       <div class="ola-input-dot drop"></div>
       <input type="text" id="olaDropInput" class="ola-text-input" placeholder="Where are you going? (Type location)" oninput="handleOlaSearchInput('DROP', this.value)" onfocus="activeSearchTarget='DROP'" />
-      <div class="ola-input-action" onclick="clearOlaInput('DROP')" title="Clear">✕</div>
+      <div class="ola-input-action" onclick="clearOlaInput('DROP')" title="Clear">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
     </div>
   </div>
 
-  <!-- Location Type Selector Chips (Horizontal Scroll Ola Style) -->
+  <!-- Location Type Selector Chips (Horizontal Scroll Ola Style with Clean SVGs) -->
   <div class="ola-chips-scroll">
     <div class="ola-type-chip" onclick="startSetOnMapMode('DROP')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
       <span>Set on Map</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('HOME')">
-      <span>🏠 Home</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('WORK')">
-      <span>💼 Work</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      <span>Work</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('AIRPORT')">
-      <span>✈️ Airport</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7 4 8l6 4.5-3.5 3.5L4 15.5 3 16.5l3.5 1 1 3.5 1-1-.5-2.5 3.5-3.5 4.5 6 1.3-1.3z"/></svg>
+      <span>Airport</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('STATION')">
-      <span>🚉 Railway Station</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="8" cy="15" r="1.5"/><circle cx="16" cy="15" r="1.5"/><path d="M7 19l-3 3M17 19l3 3"/></svg>
+      <span>Railway Station</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('MALL')">
-      <span>🛍️ Shopping Mall</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Shopping Mall</span>
     </div>
     <div class="ola-type-chip" onclick="selectLocationTypePreset('HOSPITAL')">
-      <span>🏥 Hospital</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+      <span>Hospital</span>
     </div>
   </div>
 
@@ -1111,7 +1175,7 @@ function logoutRider() {
 function updateUserUI() {
   if (!currentUser) return;
   const name = currentUser.fullName || 'Rider';
-  document.getElementById('homeUserName').textContent = name + ' 👋';
+  document.getElementById('homeUserName').textContent = name;
   document.getElementById('profileNameBig').textContent = name;
   document.getElementById('profilePhoneBig').textContent = currentUser.phoneNumber;
   const init = name.charAt(0).toUpperCase();
@@ -1218,12 +1282,12 @@ async function applyGpsCoordinates(lat, lng, showConfirmation = true) {
   if (olaPickup) olaPickup.value = currentPickupAddress;
 
   if (showConfirmation) {
-    showToast(`📍 Located: ${currentPickupAddress}`);
+    showToast(`Located: ${currentPickupAddress}`);
   }
 }
 
 function recenterHomeMap() {
-  showToast('📡 Locating your position...');
+  showToast('Locating your position...');
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -1255,14 +1319,14 @@ function recenterHomeMap() {
               const brandPill = document.getElementById('homeBrandPill');
               if (brandPill) brandPill.textContent = 'RideDriveAhead • ' + currentCity;
 
-              showToast(`📍 Located: ${data.city}, ${data.region}`);
+              showToast(`Located: ${data.city}, ${data.region}`);
             } else {
-              showToast('⚠️ Location service unavailable');
+              showToast('Location service unavailable');
             }
           })
           .catch(() => {
             if (homeLeafletMap) homeLeafletMap.setView([currentLat, currentLng], 15, { animate: true });
-            showToast('📍 Centered on map');
+            showToast('Centered on map');
           });
       },
       { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
@@ -1322,17 +1386,61 @@ function clearOlaInput(target) {
   renderPopularCityPlaces();
 }
 
+function swapOlaPickupDrop() {
+  const p = document.getElementById('olaPickupInput');
+  const d = document.getElementById('olaDropInput');
+  if (!p || !d) return;
+
+  const temp = p.value;
+  p.value = d.value || currentPickupAddress;
+  d.value = temp;
+
+  currentPickupAddress = p.value;
+  currentDropAddress = d.value;
+
+  const rP = document.getElementById('routePickup');
+  const rD = document.getElementById('routeDrop');
+  if (rP) rP.value = p.value;
+  if (rD) rD.value = d.value;
+
+  showToast('Swapped pickup and destination');
+}
+
 function renderPopularCityPlaces() {
   const container = document.getElementById('olaResultsContainer');
   if (!container) return;
 
   const places = [
-    { icon: '🚉', title: `${currentCity} Central Railway Station`, sub: 'Railway Junction & Main Platform' },
-    { icon: '✈️', title: `${currentCity} Airport / Air Terminal`, sub: 'Terminal 1 & 2 Arrivals & Departures' },
-    { icon: '🏢', title: 'Main Inter-State Bus Stand (ISBT)', sub: 'City Bus Terminal' },
-    { icon: '🛍️', title: 'City Center Mall & Shopping Complex', sub: 'Central Commercial Area' },
-    { icon: '📍', title: 'Civil Lines', sub: `${currentCity}, Commercial & Residential Colony` },
-    { icon: '🏥', title: 'Government District Hospital', sub: 'Civil Hospital Road, Landmark' }
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="16" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="8" cy="15" r="1.5"/><circle cx="16" cy="15" r="1.5"/><path d="M7 19l-3 3M17 19l3 3"/></svg>',
+      title: `${currentCity} Central Railway Station`,
+      sub: 'Railway Junction & Main Platform'
+    },
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7 4 8l6 4.5-3.5 3.5L4 15.5 3 16.5l3.5 1 1 3.5 1-1-.5-2.5 3.5-3.5 4.5 6 1.3-1.3z"/></svg>',
+      title: `${currentCity} Airport / Air Terminal`,
+      sub: 'Terminal 1 & 2 Arrivals & Departures'
+    },
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="15" rx="3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>',
+      title: 'Main Inter-State Bus Stand (ISBT)',
+      sub: 'City Transit Center'
+    },
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+      title: 'City Center Mall & Shopping Complex',
+      sub: 'Central Commercial Area'
+    },
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+      title: 'Civil Lines',
+      sub: `${currentCity}, Commercial & Residential Colony`
+    },
+    {
+      svg: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>',
+      title: 'Government District Hospital',
+      sub: 'Civil Hospital Road, Landmark'
+    }
   ];
 
   container.innerHTML = `
@@ -1341,7 +1449,7 @@ function renderPopularCityPlaces() {
     </div>
     ${places.map(p => `
       <div class="ola-result-item" onclick="selectOlaLocation('${p.title.replace(/'/g, "\\'")}', '${p.sub.replace(/'/g, "\\'")}')">
-        <div class="ola-result-icon">${p.icon}</div>
+        <div class="ola-result-icon">${p.svg}</div>
         <div class="ola-result-text">
           <div class="ola-result-title">${p.title}</div>
           <div class="ola-result-sub">${p.sub}</div>
@@ -1373,7 +1481,9 @@ function handleOlaSearchInput(target, query) {
       if (list.length === 0) {
         container.innerHTML = `
           <div class="ola-result-item" onclick="selectOlaLocation('${query.replace(/'/g, "\\'")}', '${currentCity}, India')">
-            <div class="ola-result-icon">📍</div>
+            <div class="ola-result-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </div>
             <div class="ola-result-text">
               <div class="ola-result-title">${query}</div>
               <div class="ola-result-sub">${currentCity}, India (Custom Location)</div>
@@ -1386,7 +1496,9 @@ function handleOlaSearchInput(target, query) {
 
       container.innerHTML = list.map(item => `
         <div class="ola-result-item" onclick="selectOlaLocation('${item.name.replace(/'/g, "\\'")}', '${item.fullName.replace(/'/g, "\\'")}', ${item.lat}, ${item.lng})">
-          <div class="ola-result-icon">📍</div>
+          <div class="ola-result-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
           <div class="ola-result-text">
             <div class="ola-result-title">${item.name}</div>
             <div class="ola-result-sub">${item.fullName}</div>
@@ -1397,7 +1509,9 @@ function handleOlaSearchInput(target, query) {
     } catch(err) {
       container.innerHTML = `
         <div class="ola-result-item" onclick="selectOlaLocation('${query.replace(/'/g, "\\'")}', '${currentCity}')">
-          <div class="ola-result-icon">📍</div>
+          <div class="ola-result-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
           <div class="ola-result-text">
             <div class="ola-result-title">${query}</div>
             <div class="ola-result-sub">${currentCity}</div>
@@ -1475,7 +1589,7 @@ function startSetOnMapMode(target = 'DROP') {
 
   isSettingOnMap = true;
   document.getElementById('mapCenterPin').classList.add('active');
-  document.getElementById('mapPinBadge').textContent = target === 'PICKUP' ? '📍 Set Pickup Spot' : '📍 Set Destination Spot';
+  document.getElementById('mapPinBadge').textContent = target === 'PICKUP' ? 'Set Pickup Spot' : 'Set Destination Spot';
   document.getElementById('confirmMapSpotDrawer').classList.add('active');
 
   if (homeLeafletMap) {
@@ -1556,8 +1670,9 @@ function handleInlineSearch(target, value) {
 
       if (list.length === 0) {
         box.innerHTML = `
-          <div style="padding:10px 14px;cursor:pointer;font-size:13px;font-weight:700" onclick="selectInlinePlace('${target}', '${value.replace(/'/g, "\\'")}')">
-            📍 Use "${value}"
+          <div style="padding:10px 14px;cursor:pointer;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px" onclick="selectInlinePlace('${target}', '${value.replace(/'/g, "\\'")}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span>Use "${value}"</span>
           </div>
         `;
         return;

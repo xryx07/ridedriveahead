@@ -791,12 +791,12 @@ function applyDriverGpsCoordinates(lat, lng, showConfirmation = true) {
     spawnDriverHotspots(lat, lng);
   }
   if (showConfirmation) {
-    showToast('📍 Driver GPS location centered');
+    showToast('Driver GPS location centered');
   }
 }
 
 function recenterDriverMap() {
-  showToast('📡 Detecting driver position...');
+  showToast('Detecting driver position...');
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -817,14 +817,14 @@ function recenterDriverMap() {
                 if (driverCarMarker) driverCarMarker.setLatLng([driverCurrentLat, driverCurrentLng]);
                 spawnDriverHotspots(driverCurrentLat, driverCurrentLng);
               }
-              showToast(`📍 Located: ${data.city}, ${data.region}`);
+              showToast(`Located: ${data.city}, ${data.region}`);
             } else {
-              showToast('⚠️ Location service unavailable');
+              showToast('Location service unavailable');
             }
           })
           .catch(() => {
             if (driverLeafletMap) driverLeafletMap.setView([driverCurrentLat, driverCurrentLng], 14, { animate: true });
-            showToast('📍 Centered on map');
+            showToast('Centered on map');
           });
       },
       { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
