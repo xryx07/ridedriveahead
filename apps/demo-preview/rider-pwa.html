@@ -12,30 +12,87 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230B0D0F'/%3E%3Ctext x='90' y='110' font-family='sans-serif' font-size='64' font-weight='800' fill='%23C7FF3D' text-anchor='middle'%3ERDA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- Leaflet Map (Free OpenStreetMap / CartoDB Dark Matter, zero API key needed) -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+<!-- Leaflet Map -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0A0B0E;
-  --surface:#12151B;
-  --surface2:#191D26;
-  --surface3:#222734;
-  --accent:#C7FF3D;
-  --accent-glow:rgba(199,255,61,0.25);
-  --text:#F4F6F9;
-  --muted:#8590A2;
-  --border:rgba(255,255,255,0.08);
-  --border-active:rgba(199,255,61,0.4);
-  --success:#17D68A;
-  --danger:#EF4444;
-  --warning:#FBBF24;
-  --radius-card:18px;
-  --radius-btn:14px;
-  --safe-top:env(safe-area-inset-top,0px);
-  --safe-bottom:env(safe-area-inset-bottom,0px);
+
+:root, [data-theme="dark"] {
+  --theme-mode: dark;
+  color-scheme: dark;
+  --bg: #090B10;
+  --surface: #12151F;
+  --surface2: #191E2C;
+  --surface3: #22293B;
+  --accent: #C7FF3D;
+  --btn-accent-bg: #C7FF3D;
+  --btn-accent-text: #090B10;
+  --brand-highlight: #C7FF3D;
+  --accent-glow: rgba(199,255,61,0.22);
+  --accent-subtle: rgba(199,255,61,0.12);
+  --text: #F8FAFD;
+  --text-secondary: #CBD5E1;
+  --muted: #828FA3;
+  --border: rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.04);
+  --border-active: rgba(199,255,61,0.45);
+  --card-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  --elevated-shadow: 0 16px 40px rgba(0,0,0,0.65);
+  --header-bg: rgba(9,11,16,0.88);
+  --nav-bg: rgba(15,19,27,0.95);
+  --input-bg: #141923;
+  --modal-bg: rgba(9,11,16,0.98);
+  --map-bg: #06080B;
+  --hero-card-bg: linear-gradient(135deg, #131822 0%, #1B2332 100%);
+  --hero-card-border: var(--accent);
+  --tag-bg: rgba(255,255,255,0.06);
+  --success: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  --radius-card: 18px;
+  --radius-btn: 14px;
+  --safe-top: env(safe-area-inset-top,0px);
+  --safe-bottom: env(safe-area-inset-bottom,0px);
+}
+
+[data-theme="light"] {
+  --theme-mode: light;
+  color-scheme: light;
+  --bg: #F4F6FA;
+  --surface: #FFFFFF;
+  --surface2: #F1F4F8;
+  --surface3: #E2E8F0;
+  --accent: #0F172A;
+  --btn-accent-bg: #0F172A;
+  --btn-accent-text: #FFFFFF;
+  --brand-highlight: #059669;
+  --accent-glow: rgba(15,23,42,0.12);
+  --accent-subtle: rgba(5,150,105,0.10);
+  --text: #0B0F19;
+  --text-secondary: #334155;
+  --muted: #64748B;
+  --border: rgba(15,23,42,0.09);
+  --border-subtle: rgba(15,23,42,0.04);
+  --border-active: rgba(15,23,42,0.4);
+  --card-shadow: 0 4px 18px rgba(15,23,42,0.06);
+  --elevated-shadow: 0 12px 32px rgba(15,23,42,0.12);
+  --header-bg: rgba(255,255,255,0.92);
+  --nav-bg: rgba(255,255,255,0.96);
+  --input-bg: #FFFFFF;
+  --modal-bg: rgba(255,255,255,0.99);
+  --map-bg: #E2E8F0;
+  --hero-card-bg: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  --hero-card-border: var(--border);
+  --tag-bg: rgba(15,23,42,0.05);
+  --success: #059669;
+  --danger: #DC2626;
+  --warning: #D97706;
+  --radius-card: 18px;
+  --radius-btn: 14px;
+  --safe-top: env(safe-area-inset-top,0px);
+  --safe-bottom: env(safe-area-inset-bottom,0px);
 }
 html{-webkit-text-size-adjust:100%;min-height:100%}
 body{
@@ -67,8 +124,8 @@ a{text-decoration:none;color:inherit}
 .header{
   display:flex;align-items:center;gap:12px;
   padding:calc(12px + var(--safe-top)) 16px 12px;
-  position:sticky;top:0;background:rgba(10,11,14,0.92);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  position:sticky;top:0;background:var(--header-bg);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   z-index:50;border-bottom:1px solid var(--border);
 }
 .header-back{
@@ -77,15 +134,16 @@ a{text-decoration:none;color:inherit}
 }
 .header-back:active{transform:scale(0.92)}
 .header-back svg{width:20px;height:20px;stroke:var(--text);stroke-width:2.2;fill:none}
-.header-title{font-size:18px;font-weight:800;flex:1;letter-spacing:-0.02em}
+.header-title{font-size:18px;font-weight:800;flex:1;letter-spacing:-0.02em;color:var(--text)}
 
 /* BOTTOM NAVIGATION (Uber/Ola Style) */
 .bottom-nav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
-  background:rgba(15,18,24,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:var(--nav-bg);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
   border-top:1px solid var(--border);
   padding:8px 12px calc(8px + var(--safe-bottom));
   z-index:100;display:flex;justify-content:space-around;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.06);
 }
 .bottom-nav.hidden{display:none}
 .nav-tab{
@@ -94,71 +152,100 @@ a{text-decoration:none;color:inherit}
 }
 .nav-tab svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;transition:stroke .18s}
 .nav-tab span{font-size:11px;font-weight:600;letter-spacing:.2px}
-.nav-tab.active{color:var(--accent);background:rgba(199,255,61,0.08)}
-.nav-tab.active svg{stroke:var(--accent);stroke-width:2.2}
+.nav-tab.active{color:var(--brand-highlight);background:var(--accent-subtle)}
+.nav-tab.active svg{stroke:var(--brand-highlight);stroke-width:2.2}
 .nav-tab:active{transform:scale(0.92)}
 
 /* BUTTONS */
 .btn{
   display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius-btn);
-  font-weight:800;font-size:15px;letter-spacing:-0.01em;padding:0 24px;transition:transform .12s,background .15s;
-  cursor:pointer;width:100%;box-shadow:0 6px 20px rgba(0,0,0,0.3);
+  font-weight:800;font-size:15px;letter-spacing:-0.01em;padding:0 24px;transition:transform .12s,background .15s,opacity .15s;
+  cursor:pointer;width:100%;box-shadow:var(--card-shadow);
 }
 .btn:active{transform:scale(.97)}
-.btn-accent{background:var(--accent);color:#0A0B0E}
-.btn-accent:hover{background:#d5ff5c}
+.btn-accent{background:var(--btn-accent-bg);color:var(--btn-accent-text)}
+.btn-accent:hover{opacity:0.92}
 .btn-surface{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
-.btn-danger{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
 .btn-sm{height:44px;font-size:13px;padding:0 18px;border-radius:12px}
 
 /* MAP STYLES */
 .map-viewport{
-  width:100%;height:44vh;min-height:280px;position:relative;background:#06080B;
+  width:100%;height:44vh;min-height:280px;position:relative;background:var(--map-bg);
 }
 #homeMap, #activeMap{width:100%;height:100%;position:absolute;inset:0;z-index:1}
 .map-overlay-top{
   position:absolute;top:calc(12px + var(--safe-top));left:16px;right:16px;
-  z-index:10;display:flex;justify-content:space-between;align-items:center;pointer-events:none;
+  z-index:10;display:flex;justify-content:space-between;align-items:center;pointer-events:none;gap:6px;
 }
 .map-brand-chip{
-  pointer-events:auto;background:rgba(10,11,14,0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border:1px solid var(--border);border-radius:100px;padding:6px 14px 6px 8px;display:flex;align-items:center;gap:8px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  pointer-events:auto;background:var(--surface);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:100px;padding:5px 12px 5px 6px;display:flex;align-items:center;gap:8px;
+  box-shadow:var(--card-shadow);color:var(--text);
 }
 .brand-pill-logo{
-  width:28px;height:28px;border-radius:50%;background:var(--accent);color:#0A0B0E;
+  width:26px;height:26px;border-radius:50%;background:var(--brand-highlight);color:var(--btn-accent-text);
   font-weight:900;font-size:11px;display:flex;align-items:center;justify-content:center;
 }
-.brand-pill-text{font-size:13px;font-weight:800;letter-spacing:-0.02em}
+.brand-pill-text{font-size:13px;font-weight:800;letter-spacing:-0.02em;color:var(--text);white-space:nowrap}
 .map-recenter-btn{
-  pointer-events:auto;width:42px;height:42px;border-radius:50%;background:rgba(18,21,27,0.9);
+  pointer-events:auto;width:40px;height:40px;border-radius:50%;background:var(--surface);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .12s;
+  box-shadow:var(--card-shadow);transition:transform .12s, border-color .15s;flex-shrink:0;
 }
 .map-recenter-btn:active{transform:scale(0.9)}
+
+/* THEME TOGGLE PILL IN MAP OVERLAY */
+.theme-toggle-pill{
+  pointer-events:auto;display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:100px;padding:6px 11px;
+  font-size:11px;font-weight:800;color:var(--text);box-shadow:var(--card-shadow);
+  cursor:pointer;transition:all .18s;user-select:none;flex-shrink:0;
+}
+.theme-toggle-pill:active{transform:scale(0.94)}
+.theme-toggle-pill svg{stroke:var(--text);width:14px;height:14px;flex-shrink:0}
+
+/* THEME SWITCH SLIDER (IN PROFILE) */
+.theme-switch-slider{
+  width:48px;height:26px;border-radius:100px;background:var(--surface2);
+  border:1.5px solid var(--border);position:relative;cursor:pointer;
+  transition:all .2s;flex-shrink:0;
+}
+[data-theme="light"] .theme-switch-slider{
+  background:var(--accent);border-color:var(--accent);
+}
+.slider-thumb{
+  position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+  background:#FFFFFF;box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  transition:transform .22s cubic-bezier(.16,1,.3,1);
+}
+[data-theme="light"] .slider-thumb{
+  transform:translateX(22px);
+}
 
 /* HOME BOTTOM SHEET (Uber Style Floating Drawer) */
 .home-sheet{
   position:relative;z-index:20;background:var(--bg);
   border-radius:24px 24px 0 0;border-top:1px solid var(--border);
   padding:16px 16px calc(140px + var(--safe-bottom));margin-top:-20px;
-  box-shadow:0 -16px 40px rgba(0,0,0,0.6);
+  box-shadow:var(--elevated-shadow);
 }
 .sheet-drag-handle{
-  width:38px;height:4px;border-radius:2px;background:rgba(255,255,255,0.2);margin:0 auto 14px;
+  width:38px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 14px;
 }
 
 /* WHERE TO SEARCH BAR (Signature Uber Style) */
 .uber-search-card{
   background:var(--surface);border:1.5px solid var(--border);border-radius:18px;
   padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;
-  transition:all .18s;box-shadow:0 8px 24px rgba(0,0,0,0.25);margin-bottom:18px;
+  transition:all .18s;box-shadow:var(--card-shadow);margin-bottom:18px;
 }
-.uber-search-card:active{border-color:var(--accent);transform:scale(0.99)}
+.uber-search-card:active{border-color:var(--border-active);transform:scale(0.99)}
 .search-icon-circle{
-  width:40px;height:40px;border-radius:50%;background:rgba(199,255,61,0.12);
-  display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;
+  width:40px;height:40px;border-radius:50%;background:var(--accent-subtle);
+  display:flex;align-items:center;justify-content:center;color:var(--brand-highlight);flex-shrink:0;
 }
 .search-content{flex:1;min-width:0}
 .search-title{font-size:16px;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
@@ -174,17 +261,17 @@ a{text-decoration:none;color:inherit}
 .ola-swap-btn{
   position:absolute;right:14px;top:50%;transform:translateY(-50%);
   width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);
   transition:all .2s cubic-bezier(.175,.885,.32,1.275);z-index:10;
 }
 .ola-swap-btn:active{transform:translateY(-50%) rotate(180deg) scale(0.9)}
 
 .chauffeur-cta-btn{
-  background:var(--accent);color:#0A0B0E;border-radius:12px;height:46px;
+  background:var(--btn-accent-bg);color:var(--btn-accent-text);border-radius:12px;height:46px;
   font-weight:900;font-size:14px;letter-spacing:-0.01em;display:flex;align-items:center;justify-content:center;
-  gap:8px;margin-top:14px;transition:all .15s;box-shadow:0 6px 18px rgba(199,255,61,0.25);
+  gap:8px;margin-top:14px;transition:all .15s;box-shadow:var(--card-shadow);
 }
-.chauffeur-cta-btn:active{transform:scale(0.98);background:#d5ff5c}
+.chauffeur-cta-btn:active{transform:scale(0.98);opacity:0.92}
 
 /* SHORTCUT CHIPS ROW (Uber Recent Spots) */
 .quick-spots-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:22px;scrollbar-width:none}
@@ -192,87 +279,89 @@ a{text-decoration:none;color:inherit}
 .spot-chip{
   flex-shrink:0;background:var(--surface);border:1px solid var(--border);border-radius:100px;
   padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
-  cursor:pointer;transition:all .15s;
+  cursor:pointer;transition:all .15s;color:var(--text);box-shadow:var(--card-shadow);
 }
-.spot-chip:active{background:var(--surface2);border-color:var(--accent)}
-.spot-chip svg{width:14px;height:14px;stroke:var(--accent);fill:none}
+.spot-chip:active{background:var(--surface2);border-color:var(--border-active)}
+.spot-chip svg{width:14px;height:14px;stroke:var(--brand-highlight);fill:none}
 
 /* SERVICE SELECTION CARDS (Dual Hero Design) */
 .service-hero-card{
-  background:linear-gradient(135deg,#131822 0%,#1B2332 100%);
-  border:1.5px solid var(--accent);border-radius:20px;padding:18px;
+  background:var(--hero-card-bg);
+  border:1.5px solid var(--hero-card-border);border-radius:20px;padding:18px;
   margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden;
-  box-shadow:0 12px 32px rgba(0,0,0,0.35);transition:all .18s;
+  box-shadow:var(--card-shadow);transition:all .18s;
 }
 .service-hero-card:active{transform:scale(0.985)}
 .card-shine{
   position:absolute;top:0;right:0;width:140px;height:140px;
-  background:radial-gradient(circle,rgba(199,255,61,0.15) 0%,transparent 70%);
+  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);
   pointer-events:none;
 }
 .service-badge-pill{
   display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;
   font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  background:rgba(199,255,61,0.18);color:var(--accent);margin-bottom:10px;
+  background:var(--accent-subtle);color:var(--brand-highlight);margin-bottom:10px;
 }
-.service-title{font-size:19px;font-weight:900;letter-spacing:-0.03em;margin-bottom:4px}
-.service-desc{font-size:12px;color:#A4B1C5;line-height:1.5;margin-bottom:14px}
+.service-title{font-size:19px;font-weight:900;letter-spacing:-0.03em;margin-bottom:4px;color:var(--text)}
+.service-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .service-pills-row{display:flex;gap:8px;flex-wrap:wrap}
 .service-mini-tag{
-  background:rgba(255,255,255,0.06);border-radius:8px;padding:4px 8px;
-  font-size:11px;font-weight:700;color:var(--text);
+  background:var(--tag-bg);border-radius:8px;padding:4px 8px;
+  font-size:11px;font-weight:700;color:var(--text);border:1px solid var(--border-subtle);
 }
 .service-price-chip{
   position:absolute;top:18px;right:18px;text-align:right;
 }
 .price-from{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:700}
-.price-val{font-size:18px;font-weight:900;color:var(--accent)}
+.price-val{font-size:18px;font-weight:900;color:var(--brand-highlight);font-family:'JetBrains Mono',monospace}
 
 /* SECONDARY CAB CARD */
 .service-cab-card{
   background:var(--surface);border:1px solid var(--border);border-radius:20px;
   padding:16px 18px;margin-bottom:20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
-  transition:all .18s;box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  transition:all .18s;box-shadow:var(--card-shadow);
 }
-.service-cab-card:active{border-color:rgba(255,255,255,0.25);transform:scale(0.985)}
+.service-cab-card:active{border-color:var(--border-active);transform:scale(0.985)}
 
 /* PACKAGE SELECTOR CARDS */
 .pkg-card{
   background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid var(--border);
   cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:14px;margin-bottom:10px;
+  box-shadow:var(--card-shadow);
 }
 .pkg-card.selected{
-  border-color:var(--accent);background:rgba(199,255,61,0.05);box-shadow:0 0 20px rgba(199,255,61,0.12);
+  border-color:var(--border-active);background:var(--accent-subtle);box-shadow:0 0 20px var(--accent-glow);
 }
 .pkg-card:active{transform:scale(0.98)}
 .pkg-radio{
   width:22px;height:22px;border-radius:50%;border:2px solid var(--border);
   display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;
 }
-.pkg-card.selected .pkg-radio{border-color:var(--accent)}
-.pkg-radio-dot{width:11px;height:11px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .15s}
+.pkg-card.selected .pkg-radio{border-color:var(--border-active)}
+.pkg-radio-dot{width:11px;height:11px;border-radius:50%;background:var(--brand-highlight);transform:scale(0);transition:transform .15s}
 .pkg-card.selected .pkg-radio-dot{transform:scale(1)}
 
 /* VEHICLE TIER (Uber Style) */
 .tier-card{
   background:var(--surface);border-radius:var(--radius-card);padding:16px;border:1.5px solid var(--border);
   cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:14px;margin-bottom:10px;
+  box-shadow:var(--card-shadow);
 }
-.tier-card.selected{border-color:var(--accent);background:rgba(199,255,61,0.05);box-shadow:0 0 20px rgba(199,255,61,0.12)}
+.tier-card.selected{border-color:var(--border-active);background:var(--accent-subtle);box-shadow:0 0 20px var(--accent-glow)}
 .tier-card:active{transform:scale(0.98)}
 .tier-icon-wrap{
   width:54px;height:54px;border-radius:14px;background:var(--surface2);display:flex;
   align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border);
 }
-.tier-icon-wrap svg{width:32px;height:32px;stroke:var(--accent);fill:none}
+.tier-icon-wrap svg{width:32px;height:32px;stroke:var(--text);fill:none}
 
 /* INPUTS */
 .input-field{
-  width:100%;height:52px;background:var(--surface2);border:1.5px solid var(--border);
+  width:100%;height:52px;background:var(--input-bg);border:1.5px solid var(--border);
   border-radius:var(--radius-btn);padding:0 16px;font-size:15px;font-weight:600;color:var(--text);
   transition:border-color .15s;
 }
-.input-field:focus{border-color:var(--accent)}
+.input-field:focus{border-color:var(--border-active)}
 .input-field::placeholder{color:var(--muted);font-weight:500}
 
 /* TRANSMISSION SWITCHER */
@@ -281,49 +370,50 @@ a{text-decoration:none;color:inherit}
   flex:1;padding:12px;border-radius:12px;background:var(--surface2);border:1.5px solid var(--border);
   text-align:center;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;
 }
-.pill-option.active{border-color:var(--accent);color:var(--accent);background:rgba(199,255,61,0.08)}
+.pill-option.active{border-color:var(--border-active);color:var(--text);background:var(--surface);box-shadow:var(--card-shadow);font-weight:800}
 
 /* ACTIVE TRIP TRACKING SHEET (Uber Style) */
 .tracking-sheet{
   background:var(--surface);border-radius:24px 24px 0 0;border-top:1px solid var(--border);
   padding:18px 20px calc(140px + var(--safe-bottom));margin-top:-24px;position:relative;z-index:20;
+  box-shadow:var(--elevated-shadow);
 }
 .otp-uber-badge{
-  background:var(--surface2);border:1.5px dashed var(--accent);border-radius:14px;
+  background:var(--surface2);border:1.5px dashed var(--border-active);border-radius:14px;
   padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin:14px 0;
 }
-.otp-val-highlight{font-size:22px;font-weight:900;letter-spacing:4px;color:var(--accent)}
+.otp-val-highlight{font-size:22px;font-weight:900;letter-spacing:4px;color:var(--brand-highlight);font-family:'JetBrains Mono',monospace}
 
 /* LEAFLET CUSTOM PULSING MARKERS */
 .user-pulse-marker{
-  width:18px;height:18px;background:var(--accent);border:3px solid #0A0B0E;border-radius:50%;
-  box-shadow:0 0 0 0 rgba(199,255,61,0.7);animation:pulseWave 2s infinite;
+  width:18px;height:18px;background:var(--brand-highlight);border:3px solid var(--surface);border-radius:50%;
+  box-shadow:0 0 0 0 var(--accent-glow);animation:pulseWave 2s infinite;
 }
 @keyframes pulseWave{
-  0%{box-shadow:0 0 0 0 rgba(199,255,61,0.7)}
-  70%{box-shadow:0 0 0 16px rgba(199,255,61,0)}
-  100%{box-shadow:0 0 0 0 rgba(199,255,61,0)}
+  0%{box-shadow:0 0 0 0 var(--accent-glow)}
+  70%{box-shadow:0 0 0 16px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
 }
 .cab-marker-icon{
-  width:32px;height:32px;border-radius:50%;background:#12151B;border:1.5px solid var(--accent);
-  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.5);
+  width:32px;height:32px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--card-shadow);color:var(--text);
 }
-.cab-marker-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none}
+.cab-marker-icon svg{width:18px;height:18px;stroke:var(--text);fill:none}
 
 /* TOAST */
 .toast{
   position:fixed;top:calc(20px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-100px);
-  background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:12px 20px;
-  border-radius:100px;font-size:13px;font-weight:700;z-index:999;box-shadow:0 12px 32px rgba(0,0,0,0.5);
+  background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 20px;
+  border-radius:100px;font-size:13px;font-weight:700;z-index:999;box-shadow:var(--elevated-shadow);
   transition:transform .3s cubic-bezier(.175,.885,.32,1.275);pointer-events:none;display:flex;align-items:center;gap:8px;
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 /* OLA STYLE LOCATION SEARCH MODAL */
 .ola-location-modal{
-  position:fixed;inset:0;background:rgba(10,11,14,0.98);z-index:900;
+  position:fixed;inset:0;background:var(--modal-bg);z-index:900;
   display:none;flex-direction:column;max-width:480px;margin:0 auto;
-  box-shadow:0 0 50px rgba(0,0,0,0.9);animation:slideUpModal .22s cubic-bezier(.16,1,.3,1);
+  box-shadow:var(--elevated-shadow);animation:slideUpModal .22s cubic-bezier(.16,1,.3,1);
 }
 .ola-location-modal.active{display:flex}
 @keyframes slideUpModal{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -340,16 +430,16 @@ a{text-decoration:none;color:inherit}
 /* OLA DUAL CONNECTED INPUTS */
 .ola-inputs-card{
   background:var(--surface);border-radius:18px;margin:16px;padding:12px 14px;
-  border:1.5px solid var(--border);position:relative;
+  border:1.5px solid var(--border);position:relative;box-shadow:var(--card-shadow);
 }
 .ola-route-line{
   position:absolute;left:24px;top:38px;bottom:38px;width:2px;
-  background:dashed 2px rgba(255,255,255,0.18);pointer-events:none;
+  background:dashed 2px var(--border);pointer-events:none;
 }
 .ola-input-row{display:flex;align-items:center;gap:12px;position:relative}
 .ola-input-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;z-index:2}
 .ola-input-dot.pickup{background:var(--success);box-shadow:0 0 10px var(--success)}
-.ola-input-dot.drop{background:var(--accent);border-radius:3px;box-shadow:0 0 10px var(--accent)}
+.ola-input-dot.drop{background:var(--brand-highlight);border-radius:3px;box-shadow:0 0 10px var(--accent-glow)}
 .ola-text-input{
   flex:1;height:48px;font-size:14px;font-weight:700;color:var(--text);width:100%;
 }
@@ -369,10 +459,10 @@ a{text-decoration:none;color:inherit}
 .ola-type-chip{
   flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);border-radius:100px;
   padding:8px 14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
-  cursor:pointer;transition:all .15s;color:var(--text);
+  cursor:pointer;transition:all .15s;color:var(--text);box-shadow:var(--card-shadow);
 }
 .ola-type-chip:active, .ola-type-chip.selected{
-  background:rgba(199,255,61,0.12);border-color:var(--accent);color:var(--accent);
+  background:var(--accent-subtle);border-color:var(--border-active);color:var(--brand-highlight);
 }
 
 /* OLA AUTOCOMPLETE SUGGESTION LIST */
@@ -381,13 +471,13 @@ a{text-decoration:none;color:inherit}
 }
 .ola-result-item{
   display:flex;align-items:center;gap:14px;padding:14px 10px;
-  border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background .15s;border-radius:12px;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;border-radius:12px;
 }
 .ola-result-item:active{background:var(--surface2)}
 .ola-result-icon{
   width:38px;height:38px;border-radius:50%;background:var(--surface2);
   border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-  color:var(--accent);flex-shrink:0;
+  color:var(--brand-highlight);flex-shrink:0;
 }
 .ola-result-text{flex:1;min-width:0}
 .ola-result-title{font-size:14px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -400,38 +490,38 @@ a{text-decoration:none;color:inherit}
 }
 .map-center-pin-overlay.active{display:flex}
 .pin-badge{
-  background:#0A0B0E;color:var(--accent);border:1.5px solid var(--accent);
+  background:var(--surface);color:var(--text);border:1.5px solid var(--border);
   padding:4px 10px;border-radius:100px;font-size:11px;font-weight:800;margin-bottom:4px;
-  box-shadow:0 4px 14px rgba(0,0,0,0.6);white-space:nowrap;
+  box-shadow:var(--card-shadow);white-space:nowrap;
 }
 .pin-icon-drop{
-  width:36px;height:36px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.8));
+  width:36px;height:36px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.5));
 }
 .pin-shadow{
-  width:14px;height:6px;background:rgba(0,0,0,0.5);border-radius:50%;margin-top:2px;
+  width:14px;height:6px;background:rgba(0,0,0,0.4);border-radius:50%;margin-top:2px;
 }
 .confirm-map-spot-drawer{
   position:fixed;bottom:calc(70px + var(--safe-bottom));left:50%;transform:translateX(-50%);
-  width:calc(100% - 32px);max-width:448px;background:var(--surface);border:1.5px solid var(--accent);
-  border-radius:18px;padding:14px 16px;z-index:800;display:none;box-shadow:0 12px 36px rgba(0,0,0,0.7);
+  width:calc(100% - 32px);max-width:448px;background:var(--surface);border:1.5px solid var(--border-active);
+  border-radius:18px;padding:14px 16px;z-index:800;display:none;box-shadow:var(--elevated-shadow);
 }
 .confirm-map-spot-drawer.active{display:block}
 
 /* LIVE GPS TRACKING PILL & ACCURACY */
 .gps-tracking-pill{
-  display:inline-flex;align-items:center;gap:6px;background:rgba(18,22,25,0.88);
+  display:inline-flex;align-items:center;gap:6px;background:var(--surface);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1.5px solid var(--border);border-radius:100px;padding:6px 12px;
-  font-size:11px;font-weight:800;color:var(--text);box-shadow:0 6px 18px rgba(0,0,0,0.5);
-  cursor:pointer;transition:all .2s;user-select:none;
+  font-size:11px;font-weight:800;color:var(--text);box-shadow:var(--card-shadow);
+  cursor:pointer;transition:all .2s;user-select:none;flex-shrink:0;
 }
 .gps-tracking-pill:active{transform:scale(0.96)}
-.gps-tracking-pill.active{border-color:var(--accent);color:var(--accent)}
+.gps-tracking-pill.active{border-color:var(--border-active);color:var(--text)}
 .gps-dot{
   width:8px;height:8px;border-radius:50%;background:var(--muted);transition:all .2s;flex-shrink:0;
 }
 .gps-tracking-pill.active .gps-dot{
-  background:var(--accent);box-shadow:0 0 10px var(--accent);
+  background:var(--brand-highlight);box-shadow:0 0 10px var(--brand-highlight);
   animation:gpsPulse 1.8s infinite;
 }
 .gps-tracking-pill.searching .gps-dot{
@@ -441,20 +531,20 @@ a{text-decoration:none;color:inherit}
   background:#EF4444;box-shadow:0 0 8px #EF4444;
 }
 @keyframes gpsPulse{
-  0%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(199,255,61,0.7)}
-  70%{transform:scale(1.15);box-shadow:0 0 0 8px rgba(199,255,61,0)}
-  100%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(199,255,61,0)}
+  0%{transform:scale(0.95);box-shadow:0 0 0 0 var(--accent-glow)}
+  70%{transform:scale(1.15);box-shadow:0 0 0 8px transparent}
+  100%{transform:scale(0.95);box-shadow:0 0 0 0 transparent}
 }
 .map-recenter-btn.active{
-  border-color:var(--accent);color:var(--accent);box-shadow:0 0 14px rgba(199,255,61,0.35);
+  border-color:var(--border-active);color:var(--brand-highlight);box-shadow:0 0 14px var(--accent-glow);
 }
 
 /* INSECURE GPS BANNER (MOBILE HTTP) */
 .insecure-gps-banner{
-  background:linear-gradient(135deg, rgba(245,158,11,0.22), rgba(18,22,25,0.95));
-  border:1.5px solid rgba(245,158,11,0.6);border-radius:16px;margin:12px 14px 6px;
+  background:linear-gradient(135deg, rgba(245,158,11,0.18), var(--surface));
+  border:1.5px solid rgba(245,158,11,0.5);border-radius:16px;margin:12px 14px 6px;
   padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.6);position:relative;z-index:900;
+  box-shadow:var(--card-shadow);position:relative;z-index:900;
 }
 .btn-https-switch{
   background:#F59E0B;color:#0B0D0F;border:none;border-radius:10px;padding:8px 12px;
@@ -535,12 +625,18 @@ a{text-decoration:none;color:inherit}
         <div class="brand-pill-logo">R</div>
         <div class="brand-pill-text" id="homeBrandPill">RideDriveAhead</div>
       </div>
-      <div class="gps-tracking-pill" id="gpsTrackingPill" onclick="toggleGpsFollowMode()" title="Toggle Live GPS Follow Mode">
-        <span class="gps-dot"></span>
-        <span id="gpsTrackingText">Live GPS</span>
-      </div>
-      <div class="map-recenter-btn active" id="homeRecenterBtn" onclick="recenterHomeMap()" title="Recenter Location & Follow">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="gps-tracking-pill" id="gpsTrackingPill" onclick="toggleGpsFollowMode()" title="Toggle Live GPS Follow Mode">
+          <span class="gps-dot"></span>
+          <span id="gpsTrackingText">Live GPS</span>
+        </div>
+        <div class="theme-toggle-pill" id="homeThemeToggle" onclick="toggleAppTheme()" title="Toggle Dark/Light Mode">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="themeToggleText">Light</span>
+        </div>
+        <div class="map-recenter-btn active" id="homeRecenterBtn" onclick="recenterHomeMap()" title="Recenter Location & Follow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+        </div>
       </div>
     </div>
 
@@ -882,16 +978,33 @@ a{text-decoration:none;color:inherit}
   </div>
   <div style="padding:16px">
     <!-- User Card -->
-    <div style="background:var(--surface);border-radius:20px;padding:20px;border:1px solid var(--border);display:flex;align-items:center;gap:16px;margin-bottom:20px">
-      <div style="width:60px;height:60px;border-radius:50%;background:var(--surface2);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:var(--accent)" id="profileAvatarBig">
+    <div style="background:var(--surface);border-radius:20px;padding:20px;border:1px solid var(--border);display:flex;align-items:center;gap:16px;margin-bottom:20px;box-shadow:var(--card-shadow)">
+      <div style="width:60px;height:60px;border-radius:50%;background:var(--surface2);border:2px solid var(--brand-highlight);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:var(--brand-highlight)" id="profileAvatarBig">
         R
       </div>
       <div>
-        <div style="font-size:18px;font-weight:900" id="profileNameBig">Rider Partner</div>
+        <div style="font-size:18px;font-weight:900;color:var(--text)" id="profileNameBig">Rider Partner</div>
         <div style="font-size:13px;color:var(--muted);margin-top:2px" id="profilePhoneBig">+91 98765 43210</div>
-        <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;color:var(--muted);margin-top:6px">
+        <div style="display:inline-flex;align-items:center;gap:4px;background:var(--tag-bg);padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;color:var(--muted);margin-top:6px;border:1px solid var(--border-subtle)">
           <span>&#9733; Not rated yet</span>
         </div>
+      </div>
+    </div>
+
+    <!-- Display Appearance / Theme Switcher -->
+    <div style="font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Display Appearance</div>
+    <div style="background:var(--surface);border-radius:18px;padding:14px 16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;box-shadow:var(--card-shadow)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:38px;height:38px;border-radius:10px;background:var(--surface2);display:flex;align-items:center;justify-content:center;color:var(--brand-highlight)" id="profileThemeIcon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text)" id="profileThemeTitle">Dark Mode Active</div>
+          <div style="font-size:11px;color:var(--muted)">Seamless Dark &amp; Light Mode with Map Sync</div>
+        </div>
+      </div>
+      <div class="theme-switch-slider" onclick="toggleAppTheme()">
+        <div class="slider-thumb"></div>
       </div>
     </div>
 
@@ -1089,8 +1202,71 @@ let lastGeocodedLng = null;
 let lastGeocodeTime = 0;
 let gpsFixCount = 0;
 
+// Theme Engine (Dark & Light Mode Support)
+let currentAppTheme = localStorage.getItem('rda_theme') || 'dark';
+let homeTileLayer = null;
+let activeTileLayer = null;
+
+function applyAppTheme(theme, showFeedback = false) {
+  currentAppTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('rda_theme', theme);
+
+  const isLight = theme === 'light';
+
+  // Update Map Theme Pill
+  const toggleBtn = document.getElementById('homeThemeToggle');
+  if (toggleBtn) {
+    toggleBtn.innerHTML = isLight
+      ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span id="themeToggleText">Dark</span>`
+      : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><span id="themeToggleText">Light</span>`;
+  }
+
+  // Update Profile Theme Card
+  const profileTitle = document.getElementById('profileThemeTitle');
+  const profileIcon = document.getElementById('profileThemeIcon');
+  if (profileTitle) {
+    profileTitle.textContent = isLight ? 'Light Mode Active' : 'Dark Mode Active';
+  }
+  if (profileIcon) {
+    profileIcon.innerHTML = isLight
+      ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+      : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  }
+
+  // Update Leaflet tile layer URLs
+  updateMapTilesTheme();
+
+  if (showFeedback) {
+    showToast(isLight ? 'Switched to Light Mode' : 'Switched to Dark Mode');
+  }
+}
+
+function toggleAppTheme() {
+  const next = currentAppTheme === 'dark' ? 'light' : 'dark';
+  applyAppTheme(next, true);
+}
+
+function updateMapTilesTheme() {
+  const isLight = currentAppTheme === 'light';
+  const tileUrl = isLight
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+  if (homeTileLayer) {
+    homeTileLayer.setUrl(tileUrl);
+  }
+  if (activeTileLayer) {
+    activeTileLayer.setUrl(tileUrl);
+  }
+}
+
 // Initializer
 window.addEventListener('DOMContentLoaded', () => {
+  // Apply saved theme immediately
+  applyAppTheme(currentAppTheme, false);
+
   const savedUser = localStorage.getItem('rda_rider_user');
   if (savedUser) {
     try {
@@ -1449,10 +1625,12 @@ function initHomeMap() {
     boxZoom: false
   }).setView([currentLat, currentLng], 15);
 
-  // Esri World Dark Gray Base (Clean, high performance, zero watermark)
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 18
-  }).addTo(homeLeafletMap);
+  // Esri Dark / Light World Canvas based on user theme preference
+  const tileUrl = currentAppTheme === 'light'
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+  homeTileLayer = L.tileLayer(tileUrl, { maxZoom: 18 }).addTo(homeLeafletMap);
 
   // User location pulsing marker
   const pulseIcon = L.divIcon({
@@ -2078,9 +2256,11 @@ function initActiveMap() {
     boxZoom: false
   }).setView([currentLat, currentLng], 15);
 
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 18
-  }).addTo(activeLeafletMap);
+  const tileUrl = currentAppTheme === 'light'
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+  activeTileLayer = L.tileLayer(tileUrl, { maxZoom: 18 }).addTo(activeLeafletMap);
 
   // User Pickup Pin at current location
   const userIcon = L.divIcon({

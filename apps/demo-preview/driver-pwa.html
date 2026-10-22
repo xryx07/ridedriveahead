@@ -18,25 +18,73 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0B132B;
-  --surface:#131C38;
-  --surface2:#1C284D;
-  --surface3:#273766;
-  --accent:#C7FF3D;
-  --accent-glow:rgba(199,255,61,0.3);
-  --text:#F4F6F9;
-  --muted:#8DA0BD;
-  --border:rgba(255,255,255,0.08);
-  --border-active:rgba(199,255,61,0.4);
-  --success:#22C55E;
-  --danger:#EF4444;
-  --warning:#FBBF24;
-  --radius-card:18px;
-  --radius-btn:14px;
-  --safe-top:env(safe-area-inset-top,0px);
-  --safe-bottom:env(safe-area-inset-bottom,0px);
+
+:root, [data-theme="dark"] {
+  --theme-mode: dark;
+  color-scheme: dark;
+  --bg: #0B132B;
+  --surface: #131C38;
+  --surface2: #1C284D;
+  --surface3: #273766;
+  --accent: #C7FF3D;
+  --btn-accent-bg: #C7FF3D;
+  --btn-accent-text: #0B132B;
+  --brand-highlight: #C7FF3D;
+  --accent-glow: rgba(199,255,61,0.3);
+  --accent-subtle: rgba(199,255,61,0.12);
+  --text: #F4F6F9;
+  --text-secondary: #CBD5E1;
+  --muted: #8DA0BD;
+  --border: rgba(255,255,255,0.08);
+  --border-active: rgba(199,255,61,0.4);
+  --card-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  --elevated-shadow: 0 16px 40px rgba(0,0,0,0.65);
+  --header-bg: rgba(11,19,43,0.92);
+  --nav-bg: rgba(19,28,56,0.96);
+  --input-bg: #1C284D;
+  --map-bg: #060A17;
+  --success: #22C55E;
+  --danger: #EF4444;
+  --warning: #FBBF24;
+  --radius-card: 18px;
+  --radius-btn: 14px;
+  --safe-top: env(safe-area-inset-top,0px);
+  --safe-bottom: env(safe-area-inset-bottom,0px);
 }
+
+[data-theme="light"] {
+  --theme-mode: light;
+  color-scheme: light;
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --surface2: #EDF2F8;
+  --surface3: #E2E8F0;
+  --accent: #0F172A;
+  --btn-accent-bg: #0F172A;
+  --btn-accent-text: #FFFFFF;
+  --brand-highlight: #059669;
+  --accent-glow: rgba(15,23,42,0.12);
+  --accent-subtle: rgba(5,150,105,0.10);
+  --text: #0A0F1D;
+  --text-secondary: #334155;
+  --muted: #64748B;
+  --border: rgba(15,23,42,0.09);
+  --border-active: rgba(15,23,42,0.35);
+  --card-shadow: 0 4px 18px rgba(15,23,42,0.06);
+  --elevated-shadow: 0 12px 32px rgba(15,23,42,0.12);
+  --header-bg: rgba(255,255,255,0.92);
+  --nav-bg: rgba(255,255,255,0.96);
+  --input-bg: #FFFFFF;
+  --map-bg: #E2E8F0;
+  --success: #059669;
+  --danger: #DC2626;
+  --warning: #D97706;
+  --radius-card: 18px;
+  --radius-btn: 14px;
+  --safe-top: env(safe-area-inset-top,0px);
+  --safe-bottom: env(safe-area-inset-bottom,0px);
+}
+
 html{-webkit-text-size-adjust:100%;min-height:100%}
 body{
   font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
@@ -64,25 +112,26 @@ a{text-decoration:none;color:inherit}
 .header{
   display:flex;align-items:center;gap:12px;
   padding:calc(12px + var(--safe-top)) 16px 12px;
-  position:sticky;top:0;background:rgba(11,19,43,0.92);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  position:sticky;top:0;background:var(--header-bg);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   z-index:50;border-bottom:1px solid var(--border);
 }
 .header-back{
   width:42px;height:42px;display:flex;align-items:center;justify-content:center;
-  border-radius:12px;background:var(--surface);cursor:pointer;transition:all .15s;flex-shrink:0;
+  border-radius:12px;background:var(--surface2);cursor:pointer;transition:all .15s;flex-shrink:0;
 }
 .header-back:active{transform:scale(0.92)}
 .header-back svg{width:20px;height:20px;stroke:var(--text);stroke-width:2.2;fill:none}
-.header-title{font-size:18px;font-weight:800;flex:1;letter-spacing:-0.02em}
+.header-title{font-size:18px;font-weight:800;flex:1;letter-spacing:-0.02em;color:var(--text)}
 
 /* BOTTOM NAVIGATION */
 .bottom-nav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
-  background:rgba(19,28,56,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:var(--nav-bg);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
   border-top:1px solid var(--border);
   padding:8px 10px calc(8px + var(--safe-bottom));
   z-index:100;display:flex;justify-content:space-around;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.06);
 }
 .bottom-nav.hidden{display:none}
 .nav-tab{
@@ -91,66 +140,76 @@ a{text-decoration:none;color:inherit}
 }
 .nav-tab svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;transition:stroke .18s}
 .nav-tab span{font-size:10px;font-weight:700;letter-spacing:.2px}
-.nav-tab.active{color:var(--accent)}
-.nav-tab.active svg{stroke:var(--accent);stroke-width:2.2}
+.nav-tab.active{color:var(--brand-highlight);background:var(--accent-subtle)}
+.nav-tab.active svg{stroke:var(--brand-highlight);stroke-width:2.2}
 .nav-tab:active{transform:scale(0.92)}
 
 /* BUTTONS */
 .btn{
   display:flex;align-items:center;justify-content:center;gap:10px;height:54px;border-radius:var(--radius-btn);
-  font-weight:800;font-size:15px;letter-spacing:-0.01em;padding:0 24px;transition:transform .12s,background .15s;
-  cursor:pointer;width:100%;box-shadow:0 6px 20px rgba(0,0,0,0.3);
+  font-weight:800;font-size:15px;letter-spacing:-0.01em;padding:0 24px;transition:transform .12s,background .15s,opacity .15s;
+  cursor:pointer;width:100%;box-shadow:var(--card-shadow);
 }
 .btn:active{transform:scale(.97)}
-.btn-accent{background:var(--accent);color:#0B132B}
-.btn-accent:hover{background:#d5ff5c}
-.btn-surface{background:var(--surface);color:var(--text);border:1px solid var(--border)}
-.btn-danger{background:rgba(239,68,68,.15);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.btn-accent{background:var(--btn-accent-bg);color:var(--btn-accent-text)}
+.btn-accent:hover{opacity:0.92}
+.btn-surface{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.25)}
 .btn-sm{height:44px;font-size:13px;padding:0 18px;border-radius:12px}
 
 /* MAP VIEWPORT */
 .map-viewport{
-  width:100%;height:46vh;min-height:300px;position:relative;background:#060A17;
+  width:100%;height:46vh;min-height:300px;position:relative;background:var(--map-bg);
 }
 #driverMap{width:100%;height:100%;position:absolute;inset:0;z-index:1}
 
 /* TOP STATUS BAR OVERLAY (Uber Driver Style) */
 .driver-top-bar{
   position:absolute;top:calc(12px + var(--safe-top));left:16px;right:16px;
-  z-index:20;display:flex;justify-content:space-between;align-items:center;pointer-events:none;
+  z-index:20;display:flex;justify-content:space-between;align-items:center;pointer-events:none;gap:6px;
 }
 .driver-status-badge{
-  pointer-events:auto;background:rgba(19,28,56,0.92);backdrop-filter:blur(16px);
-  border:1px solid var(--border);border-radius:100px;padding:8px 16px;display:flex;align-items:center;gap:8px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  pointer-events:auto;background:var(--surface);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:100px;padding:8px 14px;display:flex;align-items:center;gap:8px;
+  box-shadow:var(--card-shadow);color:var(--text);
 }
 .beacon-dot{
   width:10px;height:10px;border-radius:50%;background:var(--muted);transition:background .3s;
 }
 .beacon-dot.online{
-  background:var(--accent);box-shadow:0 0 12px var(--accent);animation:beaconPulse 1.8s infinite;
+  background:var(--brand-highlight);box-shadow:0 0 12px var(--brand-highlight);animation:beaconPulse 1.8s infinite;
 }
 @keyframes beaconPulse{
-  0%{box-shadow:0 0 0 0 rgba(199,255,61,0.7)}
-  70%{box-shadow:0 0 0 10px rgba(199,255,61,0)}
-  100%{box-shadow:0 0 0 0 rgba(199,255,61,0)}
+  0%{box-shadow:0 0 0 0 var(--accent-glow)}
+  70%{box-shadow:0 0 0 10px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
 }
 .driver-status-text{font-size:12px;font-weight:800;letter-spacing:.05em}
 
+.theme-toggle-pill{
+  pointer-events:auto;display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:100px;padding:6px 11px;
+  font-size:11px;font-weight:800;color:var(--text);box-shadow:var(--card-shadow);
+  cursor:pointer;transition:all .18s;user-select:none;flex-shrink:0;
+}
+.theme-toggle-pill:active{transform:scale(0.94)}
+.theme-toggle-pill svg{stroke:var(--text);width:14px;height:14px;flex-shrink:0}
+
 .map-recenter-btn{
-  pointer-events:auto;width:38px;height:38px;border-radius:50%;background:rgba(19,28,56,0.92);
+  pointer-events:auto;width:38px;height:38px;border-radius:50%;background:var(--surface);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);transition:transform .12s;
+  box-shadow:var(--card-shadow);transition:transform .12s, border-color .15s;flex-shrink:0;
 }
 .map-recenter-btn:active{transform:scale(0.9)}
 
 .today-earnings-chip{
-  pointer-events:auto;background:rgba(19,28,56,0.92);backdrop-filter:blur(16px);
-  border:1px solid var(--border);border-radius:100px;padding:8px 16px;text-align:right;
-  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  pointer-events:auto;background:var(--surface);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:100px;padding:8px 14px;text-align:right;
+  box-shadow:var(--card-shadow);
 }
-.today-earnings-val{font-size:14px;font-weight:900;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.today-earnings-val{font-size:14px;font-weight:900;color:var(--brand-highlight);font-family:'JetBrains Mono',monospace}
 
 /* UBER DRIVER ICONIC BIG CIRCULAR "GO" BUTTON */
 .go-button-container{
@@ -321,7 +380,11 @@ a{text-decoration:none;color:inherit}
         <div class="beacon-dot" id="onlineBeacon"></div>
         <div class="driver-status-text" id="onlineStatusLabel">OFFLINE</div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="theme-toggle-pill" id="driverThemeToggle" onclick="toggleDriverTheme()" title="Toggle Dark/Light Mode">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="driverThemeText">Light</span>
+        </div>
         <div class="map-recenter-btn" onclick="recenterDriverMap()" title="Recenter Driver GPS">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
         </div>
@@ -599,7 +662,44 @@ let driverGpsWatchId = null;
 let driverAccuracyCircle = null;
 let isDriverFollowMode = true;
 
+let currentDriverTheme = localStorage.getItem('rda_theme') || 'dark';
+let driverTileLayer = null;
+
+function applyDriverTheme(theme, showFeedback = false) {
+  currentDriverTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('rda_theme', theme);
+
+  const isLight = theme === 'light';
+  const toggleBtn = document.getElementById('driverThemeToggle');
+  if (toggleBtn) {
+    toggleBtn.innerHTML = isLight
+      ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span id="driverThemeText">Dark</span>`
+      : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><span id="driverThemeText">Light</span>`;
+  }
+
+  const tileUrl = isLight
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+  if (driverTileLayer) {
+    driverTileLayer.setUrl(tileUrl);
+  }
+
+  if (showFeedback) {
+    showToast(isLight ? 'Switched to Light Mode' : 'Switched to Dark Mode');
+  }
+}
+
+function toggleDriverTheme() {
+  const next = currentDriverTheme === 'dark' ? 'light' : 'dark';
+  applyDriverTheme(next, true);
+}
+
 window.addEventListener('DOMContentLoaded', () => {
+  applyDriverTheme(currentDriverTheme, false);
+
   const saved = localStorage.getItem('rda_driver_user');
   if (saved) {
     try {
@@ -805,10 +905,12 @@ function initDriverMap() {
     boxZoom: false
   }).setView([driverCurrentLat, driverCurrentLng], 14);
 
-  // Esri World Dark Gray Base (Clean, high performance, zero watermark)
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 18
-  }).addTo(driverLeafletMap);
+  // Esri Dark / Light World Canvas based on driver theme preference
+  const tileUrl = currentDriverTheme === 'light'
+    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+    : 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+  driverTileLayer = L.tileLayer(tileUrl, { maxZoom: 18 }).addTo(driverLeafletMap);
 
   // Driver car marker
   const carIcon = L.divIcon({
