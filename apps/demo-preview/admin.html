@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RideDriveAhead Command Center — Enterprise Operations & RBAC</title>
     
+    <!-- Instant Theme Hydration to prevent flash -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('rda_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -376,9 +384,10 @@
             background: var(--surface-2);
         }
         .sidebar-item-btn.active {
-            color: #080A0C !important;
+            color: var(--accent-contrast) !important;
             background: var(--accent);
             font-weight: 800;
+            box-shadow: 0 4px 14px var(--accent-glow);
         }
         .sidebar-item-btn.locked {
             opacity: 0.45;
@@ -839,6 +848,20 @@
                 </select>
             </div>
 
+            <!-- Global Portals Quick Navigator -->
+            <div class="rbac-role-pill" style="padding:6px 10px;" title="Switch Platform Portal">
+                <span style="display:flex; align-items:center; color:var(--text-secondary);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+                <select onchange="if(this.value) window.location.href=this.value;" style="font-size:11px; font-weight:700;">
+                    <option value="" disabled selected>Portals</option>
+                    <option value="/admin">Admin Operations</option>
+                    <option value="/customer">Customer Website</option>
+                    <option value="/app">Rider App (PWA)</option>
+                    <option value="/driver-app">Driver App (PWA)</option>
+                    <option value="/driver">Captain Web Portal</option>
+                    <option value="/showcase">Luxury Showcase</option>
+                </select>
+            </div>
+
             <!-- Theme Toggle -->
             <button class="btn-action-neutral" style="padding:6px 10px; border-radius:8px;" id="adminThemeToggle" onclick="toggleAdminTheme()" title="Toggle Dark/Light Mode"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
 
@@ -867,7 +890,7 @@
             
             <div class="sidebar-item-btn active" data-view="overview" onclick="navToView('overview')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8v4h8v-4h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 3H6v7a6 6 0 0 0 12 0V3z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/><path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8v4h8v-4h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 3H6v7a6 6 0 0 0 12 0V3z"/></svg></span>
                     <span>Overview</span>
                 </div>
             </div>
@@ -915,7 +938,7 @@
 
             <div class="sidebar-item-btn" data-view="safety" onclick="navToView('safety')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     <span>Safety Center</span>
                 </div>
             </div>
@@ -961,7 +984,7 @@
 
             <div class="sidebar-item-btn" data-view="rbac" onclick="navToView('rbac')">
                 <div class="sidebar-item-left">
-                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                    <span class="sidebar-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     <span>Admin Users & RBAC</span>
                 </div>
             </div>
@@ -2145,7 +2168,8 @@
            ========================================================= */
         let currentRole = 'SUPER_ADMIN';
         let currentActiveView = 'overview';
-        let adminTheme = 'dark';
+        let adminTheme = localStorage.getItem('rda_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', adminTheme);
         let liveOpsMap = null;
         let fleetMarkers = [];
 
@@ -2370,8 +2394,8 @@
         function toggleAdminTheme() {
             adminTheme = adminTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', adminTheme);
-            const btn = document.getElementById('adminThemeToggle');
-            if (btn) btn.innerHTML = adminTheme === 'dark' ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' : '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+            localStorage.setItem('rda_theme', adminTheme);
+            updateAdminThemeIcon();
 
             if (liveOpsMap) {
                 const tileUrl = adminTheme === 'dark' 
@@ -2381,6 +2405,15 @@
                     if (l instanceof L.TileLayer) liveOpsMap.removeLayer(l);
                 });
                 L.tileLayer(tileUrl, { maxZoom: 18 }).addTo(liveOpsMap);
+            }
+        }
+
+        function updateAdminThemeIcon() {
+            const btn = document.getElementById('adminThemeToggle');
+            if (btn) {
+                btn.innerHTML = adminTheme === 'dark' 
+                    ? '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' 
+                    : '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
             }
         }
 
@@ -2564,6 +2597,7 @@
 
         // Initialize view based on URL hash if present
         window.addEventListener('DOMContentLoaded', () => {
+            updateAdminThemeIcon();
             const hash = window.location.hash.replace('#', '');
             if (hash && document.getElementById('view-' + hash)) {
                 navToView(hash);

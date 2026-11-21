@@ -2680,6 +2680,20 @@
 
             <!-- CLEAN, BALANCED RIGHT CONTROLS -->
             <div class="header-actions">
+                <!-- Global Portals Switcher -->
+                <div class="nav-item" style="padding:4px 8px; border:1px solid var(--border-color); border-radius:100px; display:inline-flex; align-items:center; gap:6px;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                    <select onchange="if(this.value) window.location.href=this.value;" style="font-size:12px; font-weight:700; background:transparent; border:none; outline:none; color:var(--text-primary); cursor:pointer;">
+                        <option value="" disabled selected>Portals</option>
+                        <option value="/customer">Customer Website</option>
+                        <option value="/app">Rider App (PWA)</option>
+                        <option value="/driver-app">Driver App (PWA)</option>
+                        <option value="/driver">Captain Web Portal</option>
+                        <option value="/admin">Admin Operations</option>
+                        <option value="/showcase">Luxury Showcase</option>
+                    </select>
+                </div>
+
                 <!-- Help / Support -->
                 <a href="javascript:void(0)" class="nav-item" style="padding:6px 12px; font-size:13px;" onclick="openCustomerModal('customerSupportModal')">Help</a>
 
@@ -5572,9 +5586,9 @@
                             <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Projected Net Payout (85%)</div>
                             <div style="font-size:22px; font-weight:900; color:var(--accent);" id="hostEarningsAmount">₹ 22,950</div>
                         </div>
-                        <div style="text-align:right; font-size:10px; color:var(--text-muted);">
-                            <div>✓ Direct IMPS in 24h</div>
-                            <div>✓ Escrow Deposit Shield</div>
+                        <div style="text-align:right; font-size:10px; color:var(--text-muted); display:flex; flex-direction:column; gap:3px; align-items:flex-end;">
+                            <div style="display:flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Direct IMPS in 24h</div>
+                            <div style="display:flex; align-items:center; gap:4px;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="var(--accent)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Escrow Deposit Shield</div>
                         </div>
                     </div>
                 </div>

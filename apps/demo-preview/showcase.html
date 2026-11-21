@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RideDriveAhead — Luxury Noir (Obsidian + Champagne + Ivory)</title>
+    <!-- Instant Theme Hydration -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('rda_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
     <!-- Google Fonts: Playfair Display + Plus Jakarta Sans + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +61,65 @@
             flex-direction: column;
             overflow-x: auto;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        /* LIGHT MODE OVERRIDES */
+        [data-theme="light"] body {
+            background: #F7F3EA !important;
+            color: #171717 !important;
+        }
+        [data-theme="light"] .top-action-bar {
+            background: #EDE7DC !important;
+            border-bottom: 1px solid #DED8CC !important;
+            color: #171717 !important;
+        }
+        [data-theme="light"] .top-badge-label {
+            color: #716B62 !important;
+        }
+        [data-theme="light"] .master-header {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #DED8CC !important;
+        }
+        [data-theme="light"] .brand-text-block .brand-name {
+            color: #171717 !important;
+        }
+        [data-theme="light"] .master-headline {
+            color: #171717 !important;
+        }
+        [data-theme="light"] .header-nav {
+            color: #716B62 !important;
+        }
+        [data-theme="light"] .master-footer {
+            background: #EDE7DC !important;
+            border-top: 1px solid #DED8CC !important;
+            color: #171717 !important;
+        }
+        [data-theme="light"] .pillar-title {
+            color: #171717 !important;
+        }
+        [data-theme="light"] .pillar-sub {
+            color: #716B62 !important;
+        }
+        [data-theme="light"] .portal-jump-link {
+            background: rgba(0, 0, 0, 0.05) !important;
+            border-color: rgba(0, 0, 0, 0.12) !important;
+            color: #171717 !important;
+        }
+        [data-theme="light"] .portal-jump-link:hover {
+            background: #9D7B3F !important;
+            color: #FFFFFF !important;
+            border-color: #9D7B3F !important;
+        }
+        [data-theme="light"] .perspective-tab-btn {
+            background: rgba(0, 0, 0, 0.05) !important;
+            border-color: rgba(0, 0, 0, 0.12) !important;
+            color: #171717 !important;
+        }
+        [data-theme="light"] .perspective-tab-btn.active {
+            background: #9D7B3F !important;
+            color: #FFFFFF !important;
+            border-color: #9D7B3F !important;
         }
 
         /* Notification Toast */
@@ -931,15 +997,15 @@
         </div>
 
         <div class="top-links-group">
-            <a href="/customer" class="portal-jump-link">
-                Customer Web ↗
-            </a>
-            <a href="/driver" class="portal-jump-link">
-                Driver Cockpit ↗
-            </a>
-            <a href="/admin" class="portal-jump-link">
-                Admin Console ↗
-            </a>
+            <a href="/customer" class="portal-jump-link">Customer Web ↗</a>
+            <a href="/app" class="portal-jump-link">Rider PWA ↗</a>
+            <a href="/driver-app" class="portal-jump-link">Driver PWA ↗</a>
+            <a href="/driver" class="portal-jump-link">Driver Web ↗</a>
+            <a href="/admin" class="portal-jump-link">Admin Console ↗</a>
+            <button class="perspective-tab-btn" id="showcaseThemeToggleBtn" onclick="toggleShowcaseTheme()" title="Toggle Dark/Light Mode" style="margin-left:6px;">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <span id="themeToggleText">Dark</span>
+            </button>
         </div>
     </div>
 
@@ -1566,6 +1632,32 @@
                 showToast('Viewing Triple-Platform Ecosystem (Customer / Driver / Admin)');
             }
         }
+
+        /* Synchronized Theme Toggle */
+        let currentShowcaseTheme = localStorage.getItem('rda_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentShowcaseTheme);
+
+        function toggleShowcaseTheme() {
+            currentShowcaseTheme = currentShowcaseTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', currentShowcaseTheme);
+            localStorage.setItem('rda_theme', currentShowcaseTheme);
+            updateShowcaseThemeBtn();
+            showToast('Switched to ' + (currentShowcaseTheme === 'dark' ? 'Dark Obsidian' : 'Warm Ivory') + ' Mode');
+        }
+
+        function updateShowcaseThemeBtn() {
+            const btn = document.getElementById('showcaseThemeToggleBtn');
+            const txt = document.getElementById('themeToggleText');
+            if (!btn || !txt) return;
+            if (currentShowcaseTheme === 'dark') {
+                btn.querySelector('svg').innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+                txt.textContent = 'Dark';
+            } else {
+                btn.querySelector('svg').innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+                txt.textContent = 'Light';
+            }
+        }
+        window.addEventListener('DOMContentLoaded', updateShowcaseThemeBtn);
     </script>
 </body>
 </html>
