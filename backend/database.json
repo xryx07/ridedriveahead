@@ -272,6 +272,12 @@
   "kycDocuments": [],
   "apiLogs": [
     {
+      "time": "1:06:22 am",
+      "method": "GET",
+      "endpoint": "/api/v1/geo/current",
+      "status": 200
+    },
+    {
       "time": "12:58:01 am",
       "method": "POST",
       "endpoint": "/api/v1/bookings",
